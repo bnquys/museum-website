@@ -1,5 +1,14 @@
 .fs-7 {
-    font-size: 0.75rem !important;
+    font-size: 0.85rem !important;
+}
+
+/* .fw-lightest {
+    font-weight: 50 !important;
+} */
+
+.py-6 {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
 }
 
 .btn-success {
