@@ -4052,7 +4052,7 @@ textarea.form-control-lg {
 }
 @media (prefers-reduced-motion: reduce) {
   .navbar-toggler {
-    transition: ;
+    transition: none;
   }
 }
 .navbar-toggler:hover {
@@ -6037,7 +6037,6 @@ textarea.form-control-lg {
   content: "";
 }
 
-
 .carousel-item {
   position: relative;
   display: none;
@@ -6165,11 +6164,6 @@ textarea.form-control-lg {
   margin-right: 15%;
   margin-bottom: 1rem;
   margin-left: 15%;
-}
-.carousel-indicators button[type="button"] {
-  border: none;
-  border-radius: 15px;
-  margin: 0 10px;
 }
 .carousel-indicators [data-bs-target] {
   box-sizing: content-box;

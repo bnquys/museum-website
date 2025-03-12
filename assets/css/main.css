@@ -70,27 +70,15 @@ a {
     opacity: 1;
 }
 
-.primary-btn {
-    /* text-decoration: none; */
-    background-color: var(--normal-cl); /* Light green background */
-    color: white;                /* White text */
-    border: 2px solid var(--normal-cl);                /* No border */
-    padding: 7px 20px;         /* Padding */
-    font-size: 14px;
-    font-weight: bold;            /* Font size */
-    cursor: pointer;             /* Pointer cursor */
-    transition: all 0.4s ease;  /* Transition for smooth effect */
-}
-
-#carouselExample .primary-btn {
+#carouselExample .btn-success {
     font-size: 18px;
     padding: 10px 30px; 
 }
 
-.primary-btn:hover {
-    background-color: transparent; /* No background color on hover */
-    color: var(--normal-cl);             /* Light green text on hover */
-    border: 2px solid var(--normal-cl);  /* Light green border on hover */
+.btn-success:hover {
+    background-color: transparent;
+    color: var(--normal-cl);
+    border: 2px solid var(--normal-cl);
 }
 
 .quote-left{
