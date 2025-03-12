@@ -1,5 +1,5 @@
 .fs-7 {
-    font-size: 14px !important;
+    font-size: 0.75rem !important;
 }
 
 .btn-success {
@@ -7,4 +7,16 @@
     border: 2px solid var(--normal-cl);
     transition: all 0.4s ease;
     padding: 7px 20px;
+}
+
+.text-dark {
+    color: var(--dark-cl) !important;
+}
+
+.text-normal {
+    color: var(--normal-cl) !important;
+}
+
+.fw-lighter {
+    font-weight: 100 !important;
 }

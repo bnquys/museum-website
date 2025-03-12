@@ -82,9 +82,9 @@ a {
 }
 
 .quote-left{
-	h1{
-		font-size:30px;
-		text-align:right;
+	h2{
+		/* font-size:30px; */
+		/* text-align:right; */
 		font-weight:100;
         color: var(--dark-cl);
 		span{
@@ -103,7 +103,7 @@ a {
 	.quote-left,.quote-right{
 		margin-bottom:30px;
 		text-align:center;
-		h1{
+		h2{
 			text-align:center
 		}
 	}
