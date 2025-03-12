@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
     --dark-cl: #059212;
-    --normal-cl: #06D001;
+    --normal-cl: #06d001;
     --light-cl: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
 }
@@ -18,7 +18,12 @@
 .header.scrolled {
     /* background-color: rgba(0, 0, 0, 0.336);  */
     /* border-image: fill 1 linear-gradient(rgba(36, 175, 36, 0.8), rgba(255, 255, 255, 0)); */
-    border-image: fill 1 linear-gradient(rgba(0, 0, 0, 0.888), rgba(0, 0, 0, 0.444), rgba(255, 255, 255, 0.067));
+    border-image: fill 1
+        linear-gradient(
+            rgba(0, 0, 0, 0.888),
+            rgba(0, 0, 0, 0.444),
+            rgba(255, 255, 255, 0.067)
+        );
     /* padding: 10px; */
 }
 
@@ -72,7 +77,7 @@ a {
 
 #carouselExample .btn-success {
     font-size: 18px;
-    padding: 10px 30px; 
+    padding: 10px 30px;
 }
 
 .btn-success:hover {
@@ -102,9 +107,20 @@ svg {
 }
 
 .hover-link {
-    transform: scale(3);
+    transition: color 0.3s, fill 0.5s;
 }
 .hover-link:hover {
     color: var(--normal-cl) !important;
-    transform: rotate(45deg) !important;
+}
+.bi-facebook:hover {
+    fill: blue;
+}
+.bi-youtube:hover {
+    fill: red;
+}
+.bi-twitter-x:hover {
+    fill: black;
+}
+.bi-globe-americas:hover {
+    fill: lightblue
 }
