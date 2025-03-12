@@ -1,0 +1,29 @@
+.row-gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+.column {
+	grid-column: span 3;
+	width: auto;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.card--hover:hover {
+	transition: color 0.2s;
+}
+.card--hover:hover h5 {
+    color: green;
+}
+.card--hover img {
+    transition: transform 0.2s ease-in-out;
+    width: 100%; 
+    height: 100%;
+    /* object-fit: cover; */
+}
+.card--hover:hover img {
+	transform: scale(1.1);
+}
