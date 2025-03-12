@@ -13,15 +13,13 @@
 }
 
 .card--hover:hover {
-	transition: color 0.2s;
+	transition: color 0.3s;
 }
 .card--hover:hover h5 {
     color: green;
 }
 .card--hover img {
-    transition: transform 0.2s ease-in-out;
-    width: 100%; 
-    height: 100%;
+    transition: transform 0.3s ease-in-out;
     /* object-fit: cover; */
 }
 .card--hover:hover img {
