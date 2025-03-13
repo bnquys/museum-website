@@ -18,14 +18,11 @@
     padding: 7px 20px;
 }
 
-.text-dark {
-    color: var(--dark-cl) !important;
+.text-dark h2{
+    font-weight: 100;
+    color: var(--dark-cl);
 }
 
 .text-normal {
     color: var(--normal-cl) !important;
-}
-
-.fw-lighter {
-    font-weight: 100 !important;
 }
