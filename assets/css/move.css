@@ -1,0 +1,32 @@
+.mv-rl {
+    opacity: 0;
+    transform: translateX(7rem);
+    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
+}
+
+.show-rl {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mv-lr {
+    opacity: 0;
+    transform: translateX(-7rem);
+    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
+}
+
+.show-lr {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mv-bt {
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
+}
+
+.show-bt {
+    opacity: 1;
+    transform: translateY(0);
+}
