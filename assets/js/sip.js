@@ -66,3 +66,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     hiddenElements.forEach((el) => observer.observe(el));
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hiddenElements = document.querySelectorAll(".mv-tb");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show-tb");
+                } else {
+                    entry.target.classList.remove("show-tb"); // Remove when scrolled out
+                }
+            });
+        },
+        { threshold: 0.2 } // Adjust how much needs to be visible
+    );
+
+    hiddenElements.forEach((el) => observer.observe(el));
+});

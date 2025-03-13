@@ -30,3 +30,14 @@
     opacity: 1;
     transform: translateY(0);
 }
+
+.mv-tb {
+    opacity: 0;
+    transform: translateY(-5rem);
+    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
+}
+
+.show-tb {
+    opacity: 1;
+    transform: translateY(0);
+}
