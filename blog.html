@@ -28,8 +28,8 @@
 		</header>
 
 		<section class="container d-flex flex-column flex-lg-row gap-5">
-			<div class="flex-fill d-flex flex-column gap-3">
-				<div class="card w-100" style="width: 18rem">
+			<div class="d-flex flex-column gap-4">
+				<div class="card">
 					<img
 						src="https://picsum.photos/500/300?random=1"
 						class="card-img-top"
@@ -91,7 +91,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="card w-100" style="width: 18rem">
+				<div class="card">
 					<img
 						src="https://picsum.photos/500/300?random=2"
 						class="card-img-top"
@@ -154,7 +154,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex-fill d-flex flex-column w-100">
+			<div class="d-flex flex-column w-100 gap-4">
+				<!-- Search box -->
 				<form action="#" class="container-fluid">
 					<div class="row row-cols-2 border p-5 p-auto">
 						<div class="col-10 p-0">
@@ -189,10 +190,11 @@
 						</div>
 					</div>
 				</form>
-				<div class="card">
+				<!-- Previewer -->
+				<div class="card rounded-0 py-2">
 					<img
 						src="https://picsum.photos/500"
-						class="card-img-top mx-auto my-4"
+						class="card-img-top mx-auto my-4 rounded-0"
 						style="width: 40%"
 						alt="..."
 					/>
@@ -247,9 +249,10 @@
 						</div>
 					</div>
 				</div>
+				<!-- Post Categories -->
 				<div class="container-fluid border">
 					<h3 class="p-2 pt-3">Post Categories</h3>
-					<ul class="list-group list-group-flush">
+					<ul class="list-group list-group-flush mb-3">
 						<li class="list-group-item list-group-item-action">
 							<div class="d-flex justify-content-between">
 								<p class="mb-0">An item</p>
@@ -282,6 +285,7 @@
 						</li>
 					</ul>
 				</div>
+				<!-- Recent posts -->
 				<div class="container-fluid border">
 					<h3 class="p-2 pt-3">Recent Posts</h3>
 					<ul class="list-group">
@@ -362,9 +366,10 @@
 						</li>
 					</ul>
 				</div>
+				<!-- Post archive -->
 				<div class="container-fluid border">
 					<h3 class="p-2 pt-3">Post Archive</h3>
-					<ul class="list-group list-group-flush px-4">
+					<ul class="list-group list-group-flush px-4 mb-3">
 						<li class="list-group-item list-group-item-action">
 							<div class="d-flex justify-content-between">
 								<p class="mb-0">Dec</p>
@@ -408,6 +413,23 @@
 							</div>
 						</li>
 					</ul>
+				</div>
+				<!-- Tag clouds -->
+				<div class="container-fluid border">
+					<h3 class="p-2 pt-3">Tag clouds</h3>
+					<div class="d-flex flex-wrap gap-1 px-3 mb-3">
+						<a href="#" class="border p-2">Lifestyle</a
+						><a href="#" class="border p-2">Art</a
+						><a href="#" class="border p-2">Adventure</a
+						><a href="#" class="border p-2">Food</a
+						><a href="#" class="border p-2">Technology</a
+						><a href="#" class="border p-2">Fashion</a
+						><a href="#" class="border p-2">Art</a
+						><a href="#" class="border p-2">Adventure</a
+						><a href="#" class="border p-2">Food</a
+						><a href="#" class="border p-2">Technology</a
+						><a href="#" class="border p-2">Fashion</a>
+					</div>
 				</div>
 			</div>
 		</section>
