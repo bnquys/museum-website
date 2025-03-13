@@ -85,3 +85,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
     hiddenElements.forEach((el) => observer.observe(el));
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hiddenElements = document.querySelectorAll(".mv-flip");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show-flip");
+                } else {
+                    entry.target.classList.remove("show-flip"); // Remove when scrolled out
+                }
+            });
+        },
+        { threshold: 0.2 } // Adjust how much needs to be visible
+    );
+
+    hiddenElements.forEach((el) => observer.observe(el));
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hiddenElements = document.querySelectorAll(".mv-rotate");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show-rotate");
+                } else {
+                    entry.target.classList.remove("show-rotate"); // Remove when scrolled out
+                }
+            });
+        },
+        { threshold: 0.2 } // Adjust how much needs to be visible
+    );
+
+    hiddenElements.forEach((el) => observer.observe(el));
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hiddenElements = document.querySelectorAll(".mv-scale");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show-scale");
+                } else {
+                    entry.target.classList.remove("show-scale"); // Remove when scrolled out
+                }
+            });
+        },
+        { threshold: 0.2 } // Adjust how much needs to be visible
+    );
+
+    hiddenElements.forEach((el) => observer.observe(el));
+});

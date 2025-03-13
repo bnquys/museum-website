@@ -160,6 +160,7 @@ svg {
 }
 
 .img-gallery .hover-link:hover{
+    z-index: 1;
     border: none;
     border-radius: 5px;
     transform: scale(1.1) rotate(5deg) translateX(1rem);
