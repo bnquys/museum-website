@@ -78,15 +78,21 @@ a {
 #carouselExample .btn-success {
     font-size: 18px;
     padding: 10px 30px;
-    animation: pulse 1.2s infinite;
+    animation: pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.9); }
+    0% {
+        transform: scale(0.9);
+    }
     /* 25% { transform: scale(1.0); } */
-    50% { transform: scale(1.1); }
+    50% {
+        transform: scale(1.1);
+    }
     /* 75% { transform: scale(1.0);} */
-    100% { transform: scale(0.9); }
+    100% {
+        transform: scale(0.9);
+    }
 }
 
 .btn-success:hover {
@@ -116,22 +122,26 @@ svg {
 }
 
 .hover-link {
-    transition: color 0.3s, fill 0.3s, font-weight 0.3s, transform 0.3s;
+    transition: color 0.3s ease-in-out, fill 0.3s, font-weight 0.3s,
+        transform 0.3s;
 }
 .hover-link:hover {
     transform: scale(1.3);
-    font-weight: 600;
     color: var(--normal-cl) !important;
 }
+.nav-item .hover-link:hover {
+    font-weight: 600;
+}
+
 .bi-facebook:hover {
-    fill: blue;
+    fill: #0266ff;
 }
 .bi-youtube:hover {
-    fill: red;
+    fill: #f70000;
 }
 .bi-twitter-x:hover {
     fill: black;
 }
 .bi-globe-americas:hover {
-    fill: lightblue;
+    fill: blue;
 }
