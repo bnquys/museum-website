@@ -1,12 +1,4 @@
 {
-<<<<<<< HEAD
 	"liveServer.settings.port": 5500,
 	"css.styleSheets": ["../assets/css/bootstrap.css"]
-=======
-<<<<<<< HEAD
-	"css.styleSheets": ["../assets/css/bootstrap.css"]
-=======
-    "liveServer.settings.port": 5501
->>>>>>> 77192cc5eb59c03a9894a0060d82a746a783f354
->>>>>>> d0722b21431aeda2685037b1fbebe534cc3230b1
 }
