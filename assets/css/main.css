@@ -20,7 +20,7 @@
     /* border-image: fill 1 linear-gradient(rgba(36, 175, 36, 0.8), rgba(255, 255, 255, 0)); */
     border-image: fill 1
         linear-gradient(
-            rgba(0, 0, 0, 0.888),
+            rgba(0, 0, 0, 0.699),
             rgba(0, 0, 0, 0.444),
             rgba(255, 255, 255, 0.067)
         );
@@ -162,5 +162,6 @@ svg {
 .img-gallery .hover-link:hover{
     border: none;
     border-radius: 5px;
-    transform: scale(1.1);   
+    transform: scale(1.1) rotate(5deg) translateX(1rem);
 }
+
