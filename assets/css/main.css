@@ -108,7 +108,7 @@ a {
 svg {
     transition: padding 0.4s, transform 0.4s;
 }
-.navbar-toggler:hover svg {
+.navbar-toggler:hover svg, .navbar-toggler:enabled svg {
     /* fill: rgb(0, 0, 0); */
     transform: rotate(-90deg);
     /* padding: 3px; */
