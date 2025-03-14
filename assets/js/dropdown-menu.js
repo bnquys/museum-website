@@ -1,7 +1,6 @@
 $(document).ready(function () {
 	var listItems = $("#navbarSupportedContent li").clone();
-
 	listItems.addClass("dropdown-item");
-
-	$("#btn-menu").append(listItems);
+	listItems.find("a").addClass("ps-3 fs-4");
+	$("#dropdown-menu").append(listItems);
 });
