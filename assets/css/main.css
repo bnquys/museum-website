@@ -108,7 +108,7 @@ a {
 svg {
     transition: padding 0.4s, transform 0.4s;
 }
-.navbar-toggler:hover svg {
+.navbar-toggler:hover svg, .navbar-toggler:enabled svg {
     /* fill: rgb(0, 0, 0); */
     transform: rotate(-90deg);
     /* padding: 3px; */
@@ -125,10 +125,13 @@ svg {
     transition: color 0.3s ease-in-out, fill 0.3s, font-weight 0.3s,
         transform 0.3s;
 }
+
 .hover-link:hover {
+    transition: transform 0.3s;
     transform: scale(1.3);
     color: var(--normal-cl) !important;
 }
+
 .nav-item .hover-link:hover {
     font-weight: 600;
 }
@@ -157,9 +160,11 @@ svg {
     flex-grow: 1;
     flex-basis: 200;
     width: auto;
+    transition: transform 1s;
 }
 
 .img-gallery .hover-link:hover{
+    z-index: 1;
     border: none;
     border-radius: 5px;
     transform: scale(1.1) rotate(5deg) translateX(1rem);
