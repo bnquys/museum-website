@@ -92,6 +92,6 @@
     }
     to {
         color: white;
-        text-shadow: 0 0 20px var(--normal-cl), 0 0 30px var(--normal-cl), 0 0 50px var(--normal-cl);
+        text-shadow: 0 0 15px var(--normal-cl), 0 0 30px var(--normal-cl), 0 0 50px var(--normal-cl);
     }
 }

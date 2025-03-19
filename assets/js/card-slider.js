@@ -1,5 +1,5 @@
 $(".responsive").slick({
-	dots: true,
+	// dots: true,
 	infinite: true,
 	speed: 1000,
 	slidesToShow: 3,
@@ -11,7 +11,7 @@ $(".responsive").slick({
 				slidesToShow: 3,
 				slidesToScroll: 3,
 				infinite: true,
-				dots: true,
+				// dots: true,
 			},
 		},
 		{

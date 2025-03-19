@@ -12,16 +12,3 @@
 	gap: 1rem;
 }
 
-.card--hover:hover {
-	transition: color 0.3s;
-}
-.card--hover:hover h5 {
-    color: green;
-}
-.card--hover img {
-    transition: transform 0.3s ease-in-out;
-    /* object-fit: cover; */
-}
-.card--hover:hover img {
-	transform: scale(1.1);
-}
