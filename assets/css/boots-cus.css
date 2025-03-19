@@ -26,3 +26,16 @@
 .text-normal {
     color: var(--normal-cl) !important;
 }
+
+.mb-6 {
+    margin-bottom: 4rem;
+}
+
+.dropdown-item {
+    padding: 1rem 1.5rem;
+}
+
+.drop-menu {
+    font-size: 1.2rem !important;
+
+}
