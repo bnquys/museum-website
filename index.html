@@ -82,7 +82,7 @@
             <nav
                 class="navbar navbar-expand-lg bg-body-black bg-opacity-50 ms-2 ms-sm-0"
             >
-                <div class="container">
+                <div id="menu" class="container">
                     <!-- MENU -->
                     <a class="navbar-brand text-light fs-3 fw-bold" href="#"
                         ><img
@@ -97,6 +97,7 @@
 
                     <div class="dropdown d-lg-none navbar-toggler border-0">
                         <button
+                            id="btn-menu"
                             class="btn btn-secondary border-0 bg-transparent"
                             type="button"
                             data-bs-toggle="dropdown"
@@ -118,7 +119,7 @@
                         </button>
                         <ul
                             id="dropdown-menu"
-                            class="dropdown-menu dropdown-menu-end bg-transparent"
+                            class="dropdown-menu dropdown-menu-end border-0"
                         ></ul>
                     </div>
 
@@ -129,68 +130,40 @@
                         <ul
                             class="navbar-nav ms-auto mb-2 mb-lg-0 text-end pe-3 pe-lg-0 border-0"
                         >
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Home</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >About</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">About</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Gallery</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">Gallery</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Event</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">Event</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Ticket</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">Ticket</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active pe-4 hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Blog</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="blog.html">Blog</a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link active hover-link"
-                                    aria-current="page"
-                                    href="#"
-                                    style="color: white"
-                                    >Contact</a
-                                >
+                            <li
+                                class="nav-item nav-link pe-4 hover-link d-block"
+                            >
+                                <a href="#">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -199,7 +172,11 @@
         </div>
 
         <!-- CAROUSEL -->
-        <div id="carouselExample" class="carousel slide position-relative">
+        <div
+            id="carouselExample"
+            class="carousel slide carousel-fade"
+            data-bs-ride="carousel"
+        >
             <div
                 class="position-absolute top-50 start-50 translate-middle text-center text-white"
                 style="z-index: 10"
@@ -242,7 +219,7 @@
                 </div>
             </div>
             <button
-                class="carousel-control-prev"
+                class="carousel-control-prev d-none"
                 type="button"
                 data-bs-target="#carouselExample"
                 data-bs-slide="prev"
@@ -254,7 +231,7 @@
                 <span class="visually-hidden">Previous</span>
             </button>
             <button
-                class="carousel-control-next"
+                class="carousel-control-next d-none"
                 type="button"
                 data-bs-target="#carouselExample"
                 data-bs-slide="next"
@@ -436,7 +413,7 @@
         </section>
 
         <!-- ONGOING EXHIBITIONS CARD SLIDER -->
-        <section id="Exhibition" class="container-fluid py-6 bg-green-light">
+        <section id="exhibition" class="container-fluid py-6 bg-green-light">
             <div class="container mb-5">
                 <h2 class="text-center mv-bt">
                     Ongoing Exhibitions from the scratch
@@ -701,7 +678,7 @@
         </section>
 
         <!-- LATEST BLOG -->
-        <section id="Blog" class="container-fluid py-6 bg-green-light">
+        <section id="blog" class="container-fluid py-6 bg-green-light">
             <div class="container">
                 <div class="mb-6">
                     <h2 class="text-center mv-bt">Latest From Our Blog</h2>
