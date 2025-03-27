@@ -18,7 +18,7 @@
 				text-decoration: none;
 			}
 		</style>
-		<title>Document</title>
+		<title>Contact</title>
 	</head>
 	<body>
 		<header
@@ -30,8 +30,8 @@
 			</p>
 		</header>
 		<section class="container">
-			<div class="row">
-				<div class="col-4 d-flex flex-column">
+			<div class="row row-cols-1 row-cols-sm-3">
+				<div class="col mt-4 mt-sm-0 d-flex flex-column">
 					<div class="d-flex gap-3">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -90,30 +90,39 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-4 d-flex flex-column gap-3">
-					<input
-						type="email"
-						class="form-control"
-						id="exampleInputEmail1"
-						aria-describedby="emailHelp"
-						placeholder="Enter your name"
-					/>
-					<input
-						type="email"
-						class="form-control"
-						id="exampleInputEmail1"
-						aria-describedby="emailHelp"
-						placeholder="Enter email address"
-					/>
-					<input
-						type="email"
-						class="form-control"
-						id="exampleInputEmail1"
-						aria-describedby="emailHelp"
-						placeholder="Enter your subject"
-					/>
+				<div class="col mt-4 mt-sm-0 d-flex flex-column gap-3">
+					<div class="form-floating">
+						<input
+							type="text"
+							class="form-control"
+							id="floatingInput"
+							name="name"
+							placeholder="Your name"
+						/>
+						<label for="floatingInput">Your name</label>
+					</div>
+					<div class="form-floating">
+						<input
+							type="email"
+							class="form-control"
+							id="floatingInput"
+							name="email"
+							placeholder="name@example.com"
+						/>
+						<label for="floatingInput">Email address</label>
+					</div>
+					<div class="form-floating">
+						<input
+							type="text"
+							class="form-control"
+							id="floatingInput"
+							name="subject"
+							placeholder="Your subject"
+						/>
+						<label for="floatingInput">Your subject</label>
+					</div>
 				</div>
-				<div class="col-4">
+				<div class="col mt-4 mt-sm-0">
 					<textarea
 						class="form-control"
 						id="exampleFormControlTextarea1"
