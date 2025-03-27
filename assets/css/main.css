@@ -5,7 +5,7 @@
     --dark-cl-rgba: rgba(5, 146, 18, 0.6);
     --normal-cl: #06d001;
     --normal-cl-rgba : rgba(6, 208, 1, 0.6);
-    --light-cl: rgba(144, 238, 144, 0.253);
+    --light-cl-rgba: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
 }
 
@@ -40,7 +40,7 @@ a {
 }
 
 #card .card {
-    background-color: var(--light-cl);
+    background-color: var(--light-cl-rgba);
     /* border-radius: 0px; */
     /* border: none; */
 }
@@ -65,7 +65,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--light-cl);
+    background: var(--light-cl-rgba);
     color: var(--dark-cl);
     display: flex;
     flex-direction: column;
@@ -215,6 +215,18 @@ svg {
     color: var(--normal-cl);
 }
 
+#blog {
+    display: flex;
+    gap: 20px;
+    position: relative;
+}
+
+#blog .card {
+    background-color: red;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
 #blog .card::after {
     content: "";
     position: absolute;
@@ -222,14 +234,18 @@ svg {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--super-light-cl);
+    background: var(--light-cl-rgba);
     border: 2px solid transparent;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
-#blog .card:hover::after {
+#blog-content:hover .card::after {
     opacity: 1;
+}
+
+#blog .card:hover::after {
+    opacity: 0;
 }
 
 #blog .card img {
@@ -255,6 +271,7 @@ svg {
     fill: blue;
     color: blue;
 }
+
 
 #menu a {
     color: white;

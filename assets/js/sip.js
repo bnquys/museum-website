@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     lastScrollTop = scrollTop;
                 },
-                { threshold: 0.25 }
+                { threshold: 0.4 }
             );
 
             elements.forEach((el) => observer.observe(el));
