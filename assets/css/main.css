@@ -2,7 +2,9 @@
 
 :root {
     --dark-cl: #059212;
+    --dark-cl-rgba: rgba(5, 146, 18, 0.6);
     --normal-cl: #06d001;
+    --normal-cl-rgba : rgba(6, 208, 1, 0.6);
     --light-cl: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
 }
@@ -143,10 +145,6 @@ svg {
     color: var(--normal-cl) !important;
 }
 
-.nav-item .hover-link:hover a {
-    font-weight: 600;
-}
-
 .bi-facebook:hover {
     fill: #0266ff;
 }
@@ -187,7 +185,7 @@ svg {
 }
 
 #exhibition .card-body:hover img {
-    box-shadow: 0 0 15px rgba(61, 255, 2, 1);
+    box-shadow: 0 0 15px var(--normal-cl);
     transform: scale(95%) translateY(0.5rem);
 }
 
@@ -239,7 +237,7 @@ svg {
 }
 
 #blog .card:hover h5 {
-    color: green;
+    color: var(--normal-cl);
 }
 
 #blog .card:hover img {
@@ -265,7 +263,6 @@ svg {
 
 #menu .nav-item:hover a {
     color: var(--normal-cl);
-    /* font-weight: 600; */
 }
 
 @media (max-width: 1024px) {
@@ -275,11 +272,12 @@ svg {
     }
 
     #menu .nav-item:hover {
-        border-radius: 12px;
-        background-color: rgba(52, 238, 35, 0.699);
+        /* border-radius: 12px; */
+        background-color: var(--normal-cl-rgba);
+        transform: scale(1.3);
     }
 
     #dropdown-menu {
-        background-color: rgba(41, 141, 32, 0.699);
+        background-color: var(--dark-cl-rgba);
     }
 }
