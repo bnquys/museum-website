@@ -1,5 +1,5 @@
 .fs-7 {
-    font-size: 0.85rem !important;
+	font-size: 0.85rem !important;
 }
 
 /* .fw-lightest {
@@ -7,30 +7,34 @@
 } */
 
 .py-6 {
-    padding-top: 4.5rem !important;
-    padding-bottom: 4.5rem !important;
+	padding-top: 4.5rem !important;
+	padding-bottom: 4.5rem !important;
 }
 
 .btn-success {
-    background-color: var(--normal-cl);
-    border: 2px solid var(--normal-cl);
-    transition: all 0.4s ease;
-    padding: 7px 20px;
+	background-color: var(--normal-cl);
+	border: 2px solid var(--normal-cl);
+	transition: all 0.4s ease;
+	padding: 7px 20px;
 }
 
-.text-dark h2{
-    font-weight: 100;
-    color: var(--dark-cl);
+.text-dark h2 {
+	font-weight: 100;
+	color: var(--dark-cl);
 }
 
 .text-normal {
-    color: var(--normal-cl) !important;
+	color: var(--normal-cl) !important;
 }
 
 .mb-6 {
-    margin-bottom: 4rem;
+	margin-bottom: 4rem;
 }
 
 .drop-menu {
-    font-size: 1.2rem !important;
+	font-size: 1.2rem !important;
+}
+
+.top-70 {
+	top: 70% !important;
 }
