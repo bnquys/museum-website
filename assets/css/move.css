@@ -1,112 +1,104 @@
 .mv-rl {
-    opacity: 0;
-    transform: translateX(7rem);
-<<<<<<< HEAD
-    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
-=======
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
->>>>>>> home-page
+	opacity: 0;
+	transform: translateX(7rem);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-rl {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
 }
 
 .mv-lr {
-    opacity: 0;
-    transform: translateX(-7rem);
-<<<<<<< HEAD
-    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
-=======
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
->>>>>>> home-page
+	opacity: 0;
+	transform: translateX(-7rem);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-lr {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
 }
 
 .mv-bt {
-    opacity: 0;
-    transform: translateY(5rem);
-<<<<<<< HEAD
-    transition: opacity 1.75s ease-out, transform 0.65s ease-out;
-=======
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
->>>>>>> home-page
+	opacity: 0;
+	transform: translateY(5rem);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-bt {
-    opacity: 1;
-    transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
-<<<<<<< HEAD
-=======
 
 .mv-tb {
-    opacity: 0;
-    transform: translateY(-5rem);
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
+	opacity: 0;
+	transform: translateY(-5rem);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-tb {
-    opacity: 1;
-    transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .mv-flip {
-    opacity: 0;
-    transform: rotateY(90deg);
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
+	opacity: 0;
+	transform: rotateY(90deg);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-flip {
-    opacity: 1;
-    transform: rotateY(0);
+	opacity: 1;
+	transform: rotateY(0);
 }
 
 .mv-rotate {
-    opacity: 0;
-    transform: rotate(-10deg);
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
+	opacity: 0;
+	transform: rotate(-10deg);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-rotate {
-    opacity: 1;
-    transform: rotate(0);
+	opacity: 1;
+	transform: rotate(0);
 }
 
 .mv-scale {
-    opacity: 0;
-    transform: scale(0.5);
-    transition: opacity 1s ease-out, transform 0.6s ease-out;
+	opacity: 0;
+	transform: scale(0.5);
+	transition: opacity 1s ease-out, transform 0.6s ease-out;
 }
 
 .show-scale {
-    opacity: 1;
-    transform: scale(1);
+	opacity: 1;
+	transform: scale(1);
 }
 
-.show-bt:nth-child(1) { transition-delay: 0.1s; }
-.show-bt:nth-child(2) { transition-delay: 0.2s; }
-.show-bt:nth-child(3) { transition-delay: 0.3s; }
+.show-bt:nth-child(1) {
+	transition-delay: 0.1s;
+}
+.show-bt:nth-child(2) {
+	transition-delay: 0.2s;
+}
+.show-bt:nth-child(3) {
+	transition-delay: 0.3s;
+}
 
 .glowing-text {
-    color: var(--normal-cl);
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
-    animation: glow 3s infinite alternate;
+	color: var(--normal-cl);
+	text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+	animation: glow 3s infinite alternate;
 }
 
 @keyframes glow {
-    from {
-        color: var(--normal-cl);
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
-    }
-    to {
-        color: white;
-        text-shadow: 0 0 15px var(--normal-cl), 0 0 30px var(--normal-cl), 0 0 50px var(--normal-cl);
-    }
+	from {
+		color: var(--normal-cl);
+		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+	}
+	to {
+		color: white;
+		text-shadow: 0 0 15px var(--normal-cl), 0 0 30px var(--normal-cl),
+			0 0 50px var(--normal-cl);
+	}
 }
->>>>>>> home-page
