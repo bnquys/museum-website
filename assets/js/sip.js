@@ -9,3 +9,43 @@ window.addEventListener("scroll", function () {
         header.classList.remove("p-3");
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const animationClasses = [
+        "rl",
+        "lr",
+        "bt",
+        "tb",
+        "flip",
+        "rotate",
+        "scale",
+    ];
+
+    animationClasses.forEach((animation) => {
+        const elements = document.querySelectorAll(`.mv-${animation}`);
+        let lastScrollTop = window.scrollY;
+
+        if (elements.length > 0) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    let scrollTop = window.scrollY;
+
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(`show-${animation}`);
+                        } else {
+                            if (scrollTop < lastScrollTop)
+                                entry.target.classList.remove(
+                                    `show-${animation}`
+                                );
+                        }
+                    });
+                    lastScrollTop = scrollTop;
+                },
+                { threshold: 0.4 }
+            );
+
+            elements.forEach((el) => observer.observe(el));
+        }
+    });
+});

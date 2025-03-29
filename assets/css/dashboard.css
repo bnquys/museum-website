@@ -1,0 +1,10 @@
+aside {
+	height: 100vh;
+	/* background-color: blue; */
+	position: sticky;
+}
+
+#list-group > li {
+	background-color: transparent;
+	border: 0;
+}
