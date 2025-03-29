@@ -11,135 +11,41 @@ window.addEventListener("scroll", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-rl");
+    const animationClasses = [
+        "rl",
+        "lr",
+        "bt",
+        "tb",
+        "flip",
+        "rotate",
+        "scale",
+    ];
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-rl");
-                } else {
-                    entry.target.classList.remove("show-rl"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
+    animationClasses.forEach((animation) => {
+        const elements = document.querySelectorAll(`.mv-${animation}`);
+        let lastScrollTop = window.scrollY;
 
-    hiddenElements.forEach((el) => observer.observe(el));
-});
+        if (elements.length > 0) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    let scrollTop = window.scrollY;
 
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-lr");
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(`show-${animation}`);
+                        } else {
+                            if (scrollTop < lastScrollTop)
+                                entry.target.classList.remove(
+                                    `show-${animation}`
+                                );
+                        }
+                    });
+                    lastScrollTop = scrollTop;
+                },
+                { threshold: 0.4 }
+            );
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-lr");
-                } else {
-                    entry.target.classList.remove("show-lr"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-bt");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-bt");
-                } else {
-                    entry.target.classList.remove("show-bt"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-tb");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-tb");
-                } else {
-                    entry.target.classList.remove("show-tb"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-flip");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-flip");
-                } else {
-                    entry.target.classList.remove("show-flip"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-rotate");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-rotate");
-                } else {
-                    entry.target.classList.remove("show-rotate"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const hiddenElements = document.querySelectorAll(".mv-scale");
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show-scale");
-                } else {
-                    entry.target.classList.remove("show-scale"); // Remove when scrolled out
-                }
-            });
-        },
-        { threshold: 0.2 } // Adjust how much needs to be visible
-    );
-
-    hiddenElements.forEach((el) => observer.observe(el));
+            elements.forEach((el) => observer.observe(el));
+        }
+    });
 });
