@@ -40,20 +40,13 @@
 
 <?php
     include "components/navbar.php";
-    include "components/carousel-slide.php" 
-?>
-<section class="container-fluid py-6">
-    <?php
-        include "components/functions.php";
-        include "components/quotes.php"
-    ?>
-</section>
-<?php
+    include "components/carousel-slide.php";
+	include "components/function-quote.php";
     include "components/ongoing-exhibitions-cards.php";
     include "components/upcoming-events.php";
     include "components/latest-blog.php";
     include "components/gallery.php";
-    include "components/footer.php"
+    include "components/footer.php";
 ?>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 

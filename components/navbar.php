@@ -6,7 +6,7 @@
 							>Visit</a
 						>
 						<a
-							href="./ticket.html"
+							href="./ticket.php"
 							class="d-inline text-light hover-link"
 							>Buy Ticket</a
 						>
@@ -49,7 +49,7 @@
 					<!-- MENU -->
 					<a
 						class="navbar-brand text-light fs-3 fw-bold"
-						href="index.html"
+						href="index.php"
 						><img
 							src="./assets/img/museum.png"
 							alt="Icon"
@@ -96,25 +96,25 @@
 							class="navbar-nav ms-auto mb-2 mb-lg-0 text-end pe-3 pe-lg-0 border-0"
 						>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="index.html">Home</a>
+								<a href="index.php">Home</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="about.html">About</a>
+								<a href="about.php">About</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="#">Gallery</a>
+								<a href="gallery.php">Gallery</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="#">Event</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="ticket.html">Ticket</a>
+								<a href="ticket.php">Ticket</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="blog.html">Blog</a>
+								<a href="blog.php">Blog</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="contact.html">Contact</a>
+								<a href="contact.php">Contact</a>
 							</li>
 						</ul>
 					</div>
