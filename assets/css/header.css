@@ -35,31 +35,30 @@ header a {
 		padding: 6rem !important;
 	}
 
-	section img {
+	#banner-img {
 		margin-top: 5.5rem !important;
 	}
 }
-
 
 /* header .bg-darker::before {
     height: 65%;
 } */
 
 header a {
-    position: relative;
+	position: relative;
 }
 
 header a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: width 0.3s ease-out;
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 0;
+	height: 2px;
+	background: white;
+	transition: width 0.3s ease-out;
 }
 
 header a:hover::after {
-    width: 100%;
+	width: 100%;
 }

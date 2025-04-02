@@ -12,7 +12,7 @@
 					<div class="col-md-3 mv-rotate">
 						<a href="#">
 							<div
-								class="card border-0 rounded-0 card--hover bg-transparent"
+								class="card border-0 rounded-0 bg-transparent"
 							>
 								<img
 									src="https://picsum.photos/330/256?random=1"
@@ -74,7 +74,7 @@
 					<div class="col-md-3 mv-rotate">
 						<a href="#">
 							<div
-								class="card border-0 rounded-0 card--hover bg-transparent"
+								class="card border-0 rounded-0 bg-transparent"
 							>
 								<img
 									src="https://picsum.photos/330/256?random=2"
@@ -136,7 +136,7 @@
 					<div class="col-md-3 mv-rotate">
 						<a href="#">
 							<div
-								class="card border-0 rounded-0 card--hover bg-transparent"
+								class="card border-0 rounded-0 bg-transparent"
 							>
 								<img
 									src="https://picsum.photos/330/256?random=3"
@@ -198,7 +198,7 @@
 					<div class="col-md-3 mv-rotate">
 						<a href="#">
 							<div
-								class="card border-0 rounded-0 card--hover bg-transparent"
+								class="card border-0 rounded-0 bg-transparent"
 							>
 								<img
 									src="https://picsum.photos/330/256?random=4"

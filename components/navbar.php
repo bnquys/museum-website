@@ -105,7 +105,7 @@
 								<a href="gallery.php">Gallery</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
-								<a href="#">Event</a>
+								<a href="event.php">Event</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="ticket.php">Ticket</a>

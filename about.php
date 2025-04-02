@@ -14,7 +14,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	</head>
 	<body>
-		<!-- BANNER -->
 		<?php
             include "components/navbar.php";
 			$name = "About Us";
@@ -34,6 +33,7 @@
 					src="https://picsum.photos/555/650"
 					alt=""
 					class="shadow-lg"
+					id="banner-img"
 				/>
 				<div
 					class="shadow-lg img-responsive mt-5 mt-xl-0"
