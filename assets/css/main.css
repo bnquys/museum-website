@@ -41,6 +41,7 @@ a {
 
 #menu a {
     color: white;
+    transition: color 0.3s ease;
 }
 
 #menu .nav-item:hover a {
@@ -63,6 +64,27 @@ a {
         background-color: var(--dark-cl-rgba);
     }
 }
+#menu li {
+    position: relative;
+    /* transform: none; */
+}
+
+#menu li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease-out;
+}
+
+#menu li:hover::after {
+    width: 100%;
+}
+
+
 
 #card .card {
     background-color: var(--light-cl-rgba);
