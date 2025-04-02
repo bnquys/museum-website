@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event</title>
-    <?php include "components/favicon.php";?>
+    <link rel="icon" type="png" href="/assets/img/museum.png">
 
     <link rel="stylesheet" href="assets/css/bootstrap.css" />
     <link rel="stylesheet" href="assets/css/boots-cus.css" />
