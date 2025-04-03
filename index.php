@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Our Museum</title>
-		<link rel="icon" type="png" href="/assets/img/museum.png">
+		<title>Our Museum </title>
+		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
 
 		<link rel="stylesheet" href="assets/css/carousel-banner.css" />
 		<link rel="stylesheet" href="assets/css/bootstrap.css" />
