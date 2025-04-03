@@ -162,6 +162,7 @@ a {
 }
 
 .text-gray {
+    font-size: 1rem;
     color: #777777;
 }
 
@@ -178,9 +179,27 @@ svg {
     transition: height 0.3s ease;
 }
 
-.bg-green-light {
+section:nth-child(even) {
     background-color: var(--super-light-cl);
 }
+
+section h2[name="title"] {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--normal-cl), yellow);
+    background-clip: text;
+    color: transparent;
+    /* text-transform: uppercase; */
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* .bg-green-light {
+    background-color: var(--super-light-cl);
+} */
 
 .hover-link {
     transition: all 0.3s ease-in-out;
@@ -247,10 +266,8 @@ svg {
     position: relative;
 }
 
-#blog .card {
-    background-color: red;
+#blog .card * {
     transition: all 0.3s ease;
-    position: relative;
 }
 
 #blog .card::after {
@@ -284,6 +301,14 @@ svg {
 
 #blog .card:hover img {
     transform: scale(1.1);
+}
+
+#blog p[name="date"] {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+#blog .card:hover p[name="date"] {
+    background-color: gray;
 }
 
 #blog .card:hover .bi-heart,

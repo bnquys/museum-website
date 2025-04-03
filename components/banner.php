@@ -7,7 +7,7 @@
         class="position-absolute top-50 start-50 translate-middle text-center text-white"
         style="z-index: 10"
     >
-        <h1 class="mv-bt"><?=$name?></h1>
+        <h1 class="mv-bt pulse"><?=$name?></h1>
         <p class="mv-bt">
             <a href="index.html">Home</a> &rarr;
             <a href="about.html"><?=$name?></a>

@@ -75,7 +75,7 @@
     transform: scale(1);
 }
 
-.show-bt:nth-child(1) {
+.show-bt:first-child {
     transition-delay: 0.1s;
 }
 .show-bt:nth-child(2) {
@@ -88,7 +88,7 @@
 .glowing-text {
     color: var(--normal-cl);
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
-    animation: glow 3s infinite alternate;
+    animation: glow 2s infinite alternate;
 }
 
 @keyframes glow {
@@ -100,5 +100,25 @@
         color: white;
         text-shadow: 0 0 15px var(--normal-cl), 0 0 30px var(--normal-cl),
             0 0 50px var(--normal-cl);
+    }
+}
+
+.pulse {
+    /* font-size: 18px; */
+    /* padding: 10px 30px; */
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+    }
+    /* 25% { transform: scale(1.0); } */
+    50% {
+        transform: scale(1.1);
+    }
+    /* 75% { transform: scale(1.0);} */
+    100% {
+        transform: scale(0.9);
     }
 }

@@ -1,6 +1,6 @@
 <section class="container-fluid py-6">
 			<div class="container">
-				<h2 class="text-center mv-bt">Checkout our Upcoming Events</h2>
+				<h2 name="title" class="text-center mv-bt">Checkout our Upcoming Events</h2>
 				<p class="text-center text-gray fw-light mv-bt mb-6">
 					Who are in extremely love with eco friendly system.
 				</p>

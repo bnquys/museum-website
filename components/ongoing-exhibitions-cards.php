@@ -1,6 +1,6 @@
-<section id="exhibition" class="container-fluid py-6 bg-green-light">
+<section id="exhibition" class="container-fluid py-6 ">
 			<div class="container mb-5">
-				<h2 class="text-center mv-bt">
+				<h2 name="title" class="text-center mv-bt">
 					Ongoing Exhibitions from the scratch
 				</h2>
 				<p class="text-center text-gray fw-light mv-bt mb-6">

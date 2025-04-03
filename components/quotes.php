@@ -1,4 +1,4 @@
-<div class="container mb-5">
+<div class="container ">
 				<div class="row">
 					<div
 						class="col-md-6 text-lg-end text-center text-dark mv-rl"

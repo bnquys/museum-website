@@ -1,7 +1,7 @@
-<section id="blog" class="container-fluid py-6 bg-green-light">
+<section id="blog" class="container-fluid py-6 ">
 			<div class="container">
 				<div class="mb-6">
-					<h2 class="text-center mv-bt">Latest From Our Blog</h2>
+					<h2 name="title" class="text-center mv-bt">Latest From Our Blog</h2>
 					<p class="text-center text-gray fw-light mv-bt">
 						Lorem ipsum dolor sit amet, consectetur adipisicing
 						elit, sed do eiusmod tempor incididunt ut labore et
@@ -9,7 +9,7 @@
 					</p>
 				</div>
 				<div id="blog-content" class="row">
-					<div class="col-md-3 mv-rotate">
+					<div class="col-md-3 mv-tb">
 						<a href="#">
 							<div
 								class="card border-0 rounded-0 bg-transparent"
@@ -21,7 +21,8 @@
 								/>
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
-										class="bg-black d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										name="date"
+										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -29,9 +30,7 @@
 										Lorem ipsum dolor sit amet consectetur.
 									</h5>
 									<p class="card-text text-gray fw-light">
-										Some quick example text to build on the
-										card title and make up the bulk of the
-										card's content.
+										Alo Helloo...
 									</p>
 								</div>
 								<div
@@ -71,7 +70,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="col-md-3 mv-rotate">
+					<div class="col-md-3 mv-bt">
 						<a href="#">
 							<div
 								class="card border-0 rounded-0 bg-transparent"
@@ -83,7 +82,8 @@
 								/>
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
-										class="bg-black d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										name="date"
+										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -91,9 +91,7 @@
 										Lorem ipsum dolor sit amet consectetur.
 									</h5>
 									<p class="card-text text-gray fw-light">
-										Some quick example text to build on the
-										card title and make up the bulk of the
-										card's content.
+										Alo Helloo...
 									</p>
 								</div>
 								<div
@@ -133,7 +131,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="col-md-3 mv-rotate">
+					<div class="col-md-3 mv-tb">
 						<a href="#">
 							<div
 								class="card border-0 rounded-0 bg-transparent"
@@ -145,7 +143,8 @@
 								/>
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
-										class="bg-black d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										name="date"
+										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -153,9 +152,7 @@
 										Lorem ipsum dolor sit amet consectetur.
 									</h5>
 									<p class="card-text text-gray fw-light">
-										Some quick example text to build on the
-										card title and make up the bulk of the
-										card's content.
+										Alo Helloo...
 									</p>
 								</div>
 								<div
@@ -195,7 +192,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="col-md-3 mv-rotate">
+					<div class="col-md-3 mv-bt">
 						<a href="#">
 							<div
 								class="card border-0 rounded-0 bg-transparent"
@@ -207,7 +204,8 @@
 								/>
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
-										class="bg-black d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										name="date"
+										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -215,9 +213,7 @@
 										Lorem ipsum dolor sit amet consectetur.
 									</h5>
 									<p class="card-text text-gray fw-light">
-										Some quick example text to build on the
-										card title and make up the bulk of the
-										card's content.
+										Alo Helloo...
 									</p>
 								</div>
 								<div

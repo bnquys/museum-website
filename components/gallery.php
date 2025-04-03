@@ -3,7 +3,7 @@
 			style="background-color: #04091e"
 		>
 			<div class="container pt-1">
-				<h2 class="text-center text-white mv-bt">
+				<h2 name="title" class="text-center text-white mv-bt">
 					Our Exhibition Gallery
 				</h2>
 				<p class="text-center text-gray fw-light mv-bt pb-5">

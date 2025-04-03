@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="assets/css/header.css" />
 		<link rel="stylesheet" href="assets/css/move.css">
         <link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/about.css">
         <!-- Link jQuery for DropDown menu -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	</head>
@@ -22,29 +23,31 @@
             include "components/function-quote.php";
         ?>
 
-		<section class="container mt-5">
+		<section class="container-fluid py-5 mb-5 bg-green-light">
 			<div class="text-center">
-				<h2>Few words about our Museum</h2>
-				<p>Who are in extremely love with eco friendly system.</p>
+				<h2 name="title" class="mv-bt">Few words about our Museum</h2>
+				<p class="text-gray mv-bt">Who are in extremely love with eco friendly system.</p>
 			</div>
 			<div
-				class="d-flex flex-column flex-xl-row justify-content-center mt-5"
+				class="d-flex flex-column flex-xl-row justify-content-center mt-5 mb-5"
 			>
-				<img
-					src="https://picsum.photos/555/650"
-					alt=""
-					class="shadow-lg"
-					id="banner-img"
-				/>
+				<div id="frame" class="mb-5">
+					<img
+						src="https://picsum.photos/1920/1080"
+						alt=""
+						class="shadow-lg mv-rl"
+						id="banner-img"
+					/>
+				</div>
 				<div
-					class="shadow-lg img-responsive mt-5 mt-xl-0"
+					class="shadow-lg img-responsive mt-5 mt-xl-0 mv-lr"
 					style="padding: 6rem"
 				>
 					<h3>
 						We Realize that <br />there are reduced <br />Wastege
 						Stand out
 					</h3>
-					<p class="mt-4">
+					<p class="text-gray mt-4">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit.
 						Suscipit eveniet fugiat quo quas placeat praesentium
 						nisi adipisci perferendis enim qui omnis voluptas quam
