@@ -6,13 +6,13 @@
 		<title>Our Museum</title>
 		<link rel="icon" type="png" href="/assets/img/museum.png">
 
-		<link rel="stylesheet" href="./assets/css/carousel-banner.css" />
-		<link rel="stylesheet" href="./assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="./assets/css/boots-cus.css" />
-		<link rel="stylesheet" href="./assets/css/card-slider.css" />
-		<link rel="stylesheet" href="./assets/css/style.css" />
-		<link rel="stylesheet" href="./assets/css/move.css" />
-		<link rel="stylesheet" href="./assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/carousel-banner.css" />
+		<link rel="stylesheet" href="assets/css/bootstrap.css" />
+		<link rel="stylesheet" href="assets/css/boots-cus.css" />
+		<link rel="stylesheet" href="assets/css/card-slider.css" />
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<link rel="stylesheet" href="assets/css/move.css" />
+		<link rel="stylesheet" href="assets/css/main.css" />
 
 		<!-- Links for Cards slider -->
 		<link

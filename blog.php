@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="assets/css/boots-cus.css" />
         <link rel="stylesheet" href="assets/css/header.css" />
 		<link rel="stylesheet" href="assets/css/blog.css">
+		<link rel="stylesheet" href="assets/css/move.css" />
         <link rel="stylesheet" href="assets/css/main.css">
 
         <!-- Link jQuery for DropDown menu -->

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="assets/css/bootstrap.css" />
         <link rel="stylesheet" href="assets/css/boots-cus.css" />
         <link rel="stylesheet" href="assets/css/header.css" />
+		<link rel="stylesheet" href="assets/css/move.css" />
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/style.css">
 		<title>Ticket</title>
@@ -22,8 +23,8 @@
             include "components/banner.php";
         ?>
 		<section class="container mb-5">
-			<h2 class="text-center">Ongoing Exhibitions from the scratch</h2>
-			<p class="text-center fw-light">
+			<h2 class="text-center mv-bt">Ongoing Exhibitions from the scratch</h2>
+			<p class="text-center text-gray fw-light mv-bt mb-6">
 				Who are in extremely love with eco friendly system.
 			</p>
 			<div class="row row-cols-lg-3 row-cols-1 row-cols-md-2">

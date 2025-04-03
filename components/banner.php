@@ -15,9 +15,9 @@
     </div>
     <div>
         <img
-            src="https://picsum.photos/1500/500"
+            src="assets/img/banner.jpg"
             alt=""
-            class="w-100"
+            class="w-100 mv-flip"
         />
     </div>
 </header>
