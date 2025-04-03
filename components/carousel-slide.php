@@ -15,12 +15,12 @@
 					sed do eiusmod tempor incididunt ut labore et dolore magna
 					aliqua. Ut enim ad minim. sed do eiusmod tempor incididunt..
 				</p>
-				<button
+				<a
 					href="login.html"
 					class="btn btn-success rounded-0 fw-bold text-uppercase"
 				>
 					Get Started
-				</button>
+				</a>
 			</div>
 			<div class="carousel-inner bg-darker">
 				<div class="carousel-item active">
