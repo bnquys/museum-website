@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <link rel="stylesheet" href="assets/css/bootstrap.css" />
-        <link rel="stylesheet" href="assets/css/boots-cus.css" />
-        <link rel="stylesheet" href="assets/css/header.css" />
-		<link rel="stylesheet" href="assets/css/move.css" />
-        <link rel="stylesheet" href="assets/css/main.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-		<title>Ticket</title>
-		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
-
-        <!-- Link jQuery for DropDown menu -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	</head>
-	<body>
         <?php
+			$css = "ticket";
+			include "components/first.php";
             include "components/navbar.php";
             $name = "Ticket";
             include "components/banner.php";

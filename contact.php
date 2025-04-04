@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="assets/css/bootstrap.css" />
-        <link rel="stylesheet" href="assets/css/boots-cus.css" />
-        <link rel="stylesheet" href="assets/css/header.css" />
-		<link rel="stylesheet" href="assets/css/move.css" />
-        <link rel="stylesheet" href="assets/css/main.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-		<title>Contact</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
-        <!-- Link jQuery for DropDown menu -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	</head>
-	<body>
 		<?php
+			$css = "contact";
+			include "components/first.php";
             include "components/navbar.php";
             $name = "Contact";
             include "components/banner.php";
@@ -131,9 +116,5 @@
 
 		<?php 
             include "components/footer.php";
+			include "components/last.php";
         ?>
-        <script src="./assets/js/dropdown-menu.js"></script>
-        <script src="assets/js/bootstrap.bundle.js"></script>
-        <script src="assets/js/sip.js"></script>
-	</body>
-</html>

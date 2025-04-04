@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>About Us</title>
-		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
-
-		<link rel="stylesheet" href="assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/css/boots-cus.css" />
-		<link rel="stylesheet" href="assets/css/move.css">
-        <link rel="stylesheet" href="assets/css/main.css">
-		<link rel="stylesheet" href="assets/css/about.css">
-        <!-- Link jQuery for DropDown menu -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	</head>
-	<body>
 		<?php
+			$css = "about";
+			include "components/first.php";
             include "components/navbar.php";
 			$name = "About Us";
             include "components/banner.php";
