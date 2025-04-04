@@ -13,10 +13,47 @@
     font-family: "Poppins", sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 h1 {
     text-shadow: 2px 2px var(--dark-cl);
-    /* font-size: 2.5rem; */
-    /* font-weight: 900; */
+	font-size: 3rem;
+	font-weight: 100;
+}
+
+header a {
+    position: relative;
+	color: white;
+}
+
+@media screen and (min-width: 1200px) {
+	.img-responsive {
+		margin-left: -3rem !important;
+		width: 555px !important;
+		height: 650px !important;
+		padding: 6rem !important;
+	}
+
+	#banner-img {
+		margin-top: 5.5rem !important;
+	}
+}
+
+header a::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -2px;
+	width: 0;
+	height: 2px;
+	background: white;
+	transition: width 0.3s ease-out;
+}
+
+header a:hover::after {
+	width: 100%;
 }
 
 .header {
@@ -33,10 +70,6 @@ h1 {
             rgba(255, 255, 255, 0.067)
         );
     /* padding: 10px; */
-}
-
-a {
-    text-decoration: none;
 }
 
 #menu a {

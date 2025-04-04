@@ -10,10 +10,9 @@
         <link rel="stylesheet" href="assets/css/bootstrap.css" />
         <link rel="stylesheet" href="assets/css/carousel-banner.css" />
         <link rel="stylesheet" href="assets/css/boots-cus.css" />
-        <link rel="stylesheet" href="assets/css/header.css" />
-		<link rel="stylesheet" href="assets/css/blog.css">
 		<link rel="stylesheet" href="assets/css/move.css" />
         <link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/blog.css">
 
         <!-- Link jQuery for DropDown menu -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
