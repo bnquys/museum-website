@@ -98,7 +98,8 @@
 
 				</div>
 				<p class="text-light text-center mt-3 border-top pt-2">
-					Have an account? <a href="login.php" id="btn-sign-in">Login</a>
+					Have an account? <a href="login.php" id="btn-sign-in">Login</a><br>
+					Or back to <a href="index.php">Home</a>
 				</p>
 			</form>
 		</div>

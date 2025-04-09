@@ -33,7 +33,8 @@
 
 				</div>
 				<p class="text-light text-center mt-3 border-top pt-2">
-					Create an account? <a href="login.php?pg=signup" id="btn-sign-in">Sign Up</a>
+					Create an account? <a href="login.php?pg=signup" id="btn-sign-in">Sign Up</a> <br>
+					Or back to <a href="index.php">Home</a>
 				</p>
 			</form>
 		</div>
