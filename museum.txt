@@ -1,0 +1,276 @@
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     4/9/2025 12:31:24 PM                         */
+/*==============================================================*/
+
+
+alter table ARTIFACTS 
+   drop foreign key FK_ARTIFACT_HAS_EXHIBITI;
+
+alter table Account 
+   drop foreign key FK_ACCOUNT_HAS_USER;
+
+alter table ContactForms 
+   drop foreign key FK_CONTACTF_CONTACT_ACCOUNT;
+
+alter table EVENTS 
+   drop foreign key FK_EVENTS_INCLUDE_EXHIBITI;
+
+alter table GUIDES 
+   drop foreign key FK_GUIDES_HIRE_TICKETS;
+
+alter table GUIDES 
+   drop foreign key FK_GUIDES_ROLE_ACCOUNT;
+
+alter table REVIEWS 
+   drop foreign key FK_REVIEWS_REVIEW_EVENTS;
+
+alter table REVIEWS 
+   drop foreign key FK_REVIEWS_WRITE_ACCOUNT;
+
+alter table TICKETS 
+   drop foreign key FK_TICKETS_BUY_ACCOUNT;
+
+alter table TICKETS 
+   drop foreign key FK_TICKETS_HIRE_GUIDES;
+
+alter table User 
+   drop foreign key FK_USER_HAS_ACCOUNT;
+
+
+alter table ARTIFACTS 
+   drop foreign key FK_ARTIFACT_HAS_EXHIBITI;
+
+drop table if exists ARTIFACTS;
+
+
+alter table Account 
+   drop foreign key FK_ACCOUNT_HAS_USER;
+
+drop table if exists Account;
+
+
+alter table ContactForms 
+   drop foreign key FK_CONTACTF_CONTACT_ACCOUNT;
+
+drop table if exists ContactForms;
+
+
+alter table EVENTS 
+   drop foreign key FK_EVENTS_INCLUDE_EXHIBITI;
+
+drop table if exists EVENTS;
+
+drop table if exists EXHIBITIONS;
+
+
+alter table GUIDES 
+   drop foreign key FK_GUIDES_HIRE_TICKETS;
+
+alter table GUIDES 
+   drop foreign key FK_GUIDES_ROLE_ACCOUNT;
+
+drop table if exists GUIDES;
+
+drop table if exists Navbar;
+
+
+alter table REVIEWS 
+   drop foreign key FK_REVIEWS_WRITE_ACCOUNT;
+
+alter table REVIEWS 
+   drop foreign key FK_REVIEWS_REVIEW_EVENTS;
+
+drop table if exists REVIEWS;
+
+
+alter table TICKETS 
+   drop foreign key FK_TICKETS_BUY_ACCOUNT;
+
+alter table TICKETS 
+   drop foreign key FK_TICKETS_HIRE_GUIDES;
+
+drop table if exists TICKETS;
+
+
+alter table User 
+   drop foreign key FK_USER_HAS_ACCOUNT;
+
+drop table if exists User;
+
+/*==============================================================*/
+/* Table: ARTIFACTS                                             */
+/*==============================================================*/
+create table ARTIFACTS
+(
+   Id                   char(10) not null  comment '',
+   ExhId                char(10) not null  comment '',
+   Title                national varchar(100)  comment '',
+   Description          national varchar(256)  comment '',
+   History              text  comment '',
+   ImageUrl             varchar(256)  comment '',
+   IsShow               bool  comment '',
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: Account                                               */
+/*==============================================================*/
+create table Account
+(
+   Username             varchar(50) not null  comment '',
+   Id                   char(256) not null  comment '',
+   Password             char(64)  comment '',
+   IsActive             bool  comment '',
+   primary key (Username)
+);
+
+/*==============================================================*/
+/* Table: ContactForms                                          */
+/*==============================================================*/
+create table ContactForms
+(
+   Username             varchar(50) not null  comment '',
+   Message              text  comment '',
+   CreatedAt            datetime  comment '',
+   primary key (Username)
+);
+
+/*==============================================================*/
+/* Table: EVENTS                                                */
+/*==============================================================*/
+create table EVENTS
+(
+   Id                   char(10) not null  comment '',
+   ExhId                char(10)  comment '',
+   Title                national varchar(100)  comment '',
+   Description          text  comment '',
+   TimeStart            datetime  comment '',
+   TimeEnd              datetime  comment '',
+   Location             national varchar(256)  comment '',
+   Type                 national varchar(50)  comment '',
+   IsShow               char(256)  comment '',
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: EXHIBITIONS                                           */
+/*==============================================================*/
+create table EXHIBITIONS
+(
+   Id                   char(10) not null  comment '',
+   Title                national varchar(100)  comment '',
+   Description          text  comment '',
+   StartDate            datetime  comment '',
+   EndDate              datetime  comment '',
+   Location             national varchar(256)  comment '',
+   ImageUrl             varchar(256)  comment '',
+   IsShow               bool  comment '',
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: GUIDES                                                */
+/*==============================================================*/
+create table GUIDES
+(
+   Username             varchar(50) not null  comment '',
+   ID                   char(256) not null  comment '',
+   TicId                char(10) not null  comment '',
+   UseId                char(256)  comment '',
+   Password             char(64)  comment '',
+   IsActive             bool  comment '',
+   EXPERTISE            char(256)  comment '',
+   SCHEDULE             char(256)  comment '',
+   primary key (Username, ID)
+);
+
+/*==============================================================*/
+/* Table: Navbar                                                */
+/*==============================================================*/
+create table Navbar
+(
+   Name                 national varchar(100) not null  comment '',
+   Href                 varchar(256)  comment '',
+   IsShow               bool  comment '',
+   primary key (Name)
+);
+
+/*==============================================================*/
+/* Table: REVIEWS                                               */
+/*==============================================================*/
+create table REVIEWS
+(
+   Id                   char(10) not null  comment '',
+   EveId                char(10) not null  comment '',
+   Username             varchar(50) not null  comment '',
+   Rating               real  comment '',
+   Comment              text  comment '',
+   CreatedAt            datetime  comment '',
+   IsShow               bool  comment '',
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: TICKETS                                               */
+/*==============================================================*/
+create table TICKETS
+(
+   ID                   char(10) not null  comment '',
+   Username             varchar(50) not null  comment '',
+   GuiUsername          varchar(50)  comment '',
+   GuiId                char(256)  comment '',
+   VisitDate            datetime  comment '',
+   STATUS               national varchar(50)  comment '',
+   PaymentSatus         national varchar(50)  comment '',
+   Language             varchar(50)  comment '',
+   primary key (ID)
+);
+
+/*==============================================================*/
+/* Table: User                                                  */
+/*==============================================================*/
+create table User
+(
+   Id                   char(256) not null  comment '',
+   Username             varchar(50)  comment '',
+   Name                 char(256)  comment '',
+   Role                 national varchar(50)  comment '',
+   Email                varchar(50)  comment '',
+   PhoneNumber          varchar(20)  comment '',
+   primary key (Id)
+);
+
+alter table ARTIFACTS add constraint FK_ARTIFACT_HAS_EXHIBITI foreign key (ExhId)
+      references EXHIBITIONS (Id) on delete restrict on update restrict;
+
+alter table Account add constraint FK_ACCOUNT_HAS_USER foreign key (Id)
+      references User (Id) on delete restrict on update restrict;
+
+alter table ContactForms add constraint FK_CONTACTF_CONTACT_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
+alter table EVENTS add constraint FK_EVENTS_INCLUDE_EXHIBITI foreign key (ExhId)
+      references EXHIBITIONS (Id) on delete restrict on update restrict;
+
+alter table GUIDES add constraint FK_GUIDES_HIRE_TICKETS foreign key (TicId)
+      references TICKETS (ID) on delete restrict on update restrict;
+
+alter table GUIDES add constraint FK_GUIDES_ROLE_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
+alter table REVIEWS add constraint FK_REVIEWS_REVIEW_EVENTS foreign key (EveId)
+      references EVENTS (Id) on delete restrict on update restrict;
+
+alter table REVIEWS add constraint FK_REVIEWS_WRITE_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
+alter table TICKETS add constraint FK_TICKETS_BUY_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
+alter table TICKETS add constraint FK_TICKETS_HIRE_GUIDES foreign key (GuiUsername, GuiId)
+      references GUIDES (Username, ID) on delete restrict on update restrict;
+
+alter table User add constraint FK_USER_HAS_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
