@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/css/login.css" />
-		<title>Sign up</title>
-		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<div class="position-relative">
+<div class="position-relative">
 			<img class="bg-img" src="assets/img/bg.jpg" alt="" />
 			<form
 				action=""
@@ -110,23 +98,7 @@
 
 				</div>
 				<p class="text-light text-center mt-3 border-top pt-2">
-					Have an account? <a href="#" id="btn-sign-in">Sign in</a>
+					Have an account? <a href="login.php" id="btn-sign-in">Login</a>
 				</p>
 			</form>
 		</div>
-		<script src="assets/js/bootstrap.bundle.js"></script>
-		<script>
-			$(document).ready(function () {
-				$("#show-next-steps").click(function () {
-					$("#next-step").removeClass("d-none");
-					$("#first-step").addClass("d-none");
-				});
-				
-				$("#btn-back").click(function(){
-					$("#next-step").addClass("d-none");
-					$("#first-step").removeClass("d-none");
-				});
-			});
-		</script>
-	</body>
-</html>

@@ -16,7 +16,7 @@
 					aliqua. Ut enim ad minim. sed do eiusmod tempor incididunt..
 				</p>
 				<a
-					href="login.html"
+					href="login.php"
 					class="btn btn-success rounded-0 fw-bold text-uppercase"
 				>
 					Get Started
