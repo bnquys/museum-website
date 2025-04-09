@@ -2,7 +2,7 @@
 			id="carouselExample"
 			class="carousel slide carousel-fade"
 			data-bs-ride="carousel"
-			data-bs-interval="1000"
+			data-bs-interval="3000"
 		>
 			<div
 				class="position-absolute top-50 start-50 translate-middle text-center text-white"

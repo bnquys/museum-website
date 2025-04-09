@@ -1,6 +1,7 @@
 <section
 			class="container-fluid border-0 py-6"
-			style="background-color: #04091e"
+			style="background-color: rgb(5, 30, 4)"
+			<!-- style="background-color: #04091e" -->
 		>
 			<div class="container pt-1">
 				<h2 name="title" class="text-center text-white mv-bt">

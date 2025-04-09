@@ -8,13 +8,13 @@
 
         <section class="container d-flex flex-column flex-lg-row gap-5">
             <div id="post" class="d-flex flex-column gap-4">
-                <div class="card border-0">
+                <div class="border-0 row">
                     <img
-                        src="https://picsum.photos/500/300?random=1"
-                        class="card-img-top"
+                        src="https://picsum.photos/1000?random=1"
+                        class="col-4"
                         alt="..."
                     />
-                    <div class="card-body">
+                    <div class="col-8">
                         <p>
                             <a href="#">Art</a>, <a href="#">Technology</a>,
                             <a href="#">Fashion</a>
@@ -29,11 +29,13 @@
                             MCSE boot camps have its supporters and its
                             detractors. Some people do not understand why you
                             should have to spend money on boot camp when you can
-                            get the MCSE study materials yourself at a fraction
-                            of the camp price. However, who has the willpower to
-                            actually sit through a self-imposed MCSE training.
-                            who has the willpower to actually sit through a
-                            self-imposed MCSE training.
+                            get the MCSE study.mps have its supporters and its
+                            detractors. Some people do not understand why you
+                            should have to spend money on boot camp when you can
+                            get the MCSE study.mps have its supporters and its
+                            detractors. Some people do not understand why you
+                            should have to spend money on boot camp when you can
+                            get the MCSE study.
                         </p>
                         <div class="d-flex gap-3">
                             <p>
@@ -72,7 +74,7 @@
                 </div>
                 <div class="card border-0">
                     <img
-                        src="https://picsum.photos/500/300?random=2"
+                        src="https://picsum.photos/2000/1200?random=2"
                         class="card-img-top"
                         alt="..."
                     />
