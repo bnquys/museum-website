@@ -22,7 +22,7 @@
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
 										name="date"
-										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										class="d-inline p-1 text-white fw-light pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -83,7 +83,7 @@
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
 										name="date"
-										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										class="d-inline p-1 text-white fw-light pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -144,7 +144,7 @@
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
 										name="date"
-										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										class="d-inline p-1 text-white fw-light pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
@@ -205,7 +205,7 @@
 								<div class="card-body pb-0 px-0 rounded-0">
 									<p
 										name="date"
-										class="d-inline p-1 text-white fw-light fs-7 pe-2 ps-2"
+										class="d-inline p-1 text-white fw-light pe-2 ps-2"
 									>
 										06 Mar 2025
 									</p>
