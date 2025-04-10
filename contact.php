@@ -1,8 +1,8 @@
 		<?php
 			$css = "contact";
+			$title = $name = "Contact";
 			include "components/first.php";
             include "components/navbar.php";
-            $name = "Contact";
             include "components/banner.php";
         ?>
 		<section class="container">

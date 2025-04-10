@@ -1,12 +1,16 @@
+<?php
+	$title = "Login";
+	include "first.php";
+?>
+
 <div class="position-relative">
-			<img class="bg-img" src="assets/img/bg.jpg" alt="" />
+			<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 			<form
 				action=""
 				class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
 				id="form"
 			>
 				<h1 class="text-center text-light fw-bold">Login</h1>
-
 				<div id="next-step">
 					<label for="username" class="form-label text-light"
 						>Username</label
@@ -29,7 +33,9 @@
 						name="password"
 					/>
 
-					<input type="submit" class="btn btn-primary my-3"></input>
+					<div class="d-flex justify-content-center">
+						<input type="submit" class="btn btn-success my-3"></input>
+					</div>
 
 				</div>
 				<p class="text-light text-center mt-3 border-top pt-2">

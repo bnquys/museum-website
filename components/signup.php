@@ -1,5 +1,10 @@
+<?php
+	$title = "Sign Up";
+	include "first.php";
+?>
+
 <div class="position-relative">
-			<img class="bg-img" src="assets/img/bg.jpg" alt="" />
+			<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 			<form
 				action=""
 				class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
@@ -14,7 +19,8 @@
 						type="text"
 						name="name"
 						id="name"
-						class="form-control mb-3"
+						class="form-control"
+						placeholder="Mc Donal"
 					/>
 
 					<label for="birth-year" class="form-label text-light"
@@ -24,7 +30,7 @@
 						type="number"
 						name="birthYear"
 						id="birth-year"
-						class="form-control mb-3"
+						class="form-control"
 						min="1900"
 					/>
 
@@ -35,7 +41,7 @@
 						type="tel"
 						name="phoneNumber"
 						id="phone-number"
-						class="form-control mb-3"
+						class="form-control"
 					/>
 
 					<label for="email" class="form-label text-light"
@@ -45,16 +51,18 @@
 						type="email"
 						name="email"
 						id="email"
-						class="form-control mb-3"
+						class="form-control"
 					/>
 
-					<button
-						id="show-next-steps"
-						type="button"
-						class="btn btn-primary"
-					>
-						Next steps
-					</button>
+					<div class="d-flex justify-content-center">
+						<button
+							id="show-next-steps"
+							type="button"
+							class="btn btn-success my-3"
+						>
+							Next steps
+						</button>
+					</div>
 				</div>
 
 				<div id="next-step" class="d-none">
@@ -79,7 +87,7 @@
 						name="password"
 					/>
 					<div id="passwordHelpBlock" class="form-text text-danger">
-						Must be 8-20 characters long.
+						Must be 8-20 characters long nha:>.
 					</div>
 
 					<label for="comfirm-pass" class="form-label text-light"
@@ -93,8 +101,10 @@
 						aria-describedby="passwordHelpBlock"
 					/>
 
-					<button id ="btn-back" class="btn btn-primary my-3">Back</button>
-					<input type="submit" class="btn btn-primary my-3"></input>
+					<div class="d-flex justify-content-around">
+						<a id ="btn-back" href="login.php?pg=signup" class="btn btn-success my-3">Back</a>
+						<input type="submit" class="btn btn-success my-3"></input>
+					</div>
 
 				</div>
 				<p class="text-light text-center mt-3 border-top pt-2">

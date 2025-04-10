@@ -1,6 +1,5 @@
 <?php
-	$css = "login";
-	include "components/first.php";
+	$css = "portal";
 
 	if (isset($_GET["pg"])) {
 		$page = $_GET["pg"];
