@@ -93,7 +93,7 @@
 						aria-describedby="passwordHelpBlock"
 					/>
 
-					<button id ="btn-back" class="btn btn-primary my-3">Back</button>
+					<a id ="btn-back" href="login.php?pg=signup" class="btn btn-primary my-3">Back</a>
 					<input type="submit" class="btn btn-primary my-3"></input>
 
 				</div>
