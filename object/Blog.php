@@ -12,11 +12,42 @@
         private const DATABASE = "museumDB";
 
 
-        public function __construct($title, $summary, $content, $imgUrl) {
+        public function __construct($id, $title, $summary, $content, $imgUrl) {
+            $this->id = $id;
             $this->title = $title;
             $this->summary = $summary;
             $this->content = $content;
             $this->imgUrl = $imgUrl;
+        }
+
+        public function showTag() {
+            $conn = new mysqli(self::SERVER, self::USERNAME, self::PASSWORD, self::DATABASE);
+
+            if ($conn->connect_error) {
+                die("Connection failed ". $conn->connect_error);
+            }
+            $stmt = $conn->prepare("SELECT tags.name AS tag_name FROM blog_tags JOIN tags ON tags.id = blog_tags.tag_id WHERE blog_tags.blog_id = ?");
+            $id = (string) $this->id;
+            $stmt->bind_param("s", $id);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $isFirst = true;
+            $tags = "";
+
+            while($row = $result->fetch_assoc()) {
+                if ($isFirst) {
+                    $tags .= '<a href="#">'. $row["tag_name"]  .'</a>';
+                    $isFirst = false;
+                } else {
+                    $tags .= ', <a href="#">'. $row["tag_name"]  .'</a>';
+                }
+            }
+
+            $stmt->close();
+            $conn->close();
+            return $tags;
         }
 
         public static function show($limit) {
@@ -26,7 +57,7 @@
                 die("Connection failed ". $conn->connect_error);
             }
 
-            $stmt = $conn->prepare("SELECT id, title, summary, content, imgUrl FROM blog ORDER BY id LIMIT ?");
+            $stmt = $conn->prepare("SELECT id, title, summary, content, imgUrl FROM blogs ORDER BY id DESC LIMIT ?");
 
             $stmt->bind_param("i", $limit);
 
@@ -34,11 +65,10 @@
 
             $result = $stmt->get_result();
             while ($row = $result->fetch_assoc()) {
-                $id = $row['id'];
-                $blog = new Blog($row['title'], $row['summary'], $row['content'], $row['imgUrl']);
+                $blog = new Blog($row['id'], $row['title'], $row['summary'], $row['content'], $row['imgUrl']);
 
                 echo 
-                    '<div id="'.$id.'" class="border-0 row">
+                    '<div id="'.$blog->id.'" class="border-0 row">
                         <div class="col-md-4">
                             <div class="thumbnail-container">
                                 <img
@@ -50,11 +80,10 @@
                         </div>
                         <div class="col-md-8 content">
                             <p>
-                                <a href="#">Art</a>, <a href="#">Technology</a>,
-                                <a href="#">Fashion</a>
+                                '.$blog->showTag().'
                             </p>
                             <h2>
-                                <a href="#">'.$blog->title.'</a>
+                                <a href="blog.php?blogId='. $blog->id .'">'.$blog->title.'</a>
                             </h2>
                             <p class="card-text">'.$blog->summary.'</p>
                             <div class="d-flex gap-3">
@@ -96,6 +125,16 @@
 
             $stmt->close();
             $conn->close();
+        }
+
+        public static function show_latest_blog($limit) {
+            $conn = new mysqli(self::SERVER, self::USERNAME, self::PASSWORD, self::DATABASE);
+
+            if ($conn->connect_error) {
+                die("Connection failed: ". $conn->connect_error);
+            }
+
+            
         }
     }
 ?>
