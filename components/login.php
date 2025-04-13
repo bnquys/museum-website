@@ -1,14 +1,8 @@
 <?php
-	use Museum\Object\Account;
+	require_once "../object/Account.php";
+
 	$title = "Login";
 	include "first.php";
-
-	function format_input($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
 
 	$username = $password = "";
 	$formSubmitted = false;

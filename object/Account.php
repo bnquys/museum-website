@@ -1,7 +1,5 @@
 <?php
-    namespace Museum\Object;
-
-    use Museum\Database;
+    require_once "Database.php";
 
     class Account {
 
@@ -11,6 +9,18 @@
         public function __construct($username, $password) {
             $this->username = $username;
             $this->password = $password;
+        }
+
+        public static function add(Account $account) {
+            $conn = Database::Connect();
+
+            $stmt = $conn->prepare("INSERT INTO Account VALUE (?, ?, ?)");
+            $activateCode = self::generateRandomNumbers(10);
+            $stmt->bind_param("sss", $account->username, $account->password, $activateCode);
+            $stmt->execute();
+
+            $stmt->close();
+            $conn->close();
         }
 
         public function exists() {
@@ -53,6 +63,14 @@
             $stmt->close();
             $conn->close();
             return false;
+        }
+
+        private static function generateRandomNumbers($length) {
+            $randomNumbers = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomNumbers .= rand(0, 9); 
+            }
+            return $randomNumbers;
         }
     }
 ?>
