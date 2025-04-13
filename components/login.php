@@ -1,5 +1,7 @@
 <?php
 	require_once 'object/Account.php';  
+	$title = "Login";
+	include "first.php";
 
 	function format_input($data) {
 		$data = trim($data);
@@ -37,7 +39,7 @@
 ?>
 
 <div class="position-relative">
-	<img class="bg-img" src="assets/img/bg.jpg" alt="" />
+	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 	<form
 		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
 		method = "post"
@@ -45,7 +47,6 @@
 		id="form"
 	>
 		<h1 class="text-center text-light fw-bold">Login</h1>
-
 		<div>
 			<div>
 				<label for="username" class="form-label text-light">Username</label>
@@ -66,7 +67,7 @@
 			</div>
 			
 
-			<input type="submit" class="btn btn-primary my-3"></input>
+			<input type="submit" class="btn btn-primary my-3" value="Submit"></input>
 			<p class="text-light text-center">Forgot your account? <a href="#">Click here</a></p>
 
 		</div>

@@ -1,8 +1,8 @@
     <?php
         $css = "event";
+        $title = $name = "Event";
         include "components/first.php";
         include "components/navbar.php";
-        $name = "Event";
         include "components/banner.php";
         include "components/upcoming-events.php";
         include "components/latest-blog.php";

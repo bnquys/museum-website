@@ -1,8 +1,8 @@
         <?php
 			$css = "blog";
+            $title = $name = "Blog";
 			include "components/first.php";
             include "components/navbar.php";
-            $name = "Blog";
             include "components/banner.php";
         ?>
 

@@ -1,4 +1,5 @@
 <?php
+    $title = "Our Museum";
 	include "components/first.php";
     include "components/navbar.php";
     include "components/carousel-slide.php";

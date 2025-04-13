@@ -1,8 +1,8 @@
         <?php
 			$css = "ticket";
+            $title = $name = "Ticket";
 			include "components/first.php";
             include "components/navbar.php";
-            $name = "Ticket";
             include "components/banner.php";
         ?>
 		<section class="container mb-5">

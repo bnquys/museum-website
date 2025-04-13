@@ -1,8 +1,8 @@
 		<?php
 			$css = "about";
+			$title = $name = "About Us";
 			include "components/first.php";
             include "components/navbar.php";
-			$name = "About Us";
             include "components/banner.php";
             include "components/function-quote.php";
         ?>
