@@ -1,6 +1,7 @@
 <?php
-    require_once("Constant.php");
-
+    namespace Museum\Object;
+    use Museum\Database;
+    
     class Blog {
         public $id;
         public $title;
@@ -8,16 +9,6 @@
         public $summary;
         public $content;
         public $uploadDate;
-
-        private static function connectDatabase() {
-            $conn = new mysqli(SERVER, USERNAME, PASSWORD, DATABASE);
-            
-            if ($conn->connect_error) {
-                die("Connection failed ". $conn->connect_error);
-            }
-
-            return $conn;
-        }
 
         public function __construct($id, $title, $summary, $content, $imgUrl, $uploadDate) {
             $this->id = $id;
@@ -29,7 +20,7 @@
         }
 
         public static function getListBlog($limit) {
-            $conn = self::connectDatabase();
+            $conn = Database::Connect();
 
             $stmt = $conn->prepare("SELECT id, title, summary, content, image_url, upload_date FROM Blog LIMIT ?");
             if (!$stmt) {
@@ -59,7 +50,7 @@
         }
 
         public static function delete($id) {
-            $conn = self::connectDatabase();
+            $conn = Database::Connect();
 
             $stmt = $conn->prepare("DELETE FROM Blog WHERE id = ?");
             $id = (string) $id;
