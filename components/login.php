@@ -1,8 +1,11 @@
 <?php
-	require_once "../object/Account.php";
-
 	$title = "Login";
 	include "first.php";
+
+
+	require_once "vendor/autoload.php";
+	use Museum\Object\Account;
+
 
 	$username = $password = "";
 	$formSubmitted = false;
@@ -18,16 +21,17 @@
 
 
 	if ($formSubmitted) {
+		echo "hehe";
 		$account = new Account($username, $password);
-		if(!$account->verifyUsername()) {
-			$usernameIncorrect = true;
-		}
+		// if(!$account->verifyUsername()) {
+		// 	$usernameIncorrect = true;
+		// }
 
-		if ($account->exists()) {
-			header('location:' . "dashboard.html");
-		} else {
-			$passwordIncorrect = true;
-		}
+		// if ($account->exists()) {
+		// 	header('location:' . "dashboard.html");
+		// } else {
+		// 	$passwordIncorrect = true;
+		// }
 	}
 
 ?>

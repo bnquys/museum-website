@@ -1,6 +1,6 @@
 <?php
     namespace Museum\Object;
-    use Museum\Database;
+    // use Museum\Object\Database;
     
     class Blog {
         public $id;
