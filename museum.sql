@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     4/14/2025 8:41:08 PM                         */
+/* Created on:     4/14/2025 9:35:55 PM                         */
 /*==============================================================*/
 
 
@@ -181,9 +181,19 @@ create table Navbar
 );
 
 /*==============================================================*/
-/* Table: "Order"                                               */
+/* Table: OrderTicket                                           */
 /*==============================================================*/
-create table "Order"
+create table OrderTicket
+(
+   OrdId                varchar(20) not null,
+   Id                   varchar(20) not null,
+   primary key (OrdId, Id)
+);
+
+/*==============================================================*/
+/* Table: Orders                                                */
+/*==============================================================*/
+create table Orders
 (
    Id                   varchar(20) not null,
    VouId                varchar(20),
@@ -191,16 +201,6 @@ create table "Order"
    Username             varchar(50),
    CreatedDate          datetime,
    primary key (Id)
-);
-
-/*==============================================================*/
-/* Table: OrderTicket                                           */
-/*==============================================================*/
-create table OrderTicket
-(
-   Id                   varchar(20) not null,
-   TicId                varchar(20) not null,
-   primary key (Id, TicId)
 );
 
 /*==============================================================*/
@@ -348,26 +348,26 @@ alter table Guides add constraint FK_GUIDES_HIRE_TICKET foreign key (Id)
 alter table Guides add constraint FK_GUIDES_INHERITAN_CLIENT foreign key (Email)
       references Client (Email) on delete restrict on update restrict;
 
-alter table "Order" add constraint FK_ORDER_APPLY_VOUCHER foreign key (VouId)
+alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_ORDERS foreign key (OrdId)
+      references Orders (Id) on delete restrict on update restrict;
+
+alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_TICKET foreign key (Id)
+      references Ticket (Id) on delete restrict on update restrict;
+
+alter table Orders add constraint FK_ORDERS_APPLY_VOUCHER foreign key (VouId)
       references Voucher (Id) on delete restrict on update restrict;
 
-alter table "Order" add constraint FK_ORDER_MAKE_ACCOUNT foreign key (Username)
+alter table Orders add constraint FK_ORDERS_MAKE_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
 
-alter table "Order" add constraint FK_ORDER_PAY_PAYMENT foreign key (PayId)
+alter table Orders add constraint FK_ORDERS_PAY_PAYMENT foreign key (PayId)
       references Payment (Id) on delete restrict on update restrict;
-
-alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_ORDER foreign key (Id)
-      references "Order" (Id) on delete restrict on update restrict;
-
-alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_TICKET foreign key (TicId)
-      references Ticket (Id) on delete restrict on update restrict;
 
 alter table Payment add constraint FK_PAYMENT_METHOD_PAYMENTM foreign key (PayId)
       references PaymentMethod (Id) on delete restrict on update restrict;
 
-alter table Payment add constraint FK_PAYMENT_PAY_ORDER foreign key (OrdId)
-      references "Order" (Id) on delete restrict on update restrict;
+alter table Payment add constraint FK_PAYMENT_PAY_ORDERS foreign key (OrdId)
+      references Orders (Id) on delete restrict on update restrict;
 
 alter table Reviews add constraint FK_REVIEWS_REVIEW_EVENTS foreign key (EveId)
       references Events (Id) on delete restrict on update restrict;
