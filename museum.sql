@@ -1,6 +1,6 @@
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     4/12/2025 9:22:42 PM                         */
+/* DBMS name:      MySQL5.0Custom                               */
+/* Created on:     4/14/2025 8:41:08 PM                         */
 /*==============================================================*/
 
 
@@ -9,9 +9,9 @@
 /*==============================================================*/
 create table Academy
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    Price                float default 0,
-   Speaker              national varchar(100),
+   Speaker              varchar(100),
    primary key (Id)
 );
 
@@ -21,9 +21,9 @@ create table Academy
 create table Account
 (
    Username             varchar(50) not null,
-   Id                   char(256) not null,
-   Password             char(64),
-   IsActive             bool,
+   Email                varchar(50) not null,
+   Password             varchar(100),
+   IsActive             boolean,
    CodeActivate         varchar(10),
    primary key (Username)
 );
@@ -33,12 +33,12 @@ create table Account
 /*==============================================================*/
 create table Artifact
 (
-   Id                   char(10) not null,
-   Title                national varchar(100),
-   Description          national varchar(256),
+   Id                   varchar(20) not null,
+   Title                varchar(100),
+   Description          varchar(256),
    History              text,
    ImageUrl             varchar(256),
-   IsShow               bool default 1,
+   IsShow               boolean default 1,
    primary key (Id)
 );
 
@@ -47,14 +47,14 @@ create table Artifact
 /*==============================================================*/
 create table Blog
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    Username             varchar(50) not null,
-   Title                national varchar(256),
+   Title                varchar(256),
    Date                 datetime,
    Summary              text,
    Content              text,
    ImageUrl             varchar(256),
-   IsShow               bool,
+   IsShow               boolean,
    primary key (Id)
 );
 
@@ -63,9 +63,21 @@ create table Blog
 /*==============================================================*/
 create table BlogTag
 (
-   Id                   char(10) not null,
-   BloId                char(10) not null,
+   Id                   varchar(20) not null,
+   BloId                varchar(20) not null,
    primary key (Id, BloId)
+);
+
+/*==============================================================*/
+/* Table: Client                                                */
+/*==============================================================*/
+create table Client
+(
+   Email                varchar(50) not null,
+   Username             varchar(50),
+   Name                 varchar(50),
+   PhoneNumber          varchar(20),
+   primary key (Email)
 );
 
 /*==============================================================*/
@@ -84,7 +96,7 @@ create table ContactForms
 /*==============================================================*/
 create table EventStatus
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    Status               varchar(50),
    primary key (Id)
 );
@@ -94,9 +106,9 @@ create table EventStatus
 /*==============================================================*/
 create table EventType
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    Name                 varchar(50),
-   IsShow               bool,
+   IsShow               boolean,
    primary key (Id)
 );
 
@@ -105,14 +117,14 @@ create table EventType
 /*==============================================================*/
 create table Events
 (
-   Id                   char(10) not null,
-   EveId                char(10),
-   EveId2               char(10),
-   Title                national varchar(100),
+   Id                   varchar(20) not null,
+   EveId                varchar(20),
+   EveId2               varchar(20),
+   Title                varchar(256),
    Description          text,
    TimeStart            datetime,
    TimeEnd              datetime,
-   Location             national varchar(256),
+   Location             varchar(256),
    primary key (Id)
 );
 
@@ -121,8 +133,8 @@ create table Events
 /*==============================================================*/
 create table ExhibitionArtifact
 (
-   Id                   char(10) not null,
-   ExhId                char(10) not null,
+   Id                   varchar(20) not null,
+   ExhId                varchar(20) not null,
    primary key (Id, ExhId)
 );
 
@@ -131,7 +143,7 @@ create table ExhibitionArtifact
 /*==============================================================*/
 create table Exhibitions
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    primary key (Id)
 );
 
@@ -140,11 +152,11 @@ create table Exhibitions
 /*==============================================================*/
 create table Guides
 (
-   UseId                char(256) not null,
-   Id                   char(10) not null,
-   Expertise            char(256),
+   Email                varchar(50) not null,
+   Id                   varchar(20) not null,
+   Expertise            text,
    Introduction         text,
-   primary key (UseId)
+   primary key (Email)
 );
 
 /*==============================================================*/
@@ -153,7 +165,7 @@ create table Guides
 create table Language
 (
    Id                   varchar(20) not null,
-   Name                 national varchar(50),
+   Name                 varchar(50),
    primary key (Id)
 );
 
@@ -162,9 +174,9 @@ create table Language
 /*==============================================================*/
 create table Navbar
 (
-   Name                 national varchar(100) not null,
+   Name                 varchar(100) not null,
    Href                 varchar(256),
-   IsShow               bool,
+   IsShow               boolean,
    primary key (Name)
 );
 
@@ -173,11 +185,11 @@ create table Navbar
 /*==============================================================*/
 create table "Order"
 (
-   Id                   char(10) not null,
-   VouId                char(10),
-   PayId                char(10),
+   Id                   varchar(20) not null,
+   VouId                varchar(20),
+   PayId                varchar(20),
    Username             varchar(50),
-   CreatedDate          char(256),
+   CreatedDate          datetime,
    primary key (Id)
 );
 
@@ -186,9 +198,9 @@ create table "Order"
 /*==============================================================*/
 create table OrderTicket
 (
-   OrdId                char(10) not null,
-   Id                   char(10) not null,
-   primary key (OrdId, Id)
+   Id                   varchar(20) not null,
+   TicId                varchar(20) not null,
+   primary key (Id, TicId)
 );
 
 /*==============================================================*/
@@ -196,9 +208,9 @@ create table OrderTicket
 /*==============================================================*/
 create table Payment
 (
-   Id                   char(10) not null,
-   OrdId                char(10) not null,
-   PayId                char(10),
+   Id                   varchar(20) not null,
+   OrdId                varchar(20) not null,
+   PayId                varchar(20),
    TotalCost            float,
    primary key (Id)
 );
@@ -208,8 +220,8 @@ create table Payment
 /*==============================================================*/
 create table PaymentMethod
 (
-   Id                   char(10) not null,
-   Method               national varchar(50),
+   Id                   varchar(20) not null,
+   Method               varchar(50),
    primary key (Id)
 );
 
@@ -218,13 +230,13 @@ create table PaymentMethod
 /*==============================================================*/
 create table Reviews
 (
-   Id                   char(10) not null,
-   EveId                char(10) not null,
+   Id                   varchar(20) not null,
+   EveId                varchar(20) not null,
    Username             varchar(50) not null,
-   Rating               real,
+   Rating               float,
    Comment              text,
    CreatedAt            datetime,
-   IsShow               bool,
+   IsShow               boolean,
    primary key (Id)
 );
 
@@ -233,9 +245,9 @@ create table Reviews
 /*==============================================================*/
 create table Role
 (
-   Id                   char(10) not null,
-   UseId                char(256) not null,
-   Name                 national varchar(50),
+   Id                   varchar(20) not null,
+   Email                varchar(50) not null,
+   Name                 varchar(50),
    primary key (Id)
 );
 
@@ -244,9 +256,9 @@ create table Role
 /*==============================================================*/
 create table Speak
 (
-   UseId                char(256) not null,
+   Email                varchar(50) not null,
    Id                   varchar(20) not null,
-   primary key (UseId, Id)
+   primary key (Email, Id)
 );
 
 /*==============================================================*/
@@ -254,9 +266,9 @@ create table Speak
 /*==============================================================*/
 create table Tag
 (
-   Id                   char(10) not null,
-   Name                 national varchar(50),
-   IsShow               bool,
+   Id                   varchar(20) not null,
+   Name                 varchar(50),
+   IsShow               boolean,
    primary key (Id)
 );
 
@@ -265,9 +277,9 @@ create table Tag
 /*==============================================================*/
 create table Ticket
 (
-   Id                   char(10) not null,
-   TicId                char(10),
-   UseId                char(256),
+   Id                   varchar(20) not null,
+   TicId                varchar(20),
+   Email                varchar(50),
    VisitDate            datetime,
    primary key (Id)
 );
@@ -277,21 +289,8 @@ create table Ticket
 /*==============================================================*/
 create table TicketType
 (
-   Id                   char(10) not null,
-   Name                 national varchar(50),
-   primary key (Id)
-);
-
-/*==============================================================*/
-/* Table: User                                                  */
-/*==============================================================*/
-create table User
-(
-   Id                   char(256) not null,
-   Username             varchar(50),
-   Name                 char(256),
-   Email                varchar(50),
-   PhoneNumber          varchar(20),
+   Id                   varchar(20) not null,
+   Name                 varchar(50),
    primary key (Id)
 );
 
@@ -300,7 +299,7 @@ create table User
 /*==============================================================*/
 create table Voucher
 (
-   Id                   char(10) not null,
+   Id                   varchar(20) not null,
    Price                float,
    Percent              real,
    Description          text,
@@ -310,8 +309,8 @@ create table Voucher
 alter table Academy add constraint FK_ACADEMY_TYPE_EVENTS foreign key (Id)
       references Events (Id) on delete restrict on update restrict;
 
-alter table Account add constraint FK_ACCOUNT_HAS_USER foreign key (Id)
-      references User (Id) on delete restrict on update restrict;
+alter table Account add constraint FK_ACCOUNT_HAS_CLIENT foreign key (Email)
+      references Client (Email) on delete restrict on update restrict;
 
 alter table Blog add constraint FK_BLOG_POST_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
@@ -321,6 +320,9 @@ alter table BlogTag add constraint FK_BLOGTAG_BLOGTAG_BLOG foreign key (BloId)
 
 alter table BlogTag add constraint FK_BLOGTAG_BLOGTAG_TAG foreign key (Id)
       references Tag (Id) on delete restrict on update restrict;
+
+alter table Client add constraint FK_CLIENT_HAS_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
 
 alter table ContactForms add constraint FK_CONTACTF_CONTACT_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
@@ -343,8 +345,8 @@ alter table Exhibitions add constraint FK_EXHIBITI_TYPE_EVENTS foreign key (Id)
 alter table Guides add constraint FK_GUIDES_HIRE_TICKET foreign key (Id)
       references Ticket (Id) on delete restrict on update restrict;
 
-alter table Guides add constraint FK_GUIDES_INHERITAN_USER foreign key (UseId)
-      references User (Id) on delete restrict on update restrict;
+alter table Guides add constraint FK_GUIDES_INHERITAN_CLIENT foreign key (Email)
+      references Client (Email) on delete restrict on update restrict;
 
 alter table "Order" add constraint FK_ORDER_APPLY_VOUCHER foreign key (VouId)
       references Voucher (Id) on delete restrict on update restrict;
@@ -355,10 +357,10 @@ alter table "Order" add constraint FK_ORDER_MAKE_ACCOUNT foreign key (Username)
 alter table "Order" add constraint FK_ORDER_PAY_PAYMENT foreign key (PayId)
       references Payment (Id) on delete restrict on update restrict;
 
-alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_ORDER foreign key (OrdId)
+alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_ORDER foreign key (Id)
       references "Order" (Id) on delete restrict on update restrict;
 
-alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_TICKET foreign key (Id)
+alter table OrderTicket add constraint FK_ORDERTIC_ORDERTICK_TICKET foreign key (TicId)
       references Ticket (Id) on delete restrict on update restrict;
 
 alter table Payment add constraint FK_PAYMENT_METHOD_PAYMENTM foreign key (PayId)
@@ -373,21 +375,18 @@ alter table Reviews add constraint FK_REVIEWS_REVIEW_EVENTS foreign key (EveId)
 alter table Reviews add constraint FK_REVIEWS_WRITE_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
 
-alter table Role add constraint FK_ROLE_ROLE_USER foreign key (UseId)
-      references User (Id) on delete restrict on update restrict;
+alter table Role add constraint FK_ROLE_ROLE_CLIENT foreign key (Email)
+      references Client (Email) on delete restrict on update restrict;
 
-alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (UseId)
-      references Guides (UseId) on delete restrict on update restrict;
+alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
+      references Guides (Email) on delete restrict on update restrict;
 
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
 
-alter table Ticket add constraint FK_TICKET_HIRE_GUIDES foreign key (UseId)
-      references Guides (UseId) on delete restrict on update restrict;
+alter table Ticket add constraint FK_TICKET_HIRE_GUIDES foreign key (Email)
+      references Guides (Email) on delete restrict on update restrict;
 
 alter table Ticket add constraint FK_TICKET_TYPE_TICKETTY foreign key (TicId)
       references TicketType (Id) on delete restrict on update restrict;
-
-alter table User add constraint FK_USER_HAS_ACCOUNT foreign key (Username)
-      references Account (Username) on delete restrict on update restrict;
 
