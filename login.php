@@ -6,15 +6,15 @@
 		$page = $_GET["pg"];
 		switch ($page) {
 			case 'signup':
-				include "components/signup.php";
+				include realpath(__DIR__."/components/signup.php");
 				break;
 				
 			default:
-				include "components/login.php";
+				include realpath(__DIR__."/components/login.php");
 				break;
 			}
 	} else {
-		include "components/login.php";
+		include realpath(__DIR__."/components/login.php");
 	}
 		
 	include "components/last.php"
