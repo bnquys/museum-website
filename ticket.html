@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Funeral Museum Tickets</title>
+        <link rel="stylesheet" href="assets/css/carousel-banner.css" />
+        <link rel="stylesheet" href="assets/css/bootstrap.css" />
+        <link rel="stylesheet" href="assets/css/boots-cus.css" />
+        <link rel="stylesheet" href="assets/css/card-slider.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/move.css" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/<?=$css?>.css" />
+        <style>
+            h1,
+            h2 {
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+            .ticket-type {
+                font-size: 1.2rem;
+                text-transform: uppercase;
+                margin-bottom: 0;
+            }
+            .ticket-desc {
+                color: #666;
+                font-size: 0.9rem;
+            }
+            .price {
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+        </style>
+    </head>
+    <body class="bg-light">
+        <div class="container py-5">
+            <!-- Intro Section -->
+            <div class="text-center mb-5">
+                <p class="text-muted fst-italic">Our Tickets</p>
+                <h1>Visit Our Museum</h1>
+                <p class="mt-4 mx-auto" style="max-width: 800px">
+                    The National Museum of Funeral History is an impressive
+                    tourist attraction and offers a wealth of authentic
+                    artifacts and documentation. Discover our world of
+                    historical and international mourning rituals or focus on
+                    the more present-day funeral artifacts we have to offer. You
+                    can buy tickets online or on-site.
+                    <a href="#">Click here</a> to see a map of the museum
+                    layout.
+                </p>
+            </div>
+
+            <!-- Ticket Pricing Section -->
+            <form id="ticketForm">
+                <!-- Ticket Table Header -->
+                <div class="row fw-bold border-bottom pb-2 mb-3">
+                    <div class="col-6 col-md-6">Category</div>
+                    <div class="col-3 col-md-3">Price</div>
+                    <div class="col-3 col-md-3">Qty</div>
+                </div>
+
+                <!-- Children 5 and under -->
+                <div class="row align-items-center mb-3">
+                    <div class="col-6 col-md-6">
+                        <p class="ticket-type">Children (5 and under)</p>
+                        <p class="ticket-desc">Children under 5 are FREE.</p>
+                    </div>
+                    <div class="col-3 col-md-3 price">$0</div>
+                    <div class="col-3 col-md-3">
+                        <input
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            value="0"
+                            data-price="0"
+                        />
+                    </div>
+                </div>
+
+                <!-- Children 6-11 -->
+                <div class="row align-items-center mb-3">
+                    <div class="col-6 col-md-6">
+                        <p class="ticket-type">Children (6-11)</p>
+                        <p class="ticket-desc">Ages 6 - 11</p>
+                    </div>
+                    <div class="col-3 col-md-3 price">$7</div>
+                    <div class="col-3 col-md-3">
+                        <input
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            value="0"
+                            data-price="7"
+                        />
+                    </div>
+                </div>
+
+                <!-- SCI Employee -->
+                <div class="row align-items-center mb-3">
+                    <div class="col-6 col-md-6">
+                        <p class="ticket-type">SCI Employee</p>
+                        <p class="ticket-desc">Day-pass</p>
+                    </div>
+                    <div class="col-3 col-md-3 price">$10</div>
+                    <div class="col-3 col-md-3">
+                        <input
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            value="0"
+                            data-price="10"
+                        />
+                    </div>
+                </div>
+
+                <!-- Group -->
+                <div class="row align-items-center mb-4">
+                    <div class="col-6 col-md-6">
+                        <p class="ticket-type">Group</p>
+                        <p class="ticket-desc">Minimum 25 guests</p>
+                    </div>
+                    <div class="col-3 col-md-3 price">$10</div>
+                    <div class="col-3 col-md-3">
+                        <input
+                            type="number"
+                            class="form-control"
+                            min="0"
+                            value="0"
+                            data-price="10"
+                        />
+                    </div>
+                </div>
+
+                <!-- Total and Add to Cart Section -->
+                <div
+                    class="d-flex justify-content-end align-items-end flex-column text-end mt-4"
+                >
+                    <div class="mb-2">
+                        <h5>Total: <span id="totalPrice">$0.00</span></h5>
+                    </div>
+                    <button class="btn btn-warning">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            const inputs = document.querySelectorAll('input[type="number"]');
+            const totalDisplay = document.getElementById("totalPrice");
+
+            function calculateTotal() {
+                let total = 0;
+                inputs.forEach((input) => {
+                    const qty = parseInt(input.value) || 0;
+                    const price = parseFloat(input.dataset.price);
+                    total += qty * price;
+                });
+                totalDisplay.textContent = total.toFixed(2);
+            }
+
+            inputs.forEach((input) =>
+                input.addEventListener("input", calculateTotal)
+            );
+        </script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"
+            integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="./assets/js/card-slider.js"></script>
+        <script src="./assets/js/bootstrap.bundle.js"></script>
+        <script src="./assets/js/sip.js"></script>
+        <script src="assets/js/register.js"></script>
+    </body>
+</html>

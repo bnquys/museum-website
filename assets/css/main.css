@@ -314,6 +314,10 @@ section h2[name="title"] {
     opacity: 1;
 }
 
+#blog-content:hover img {
+    filter: blur(3px);
+}
+
 #blog .card:hover::after {
     opacity: 0;
 }
@@ -327,6 +331,7 @@ section h2[name="title"] {
 }
 
 #blog .card:hover img {
+    filter: none;
     transform: scale(1.1);
 }
 
