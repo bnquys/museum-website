@@ -1,0 +1,168 @@
+.
+├── about.php
+├── assets
+│   ├── css
+│   │   ├── about.css
+│   │   ├── blog.css
+│   │   ├── boots-cus.css
+│   │   ├── bootstrap.css
+│   │   ├── card-slider.css
+│   │   ├── carousel-banner.css
+│   │   ├── dashboard.css
+│   │   ├── main.css
+│   │   ├── move.css
+│   │   ├── portal.css
+│   │   ├── style.css
+│   │   └── ticket.css
+│   ├── img
+│   │   ├── banner.jpg
+│   │   ├── bgg.jpg
+│   │   ├── bg.jpg
+│   │   ├── earth.png
+│   │   ├── g10.jpg
+│   │   ├── g11.jpg
+│   │   ├── g12.jpg
+│   │   ├── g1.jpg
+│   │   ├── g2.jpg
+│   │   ├── g3.jpg
+│   │   ├── g4.jpg
+│   │   ├── g5.jpg
+│   │   ├── g6.jpg
+│   │   ├── g7.jpg
+│   │   ├── g8.jpg
+│   │   ├── g9.jpg
+│   │   └── museum.ico
+│   └── js
+│       ├── bootstrap.bundle.js
+│       ├── card-slider.js
+│       ├── dashboard.js
+│       ├── dropdown-menu.js
+│       ├── register.js
+│       └── sip.js
+├── blog.php
+├── components
+│   ├── banner.php
+│   ├── carousel-slide.php
+│   ├── first.php
+│   ├── footer.php
+│   ├── function-quote.php
+│   ├── functions.php
+│   ├── gallery.php
+│   ├── last.php
+│   ├── latest-blog.php
+│   ├── login.php
+│   ├── navbar.php
+│   ├── ongoing-exhibitions-cards.php
+│   ├── quotes.php
+│   ├── signup.php
+│   └── upcoming-events.php
+├── composer.json
+├── composer.lock
+├── contact.php
+├── dashboard.php
+├── directory-structure.txt
+├── event.php
+├── gallery.php
+├── index2.php
+├── index.php
+├── login.php
+├── mailer.php
+├── museum.txt
+├── src
+│   └── object
+│       ├── Account.php
+│       ├── Blog.php
+│       ├── Database.php
+│       └── User.php
+├── ticket.php
+└── vendor
+    ├── autoload.php
+    ├── composer
+    │   ├── autoload_classmap.php
+    │   ├── autoload_namespaces.php
+    │   ├── autoload_psr4.php
+    │   ├── autoload_real.php
+    │   ├── autoload_static.php
+    │   ├── ClassLoader.php
+    │   ├── installed.json
+    │   ├── installed.php
+    │   ├── InstalledVersions.php
+    │   ├── LICENSE
+    │   └── platform_check.php
+    └── phpmailer
+        └── phpmailer
+            ├── COMMITMENT
+            ├── composer.json
+            ├── get_oauth_token.php
+            ├── language
+            │   ├── phpmailer.lang-af.php
+            │   ├── phpmailer.lang-ar.php
+            │   ├── phpmailer.lang-as.php
+            │   ├── phpmailer.lang-az.php
+            │   ├── phpmailer.lang-ba.php
+            │   ├── phpmailer.lang-be.php
+            │   ├── phpmailer.lang-bg.php
+            │   ├── phpmailer.lang-bn.php
+            │   ├── phpmailer.lang-ca.php
+            │   ├── phpmailer.lang-cs.php
+            │   ├── phpmailer.lang-da.php
+            │   ├── phpmailer.lang-de.php
+            │   ├── phpmailer.lang-el.php
+            │   ├── phpmailer.lang-eo.php
+            │   ├── phpmailer.lang-es.php
+            │   ├── phpmailer.lang-et.php
+            │   ├── phpmailer.lang-fa.php
+            │   ├── phpmailer.lang-fi.php
+            │   ├── phpmailer.lang-fo.php
+            │   ├── phpmailer.lang-fr.php
+            │   ├── phpmailer.lang-gl.php
+            │   ├── phpmailer.lang-he.php
+            │   ├── phpmailer.lang-hi.php
+            │   ├── phpmailer.lang-hr.php
+            │   ├── phpmailer.lang-hu.php
+            │   ├── phpmailer.lang-hy.php
+            │   ├── phpmailer.lang-id.php
+            │   ├── phpmailer.lang-it.php
+            │   ├── phpmailer.lang-ja.php
+            │   ├── phpmailer.lang-ka.php
+            │   ├── phpmailer.lang-ko.php
+            │   ├── phpmailer.lang-ku.php
+            │   ├── phpmailer.lang-lt.php
+            │   ├── phpmailer.lang-lv.php
+            │   ├── phpmailer.lang-mg.php
+            │   ├── phpmailer.lang-mn.php
+            │   ├── phpmailer.lang-ms.php
+            │   ├── phpmailer.lang-nb.php
+            │   ├── phpmailer.lang-nl.php
+            │   ├── phpmailer.lang-pl.php
+            │   ├── phpmailer.lang-pt_br.php
+            │   ├── phpmailer.lang-pt.php
+            │   ├── phpmailer.lang-ro.php
+            │   ├── phpmailer.lang-ru.php
+            │   ├── phpmailer.lang-si.php
+            │   ├── phpmailer.lang-sk.php
+            │   ├── phpmailer.lang-sl.php
+            │   ├── phpmailer.lang-sr_latn.php
+            │   ├── phpmailer.lang-sr.php
+            │   ├── phpmailer.lang-sv.php
+            │   ├── phpmailer.lang-tl.php
+            │   ├── phpmailer.lang-tr.php
+            │   ├── phpmailer.lang-uk.php
+            │   ├── phpmailer.lang-ur.php
+            │   ├── phpmailer.lang-vi.php
+            │   ├── phpmailer.lang-zh_cn.php
+            │   └── phpmailer.lang-zh.php
+            ├── LICENSE
+            ├── README.md
+            ├── SECURITY.md
+            ├── src
+            │   ├── DSNConfigurator.php
+            │   ├── Exception.php
+            │   ├── OAuth.php
+            │   ├── OAuthTokenProvider.php
+            │   ├── PHPMailer.php
+            │   ├── POP3.php
+            │   └── SMTP.php
+            └── VERSION
+
+14 directories, 152 files
