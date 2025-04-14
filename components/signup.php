@@ -1,9 +1,13 @@
 <?php
-	require_once "../object/Account.php";
-	require_once "../object/User.php";
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
 
 	$title = "Sign Up";
 	include "first.php";
+
+	require_once realpath(__DIR__."/../vendor/autoload.php");
+	use Museum\Object\Account;
+	use Museum\Object\User;
 
 	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
 	$formSubmitted = false;
@@ -20,10 +24,11 @@
 	}
 
 	if($formSubmitted) {
-		// Account::add($account);
+		$account = new Account($username, $password);
+		Account::add($account);
 
-		// $user = new User($name, $birthYear, $phoneNumber, $email, $username);
-		// User::add($user);
+		$user = new User($name, $birthYear, $phoneNumber, $email, $username);
+		User::add($user);
 	}
 
 ?>
@@ -48,7 +53,7 @@
 				class="form-control"
 				placeholder="Mc Donal"
 				value="<?= $name?>"
-				required
+				
 			/>
 
 			<label for="birth-year" class="form-label text-light"
@@ -72,7 +77,6 @@
 				id="phone-number"
 				class="form-control"
 				value="<?= $phoneNumber?>"
-				required
 			/>
 
 			<label for="email" class="form-label text-light"
@@ -84,7 +88,6 @@
 				id="email"
 				class="form-control"
 				value="<?= $email?>"
-				required
 			/>
 
 			<div class="d-flex justify-content-center">
@@ -108,7 +111,6 @@
 				id="username"
 				name="username"
 				value="<?= $username?>"
-				required
 			/>
 
 			<label for="password" class="form-label text-light"
@@ -120,7 +122,6 @@
 				class="form-control"
 				aria-describedby="passwordHelpBlock"
 				name="password"
-				required
 			/>
 			<div id="passwordHelpBlock" class="form-text text-danger">
 				Must be 8-20 characters long nha.
@@ -135,7 +136,6 @@
 				class="form-control"
 				name="confirmPass"
 				aria-describedby="passwordHelpBlock"
-				required
 			/>
 
 			<div class="d-flex justify-content-around">

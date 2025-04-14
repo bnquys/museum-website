@@ -27,18 +27,10 @@
 
             $stmt = $conn->prepare("INSERT INTO Client(Id, Name, Email, PhoneNumber, Username) VALUES (?, ?, ?, ?, ?)");
             $id = Database::generatePrimaryKey(self::TABLE, self::PREFIX, self::LENGTH);
-            $stmt->bind_param("sssss", $id, $user->name, $user->birthYear, $user->phoneNumber, $user->email, $user->username);
+            $stmt->bind_param("sssss", $id, $user->name, $user->phoneNumber, $user->email, $user->username);
 
             $stmt->execute();
             $conn->close();
-        }
-
-        function generateRandomNumbers($length) {
-            $randomNumbers = '';
-            for ($i = 0; $i < $length; $i++) {
-                $randomNumbers .= rand(0, 9); 
-            }
-            return $randomNumbers;
         }
     }
 

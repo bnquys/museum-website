@@ -48,7 +48,7 @@
 <div class="position-relative">
 	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 	<form
-		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"
+		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . (isset($_GET['pg']) ? '?pg=' . $_GET['pg'] : '')); ?>"
 		method = "post"
 		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
 		id="form"

@@ -14,8 +14,8 @@
         public static function add(Account $account) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO Account VALUE (?, ?, ?)");
-            $activateCode = self::generateRandomNumbers(10);
+            $stmt = $conn->prepare("INSERT INTO Account(Username, Password, CodeActivate) VALUE (?, ?, ?)");
+            $activateCode = self::generateRandomNumbers(6);
             $stmt->bind_param("sss", $account->username, $account->password, $activateCode);
             $stmt->execute();
 
