@@ -1,10 +1,15 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 	$title = "Login";
 	include "first.php";
 
 
-	require_once "vendor/autoload.php";
+	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
+
+	echo var_dump(realpath(__DIR__ . "/../vendor/autoload.php"));
+
 
 
 	$username = $password = "";
@@ -21,7 +26,9 @@
 
 
 	if ($formSubmitted) {
-		echo "hehe";
+		echo "formSubmitted: " . ($formSubmitted ? 'true' : 'false');
+		echo "username: " . $username;
+		echo "password: " . $password;
 		$account = new Account($username, $password);
 		// if(!$account->verifyUsername()) {
 		// 	$usernameIncorrect = true;

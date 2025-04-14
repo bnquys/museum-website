@@ -1,6 +1,5 @@
 <?php
     namespace Museum\Object;
-    // use Museum\Object\Database;
 
     class Account {
 

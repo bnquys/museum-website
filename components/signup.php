@@ -20,7 +20,7 @@
 	}
 
 	if($formSubmitted) {
-		Account::add($account);
+		// Account::add($account);
 
 		// $user = new User($name, $birthYear, $phoneNumber, $email, $username);
 		// User::add($user);
