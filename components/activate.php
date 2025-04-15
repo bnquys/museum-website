@@ -1,37 +1,7 @@
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-
-	$title = "Sign Up";
+	$css = "portal";
+    $title = "Activate";
 	include "first.php";
-
-	require_once realpath(__DIR__."/../vendor/autoload.php");
-	use Museum\Object\Account;
-	use Museum\Object\User;
-
-	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
-	$formSubmitted = false;
-
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$name = format_input($_POST["name"]);
-		$birthYear = format_input($_POST["birthYear"]);
-		$phoneNumber = format_input($_POST["phoneNumber"]);
-		$email = format_input($_POST["email"]);
-		$username = format_input($_POST["username"]);
-		$password = format_input($_POST["password"]);
-		$confirmPass = format_input($_POST["confirmPass"]);
-		$formSubmitted = true;
-	}
-
-	if($formSubmitted) {
-		echo "Good job!";
-		// $account = new Account($username, $password);
-		// Account::add($account);
-
-		// $user = new User($name, $birthYear, $phoneNumber, $email, $username);
-		// User::add($user);
-	}
-
 ?>
 
 <div class="position-relative">
@@ -152,57 +122,6 @@
 	</form>
 </div>
 
-<?php
-	function isValidYearAndAge($year) {
-		if (!is_numeric($year)) {
-			return false; 
-		}
-
-		$year = (int)$year;
-
-		$currentYear = date("Y");
-		if ($year <= 0 || $year > $currentYear) {
-			return false; 
-		}
-
-		$age = $currentYear - $year;
-
-		if ($age <= 0) {
-			return false; 
-		}
-
-		return true; 
-	}
-
-	function isValidFullName($fullName) {
-		if (empty($fullName)) {
-			return false; 
-		}
-
-		$fullName = trim($fullName);
-
-		if (!preg_match("/^[a-zA-Z\s]+$/", $fullName)) {
-			return false; 
-		}
-
-		return true; 
-	}
-
-	function formatFullName($fullName) {
-		$fullName = trim($fullName);
-		
-		$fullName = preg_replace('/\s+/', ' ', $fullName);
-		
-		$fullName = ucwords(strtolower($fullName));
-		
-		return $fullName;
-	}
-
-	function isValidPhoneNumber($phone) {
-		$phone = str_replace(' ', '', $phone);
-
-		$phonePattern = '/^0\d{9}$/'; 
-
-		return preg_match($phonePattern, $phone);
-	}
+<?php		
+	include "components/last.php"
 ?>

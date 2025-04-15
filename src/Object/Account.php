@@ -14,7 +14,7 @@
         public static function add(Account $account) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO Account(Username, Password, CodeActivate) VALUE (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO Account (Username, Password, CodeActivate) VALUE (?, ?, ?)");
             $activateCode = self::generateRandomNumbers(6);
             $stmt->bind_param("sss", $account->username, $account->password, $activateCode);
             $stmt->execute();
@@ -44,11 +44,11 @@
             return false;
         }
 
-        public function verifyUsername() {
+        public function verifyUsername(string $username) {
             $conn = Database::Connect();
 
             $stmt = $conn->prepare("SELECT 1 FROM Account WHERE Username = ?");
-            $stmt->bind_param("s", $this->username);
+            $stmt->bind_param("s", $username);
 
             $stmt->execute();
 

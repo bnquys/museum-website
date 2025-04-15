@@ -25,12 +25,31 @@
         public static function add(User $user) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO Client(Id, Name, Email, PhoneNumber, Username) VALUES (?, ?, ?, ?, ?)");
-            $id = Database::generatePrimaryKey(self::TABLE, self::PREFIX, self::LENGTH);
-            $stmt->bind_param("sssss", $id, $user->name, $user->phoneNumber, $user->email, $user->username);
+            $stmt = $conn->prepare("INSERT INTO Client(Name, Email, PhoneNumber, Username) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $user->name, $user->phoneNumber, $user->email, $user->username);
 
             $stmt->execute();
             $conn->close();
+        }
+
+        public static function verifyEmail(string $email) {
+            $conn = Database::Connect();
+
+            $stmt = $conn->prepare("SELECT 1 FROM Client WHERE Email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $stmt->close();
+                $conn->close();
+
+                return false;
+            }
+
+            $stmt->close();
+            $conn->close();
+            return true;
         }
     }
 
