@@ -1,0 +1,10 @@
+{
+	"autoload": {
+		"psr-4": {
+			"Museum\\": "src/"
+		}
+	},
+	"require": {
+		"phpmailer/phpmailer": "^6.9"
+	}
+}

@@ -1,6 +1,6 @@
 <?php
-	include "object/Blog.php";
-
+	require_once realpath(__DIR__."/vendor/autoload.php");
+	use Museum\Object\Blog;
 	
 	if ($_SERVER["REQUEST_METHOD"] == "GET") {
 		if (isset($_GET["deleteId"])) {
