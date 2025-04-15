@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
     --dark-cl: #059212;
@@ -9,11 +9,17 @@
     --normal-light-cl: rgb(175, 255, 0);
     --light-cl-rgba: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
+
+    --deep-forest-cl: #014421; /* For deep backgrounds or titles */
+    --earth-cl: #8b5e3c; /* Natural contrast color */
+    --sky-cl: #b2f5ea; /* Light peaceful touch */
+    --alert-cl: #ff3c00; /* For alert/error states */
+    --btn-accent: #1abc9c;
 }
 
 * {
     /* font-family: 'Gelasio', serif; */
-    font-family: 'Poppins', serif;
+    font-family: "Poppins", serif;
     /* box-shadow: 0 0 20px rgba(61, 255, 2, 1); */
     /* text-shadow: 0 0 20px rgba(61, 255, 2, 1); */
 }
@@ -25,41 +31,41 @@ a {
 h1 {
     /* font-family: 'Poppins', serif; */
     text-shadow: 3px 3px var(--dark-cl);
-	font-size: 3rem;
-	font-weight: 600;
+    font-size: 3rem;
+    font-weight: 600;
 }
 
 header a {
     position: relative;
-	color: white;
+    color: white;
 }
 
 @media screen and (min-width: 1200px) {
-	.img-responsive {
-		margin-left: -3rem !important;
-		width: 555px !important;
-		height: 650px !important;
-		padding: 6rem !important;
-	}
+    .img-responsive {
+        margin-left: -3rem !important;
+        width: 555px !important;
+        height: 650px !important;
+        padding: 6rem !important;
+    }
 
-	#banner-img {
-		margin-top: 5.5rem !important;
-	}
+    #banner-img {
+        margin-top: 5.5rem !important;
+    }
 }
 
 header a::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	bottom: -2px;
-	width: 0;
-	height: 2px;
-	background: white;
-	transition: width 0.3s ease-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease-out;
 }
 
 header a:hover::after {
-	width: 100%;
+    width: 100%;
 }
 
 .header {
@@ -71,12 +77,9 @@ header a:hover::after {
     /* border-image: fill 1 linear-gradient(rgba(36, 175, 36, 0.8), rgba(255, 255, 255, 0)); */
     border-image: fill 1
         linear-gradient(
-            /* rgba(0, 0, 0, 0.699), */
-            var(--dark-cl),
-            /* rgba(0, 0, 0, 0.444), */
-            /* var(--normal-cl), */
-            rgba(255, 255, 255, 0)
-            /* var(--super-light-cl) */
+            /* rgba(0, 0, 0, 0.699), */ var(--dark-cl),
+            /* rgba(0, 0, 0, 0.444), */ /* var(--normal-cl), */
+                rgba(255, 255, 255, 0) /* var(--super-light-cl) */
         );
     /* padding: 10px; */
 }
@@ -91,7 +94,8 @@ header a:hover::after {
     text-shadow: 1px 1px black;
 }
 
-@media (max-width: 1024px) { /* mini-menu */
+@media (max-width: 1024px) {
+    /* mini-menu */
     #menu .nav-item:hover a {
         color: white;
         /* text-shadow: 1px 2px black; */
@@ -231,15 +235,24 @@ section:nth-child(even) {
 section h2[name="title"] {
     font-size: 2.5rem;
     font-weight: bold;
-    background: linear-gradient(135deg, var(--normal-cl), var(--normal-light-cl));
+    background: linear-gradient(
+        135deg,
+        var(--normal-cl),
+        var(--normal-light-cl)
+    );
     background-clip: text;
     color: transparent;
     /* text-transform: uppercase; */
 }
 
 @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
 }
 
 /* .bg-green-light {
@@ -378,15 +391,20 @@ section h2[name="title"] {
 }
 
 footer * {
-    font-family: 'Gelasio', serif;
+    font-family: "Gelasio", serif;
 }
 
 footer {
     background-color: var(--dark-cl);
-    background: radial-gradient(circle, var(--normal-cl), var(--dark-cl), var(--dark-cl));
+    background: radial-gradient(
+        circle,
+        var(--normal-cl),
+        var(--dark-cl),
+        var(--dark-cl)
+    );
 }
 
-#InputEmail::placeholder{
+#InputEmail::placeholder {
     color: white;
 }
 
