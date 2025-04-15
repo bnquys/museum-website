@@ -124,7 +124,7 @@
 				name="password"
 			/>
 			<div id="passwordHelpBlock" class="form-text text-danger">
-				Must be 8-20 characters long nha.
+				Must be 8-20 characters long.
 			</div>
 
 			<label for="confirm-pass" class="form-label text-light"
@@ -150,3 +150,58 @@
 		</p>
 	</form>
 </div>
+
+<?php
+	function isValidYearAndAge($year) {
+		if (!is_numeric($year)) {
+			return false; 
+		}
+
+		$year = (int)$year;
+
+		$currentYear = date("Y");
+		if ($year <= 0 || $year > $currentYear) {
+			return false; 
+		}
+
+		$age = $currentYear - $year;
+
+		if ($age <= 0) {
+			return false; 
+		}
+
+		return true; 
+	}
+
+	function isValidFullName($fullName) {
+		if (empty($fullName)) {
+			return false; 
+		}
+
+		$fullName = trim($fullName);
+
+		if (!preg_match("/^[a-zA-Z\s]+$/", $fullName)) {
+			return false; 
+		}
+
+		return true; 
+	}
+
+	function formatFullName($fullName) {
+		$fullName = trim($fullName);
+		
+		$fullName = preg_replace('/\s+/', ' ', $fullName);
+		
+		$fullName = ucwords(strtolower($fullName));
+		
+		return $fullName;
+	}
+
+	function isValidPhoneNumber($phone) {
+		$phone = str_replace(' ', '', $phone);
+
+		$phonePattern = '/^0\d{9}$/'; 
+
+		return preg_match($phonePattern, $phone);
+	}
+?>

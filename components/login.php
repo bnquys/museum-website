@@ -5,13 +5,8 @@
 	$title = "Login";
 	include "first.php";
 
-
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
-
-	// echo var_dump(realpath(__DIR__ . "/../vendor/autoload.php"));
-
-
 
 	$username = $password = "";
 	$formSubmitted = false;
@@ -24,12 +19,7 @@
 		$formSubmitted = true;
 	}
 
-
-
 	if ($formSubmitted) {
-		echo "formSubmitted: " . ($formSubmitted ? 'true' : 'false');
-		echo "username: " . $username;
-		echo "password: " . $password;
 		$account = new Account($username, $password);
 		if(!$account->verifyUsername()) {
 			$usernameIncorrect = true;
@@ -48,7 +38,7 @@
 <div class="position-relative">
 	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 	<form
-		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . (isset($_GET['pg']) ? '?pg=' . $_GET['pg'] : '')); ?>"
+		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
 		method = "post"
 		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
 		id="form"
@@ -58,18 +48,33 @@
 		<div>
 			<div>
 				<label for="username" class="form-label text-light">Username</label>
-				<input type="text" class="form-control <?php if($formSubmitted) {if (!$usernameIncorrect) {echo 'is-valid';} else {echo 'is-invalid';}}?>" id="username" name="username" value="<?=$username?>" required>
-				<div id="validationServerUsernameFeedback" class="invalid-feedback">
+				<input type="text" class="form-control 
+					<?php 
+						if($formSubmitted) {
+							if (!$usernameIncorrect) {echo 'is-valid';
+							} else {
+								echo 'is-invalid';
+							}
+						}
+					?>" 
+					id="username" name="username" value="<?=$username?>" required>
+				<div class="invalid-feedback text-danger">
 					Username Incorrect.
 				</div>
 			</div>
 
-
-
 			<div>
-				<label for="password" class="form-label text-light">Username</label>
-				<input type="password" class="form-control <?php if($formSubmitted && !$usernameIncorrect && $passwordIncorrect) echo 'is-invalid';?>" id="password" name="password" required>
-				<div id="validationServerUsernameFeedback" class="invalid-feedback">
+				<label for="password" class="form-label text-light">Password</label>
+				<input type="password" class="form-control 
+					<?php 
+						if ($formSubmitted && $usernameIncorrect) {
+							echo ''; 
+						} elseif ($formSubmitted && $passwordIncorrect) {
+							echo 'is-invalid'; 
+						}
+					?>" 
+					id="password" name="password" required>
+				<div class="invalid-feedback text-danger">
 					Password Incorrect.
 				</div>
 			</div>
