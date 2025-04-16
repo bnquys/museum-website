@@ -412,3 +412,7 @@ footer h6 {
     /* color: var(--dark-cl); */
     /* text-shadow: 1px 1px black; */
 }
+
+.btn-ticket {
+    background-color: var(--light-cl-rgba) !important;
+}

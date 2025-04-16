@@ -1,6 +1,6 @@
 * {
-    font-family: 'Gelasio', serif;
-    font-family: 'EB Garamond';
+    /* font-family: 'Gelasio', serif; */
+    font-family: "EB Garamond";
 }
 
 body {
@@ -65,6 +65,14 @@ strong {
 .form-label {
     color: var(--dark-cl);
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    /* background-color: red; */
+    /* color: white; */
+    /* padding: 5px; */
+    /* border-radius: 4px; */
+    cursor: pointer;
+}
+
 
 input[type="number"],
 input[type="date"],
@@ -92,16 +100,17 @@ select.form-select {
     height: 80px;
 }
 
-
 input[type="number"]:focus,
 input[type="date"]:focus,
 select.form-select:focus {
     outline: none;
+    color: var(--dark-cl);
     border-color: var(--normal-cl);
     box-shadow: 0 0 0 2px var(--normal-cl-rgba);
 }
 
-.price, .row-total {
+.price,
+.row-total {
     font-size: 1.7rem;
 }
 
@@ -121,16 +130,20 @@ select.form-select:focus {
     box-shadow: 0 0 20px var(--normal-cl-rgba);
 }
 
+h5, #totalPrice{
+    font-size: 1.8rem;
+}
+
 #totalPrice {
     color: var(--dark-cl);
     font-weight: bold;
-    font-size: 1.3rem;
     background-color: var(--sky-cl); /* soft highlight */
     padding: 10px 16px;
     border-radius: 8px;
 }
 
 .btn-warning {
+    width: 20%;
     background-color: var(--normal-cl);
     border-color: var(--normal-cl);
     color: white;

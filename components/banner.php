@@ -9,8 +9,8 @@
     >
         <h1 class="mv-bt pulse"><?=$name?></h1>
         <p class="mv-bt">
-            <a href="index.html">Home</a> &rarr;
-            <a href="about.html"><?=$name?></a>
+            <a href="index.php">Home</a> &rarr;
+            <a href="<?=$css?>.php"><?=$name?></a>
         </p>
     </div>
     <div>

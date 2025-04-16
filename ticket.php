@@ -80,7 +80,7 @@
                             />
                         </div>
                         <div class="col-2 col-md-2 text-center">
-                            <span class="row-total">$0.00</span>
+                            <span class="fs-3">FREE</span>
                         </div>
                     </div>
     
@@ -343,7 +343,7 @@
                     class="d-flex justify-content-end align-items-end flex-column text-end mt-4"
                 >
                     <div class="mb-2">
-                        <h5>Total: >>><span id="totalPrice">$0.00</span></h5>
+                        <h5>Total: >>> <span id="totalPrice">$0.00</span></h5>
                     </div>
                     <button class="btn btn-warning">Checkout</button>
                 </div>
