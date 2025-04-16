@@ -3,7 +3,7 @@
 	// ini_set('display_errors', 1);
 
 	$title = "Login";
-	include "first.php";
+	include realpath(__DIR__."/first.php");
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
@@ -80,11 +80,13 @@
 			</div>
 			
 
-			<input type="submit" class="btn btn-primary my-3" value="Submit"></input>
-			<p class="text-light text-center">Forgot your account? <a href="#">Click here</a></p>
+			<div class="d-flex justify-content-center">
+				<input type="submit" class="btn btn-success my-3" value="Submit"></input>
+			</div>
+			<p class="text-light text-center mb-0 mt-2">Forgot your account? <a href="#">Click here</a></p>
 
 		</div>
-		<p class="text-light text-center mt-3 border-top pt-2">
+		<p class="text-light text-center mt-1 border-top pt-2">
 			Create an account? <a href="login.php?pg=signup" id="btn-sign-in">Sign Up</a> <br>
 			Or back to <a href="index.php">Home</a>
 		</p>

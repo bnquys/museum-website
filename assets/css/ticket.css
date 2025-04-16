@@ -1,0 +1,158 @@
+* {
+    /* font-family: 'Gelasio', serif; */
+    font-family: "EB Garamond";
+}
+
+body {
+    background-color: var(--super-light-cl);
+    color: var(--dark-cl);
+}
+
+section h1,
+h2 {
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--deep-forest-cl);
+}
+
+section h1 {
+    text-shadow: none;
+    background: linear-gradient(
+        135deg,
+        var(--normal-cl),
+        var(--normal-light-cl)
+    );
+    background-clip: text;
+    color: transparent;
+}
+
+#id p {
+    letter-spacing: 3px;
+}
+
+section {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+.section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.ticket-type {
+    letter-spacing: 3px;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    color: var(--dark-cl);
+}
+
+.ticket-desc {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+strong {
+    color: var(--dark-cl);
+}
+
+.form-label {
+    color: var(--dark-cl);
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    /* background-color: red; */
+    /* color: white; */
+    /* padding: 5px; */
+    /* border-radius: 4px; */
+    cursor: pointer;
+}
+
+
+input[type="number"],
+input[type="date"],
+select.form-select {
+    border: 1px solid var(--normal-light-cl);
+    border-radius: 0;
+    font-size: 1.5rem;
+    background-color: var(--light-cl-rgba);
+    color: var(--dark-cl);
+    transition: all 0.3s;
+    text-align: center;
+}
+
+input[type="number"] {
+    margin-left: 3rem;
+    padding-left: 1.5rem;
+    width: 5rem;
+    height: 3rem;
+}
+
+input[type="date"],
+select.form-select {
+    font-size: 1.5rem;
+    width: 90%;
+    height: 80px;
+}
+
+input[type="number"]:focus,
+input[type="date"]:focus,
+select.form-select:focus {
+    outline: none;
+    color: var(--dark-cl);
+    border-color: var(--normal-cl);
+    box-shadow: 0 0 0 2px var(--normal-cl-rgba);
+}
+
+.price,
+.row-total {
+    font-size: 1.7rem;
+}
+
+.guide-card {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.guide-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.guide-card.selected {
+    border: 3px solid var(--normal-light-cl);
+    background-color: var(--super-light-cl);
+    box-shadow: 0 0 20px var(--normal-cl-rgba);
+}
+
+h5, #totalPrice{
+    font-size: 1.8rem;
+}
+
+#totalPrice {
+    color: var(--dark-cl);
+    font-weight: bold;
+    background-color: var(--sky-cl); /* soft highlight */
+    padding: 10px 16px;
+    border-radius: 8px;
+}
+
+.btn-warning {
+    width: 20%;
+    background-color: var(--normal-cl);
+    border-color: var(--normal-cl);
+    color: white;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: var(--normal-light-cl); /* glow-up on hover */
+    border-color: var(--normal-light-cl);
+    color: var(--normal-cl);
+}
