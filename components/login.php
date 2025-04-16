@@ -20,8 +20,8 @@
 	}
 
 	if ($formSubmitted) {
-		$account = new Account($username, $password);
-		if(!$account->verifyUsername()) {
+		$account = new Account($username, $password, "");
+		if(Account::verifyUsername($account->username)) {
 			$usernameIncorrect = true;
 		}
 
