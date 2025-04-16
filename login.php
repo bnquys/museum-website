@@ -1,6 +1,6 @@
 <?php
 	$css = "portal";
-	include "first.php";
+	// include "first.php";
 
 	if (isset($_GET["pg"])) {
 		$page = $_GET["pg"];
