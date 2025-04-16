@@ -9,34 +9,32 @@
 	use Museum\Object\Account;
 
 	$username = $password = "";
-	$formSubmitted = false;
 	$usernameIncorrect = false;
 	$passwordIncorrect = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$username = format_input($_POST["username"]);
 		$password = format_input($_POST["password"]);
-		$formSubmitted = true;
-	}
+	
+		$account = Account::forLogin($username, $password);
 
-	if ($formSubmitted) {
-		$account = new Account($username, $password, "");
-		if(Account::verifyUsername($account->username)) {
+		if (!Account::isUsernameExists($username)) {
 			$usernameIncorrect = true;
-		}
-
-		if ($account->exists()) {
-			header('location: ' . "dashboard.php");
-			exit;
 		} else {
-			$passwordIncorrect = true;
+			if ($account->exists()) {
+				header('Location: dashboard.php');
+				exit;
+			} else {
+				$passwordIncorrect = true;
+			}
 		}
 	}
 
 ?>
 
+<!-- HTML Form -->
 <div class="position-relative">
-	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
+	<img class="bg-img" src="assets/img/bgg.jpg" alt="background" />
 	<form
 		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
 		method = "post"
@@ -46,34 +44,31 @@
 		<h1 class="text-center text-light fw-bold">Login</h1>
 
 		<div>
+			<!-- Username  -->
 			<div>
 				<label for="username" class="form-label text-light">Username</label>
-				<input type="text" class="form-control 
-					<?php 
-						if($formSubmitted) {
-							if (!$usernameIncorrect) {echo 'is-valid';
-							} else {
-								echo 'is-invalid';
-							}
-						}
-					?>" 
-					id="username" name="username" value="<?=$username?>" required>
+				<input 
+					type="text" 
+					class="form-control <?= $usernameIncorrect ? 'is-invalid' : ($username !== '' ? 'is-valid' : '') ?>" 
+					id="username" 
+					name="username" 
+					value="<?= htmlspecialchars($username) ?>" 
+					required
+				>
 				<div class="invalid-feedback text-danger">
 					Username Incorrect.
 				</div>
 			</div>
 
+			<!-- Password -->
 			<div>
 				<label for="password" class="form-label text-light">Password</label>
-				<input type="password" class="form-control 
-					<?php 
-						if ($formSubmitted && $usernameIncorrect) {
-							echo ''; 
-						} elseif ($formSubmitted && $passwordIncorrect) {
-							echo 'is-invalid'; 
-						}
-					?>" 
-					id="password" name="password" required>
+				<input 
+					type="password" 
+					class="form-control <?= (!$usernameIncorrect && $passwordIncorrect) ? 'is-invalid' : '' ?>" 
+					id="password" 
+					name="password" 
+					required>
 				<div class="invalid-feedback text-danger">
 					Password Incorrect.
 				</div>

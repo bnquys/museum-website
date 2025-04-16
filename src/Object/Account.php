@@ -10,10 +10,18 @@
         public $password;
         public $email;
 
-        public function __construct($username, $email, $password) {
+        private function __construct($username, $email, $password) {
             $this->username = $username;
             $this->password = $password;
             $this->email = $email;
+        }
+
+        public static function forLogin(string $username, string $password) {
+            return new self($username, null, $password);
+        }
+
+        public static function forSignup(string $username, string $email, string $password) {
+            return new self($username, $email, $password);
         }
 
         public static function add(Account $account) {
@@ -49,7 +57,7 @@
             return false;
         }
 
-        public static function verifyUsername(string $username) {
+        public static function isUsernameExists(string $username) {
             $conn = Database::Connect();
 
             $stmt = $conn->prepare("SELECT 1 FROM Account WHERE Username = ?");

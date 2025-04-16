@@ -2,6 +2,8 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
+	session_start();
+
 	$title = "Sign Up";
 	include "first.php";
 
@@ -38,7 +40,7 @@
 		}
 
 		// Validate username
-		if (Account::verifyUsername($username)) {
+		if (Account::isUsernameExists($username)) {
 			$usernameError = "Username is already taken";
 			$valid = false;
 		}
@@ -75,9 +77,13 @@
 			$user = new User($name, $birthYear, $phoneNumber, $email);
 			User::add($user);
 			
-			$account = new Account($username, $email, $password);
+			$account = Account::forSignup($username, $email, $password);
 			Account::add($account);
 			$user->setForeignKey($account);
+
+			$_SESSION["email"] = $email;
+			header("Location: login.php?pg=activate");
+			exit;
 		}
 	}
 
@@ -92,7 +98,7 @@
 		method="post"
 	>
 		<h1 class="text-center text-light fw-bold">Sign up</h1>
-		<div id="first-step" class="">
+		<div id="fill-out">
 			<label for="name" class="form-label text-light"
 				>Your name</label
 			>
@@ -150,7 +156,7 @@
 
 			<div class="d-flex justify-content-center">
 				<button
-					id="show-next-steps"
+					id="btn-show-create-account"
 					type="button"
 					class="btn btn-success my-3"
 				>
@@ -159,7 +165,7 @@
 			</div>
 		</div>
 
-		<div id="next-step" class="d-none">
+		<div id="create-account" class="d-none">
 			<label for="username" class="form-label text-light"
 				>Username</label
 			>
@@ -200,11 +206,13 @@
 			<div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
 
 			<div class="d-flex justify-content-around">
-				<button id ="btn-back" class="btn btn-success my-3">Back</button>
-				<input type="submit" class="btn btn-success my-3" value="Submit"></input>
+				<button id ="btn-back-to-fill-out" class="btn btn-success my-3">Back</button>
+				<input id ="btn-activate" class="btn btn-success my-3" type="submit" value="Submit">
 			</div>
 
 		</div>
+
+
 		<p class="text-light text-center mt-3 border-top pt-2">
 			Have an account? <a href="login.php" id="btn-sign-in">Login</a><br>
 			Or back to <a href="index.php">Home</a>

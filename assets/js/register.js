@@ -1,11 +1,11 @@
 $(document).ready(function () {
-	$("#show-next-steps").click(function () {
-		$("#next-step").removeClass("d-none");
-		$("#first-step").addClass("d-none");
+	$("#btn-show-create-account").click(function () {
+		$("#create-account").removeClass("d-none");
+		$("#fill-out").addClass("d-none");
 	});
 
-	$("#btn-back").click(function () {
-		$("#next-step").addClass("d-none");
-		$("#first-step").removeClass("d-none");
+	$("#btn-back-to-fill-out").click(function () {
+		$("#create-account").addClass("d-none");
+		$("#fill-out").removeClass("d-none");
 	});
 });
