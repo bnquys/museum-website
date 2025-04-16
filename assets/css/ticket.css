@@ -50,7 +50,7 @@ section {
 
 .ticket-desc {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .price {
@@ -58,13 +58,20 @@ section {
     font-size: 1.1rem;
 }
 
-strong {
+strong, .form-label {
     color: var(--dark-cl);
 }
 
-.form-label {
-    color: var(--dark-cl);
+.card-title {
+    border-left: 1px solid var(--deep-forest-cl);
+    padding-left: 0.4rem;
+    color: var(--deep-forest-cl);
 }
+
+.card-body p {
+    font-size: 1.1rem;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     /* background-color: red; */
     /* color: white; */
@@ -115,6 +122,7 @@ select.form-select:focus {
 }
 
 .guide-card {
+    border-color: transparent;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -143,6 +151,7 @@ h5, #totalPrice{
 }
 
 .btn-warning {
+    font-size: larger;
     width: 20%;
     background-color: var(--normal-cl);
     border-color: var(--normal-cl);

@@ -111,14 +111,14 @@
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="event.php">Event</a>
 							</li>
-							<li class="nav-item nav-link px-3 hover-link btn-ticket">
-								<a href="ticket.php">Ticket</a>
-							</li>
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="blog.php">Blog</a>
 							</li>
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="contact.php">Contact</a>
+							</li>
+							<li class="nav-item nav-link px-3 hover-link btn-ticket">
+								<a href="ticket.php">Get Ticket</a>
 							</li>
 						</ul>
 					</div>
