@@ -10,6 +10,8 @@
 	use Museum\Object\User;
 
 	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
+	$emailError = $usernameError = $passwordError = "";
+	// $nameError = $birthYearError = $phoneNumberError = "";
 	$formSubmitted = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,12 +26,59 @@
 	}
 
 	if($formSubmitted) {
-		echo "Good job!";
-		// $account = new Account($username, $password);
-		// Account::add($account);
+		$valid = true;
 
-		// $user = new User($name, $birthYear, $phoneNumber, $email, $username);
-		// User::add($user);
+		// Validate email
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$emailError = "Invalid email format";
+			$valid = false;
+		} elseif (User::verifyEmail($email)) {
+			$emailError = "Email is already registered";
+			$valid = false;
+		}
+
+		// Validate username
+		if (Account::verifyUsername($username)) {
+			$usernameError = "Username is already taken";
+			$valid = false;
+		}
+
+		// Validate password length
+		if (!isValidPasswordLength($password)) {
+			$passwordError = "Password must be between 8 and 20 characters";
+			$valid = false;
+		}
+
+		// Validate other fields
+		if (!isValidFullName($name)) {
+			$nameError = "Invalid name format";
+			$valid = false;
+		}
+
+		if (!isValidYearAndAge($birthYear)) {
+			$birthYearError = "Please enter a valid birth year";
+			$valid = false;
+		}
+
+		if (!isValidPhoneNumber($phoneNumber)) {
+			$phoneNumberError = "Invalid phone number format";
+			$valid = false;
+		}
+
+		// Validate password confirmation
+		if ($password !== $confirmPass) {
+			$passwordError = "Passwords do not match";
+			$valid = false;
+		}
+
+		if ($valid) {
+			$user = new User($name, $birthYear, $phoneNumber, $email);
+			User::add($user);
+			
+			$account = new Account($username, $email, $password);
+			Account::add($account);
+			$user->setForeignKey($account);
+		}
 	}
 
 ?>
@@ -51,11 +100,12 @@
 				type="text"
 				name="name"
 				id="name"
-				class="form-control"
+				class="form-control <?= isset($nameError) ? 'is-invalid' : ''?>"
 				placeholder="Mc Donal"
 				value="<?= $name?>"
-				
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $nameError ?? ''?></div>
 
 			<label for="birth-year" class="form-label text-light"
 				>Birth Year</label
@@ -64,10 +114,13 @@
 				type="number"
 				name="birthYear"
 				id="birth-year"
-				class="form-control"
+				class="form-control <?= isset($birthYearError) ? 'is-invalid' : '' ?>"
 				min="1900"
+				max=<?= date("Y")?>
 				value="<?= $birthYear?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $birthYearError ?? '' ?></div>
 
 			<label for="phone-number" class="form-label text-light"
 				>Phone Number</label
@@ -76,9 +129,11 @@
 				type="tel"
 				name="phoneNumber"
 				id="phone-number"
-				class="form-control"
+				class="form-control <?= isset($phoneNumberError) ? 'is-invalid' : '' ?>"
 				value="<?= $phoneNumber?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $phoneNumberError ?? '' ?></div>
 
 			<label for="email" class="form-label text-light"
 				>Email</label
@@ -87,9 +142,11 @@
 				type="email"
 				name="email"
 				id="email"
-				class="form-control"
+				class="form-control <?= isset($emailError) ? 'is-invalid' : '' ?>"
 				value="<?= $email?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $emailError ?? '' ?></div>
 
 			<div class="d-flex justify-content-center">
 				<button
@@ -108,11 +165,13 @@
 			>
 			<input
 				type="text"
-				class="form-control"
+				class="form-control <?= isset($usernameError) ? 'is-invalid' : '' ?>"
 				id="username"
 				name="username"
 				value="<?= $username?>"
+				required
 			/>
+			<div class="invalid-feedback"><?= $usernameError ?? '' ?></div>
 
 			<label for="password" class="form-label text-light"
 				>Password</label
@@ -120,13 +179,12 @@
 			<input
 				type="password"
 				id="password"
-				class="form-control"
+				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
 				aria-describedby="passwordHelpBlock"
 				name="password"
+				required
 			/>
-			<div id="passwordHelpBlock" class="form-text text-danger">
-				Must be 8-20 characters long.
-			</div>
+			<div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
 
 			<label for="confirm-pass" class="form-label text-light"
 				>Confirm Password</label
@@ -134,10 +192,12 @@
 			<input
 				type="password"
 				id="confirm-pass"
-				class="form-control"
+				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
 				name="confirmPass"
 				aria-describedby="passwordHelpBlock"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
 
 			<div class="d-flex justify-content-around">
 				<button id ="btn-back" class="btn btn-success my-3">Back</button>
@@ -205,4 +265,9 @@
 
 		return preg_match($phonePattern, $phone);
 	}
+
+	function isValidPasswordLength($password) {
+		return strlen($password) >= 8 && strlen($password) <= 20;
+	}
+
 ?>
