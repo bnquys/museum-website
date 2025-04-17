@@ -61,6 +61,10 @@ input:active {
     box-shadow: none;
 }
 
+button, input[type="submit"] {
+	text-transform: uppercase;
+}
+
 .text-danger {
     font-weight: 500;
     color: red !important;
