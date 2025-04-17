@@ -75,13 +75,16 @@
 
 		if ($valid) {
 			$user = new User($name, $birthYear, $phoneNumber, $email);
-			User::add($user);
+			// User::add($user);
 			
 			$account = Account::forSignup($username, $email, $password);
-			Account::add($account);
-			$user->setForeignKey($account);
+			// Account::add($account);
+			// $user->setForeignKey($account);
 
-			$_SESSION["email"] = $email;
+			$_SESSION['register'] = [
+				'account' => $account,
+				'user' => $user
+			];
 			header("Location: login.php?pg=activate");
 			exit;
 		}

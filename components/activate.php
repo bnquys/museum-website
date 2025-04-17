@@ -5,8 +5,13 @@
 	include "first.php";
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
+	use Museum\Object\Account;
+	use Museum\Object\User;
 	
-	$email = $_SESSION['email'] ?? '';
+	if ($register = $_SESSION['register']) {
+		$user = $register['user'];
+		$account = $register['account'];
+	}
 ?>
 
 <div class="position-relative">
@@ -26,7 +31,7 @@
 				id="email"
 				class="form-control" 
 				type="text" 
-				value="<?= $email?>" 
+				value="<?= $user ?? 'Email Error'?>" 
 				aria-label="Disabled input example" 
 				disabled readonly
 			>
