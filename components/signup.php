@@ -2,6 +2,8 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
+	session_start();
+
 	$title = "Sign Up";
 	include "first.php";
 
@@ -10,6 +12,8 @@
 	use Museum\Object\User;
 
 	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
+	$emailError = $usernameError = $passwordError = "";
+	// $nameError = $birthYearError = $phoneNumberError = "";
 	$formSubmitted = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,11 +28,66 @@
 	}
 
 	if($formSubmitted) {
-		$account = new Account($username, $password);
-		Account::add($account);
+		$valid = true;
 
-		$user = new User($name, $birthYear, $phoneNumber, $email, $username);
-		User::add($user);
+		// Validate email
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$emailError = "Invalid email format";
+			$valid = false;
+		} elseif (User::verifyEmail($email)) {
+			$emailError = "Email is already registered";
+			$valid = false;
+		}
+
+		// Validate username
+		if (Account::isUsernameExists($username)) {
+			$usernameError = "Username is already taken";
+			$valid = false;
+		}
+
+		// Validate password length
+		if (!isValidPasswordLength($password)) {
+			$passwordError = "Password must be between 8 and 20 characters";
+			$valid = false;
+		}
+
+		// Validate other fields
+		if (!isValidFullName($name)) {
+			$nameError = "Invalid name format";
+			$valid = false;
+		}
+
+		if (!isValidYearAndAge($birthYear)) {
+			$birthYearError = "Please enter a valid birth year";
+			$valid = false;
+		}
+
+		if (!isValidPhoneNumber($phoneNumber)) {
+			$phoneNumberError = "Invalid phone number format";
+			$valid = false;
+		}
+
+		// Validate password confirmation
+		if ($password !== $confirmPass) {
+			$passwordError = "Passwords do not match";
+			$valid = false;
+		}
+
+		if ($valid) {
+			$user = new User($name, $birthYear, $phoneNumber, $email);
+			// User::add($user);
+			
+			$account = Account::forSignup($username, $email, $password);
+			// Account::add($account);
+			// $user->setForeignKey($account);
+
+			$_SESSION['register'] = [
+				'account' => $account,
+				'user' => $user
+			];
+			header("Location: login.php?pg=activate");
+			exit;
+		}
 	}
 
 ?>
@@ -42,7 +101,7 @@
 		method="post"
 	>
 		<h1 class="text-center text-light fw-bold">Sign up</h1>
-		<div id="first-step" class="">
+		<div id="fill-out">
 			<label for="name" class="form-label text-light"
 				>Your name</label
 			>
@@ -50,11 +109,12 @@
 				type="text"
 				name="name"
 				id="name"
-				class="form-control"
+				class="form-control <?= isset($nameError) ? 'is-invalid' : ''?>"
 				placeholder="Mc Donal"
 				value="<?= $name?>"
-				
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $nameError ?? ''?></div>
 
 			<label for="birth-year" class="form-label text-light"
 				>Birth Year</label
@@ -63,10 +123,13 @@
 				type="number"
 				name="birthYear"
 				id="birth-year"
-				class="form-control"
+				class="form-control <?= isset($birthYearError) ? 'is-invalid' : '' ?>"
 				min="1900"
+				max=<?= date("Y")?>
 				value="<?= $birthYear?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $birthYearError ?? '' ?></div>
 
 			<label for="phone-number" class="form-label text-light"
 				>Phone Number</label
@@ -75,9 +138,11 @@
 				type="tel"
 				name="phoneNumber"
 				id="phone-number"
-				class="form-control"
+				class="form-control <?= isset($phoneNumberError) ? 'is-invalid' : '' ?>"
 				value="<?= $phoneNumber?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $phoneNumberError ?? '' ?></div>
 
 			<label for="email" class="form-label text-light"
 				>Email</label
@@ -86,13 +151,15 @@
 				type="email"
 				name="email"
 				id="email"
-				class="form-control"
+				class="form-control <?= isset($emailError) ? 'is-invalid' : '' ?>"
 				value="<?= $email?>"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $emailError ?? '' ?></div>
 
 			<div class="d-flex justify-content-center">
 				<button
-					id="show-next-steps"
+					id="btn-show-create-account"
 					type="button"
 					class="btn btn-success my-3"
 				>
@@ -101,17 +168,19 @@
 			</div>
 		</div>
 
-		<div id="next-step" class="d-none">
+		<div id="create-account" class="d-none">
 			<label for="username" class="form-label text-light"
 				>Username</label
 			>
 			<input
 				type="text"
-				class="form-control"
+				class="form-control <?= isset($usernameError) ? 'is-invalid' : '' ?>"
 				id="username"
 				name="username"
 				value="<?= $username?>"
+				required
 			/>
+			<div class="invalid-feedback"><?= $usernameError ?? '' ?></div>
 
 			<label for="password" class="form-label text-light"
 				>Password</label
@@ -119,13 +188,12 @@
 			<input
 				type="password"
 				id="password"
-				class="form-control"
+				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
 				aria-describedby="passwordHelpBlock"
 				name="password"
+				required
 			/>
-			<div id="passwordHelpBlock" class="form-text text-danger">
-				Must be 8-20 characters long.
-			</div>
+			<div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
 
 			<label for="confirm-pass" class="form-label text-light"
 				>Confirm Password</label
@@ -133,17 +201,21 @@
 			<input
 				type="password"
 				id="confirm-pass"
-				class="form-control"
+				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
 				name="confirmPass"
 				aria-describedby="passwordHelpBlock"
+				required
 			/>
+			<div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
 
 			<div class="d-flex justify-content-around">
-				<a id ="btn-back" href="login.php?pg=signup" class="btn btn-success my-3">Back</a>
-				<input type="submit" class="btn btn-success my-3" value="Submit"></input>
+				<button id ="btn-back-to-fill-out" class="btn btn-success my-3">Back</button>
+				<input id ="btn-activate" class="btn btn-success my-3" type="submit" value="Submit">
 			</div>
 
 		</div>
+
+
 		<p class="text-light text-center mt-3 border-top pt-2">
 			Have an account? <a href="login.php" id="btn-sign-in">Login</a><br>
 			Or back to <a href="index.php">Home</a>
@@ -204,4 +276,9 @@
 
 		return preg_match($phonePattern, $phone);
 	}
+
+	function isValidPasswordLength($password) {
+		return strlen($password) >= 8 && strlen($password) <= 20;
+	}
+
 ?>

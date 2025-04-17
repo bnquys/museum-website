@@ -1,4 +1,5 @@
 <?php
+
 	$css = "portal";
 	// include "first.php";
 
@@ -8,7 +9,9 @@
 			case 'signup':
 				include realpath(__DIR__."/components/signup.php");
 				break;
-				
+			case 'activate':
+				include realpath(__DIR__."/components/activate.php");
+				break;
 			default:
 				include realpath(__DIR__."/components/login.php");
 				break;
