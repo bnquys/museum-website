@@ -1,4 +1,9 @@
 <?php
+	session_start();
+	$name = "Dashboard";
+	$css = "dashboard";
+	include "components/first.php";
+
 	require_once realpath(__DIR__."/vendor/autoload.php");
 	use Museum\Object\Blog;
 	
@@ -11,26 +16,6 @@
 
 	$result = Blog::getListBlog(10);
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="assets/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/css/dashboard.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-		/>
-
-		<!-- Link jQuery for DropDown menu -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<title>Dashboard</title>
-		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico" />
-	</head>
-	<body>
 		<div class="container-fluid bg-success d-md-none sticky-top">
 			<nav class="nav">
 				<button
@@ -99,67 +84,99 @@
 						<p class="h2">Dashboard</p>
 					</button>
 					<ul class="list-group" id="list-group">
-						<li class="list-group-item d-flex gap-2 text-light">
-							<i class="bi bi-file-earmark-post"></i>
-							<p class="m-0">An item</p>
+						<li class="list-group-item">
+							<a href="#" class="d-flex gap-2 text-light">
+								<i class="bi bi-file-earmark-post"></i>
+								<p class="m-0">An item</p>
+							</a>
 						</li>
-						<li class="list-group-item d-flex gap-2 text-light">
-							<i class="bi bi-envelope"></i>
-							<p class="m-0">A second item</p>
+						<li class="list-group-item">
+							<a href="#" class="d-flex gap-2 text-light">
+								<i class="bi bi-envelope"></i>
+								<p class="m-0">A second item</p>
+							</a>
 						</li>
-						<li class="list-group-item d-flex gap-2 text-light">
-							<i class="bi bi-android2"></i>
-							<p class="m-0">A third item</p>
+						<li class="list-group-item">
+							<a href="#" class="d-flex gap-2 text-light">
+								<i class="bi bi-android2"></i>
+								<p class="m-0">A third item</p>
+							</a>
 						</li>
-						<li class="list-group-item d-flex gap-2 text-light">
-							<i class="bi bi-balloon"></i>
-							<p class="m-0">A fourth item</p>
+						<li class="list-group-item">
+							<a href="#" class="d-flex gap-2 text-light">
+								<i class="bi bi-balloon"></i>
+								<p class="m-0">A fourth item</p>
+							</a>
 						</li>
-						<li class="list-group-item d-flex gap-2 text-light">
-							<i class="bi bi-book"></i>
-							<p class="m-0">And a fifth one</p>
+						<li class="list-group-item">
+							<a href="#" class="d-flex gap-2 text-light">
+								<i class="bi bi-book"></i>
+								<p class="m-0">And a fifth one</p>
+							</a>
 						</li>
 					</ul>
 				</aside>
 			</div>
 			<div class="col">
-				<table>
-					<caption>
-						Blog Manager
-					</caption>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Title</th>
-							<!-- <th>Summary</th> -->
-							<!-- <th>Content</th> -->
-							<th>Image URL</th>
-							<th>Upload Date</th>
-							<th>Edit</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($result as $blog) { ?>
-							<tr>
-								<td><?= $blog->id?></td>
-								<td><?= $blog->title?></td>
-								<td><?= $blog->imgUrl?></td>
-								<td><?= $blog->uploadDate?></td>
-								<td>
-									<a href="dashboard.php?editId=<?= $blog->id?>">
-										<i class="bi bi-pencil-square"></i>
-									</a>
-									<a href="dashboard.php?deleteId=<?= $blog->id?>">
-										<i class="bi bi-trash3-fill"></i>
-									</a>
-								</td>
-							</tr>
-						<?php }?>
-					</tbody>
-				</table>
+			<div class="container mt-4">
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Blog Manager</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Username</th>
+                    <th>Title</th>
+                    <th>Summary</th>
+                    <th>Upload Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($result as $blog) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($blog->id) ?></td>
+                        <td>
+                            <img src="<?= htmlspecialchars($blog->imgUrl) ?>"
+                                 alt="Thumbnail"
+                                 class="img-fluid rounded"
+                                 style="width: 160px; height: 90px; object-fit: cover;">
+                        </td>
+                        <td><?= htmlspecialchars($blog->username) ?></td>
+                        <td>
+                            <div class="text-truncate d-block" style="max-width: 250px;">
+                                <?= htmlspecialchars($blog->title) ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-truncate d-block" style="max-width: 250px;">
+                                <?= htmlspecialchars($blog->summary) ?>
+                            </div>
+                        </td>
+                        <td><?= htmlspecialchars($blog->uploadDate) ?></td>
+                        <td class="text-center">
+                            <a href="dashboard.php?editId=<?= urlencode($blog->id) ?>"
+                               class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a href="dashboard.php?deleteId=<?= urlencode($blog->id) ?>"
+                               class="btn btn-sm btn-outline-danger" title="Delete">
+                                <i class="bi bi-trash3-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+			</div>
+
+			</div>
+
 			</div>
 		</div>
-		<script src="assets/js/bootstrap.bundle.js"></script>
-		<script src="assets/js/dashboard.js"></script>
-	</body>
-</html>
+<?php include "components/last.php";?>

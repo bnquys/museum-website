@@ -1,4 +1,5 @@
 <script src="./assets/js/dropdown-menu.js"></script>
+<script src="assets/js/dashboard.js"></script>
 
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"
