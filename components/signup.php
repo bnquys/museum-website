@@ -2,15 +2,13 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
-	session_start();
-
 	$title = "Sign Up";
 	include "first.php";
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
-use Museum\Object\Mailer;
-use Museum\Object\User;
+	use Museum\Object\Mailer;
+	use Museum\Object\User;
 
 	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
 	$emailError = $usernameError = $passwordError = "";
@@ -265,16 +263,6 @@ use Museum\Object\User;
 		}
 
 		return true; 
-	}
-
-	function formatFullName($fullName) {
-		$fullName = trim($fullName);
-		
-		$fullName = preg_replace('/\s+/', ' ', $fullName);
-		
-		$fullName = ucwords(strtolower($fullName));
-		
-		return $fullName;
 	}
 
 	function isValidPhoneNumber($phone) {

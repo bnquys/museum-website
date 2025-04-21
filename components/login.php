@@ -22,6 +22,7 @@
 			$usernameIncorrect = true;
 		} else {
 			if ($account->exists()) {
+				$_SESSION['login'] = $username;
 				header('Location: dashboard.php');
 				exit;
 			} else {

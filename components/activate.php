@@ -1,18 +1,14 @@
 <?php
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
-
-	session_start();
-	var_dump($_SESSION['register']);
-
-
-	if (!isset($_SESSION['register'])) {
-        header("Location: login.php?pg=signup");
-        exit;
-    }
-
+	
     $title = "Activate";
 	include "first.php";
+
+	if (!isset($_SESSION['register'])) {
+		header("Location: login.php?pg=signup");
+		exit;
+	}
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;

@@ -1,4 +1,7 @@
 <?php
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+    
     $title = "Our Museum";
 	include "components/first.php";
     include "components/navbar.php";

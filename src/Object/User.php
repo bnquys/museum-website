@@ -3,7 +3,6 @@
 
     class User {
         public const TABLE = "Client";
-        public const PREFIX = "USER";
         public const LENGTH = 10;
 
         public $id;
@@ -13,7 +12,7 @@
         public $email;
 
         public function __construct($name, $birthYear, $phoneNumber, $email) {
-            $this->name = $name;
+            $this->name = self::formatFullName($name);
             $this->birthYear = $birthYear;
             $this->phoneNumber = $phoneNumber;
             $this->email = $email;
@@ -61,6 +60,16 @@
             $conn->close();
             return false;
         }
+
+        private static function formatFullName($fullName) {
+            $fullName = trim($fullName);
+            
+            $fullName = preg_replace('/\s+/', ' ', $fullName);
+            
+            $fullName = ucwords(strtolower($fullName));
+		
+		return $fullName;
+	}
     }
 
 ?>

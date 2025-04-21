@@ -36,6 +36,27 @@
             $conn->close();
         }
 
+        public static function getByUsername(string $username): ?self {
+            $conn = Database::Connect();
+
+            $stmt = $conn->prepare("SELECT Username, Email, Password FROM " . self::TABLE . " WHERE Username = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $account = null;
+
+            if ($row = $result->fetch_assoc()) {
+                $account = new self($row['Username'], $row['Email'], $row['Password']);
+            }
+
+            $stmt->close();
+            $conn->close();
+
+            return $account;
+        }
+
+
         public function exists() {
             $conn = Database::Connect();
 
@@ -85,5 +106,30 @@
             }
             return $randomNumbers;
         }
+
+        public function getUser() {
+            $conn = Database::Connect();
+
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber FROM " . User::TABLE . " WHERE Email = ?");
+            $stmt->bind_param("s", $this->email);
+            $stmt->execute();
+            
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows === 1) {
+                $row = $result->fetch_assoc();
+                $user = new User($row['Name'], null, $row['PhoneNumber'], $row['Email']);
+                
+                $stmt->close();
+                $conn->close();
+                
+                return $user;
+            }
+
+            $stmt->close();
+            $conn->close();
+            return null;
+        }
+
     }
 ?>
