@@ -1,30 +1,39 @@
-        <?php
-			$css = "ticket";
-            $title = "Ticket";
-            $name = "In Person Tickets";
-			include "components/first.php";
-            include "components/navbar.php";
-            include "components/banner.php";
-        ?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Our Museum Tickets</title>
+        <link rel="stylesheet" href="assets/css/carousel-banner.css" />
+        <link rel="stylesheet" href="assets/css/bootstrap.css" />
+        <link rel="stylesheet" href="assets/css/boots-cus.css" />
+        <link rel="stylesheet" href="assets/css/card-slider.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/move.css" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/<?=$css?>.css" />
+        <link rel="stylesheet" href="assets/css/ticket.css" />
+    </head>
+    <body>
+        <!-- Intro Section -->
+        <section class="container text-center mb-5">
+            <p class="text-muted fst-italic">Our Tickets</p>
+            <h1>Visit Our Museum</h1>
+            <p class="mt-4 mx-auto" style="max-width: 600px">
+                The National Museum of Funeral History is an impressive tourist
+                attraction and offers a wealth of authentic artifacts and
+                documentation. Discover our world of historical and
+                international mourning rituals or focus on the more present-day
+                funeral artifacts we have to offer. You can buy tickets online
+                or on-site.
+            </p>
+        </section>
+
         <!-- Ticket Pricing Section -->
         <section class="container-fluid">
-            <!-- Intro Section -->
-            <div id="intro" class="container text-center">
-                <p class="text-muted fst-italic">Our Tickets</p>
-                <h1>Visit Our Museum <br>to reconect with the <br>wonders of nature</h1>
-                <p class="mt-4 mx-auto text-gray" style="max-width: 600px">
-                    The Our Museum is an impressive tourist
-                    attraction and offers a wealth of authentic artifacts and
-                    documentation. Discover our world of historical and
-                    international mourning rituals or focus on the more present-day
-                    funeral artifacts we have to offer. You can buy tickets online
-                    or on-site.
-                </p>
-            </div>
-
             <form class="container" id="ticketForm">
                 <!-- Choose Date and Time -->
-                <div class="section">
+                <div>
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
@@ -41,14 +50,14 @@
                             <input
                                 type="date"
                                 id="visitDate"
-                                class="form-control mx-auto"
+                                class="form-control"
                             />
                         </div>
                         <div class="col-md-4">
                             <label for="visitTime" class="form-label"
                                 >Select Time Slot</label
                             >
-                            <select id="visitTime" class="form-select mx-auto">
+                            <select id="visitTime" class="form-select">
                                 <option value="">-- Select a date first --</option>
                             </select>
                         </div>
@@ -56,7 +65,7 @@
                 </div>
 
                 <!-- Choose Participants -->
-                <div class="section">
+                <div>
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
@@ -64,13 +73,13 @@
                     </div>
     
                     <!-- Children 5 and under -->
-                    <div class="row align-items-center mt-4 mb-4">
+                    <div class="row align-items-center mb-3">
                         <div class="col-6 col-md-6">
                             <p class="ticket-type">Children (5 and under)</p>
-                            <p class="ticket-desc">Children under 5 are <strong>FREE</strong>.</p>
+                            <p class="ticket-desc">Children under 5 are FREE.</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$0</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -80,18 +89,18 @@
                             />
                         </div>
                         <div class="col-2 col-md-2 text-center">
-                            <span class="fs-3">FREE</span>
+                            <span class="">FREE</span>
                         </div>
                     </div>
     
                     <!-- Children 6-11 -->
-                    <div class="row align-items-center mb-4">
+                    <div class="row align-items-center mb-3">
                         <div class="col-6 col-md-6">
                             <p class="ticket-type">Children (6-11)</p>
                             <p class="ticket-desc">Ages 6 - 11</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$7</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -106,13 +115,13 @@
                     </div>
     
                     <!-- Adult -->
-                    <div class="row align-items-center mb-4">
+                    <div class="row align-items-center mb-3">
                         <div class="col-6 col-md-6">
                             <p class="ticket-type">Adult</p>
                             <p class="ticket-desc">Day-pass</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$15</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -127,13 +136,13 @@
                     </div>
     
                     <!-- Seniors & Veterans -->
-                    <div class="row align-items-center mb-4">
+                    <div class="row align-items-center mb-3">
                         <div class="col-6 col-md-6">
                             <p class="ticket-type">Seniors & Veterans</p>
                             <p class="ticket-desc">55+ and Veterans</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$12</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -148,13 +157,13 @@
                     </div>
     
                     <!-- SCI Employee -->
-                    <div class="row align-items-center mb-4">
+                    <div class="row align-items-center mb-3">
                         <div class="col-6 col-md-6">
                             <p class="ticket-type">SCI Employee</p>
                             <p class="ticket-desc">Day-pass</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$10</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -175,7 +184,7 @@
                             <p class="ticket-desc">Minimum 25 guests</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$10</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-2 col-md-2 justify-content-center">
                             <input
                                 type="number"
                                 class="form-control"
@@ -191,7 +200,7 @@
                 </div>
 
                 <!-- Tour Guide Selection -->
-                <div class="section">
+                <div>
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
@@ -343,9 +352,9 @@
                     class="d-flex justify-content-end align-items-end flex-column text-end mt-4"
                 >
                     <div class="mb-2">
-                        <h5>Total: >>> <span id="totalPrice">$0.00</span></h5>
+                        <h5>Total: ><span id="totalPrice">$0.00</span></h5>
                     </div>
-                    <button class="btn btn-warning">Checkout</button>
+                    <button class="btn btn-warning">Add to Cart</button>
                 </div>
             </form>
         </section>
@@ -424,11 +433,15 @@
             });
         </script>
 
-        <?php 
-            include "components/footer.php";
-        ?>
-        <script src="./assets/js/dropdown-menu.js"></script>
-        <script src="assets/js/bootstrap.bundle.js"></script>
-        <script src="assets/js/sip.js"></script>
-	</body>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"
+            integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="./assets/js/card-slider.js"></script>
+        <script src="./assets/js/bootstrap.bundle.js"></script>
+        <script src="./assets/js/sip.js"></script>
+        <script src="assets/js/register.js"></script>
+    </body>
 </html>
