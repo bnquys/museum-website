@@ -22,7 +22,7 @@
         public static function add(User $user) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ."(Name, Email, PhoneNumber) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $user->name, $user->email, $user->phoneNumber);
             $stmt->execute();
 

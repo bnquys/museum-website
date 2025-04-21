@@ -1,3 +1,17 @@
+<?php
+  require_once "vendor/autoload.php";
+  use Museum\Object\Mailer;
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $subject = $_POST["subject"];
+    $message = $_POST["message"];
+
+    Mailer::sendMail($email, $name, $subject, $message);
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,7 +99,7 @@
 
 <body>
   <div class="container">
-    <form id="contact" action="mailer.php" method="post">
+    <form id="contact" action="" method="post">
       <h1>Contact Form</h1>
 
       <fieldset>

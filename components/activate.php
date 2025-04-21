@@ -1,6 +1,16 @@
 <?php
-	
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+
 	session_start();
+	var_dump($_SESSION['register']);
+
+
+	if (!isset($_SESSION['register'])) {
+        header("Location: login.php?pg=signup");
+        exit;
+    }
+
     $title = "Activate";
 	include "first.php";
 
@@ -8,10 +18,41 @@
 	use Museum\Object\Account;
 	use Museum\Object\User;
 	
-	if ($register = $_SESSION['register']) {
-		$user = $register['user'];
-		$account = $register['account'];
+	$accountData = $_SESSION['register']['account'];
+	$userData = $_SESSION['register']['user'];
+	$activateError = "";
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$activateCode = format_input($_POST["activateCode"]);
+
+		if ($activateCode == $_SESSION['register']['account']['activateCode']) {
+			$account = Account::forSignup(
+				$accountData['username'],
+				$userData['email'],
+				$accountData['password']
+			);
+
+			$user = new User(
+				$userData['name'],
+				$userData['birthYear'],
+				$userData['phoneNumber'],
+				$userData['email']
+			);
+
+			echo "entered register!!";
+			User::add($user);
+			Account::add($account);
+			$user->setForeignKey($account);
+
+			$_SESSION['login'] = $account->username;
+
+			header("Location: index.php");
+			exit;
+		} else {
+			$activateError = "Wrong activation code!";
+		}
 	}
+
 ?>
 
 <div class="position-relative">
@@ -31,7 +72,7 @@
 				id="email"
 				class="form-control" 
 				type="text" 
-				value="<?= $user ?? 'Email Error'?>" 
+				value="<?= $userData['email']?>" 
 				aria-label="Disabled input example" 
 				disabled readonly
 			>
@@ -42,11 +83,10 @@
 				id="activateCode"
 				type="text"
 				name="activateCode"
-				class="form-control <?= isset($nameError) ? 'is-invalid' : ''?>"
-				placeholder="Mc Donal"
+				class="form-control <?= !isset($nameError) ? 'is-invalid' : ''?>"
 				required
 			/>
-			<div class="invalid-feedback text-danger"></div>
+			<div class="invalid-feedback text-danger"><?= $activateError ?></div>
 
 			<div class="d-flex justify-content-around">
 				<a href="login.php?pg=signup" class="btn btn-success my-3">Back</a>

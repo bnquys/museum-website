@@ -78,7 +78,7 @@
             return false;
         }
 
-        private static function generateRandomNumbers($length) {
+        public static function generateRandomNumbers($length) {
             $randomNumbers = '';
             for ($i = 0; $i < $length; $i++) {
                 $randomNumbers .= rand(0, 9); 

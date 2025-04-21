@@ -9,7 +9,8 @@
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
-	use Museum\Object\User;
+use Museum\Object\Mailer;
+use Museum\Object\User;
 
 	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
 	$emailError = $usernameError = $passwordError = "";
@@ -74,17 +75,24 @@
 		}
 
 		if ($valid) {
-			$user = new User($name, $birthYear, $phoneNumber, $email);
-			// User::add($user);
-			
-			$account = Account::forSignup($username, $email, $password);
-			// Account::add($account);
-			// $user->setForeignKey($account);
+			$activateCode = Account::generateRandomNumbers(6);
+
+			Mailer::sendMail($email, $name, "Your activate code", $activateCode);
 
 			$_SESSION['register'] = [
-				'account' => $account,
-				'user' => $user
+				'account' => [
+					'username' => $username,
+					'password' => $password,
+					'activateCode' => $activateCode
+				],
+				'user' => [
+					'name' => $name,
+					'birthYear' => $birthYear,
+					'phoneNumber' => $phoneNumber,
+					'email' => $email
+				]
 			];
+
 			header("Location: login.php?pg=activate");
 			exit;
 		}
