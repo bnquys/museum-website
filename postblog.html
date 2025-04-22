@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="assets/css/bootstrap.css" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="container my-5">
+			<h2 class="text-center mb-4">Tạo Bài Blog Mới</h2>
+			<form
+				action="upload.php"
+				method="post"
+				enctype="multipart/form-data"
+			>
+				<!-- Trường ẩn cho username -->
+				<input type="hidden" name="username" value="bnquys" />
+
+				<!-- Tiêu đề bài blog -->
+				<div class="mb-3">
+					<label for="title" class="form-label"
+						>Tiêu Đề Bài Blog</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="title"
+						name="title"
+						required
+					/>
+				</div>
+
+				<!-- Tóm tắt bài blog -->
+				<div class="mb-3">
+					<label for="summary" class="form-label"
+						>Tóm Tắt Bài Blog</label
+					>
+					<textarea
+						class="form-control"
+						id="summary"
+						name="summary"
+						rows="3"
+						required
+					></textarea>
+				</div>
+
+				<!-- Nội dung bài blog -->
+				<div class="mb-3">
+					<label for="content" class="form-label"
+						>Nội Dung Bài Blog</label
+					>
+					<textarea
+						class="form-control"
+						id="content"
+						name="content"
+						rows="5"
+						required
+					></textarea>
+				</div>
+
+				<!-- Tải ảnh lên -->
+				<div class="mb-3">
+					<label for="image" class="form-label"
+						>Tải Ảnh Lên (tuỳ chọn)</label
+					>
+					<input
+						class="form-control"
+						type="file"
+						name="image"
+						id="image"
+					/>
+				</div>
+
+				<!-- Chọn hiển thị bài blog -->
+				<div class="mb-3">
+					<label for="is_show" class="form-label"
+						>Hiển Thị Bài Blog</label
+					>
+					<select class="form-select" name="is_show" id="is_show">
+						<option value="1">Có</option>
+						<option value="0">Không</option>
+					</select>
+				</div>
+
+				<!-- Nút submit -->
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary">
+						Tạo Bài Blog
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<script src="assets/js/bootstrap.bundle.js"></script>
+	</body>
+</html>
