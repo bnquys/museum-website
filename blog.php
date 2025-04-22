@@ -4,14 +4,113 @@
     include "components/first.php";
     include "components/navbar.php";
     include "components/banner.php";
-    require_once "object/Blog.php";
+    // require_once "object/Blog.php";
 ?>
 
 <section class="container d-flex flex-column gap-4 mb-5">
     <?php
-        Blog::show(10);
+        // Blog::show(10);
+        
     ?>
+    <div class="container my-5">
+        <div class="row g-4">
+            <div
+                class="col-12 d-flex blog-card"
+                onclick="openModal('🔥 Blog content here 🔥')"
+            >
+                <img
+                    src="https://via.placeholder.com/150"
+                    class="img-fluid rounded"
+                    alt="Blog Pic"
+                    style="width: 150px; height: 150px; object-fit: cover"
+                />
+
+                <div class="ms-3 flex-grow-1">
+                    <h5 class="mb-1">TITLE</h5>
+                    <p class="text-muted mb-1">Summary</p>
+
+                    <div
+                        class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                    >
+                        <span>Date</span>
+                        <span>3 Reacts</span>
+                        <span>5 Comments</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="col-12 d-flex blog-card"
+                onclick="openModal('🔥 Blog content here 🔥')"
+            >
+                <img
+                    src="https://via.placeholder.com/150"
+                    class="img-fluid rounded"
+                    alt="Blog Pic"
+                    style="width: 150px; height: 150px; object-fit: cover"
+                />
+
+                <div class="ms-3 flex-grow-1">
+                    <h5 class="mb-1">TITLE</h5>
+                    <p class="text-muted mb-1">Summary</p>
+
+                    <div
+                        class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                    >
+                        <span>Date</span>
+                        <span>3 Reacts</span>
+                        <span>5 Comments</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="col-12 d-flex blog-card"
+                onclick="openModal('🔥 Blog content here 🔥')"
+            >
+                <img
+                    src="https://via.placeholder.com/150"
+                    class="img-fluid rounded"
+                    alt="Blog Pic"
+                    style="width: 150px; height: 150px; object-fit: cover"
+                />
+
+                <div class="ms-3 flex-grow-1">
+                    <h5 class="mb-1">TITLE</h5>
+                    <p class="text-muted mb-1">Summary</p>
+
+                    <div
+                        class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                    >
+                        <span>Date</span>
+                        <span>3 Reacts</span>
+                        <span>5 Comments</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>
+
+<script>
+    function openModal(content) {
+        document.getElementById("modal-text").innerText = content;
+        document.getElementById("modal").style.display = "flex";
+        document.body.style.overflow = "hidden"; // disable scroll
+    }
+
+    function closeModal(event) {
+        // Only close if clicked outside modal-content
+        if (
+            !event ||
+            event.target === document.getElementById("modal")
+        ) {
+            document.getElementById("modal").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    }
+</script>
 
 <?php 
     include "components/footer.php";

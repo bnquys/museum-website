@@ -65,7 +65,7 @@ if __name__ == "__main__":
         print("Vui lòng nhập một số nguyên dương hợp lệ.")
         sys.exit(1)
 
-    username = "bnquys"
+    username = "humm._.m"
     insert_queries = ["DELETE FROM Blog;"]
     used_random_ids = set()
 

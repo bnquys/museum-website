@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="a.css" />
+        <link rel="stylesheet" href="assets/css/bootstrap.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container my-5">
+            <div class="row g-4">
+                <div
+                    class="col-12 d-flex blog-card"
+                    onclick="openModal('🔥 Blog content here 🔥')"
+                >
+                    <img
+                        src="https://via.placeholder.com/150"
+                        class="img-fluid rounded"
+                        alt="Blog Pic"
+                        style="width: 150px; height: 150px; object-fit: cover"
+                    />
+
+                    <div class="ms-3 flex-grow-1">
+                        <h5 class="mb-1">TITLE</h5>
+                        <p class="text-muted mb-1">Summary</p>
+
+                        <div
+                            class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                        >
+                            <span>Date</span>
+                            <span>3 Reacts</span>
+                            <span>5 Comments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-12 d-flex blog-card"
+                    onclick="openModal('🔥 Blog content here 🔥')"
+                >
+                    <img
+                        src="https://via.placeholder.com/150"
+                        class="img-fluid rounded"
+                        alt="Blog Pic"
+                        style="width: 150px; height: 150px; object-fit: cover"
+                    />
+
+                    <div class="ms-3 flex-grow-1">
+                        <h5 class="mb-1">TITLE</h5>
+                        <p class="text-muted mb-1">Summary</p>
+
+                        <div
+                            class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                        >
+                            <span>Date</span>
+                            <span>3 Reacts</span>
+                            <span>5 Comments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-12 d-flex blog-card"
+                    onclick="openModal('🔥 Blog content here 🔥')"
+                >
+                    <img
+                        src="https://via.placeholder.com/150"
+                        class="img-fluid rounded"
+                        alt="Blog Pic"
+                        style="width: 150px; height: 150px; object-fit: cover"
+                    />
+
+                    <div class="ms-3 flex-grow-1">
+                        <h5 class="mb-1">TITLE</h5>
+                        <p class="text-muted mb-1">Summary</p>
+
+                        <div
+                            class="d-flex justify-content-between text-secondary mt-3 flex-wrap"
+                        >
+                            <span>Date</span>
+                            <span>3 Reacts</span>
+                            <span>5 Comments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Frame -->
+        <div id="modal" class="modal" onclick="closeModal(event)">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">×</span>
+                <p id="modal-text"></p>
+            </div>
+        </div>
+
+        <script src="./assets/js/bootstrap.bundle.js"></script>
+        <script>
+            function openModal(content) {
+                document.getElementById("modal-text").innerText = content;
+                document.getElementById("modal").style.display = "flex";
+                document.body.style.overflow = "hidden"; // disable scroll
+            }
+
+            function closeModal(event) {
+                // Only close if clicked outside modal-content
+                if (
+                    !event ||
+                    event.target === document.getElementById("modal")
+                ) {
+                    document.getElementById("modal").style.display = "none";
+                    document.body.style.overflow = "auto";
+                }
+            }
+        </script>
+    </body>
+</html>
