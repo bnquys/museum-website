@@ -1,0 +1,76 @@
+section.container-fluid {
+    background-color: var(--light-cl-rgba);
+    padding: 3rem 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+}
+
+.frame {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.frame:hover {
+    transform: translateY(-4px);
+}
+
+section.container-fluid svg {
+    color: var(--dark-cl); /* bootstrap success color */
+    flex-shrink: 0;
+}
+
+section.container-fluid .h4 {
+    font-weight: 600;
+    color: var(--deep-forest-cl);
+    margin-bottom: 0.25rem;
+}
+
+section.container-fluid p {
+    margin: 0;
+    color: #6c757d;
+}
+
+.form-floating input,
+.form-control,
+textarea {
+    border-radius: 0.5rem !important;
+    border: 1px solid #dacece;
+}
+
+textarea.form-control {
+    resize: none;
+}
+
+button.btn-success {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(25, 135, 84, 0.3);
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+.form-control {
+    border: 1px solid var(--normal-light-cl);
+    border-radius: 0;
+    background-color: var(--light-cl-rgba);
+    color: var(--dark-cl);
+    transition: all 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+.form-control:focus {
+    outline: none;
+    color: var(--dark-cl);
+    border-color: var(--normal-cl);
+    box-shadow: 0 0 0 2px var(--normal-cl-rgba);
+}
+
+label,
+.form-control::placeholder {
+    color: var(--dark-cl);
+}
