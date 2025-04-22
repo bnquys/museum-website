@@ -10,9 +10,9 @@
         <section class="container-fluid">
             <!-- Intro Section -->
             <div id="intro" class="container text-center">
-                <p class="text-muted fst-italic">Our Tickets</p>
-                <h1>Visit Our Museum <br>to reconect with the <br>wonders of nature</h1>
-                <p class="mt-4 mx-auto text-gray" style="max-width: 600px">
+                <p class="text-muted fst-italic fs-4 mb-2 mv-tb">Our Tickets</p>
+                <h1 class="mv-tb">Visit Our Museum <br class="mv-tb">to reconect with the <br class="mv-tb">wonders of nature</h1>
+                <p class="mt-4 mx-auto text-gray fs-5 mv-tb" style="max-width: 400px">
                     The Our Museum is an impressive tourist
                     attraction and offers a wealth of authentic artifacts and
                     documentation. Discover our world of historical and
@@ -28,14 +28,14 @@
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
-                        <h2 class="col-12">Choose Date and Time Arrival</h2>
+                        <h2 class="col-12 mv-lr">Choose Your Date and Time Arrival</h2>
                     </div>
     
                     <div
                         class="row g-3 align-items-center justify-content-center mb-4 text-center"
                     >
                         <div class="col-md-4">
-                            <label for="visitDate" class="form-label"
+                            <label for="visitDate" class="form-label fs-5"
                                 >Select Date</label
                             >
                             <input
@@ -45,7 +45,7 @@
                             />
                         </div>
                         <div class="col-md-4">
-                            <label for="visitTime" class="form-label"
+                            <label for="visitTime" class="form-label fs-5"
                                 >Select Time Slot</label
                             >
                             <select id="visitTime" class="form-select mx-auto">
@@ -60,13 +60,13 @@
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
-                        <h2 class="col-12">Choose your participants</h2>
+                        <h2 class="col-12 mv-lr">Choose your participants</h2>
                     </div>
     
                     <!-- Children 5 and under -->
                     <div class="row align-items-center mt-4 mb-4">
                         <div class="col-6 col-md-6">
-                            <p class="ticket-type">Children (5 and under)</p>
+                            <p class="ticket-type mv-lr">Children (5 and under)</p>
                             <p class="ticket-desc">Children under 5 are <strong>FREE</strong>.</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$0</div>
@@ -87,7 +87,7 @@
                     <!-- Children 6-11 -->
                     <div class="row align-items-center mb-4">
                         <div class="col-6 col-md-6">
-                            <p class="ticket-type">Children (6-11)</p>
+                            <p class="ticket-type mv-lr">Children (6-11)</p>
                             <p class="ticket-desc">Ages 6 - 11</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$7</div>
@@ -108,7 +108,7 @@
                     <!-- Adult -->
                     <div class="row align-items-center mb-4">
                         <div class="col-6 col-md-6">
-                            <p class="ticket-type">Adult</p>
+                            <p class="ticket-type mv-lr">Adult</p>
                             <p class="ticket-desc">Day-pass</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$15</div>
@@ -129,7 +129,7 @@
                     <!-- Seniors & Veterans -->
                     <div class="row align-items-center mb-4">
                         <div class="col-6 col-md-6">
-                            <p class="ticket-type">Seniors & Veterans</p>
+                            <p class="ticket-type mv-lr">Seniors & Veterans</p>
                             <p class="ticket-desc">55+ and Veterans</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$12</div>
@@ -150,29 +150,8 @@
                     <!-- SCI Employee -->
                     <div class="row align-items-center mb-4">
                         <div class="col-6 col-md-6">
-                            <p class="ticket-type">SCI Employee</p>
+                            <p class="ticket-type mv-lr">SCI Employee</p>
                             <p class="ticket-desc">Day-pass</p>
-                        </div>
-                        <div class="col-2 col-md-2 price text-center">$10</div>
-                        <div class="col-2 col-md-2">
-                            <input
-                                type="number"
-                                class="form-control"
-                                min="0"
-                                value="0"
-                                data-price="10"
-                            />
-                        </div>
-                        <div class="col-2 col-md-2 text-center">
-                            <span class="row-total">$0.00</span>
-                        </div>
-                    </div>
-    
-                    <!-- Group -->
-                    <div class="row align-items-center mb-4">
-                        <div class="col-6 col-md-6">
-                            <p class="ticket-type">Group</p>
-                            <p class="ticket-desc">Minimum 25 guests</p>
                         </div>
                         <div class="col-2 col-md-2 price text-center">$10</div>
                         <div class="col-2 col-md-2">
@@ -195,19 +174,19 @@
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
-                        <h2 class="col-12">Choose Your Tour Guide</h2>
+                        <h2 class="col-12 mv-lr">Choose Your Tour Guide</h2>
                     </div>
     
                     <div class="row row-cols-1 row-cols-md-4 g-4 mt-2">
                         <!-- Guide 1 -->
-                        <div class="col">
+                        <div class="col mv-scale">
                             <div
                                 class="card h-100 p-2 guide-card"
                                 data-price="30"
                                 data-guide="alex"
                             >
                                 <img
-                                    src="https://i.imgur.com/OKjR72P.jpg"
+                                    src="assets/img/male1.jpg"
                                     class="card-img-top"
                                     alt="Alex"
                                 />
@@ -236,14 +215,14 @@
                         </div>
     
                         <!-- Guide 2 -->
-                        <div class="col">
+                        <div class="col mv-scale">
                             <div
                                 class="card h-100 p-2 guide-card"
                                 data-price="35"
                                 data-guide="bella"
                             >
                                 <img
-                                    src="https://i.imgur.com/EqvEBQn.jpg"
+                                    src="assets/img/female1.jpg"
                                     class="card-img-top"
                                     alt="Bella"
                                 />
@@ -271,14 +250,14 @@
                         </div>
     
                         <!-- Guide 3 -->
-                        <div class="col">
+                        <div class="col mv-scale">
                             <div
                                 class="card h-100 p-2 guide-card"
                                 data-price="25"
                                 data-guide="chris"
                             >
                                 <img
-                                    src="https://i.imgur.com/AdK0r9v.jpg"
+                                    src="assets/img/male2.jpg"
                                     class="card-img-top"
                                     alt="Chris"
                                 />
@@ -304,14 +283,14 @@
                         </div>
     
                         <!-- Guide 4 -->
-                        <div class="col">
+                        <div class="col mv-scale">
                             <div
                                 class="card h-100 p-2 guide-card"
                                 data-price="40"
                                 data-guide="dana"
                             >
                                 <img
-                                    src="https://i.imgur.com/g4qftFJ.jpg"
+                                    src="assets/img/female2.jpg"
                                     class="card-img-top"
                                     alt="Dana"
                                 />
@@ -345,7 +324,7 @@
                     <div class="mb-2">
                         <h5>Total: >>> <span id="totalPrice">$0.00</span></h5>
                     </div>
-                    <button class="btn btn-warning">Checkout</button>
+                    <button class="btn btn-warning pulse">--- Checkout ---</button>
                 </div>
             </form>
         </section>

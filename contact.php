@@ -5,9 +5,9 @@
             include "components/navbar.php";
             include "components/banner.php";
         ?>
-		<section class="container">
-			<div class="row row-cols-1 row-cols-sm-3">
-				<div class="col mt-4 mt-sm-0 d-flex flex-column">
+		<section class="container-fluid p-5">
+			<div class="d-flex align-item-center justify-content-center gap-5">
+				<div class="frame mt-4 mt-sm-0 me-2 d-flex flex-column gap-3">
 					<div class="d-flex gap-3">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +22,8 @@
 							/>
 						</svg>
 						<div>
-							<p class="h4">Ton Duc Thang University</p>
-							<p>So 19 Nguyen Huu Tho</p>
+							<p class="h4">TDTU</p>
+							<p>19 Nguyen Huu Tho</p>
 						</div>
 					</div>
 					<div class="d-flex gap-3">
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col mt-4 mt-sm-0 d-flex flex-column gap-3">
+				<div class="frame mt-4 mt-sm-0 me-2 d-flex flex-column gap-3 w-25">
 					<div class="form-floating">
 						<input
 							type="text"
@@ -98,7 +98,7 @@
 						<label for="floatingInput">Your subject</label>
 					</div>
 				</div>
-				<div class="col mt-4 mt-sm-0">
+				<div class="frame mt-4 mt-sm-0 w-25">
 					<textarea
 						class="form-control"
 						id="exampleFormControlTextarea1"

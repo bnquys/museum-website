@@ -157,7 +157,7 @@
 				type="email"
 				name="email"
 				id="email"
-				class="form-control <?= isset($emailError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !isset($emailError) ? 'is-invalid' : '' ?>"
 				value="<?= $email?>"
 				required
 			/>
@@ -180,7 +180,7 @@
 			>
 			<input
 				type="text"
-				class="form-control <?= isset($usernameError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !isset($usernameError) ? 'is-invalid' : '' ?>"
 				id="username"
 				name="username"
 				value="<?= $username?>"
@@ -194,7 +194,7 @@
 			<input
 				type="password"
 				id="password"
-				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !isset($passwordError) ? 'is-invalid' : '' ?>"
 				aria-describedby="passwordHelpBlock"
 				name="password"
 				required
@@ -207,7 +207,7 @@
 			<input
 				type="password"
 				id="confirm-pass"
-				class="form-control <?= isset($passwordError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !isset($passwordError) ? 'is-invalid' : '' ?>"
 				name="confirmPass"
 				aria-describedby="passwordHelpBlock"
 				required
