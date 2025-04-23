@@ -3,6 +3,36 @@
 	$name = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
+
+	require_once realpath(__DIR__."/vendor/autoload.php");
+	use Museum\Object\Blog;
+    use Museum\Object\FileUploader;
+	
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$uploader = new FileUploader();
+
+        $uploadResult = $uploader->upload($_FILES["image"]);
+
+        if ($uploadResult) {
+            echo "File has been uploaded successfully. File path: " . $uploadResult;
+        } else {
+            echo "Error: " . $uploader->error;
+            exit;
+        }
+
+        $title = $_POST['title'];
+        $summary = $_POST['summary'];
+        $content = $_POST['content'];
+        $currentDate = date('Y-m-d H:i:s');
+        $username = "bnquys";
+
+        $blog = new Blog(Blog::getNextId(), $username, $title, $summary, $content, $uploadResult, $currentDate);
+
+        Blog::add($blog);
+        header("Location: dashboard.php");
+        exit;
+	}
+
 ?>
 		<div class="container-fluid bg-success d-md-none sticky-top">
 			<nav class="nav">
@@ -106,26 +136,69 @@
 				</aside>
 			</div>
 			<div class="col">
-			<div class="container mt-4">	
-			<?php
-        // Kiểm tra xem có tham số 'deleteId' hay không
-        if (isset($_GET['deleteId'])) {
-            // Nếu có deleteId, gọi phương thức xóa bài viết và sau đó chuyển hướng về trang danh sách blog
-            $deleteId = $_GET['deleteId'];
-            Blog::delete($deleteId);  // Xóa bài viết theo ID
-            header("Location: dashboard.php");  // Chuyển hướng lại trang danh sách
-            exit;
-        }
+			<div class="container mt-4">
+            <header class="bg-dark text-white text-center py-4">
+    <h1>Post New Article</h1>
+</header>
 
-        // Kiểm tra xem có tham số 'editId' hay không
-        if (isset($_GET['editId'])) {
-            // Nếu có editId, gọi trang blog_new.php để chỉnh sửa
-            include "components/dashboard/blog_new.php";
-        } else {
-            // Nếu không có editId, hiển thị danh sách bài viết
-            include "components/dashboard/blog_main.php";
-        }
-    ?>
+<div class="container mt-5">
+    <form id="blogForm" action="" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" required placeholder="Enter the article title">
+        </div>
+
+        <div class="form-group">
+            <label for="summary">Summary:</label>
+            <textarea class="form-control" id="summary" name="summary" required placeholder="Enter the article summary"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea class="form-control" id="content" name="content" required placeholder="Enter the article content"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Attach Image:</label>
+            <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+            <div id="imagePreview" class="mt-3" style="display: none;">
+                <label>Image Preview:</label><br>
+                <img id="previewImg" src="" alt="Image Preview" style="max-width: 100%; max-height: 300px;">
+                <button type="button" id="deleteImage" class="btn btn-danger mt-2">Delete Image</button>
+            </div>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="isShow" name="isShow" checked>
+            <label class="form-check-label" for="isShow">Make this post public</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Post</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Khi người dùng chọn tệp ảnh
+    $('#image').change(function(event) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Hiển thị hình ảnh xem trước
+            $('#previewImg').attr('src', e.target.result);
+            $('#imagePreview').show();  // Hiển thị phần xem trước
+        };
+
+        reader.readAsDataURL(this.files[0]);  // Đọc ảnh
+    });
+
+    // Khi người dùng nhấn nút xóa ảnh
+    $('#deleteImage').click(function() {
+        $('#image').val('');  // Xóa tệp ảnh đã chọn
+        $('#imagePreview').hide();  // Ẩn phần xem trước
+    });
+</script>
+
 
 			</div>
 
