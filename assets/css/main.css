@@ -10,8 +10,10 @@
     --light-cl-rgba: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
 
-    --deep-forest-cl: #014421; /* For deep backgrounds or titles */
-    --sky-cl: #b2f5ead3; /* Light peaceful touch */
+    --deep-forest-cl: #014421;
+    --sky-cl: #b2f5ead3;
+    
+    --so-deep-cl: rgb(5, 30, 4);
 }
 
 * {
@@ -405,7 +407,7 @@ footer {
     background: radial-gradient(
         circle,
         var(--normal-cl),
-        var(--dark-cl),
+        /* var(--dark-cl), */
         var(--dark-cl)
     );
 }
@@ -421,4 +423,8 @@ footer h6 {
 
 .btn-ticket {
     background-color: var(--dark-cl) !important;
+}
+
+.btn-ticket:hover a {
+    color:white !important;
 }

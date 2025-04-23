@@ -243,15 +243,12 @@
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
-
         </script>
         
 
         <?php 
             include "components/footer.php";
+            include "components/last.php";
         ?>
-        <script src="./assets/js/dropdown-menu.js"></script>
-        <script src="assets/js/bootstrap.bundle.js"></script>
-        <script src="assets/js/sip.js"></script>
 	</body>
 </html>
