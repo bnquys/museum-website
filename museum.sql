@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     4/23/2025 10:18:02 PM                        */
+/* Created on:     4/23/2025 11:17:11 PM                        */
 /*==============================================================*/
 
 
@@ -50,7 +50,7 @@ create table Blog
    Id                   varchar(20) not null,
    Username             varchar(50) not null,
    Title                text,
-   UploadDate           datetime default 'CURRENT_TIMESTAMP()',
+   UploadDate           datetime default CURRENT_TIMESTAMP,
    Summary              text,
    Content              text,
    ImageUrl             text default '',
@@ -78,7 +78,7 @@ create table ContactForms
 (
    Username             varchar(50) not null,
    Message              text,
-   CreatedAt            datetime default 'CURRENT_TIMESTAMP()',
+   CreatedAt            datetime default CURRENT_TIMESTAMP,
    primary key (Username)
 );
 
@@ -134,8 +134,8 @@ create table Events
    EveId2               varchar(20),
    Title                text,
    Description          text,
-   TimeStart            datetime default 'CURRENT_TIMESTAMP()',
-   TimeEnd              datetime default 'CURRENT_TIMESTAMP()',
+   TimeStart            datetime default CURRENT_TIMESTAMP,
+   TimeEnd              datetime default CURRENT_TIMESTAMP,
    Location             text,
    primary key (Id)
 );
@@ -191,7 +191,7 @@ create table Orders
    VouId                varchar(20),
    PayId                varchar(20),
    Username             varchar(50),
-   CreatedDate          datetime default 'CURRENT_TIMESTAMP()',
+   CreatedDate          datetime default CURRENT_TIMESTAMP,
    primary key (Id)
 );
 
@@ -203,6 +203,7 @@ create table Payment
    Id                   varchar(20) not null,
    OrdId                varchar(20) not null,
    PayId                varchar(20),
+   PayDate              datetime default CURRENT_TIMESTAMP,
    TotalCost            float default 0,
    primary key (Id)
 );
@@ -227,7 +228,7 @@ create table Reviews
    Username             varchar(50) not null,
    Rating               float default 0,
    Comment              text,
-   CreatedAt            datetime default 'CURRENT_TIMESTAMP()',
+   CreatedAt            datetime default CURRENT_TIMESTAMP,
    IsShow               boolean default TRUE,
    primary key (Id)
 );
@@ -272,7 +273,7 @@ create table Ticket
    Id                   varchar(20) not null,
    Email                varchar(50),
    Name                 text,
-   VisitDate            datetime default 'CURRENT_TIMESTAMP()',
+   VisitDate            datetime default CURRENT_TIMESTAMP,
    Price                float default 0,
    IsShow               boolean default TRUE,
    primary key (Id)
@@ -283,9 +284,9 @@ create table Ticket
 /*==============================================================*/
 create table ToTag
 (
-   TagId                varchar(20) not null,
    Id                   varchar(20) not null,
-   primary key (TagId, Id)
+   BloId                varchar(20) not null,
+   primary key (Id, BloId)
 );
 
 /*==============================================================*/
@@ -296,6 +297,8 @@ create table Voucher
    Id                   varchar(20) not null,
    Price                float default 0,
    Percent              real default 0,
+   DateStart            datetime default CURRENT_TIMESTAMP,
+   DateEnd              datetime default CURRENT_TIMESTAMP,
    Description          text,
    primary key (Id)
 );
@@ -375,9 +378,9 @@ alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
 alter table Ticket add constraint FK_TICKET_HIRE_GUIDES foreign key (Email)
       references Guides (Email) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (Id)
+alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
       references Blog (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (TagId)
+alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (Id)
       references Tag (Id) on delete restrict on update restrict;
 
