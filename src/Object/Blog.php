@@ -112,9 +112,7 @@
             if (!$stmt->execute()) {
                 die("Execute failed: " . $stmt->error);
             }
-        
-            echo "Blog added or updated successfully.";
-        
+                
             $stmt->close();
             $conn->close();
         }             
@@ -122,7 +120,6 @@
         public static function getNextId() {
             $conn = Database::Connect();
             
-            // Truy vấn để lấy ID lớn nhất trong bảng Blog
             $stmt = $conn->prepare("SELECT MAX(Id) AS maxId FROM Blog");
             if (!$stmt) {
                 die("Prepare failed: " . $conn->error);
@@ -135,16 +132,12 @@
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
         
-            // Lấy ID lớn nhất và loại bỏ phần prefix
             $maxId = ($row['maxId'] == NULL) ? 0 : (int)substr($row['maxId'], strlen(self::PREFIX));
             
-            // Tính ID kế tiếp
             $nextId = $maxId + 1;
         
-            // Tính chiều dài phần số (số chữ số cần thêm vào)
             $numberLength = self::CODE_LENGTH - strlen(self::PREFIX);
         
-            // Đảm bảo phần số có đủ chiều dài
             $nextIdFormatted = self::PREFIX . str_pad($nextId, $numberLength, "0", STR_PAD_LEFT);
         
             $stmt->close();

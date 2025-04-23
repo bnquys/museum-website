@@ -136,7 +136,6 @@ if (isset($_GET['editId'])) {
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $('#image').change(function(event) {
         var reader = new FileReader();
@@ -154,27 +153,33 @@ if (isset($_GET['editId'])) {
     if (confirmation) {
         // Gửi yêu cầu AJAX để xóa ảnh
         $.ajax({
-            type: 'POST',
-            url: 'delete_image.php',  // Đảm bảo đường dẫn đúng
-            data: { id: '<?= $blog->id ?>' },  // Gửi ID blog
-            success: function(response) {
-                var res = JSON.parse(response);
-                if (res.success) {
-                    // Xóa ảnh trong UI
-                    $('#previewImg').attr('src', '');
-                    $('#imagePreview').hide();
-                    alert("Image deleted successfully.");
-                } else {
-                    console.log("Error: " + res.message);
-                    alert("Failed to delete the image: " + res.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                // Xử lý lỗi AJAX
-                console.log("AJAX Error: " + error);
-                alert("Error while deleting the image.");
+    type: 'POST',
+    url: 'components/dashboard/delete_image.php',
+    data: { id: '<?= $blog->id ?>' },
+    success: function(response) {
+        console.log(response);  // Kiểm tra phản hồi từ server
+        try {
+            var res = JSON.parse(response);  // Phân tích JSON
+            if (res.success) {
+                $('#previewImg').attr('src', '');
+                $('#imagePreview').hide();
+                alert("Image deleted successfully.");
+            } else {
+                console.log("Error: " + res.message);
+                alert("Failed to delete the image: " + res.message);
             }
-        });
+        } catch (e) {
+            console.log("Error parsing JSON:", e);
+            alert("Unexpected error occurred while processing the response.");
+        }
+    },
+    error: function(xhr, status, error) {
+        console.log("AJAX Error: " + error);
+        alert("Error while deleting the image.");
+    }
+});
+
+
     }
 });
 

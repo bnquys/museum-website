@@ -1,6 +1,6 @@
 <?php
 	// session_start();
-	$name = "Dashboard";
+	$title = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
 ?>
