@@ -21,6 +21,11 @@
     /* text-shadow: 0 0 20px rgba(61, 255, 2, 1); */
 }
 
+*::selection {
+    background-color: var(--normal-cl);
+    color: white;
+}
+
 a {
     text-decoration: none;
 }
