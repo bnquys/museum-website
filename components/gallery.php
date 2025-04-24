@@ -19,8 +19,8 @@
 				data-title="The Rosetta Stone"
 				data-description="A granodiorite stele inscribed with a decree issued at Memphis, Egypt in 196 BC."
 				data-history="Discovered in 1799 by French soldiers during Napoleon's campaign in Egypt. Ceded to Britain in 1801 after the British defeated the French. Has been housed in the British Museum since 1802. Key to deciphering Egyptian hieroglyphs."
-				data-date="April 10, 2025"
-				data-author="Dr. Julia Henderson, Ecologist"
+				data-date="April 11, 2025"
+				data-author="Dr. Hello, Superhuman"
 			/>
 			<img
 				class="hover-link mv-scale gallery-img"

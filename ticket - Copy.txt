@@ -176,7 +176,7 @@
                     >
                         <h2 class="mv-lr">Want a tour guide?</h2>
                         <!-- Yes/No -->
-                        <div class="checkbox-wrapper-10 ms-3">
+                        <div class="checkbox-wrapper-10">
                             <input class="tgl tgl-flip" id="cb5" type="checkbox" />
                             <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
                         </div>
@@ -322,7 +322,23 @@
                         </div>
                     </div>
                 </div>
-                
+                <script>
+                $(document).ready(function () {
+                    // Initially hide the guide list
+                    $('.guide-list').hide();
+
+                    // When the checkbox is clicked (Yeah/Nope)
+                    $('#cb5').change(function () {
+                        if (this.checked) {
+                            // Show the guide list with animation
+                            $('.guide-list').stop(true, true).slideDown(500);
+                        } else {
+                            // Hide the guide list with animation
+                            $('.guide-list').stop(true, true).slideUp(500);
+                        }
+                    });
+                });
+                </script>
                 <!-- Total and Add to Cart Section -->
                 <div
                     class="d-flex justify-content-end align-items-end flex-column text-end mt-4"
@@ -330,91 +346,58 @@
                     <div class="mb-2">
                         <h5>Total: >>> <span id="totalPrice">$0.00</span></h5>
                     </div>
-                    <button class="btn btn-warning pulse w-auto">~~~~~ Checkout !! ~~~~~</button>
+                    <button class="btn btn-warning pulse">--- Checkout ---</button>
                 </div>
             </form>
         </section>
         <script>
-            $(document).ready(function () {
-                // Initially hide the guide list
-                $('.guide-list').hide();
+            const inputs = document.querySelectorAll('input[type="number"]');
+            const totalDisplay = document.getElementById("totalPrice");
+            const guideCards = document.querySelectorAll(".guide-card");
 
-                // When the checkbox is clicked (Yeah/Nope)
-                $('#cb5').change(function () {
-                    if (this.checked) {
-                        // Show the guide list with animation
-                        $('.guide-list').stop(true, true).slideDown(700);
-                    } else {
-                        // Hide the guide list with animation and unselect all guides
-                        $('.guide-list').stop(true, true).slideUp(700);
-                        // Unselect all guides
-                        $('.guide-card').removeClass('selected');
-                        $('input[name="guide"]:checked').prop('checked', false);
-                        calculateTotal();
+            function calculateTotal() {
+                let total = 0;
+
+                inputs.forEach((input) => {
+                    const qty = parseInt(input.value) || 0;
+                    const price = parseFloat(input.dataset.price);
+                    const rowTotal = qty * price;
+                    total += rowTotal;
+
+                    // Update the row total
+                    const row = input.closest(".row");
+                    const rowTotalSpan = row.querySelector(".row-total");
+                    if (rowTotalSpan) {
+                        rowTotalSpan.textContent = `$${rowTotal.toFixed(2)}`;
                     }
                 });
 
-                const guideCards = document.querySelectorAll(".guide-card");
-
-                guideCards.forEach((card) => {
-                    card.addEventListener("click", () => {
-                        // Toggle the selection state of the clicked guide
-                        if (card.classList.contains("selected")) {
-                            card.classList.remove("selected");
-                            const radio = card.querySelector(".guide-radio");
-                            if (radio) radio.checked = false; // Uncheck the radio
-                        } else {
-                            // Deselect any previously selected guide
-                            guideCards.forEach((c) => c.classList.remove("selected"));
-                            card.classList.add("selected");
-
-                            const radio = card.querySelector(".guide-radio");
-                            if (radio) radio.checked = true;
-                        }
-
-                        // Recalculate total price
-                        calculateTotal();
-                    });
-                });
-
-                // Function to calculate the total price
-                function calculateTotal() {
-                    let total = 0;
-
-                    // Calculate total for ticket quantities
-                    inputs.forEach((input) => {
-                        const qty = parseInt(input.value) || 0;
-                        const price = parseFloat(input.dataset.price);
-                        const rowTotal = qty * price;
-                        total += rowTotal;
-
-                        // Update the row total display
-                        const row = input.closest(".row");
-                        const rowTotalSpan = row.querySelector(".row-total");
-                        if (rowTotalSpan) {
-                            rowTotalSpan.textContent = `$${rowTotal.toFixed(2)}`;
-                        }
-                    });
-
-                    // Add the selected guide price to the total if any guide is selected
-                    const selectedCard = document.querySelector(".guide-card.selected");
-                    if (selectedCard) {
-                        const guidePrice = parseFloat(selectedCard.dataset.price);
-                        total += guidePrice;
-                    }
-
-                    // Update the total price display
-                    totalDisplay.textContent = `$${total.toFixed(2)}`;
+                const selectedCard = document.querySelector(
+                    ".guide-card.selected"
+                );
+                if (selectedCard) {
+                    const guidePrice = parseFloat(selectedCard.dataset.price);
+                    total += guidePrice;
                 }
 
-                const inputs = document.querySelectorAll('input[type="number"]');
-                const totalDisplay = document.getElementById("totalPrice");
+                totalDisplay.textContent = `$${total.toFixed(2)}`;
+            }
 
-                inputs.forEach((input) =>
-                    input.addEventListener("input", calculateTotal)
-                );
+            inputs.forEach((input) =>
+                input.addEventListener("input", calculateTotal)
+            );
+
+            guideCards.forEach((card) => {
+                card.addEventListener("click", () => {
+                    guideCards.forEach((c) => c.classList.remove("selected"));
+                    card.classList.add("selected");
+
+                    const radio = card.querySelector(".guide-radio");
+                    if (radio) radio.checked = true;
+
+                    calculateTotal();
+                });
             });
-
         </script>
         <script>
             const visitDate = document.getElementById("visitDate");

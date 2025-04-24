@@ -1,98 +1,168 @@
-.artifact-container {
+#alo {
+    @import url("https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;1,400");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Asap', 'Poppins', sans-serif;
+  text-shadow: #000 0 0 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: #111;
+  
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+.item {
+  position: relative;
+  flex: calc(100vw / 6) 1 1;
+  background-size: cover;
+  overflow: hidden;
+  filter: saturate(90%);
+  transition: 1s;
+}
+
+.item:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(25deg, rgba(0,0,0,.9), rgba(0,0,0,0));
+}
+
+.item:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+  animation: borderPulse 5s infinite;
+  
+  @media (min-width: 1024px) {
+    border-right: 1px solid #ccc;
+    border-bottom: none;
+  }
+}
+
+.item:hover {
+  flex-basis: 40%;
+  filter: saturate(120%);
+  
+  @media (min-width: 1024px) {
+    flex-basis: 75%;
+  }
+  
+  .quote {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.item:nth-child(1) {
+  background-image: url("https://cdn.wallpapersafari.com/41/38/ruKsD7.jpg");
+  background-position: 72% 35%;
+}
+
+.item:nth-child(2) {
+  background-image: url("https://fr.web.img6.acsta.net/r_1920_1080/pictures/19/06/03/11/14/3505525.jpg");
+  background-position: 60% 8%;
+}
+
+.item:nth-child(3) {
+  background-image: url("https://images8.alphacoders.com/101/1012160.jpg");
+  background-position: 52% 8%;
+}
+
+.item:nth-child(4) {
+  background-image: url("https://img1.wallspic.com/attachments/originals/6/2/8/5/6/165826-thanos_the_mad-3840x2160.jpg");
+  background-position: 45% 8%;
+}
+
+.item:nth-child(5) {
+  background-image: url("https://c.wallhere.com/photos/df/a3/1920x1080_px_Iron_man_Iron_Man_3_Robert_Downey_Jr_sea_Tony_Stark-514897.jpg!d");
+  background-position: 45% 25%;
+}
+
+.item:nth-child(6) {
+  background-image: url("https://static1.cbrimages.com/wordpress/wp-content/uploads/2019/05/Tilda-Swinton-as-the-Ancient-One-in-Doctor-Strange.jpg");
+  background-position: 65% 2%;
+}
+
+.quote {
+  position: absolute;
+  color: #fff;
+  bottom: 35%;
+  left: 5rem;
+  width: calc(100% - 10rem);
+  opacity: 0;
+  transition: 1s;
+  transform: translateX(50%);
+  
+  @media (min-width: 512px) {
+    left: 15%;
+    bottom: 35%;
+    width: 20vw;
+  }
+  
+  @media (min-width: 1024px) {
+    left: 15%;
+    bottom: 35%;
+    width: 30vw;
+  }
+  
+  p {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 80px auto;
-    width: fit-content;
-}
-
-.artifact-img-box {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px var(--dark-cl-rgba);
-}
-
-.artifact-img {
-    width: 600px;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.artifact-title {
+    display: inline-block;
+    margin-bottom: 1.7rem;
+    font-size: 1.4rem;
+    text-wrap: balance;
+    font-style: italic;
+    
+    &:before, &:after {
+      position: absolute;
+      font-size: 5.5rem;
+      opacity: .6;
+    }
+    
+    &:before {
+      content: "“";
+      top: 4rem;
+      left: -2rem;
+      transform: translate(-100%, -100%);
+    }
+    
+    &:after {
+      content: "”";
+      bottom: 2rem;
+      right: -2rem;
+      transform: translate(100%, 100%);
+    }
+  }
+  
+  span {
     position: absolute;
-    bottom: -100%;
-    width: 100%;
-    background: var(--normal-cl);
-    color: white;
-    text-align: center;
-    padding: 10px;
+    bottom: -2rem;
+    right: 0;
+    text-align: right;
+    font-size: 1.2rem;
     font-weight: bold;
-    font-size: 1.25rem;
-    transition: bottom 0.4s ease;
-    box-shadow: 0 -5px 15px var(--dark-cl-rgba);
+    transform: translate(4rem, 100%);
+    
+    &:before {
+      content: "—";
+      margin-right: .7rem;
+    }
+  }
 }
 
-.artifact-img-box:hover .artifact-title {
-    bottom: 0;
+@keyframes borderPulse{
+  0%, 100% { border-color: rgba(204, 204, 204, 1); }
+  25%, 75% { border-color: rgba(204, 204, 255, 0.9); }
+  50% { border-color: rgba(204, 204, 255, 0.5); }
 }
-
-.artifact-img-box:hover .artifact-img {
-    transform: scale(1.02);
-}
-
-/* Tag styles */
-.artifact-info-tag {
-    position: absolute;
-    top: 20px;
-    background: var(--deep-forest-cl);
-    color: white;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 2;
-    clip-path: polygon(0 0, 80% 0, 100% 50%, 80% 100%, 0 100%);
-    transition: background 0.3s;
-}
-
-.artifact-info-tag:hover {
-    background: var(--normal-cl);
-}
-
-.left-tag {
-    left: -130px;
-}
-
-.right-tag {
-    right: -130px;
-}
-
-/* Hidden info boxes */
-.info-box {
-    position: absolute;
-    top: 0;
-    width: 220px;
-    padding: 15px;
-    background: var(--light-cl-rgba);
-    color: black;
-    font-size: 0.9rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px var(--dark-cl-rgba);
-    display: none;
-    z-index: 1;
-    text-align: left;
-}
-
-.left-tag .info-box {
-    left: 100%;
-}
-
-.right-tag .info-box {
-    right: 100%;
-}
-
-.artifact-info-tag:hover .info-box {
-    display: block;
 }
