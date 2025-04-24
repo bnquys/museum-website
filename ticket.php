@@ -174,7 +174,7 @@
                     <div
                         class="d-flex justify-content-center fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
-                        <h2 class="mv-lr">Want a tour guide?</h2>
+                        <h2 class="mv-lr">Want a tour guide ?</h2>
                         <!-- Yes/No -->
                         <div class="checkbox-wrapper-10 ms-3">
                             <input class="tgl tgl-flip" id="cb5" type="checkbox" />
