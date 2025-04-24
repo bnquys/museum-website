@@ -65,12 +65,12 @@
     
                     <!-- Children 5 and under -->
                     <div class="row align-items-center mt-4 mb-4">
-                        <div class="col-6 col-md-6">
+                        <div class="col-12 col-md-6">
                             <p class="ticket-type mv-lr">Children (5 and under)</p>
                             <p class="ticket-desc">Children under 5 are <strong>FREE</strong>.</p>
                         </div>
-                        <div class="col-2 col-md-2 price text-center">$0</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-4 col-md-2 price text-center">$0</div>
+                        <div class="col-4 col-md-2">
                             <input
                                 type="number"
                                 class="form-control"
@@ -79,19 +79,19 @@
                                 data-price="0"
                             />
                         </div>
-                        <div class="col-2 col-md-2 text-center">
+                        <div class="col-4 col-md-2 text-center">
                             <span class="fs-3">FREE</span>
                         </div>
                     </div>
     
                     <!-- Children 6-11 -->
                     <div class="row align-items-center mb-4">
-                        <div class="col-6 col-md-6">
+                        <div class="col-12 col-md-6">
                             <p class="ticket-type mv-lr">Children (6-11)</p>
                             <p class="ticket-desc">Ages 6 - 11</p>
                         </div>
-                        <div class="col-2 col-md-2 price text-center">$7</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-4 col-md-2 price text-center">$7</div>
+                        <div class="col-4 col-md-2">
                             <input
                                 type="number"
                                 class="form-control"
@@ -100,19 +100,19 @@
                                 data-price="7"
                             />
                         </div>
-                        <div class="col-2 col-md-2 text-center">
+                        <div class="col-4 col-md-2 text-center">
                             <span class="row-total">$0.00</span>
                         </div>
                     </div>
     
                     <!-- Adult -->
                     <div class="row align-items-center mb-4">
-                        <div class="col-6 col-md-6">
+                        <div class="col-12 col-md-6">
                             <p class="ticket-type mv-lr">Adult</p>
                             <p class="ticket-desc">Day-pass</p>
                         </div>
-                        <div class="col-2 col-md-2 price text-center">$15</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-4 col-md-2 price text-center">$15</div>
+                        <div class="col-4 col-md-2">
                             <input
                                 type="number"
                                 class="form-control"
@@ -121,19 +121,19 @@
                                 data-price="15"
                             />
                         </div>
-                        <div class="col-2 col-md-2 text-center">
+                        <div class="col-4 col-md-2 text-center">
                             <span class="row-total">$0.00</span>
                         </div>
                     </div>
     
                     <!-- Seniors & Veterans -->
                     <div class="row align-items-center mb-4">
-                        <div class="col-6 col-md-6">
+                        <div class="col-12 col-md-6">
                             <p class="ticket-type mv-lr">Seniors & Veterans</p>
                             <p class="ticket-desc">55+ and Veterans</p>
                         </div>
-                        <div class="col-2 col-md-2 price text-center">$12</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-4 col-md-2 price text-center">$12</div>
+                        <div class="col-4 col-md-2">
                             <input
                                 type="number"
                                 class="form-control"
@@ -142,19 +142,19 @@
                                 data-price="12"
                             />
                         </div>
-                        <div class="col-2 col-md-2 text-center">
+                        <div class="col-4 col-md-2 text-center">
                             <span class="row-total">$0.00</span>
                         </div>
                     </div>
     
                     <!-- SCI Employee -->
                     <div class="row align-items-center mb-4">
-                        <div class="col-6 col-md-6">
+                        <div class="col-12 col-md-6">
                             <p class="ticket-type mv-lr">SCI Employee</p>
                             <p class="ticket-desc">Day-pass</p>
                         </div>
-                        <div class="col-2 col-md-2 price text-center">$10</div>
-                        <div class="col-2 col-md-2">
+                        <div class="col-4 col-md-2 price text-center">$10</div>
+                        <div class="col-4 col-md-2">
                             <input
                                 type="number"
                                 class="form-control"
@@ -163,7 +163,7 @@
                                 data-price="10"
                             />
                         </div>
-                        <div class="col-2 col-md-2 text-center">
+                        <div class="col-4 col-md-2 text-center">
                             <span class="row-total">$0.00</span>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                     <div
                         class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center"
                     >
-                        <h2 class="col-12 mv-lr">Choose Your Tour Guide</h2>
+                        <h2 class="col-12 mv-lr">Want a tour guide?</h2>
                     </div>
     
                     <div class="row row-cols-1 row-cols-md-4 g-4 mt-2">

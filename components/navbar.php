@@ -132,7 +132,7 @@
 							<li class="nav-item nav-link px-3 hover-link">
 								<a href="contact.php">Contact</a>
 							</li>
-							<li class="nav-item nav-link px-3 hover-link btn-ticket">
+							<li class="nav-item nav-link px-3 btn-ticket hover-link">
 								<a href="ticket.php">Get Ticket</a>
 							</li>
 						</ul>

@@ -1,0 +1,100 @@
+.gallery-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1031;
+}
+/* 
+.gallery-modal-box {
+    position: relative;
+    width: 80vw;
+    height: 70vh;
+    background: transparent;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.img-wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.img-wrapper img {
+    border: 2px solid white;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.img-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    text-align: center;
+    color: white;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.img-wrapper:hover .img-title {
+    opacity: 1;
+}
+
+.tag-left,
+.tag-right {
+    /* position: absolute; */
+    background: var(--normal-cl);
+    padding: 1.5rem 2.25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.tag-left {
+    /* left: 10%;
+    top: 20%; */
+    clip-path: polygon(0 0, 100% 0, 80% 50%, 100% 100%, 0 100%);
+}
+
+.tag-right {
+    /* right: 20%;
+    bottom: 20%; */
+    clip-path: polygon(100% 0, 0 0, 20% 50%, 0 100%, 100% 100%);
+}
+
+.info-box {
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 300px;
+    height: auto;
+    background: var(--light-cl-rgba);
+    color: var(--normal-cl);
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+    z-index: 5;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--dark-cl);
+}

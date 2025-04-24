@@ -34,7 +34,6 @@ body {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(8px);
-    background-color: rgba(0, 0, 0, 0.2);
     z-index: 1031;
 }
 
@@ -42,15 +41,33 @@ body {
 .modal-box {
     background: white;
     border-radius: 12px;
-    width: 90%;
-    max-width: 800px;
+    /* width: 90%; */
+    width: 80vw;
     height: 70vh;
     overflow: hidden;
     display: flex;
     flex-direction: row;
     box-shadow: 0 20px 40px var(--dark-cl-rgba);
-    animation: popIn 0.3s ease;
+    animation: popIn 0.5s ease;
     border: 2px solid var(--deep-forest-cl);
+}
+
+@media (max-width: 1200px) {
+    .modal-img img {
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    .modal-img {
+        height: 50% !important;
+    }
+
+    .modal-content-scroll {
+        max-height: 50% !important;
+    }
+
+    .blog-full {
+        border-left: none !important;
+    }
 }
 
 /* LEFT SIDE IMAGE */
@@ -62,7 +79,7 @@ body {
 .modal-content-scroll {
     overflow-y: auto;
     max-height: 100%;
-    padding-right: 10px;
+    padding-right: 50px;
     scrollbar-color: var(--normal-cl) transparent;
     scrollbar-width: thin;
 }
@@ -70,50 +87,12 @@ body {
 /* Smooth pop animation */
 @keyframes popIn {
     from {
-        transform: scale(0.95);
+        transform: scale(0.75);
         opacity: 0;
     }
     to {
         transform: scale(1);
         opacity: 1;
-    }
-}
-
-/* EMOJI BAR */
-.emoji-bar {
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-top: 1px solid var(--dark-cl-rgba);
-    padding-top: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 15px;
-}
-
-.emoji {
-    transition: transform 0.2s ease;
-    user-select: none;
-}
-
-.emoji:hover {
-    transform: scale(1.2);
-}
-
-/* Optional: glowing react feedback */
-.emoji.react-glow {
-    animation: glow 0.6s ease-in-out;
-}
-
-@keyframes glow {
-    0% {
-        filter: brightness(1);
-    }
-    50% {
-        filter: brightness(2);
-    }
-    100% {
-        filter: brightness(1);
     }
 }
 
@@ -170,3 +149,4 @@ body {
         transform: translateY(0);
     }
 }
+
