@@ -9,6 +9,7 @@
     --normal-light-cl: rgb(175, 255, 0);
     --light-cl-rgba: rgba(144, 238, 144, 0.253);
     --super-light-cl: #d6f8d652;
+    --white-cl: rgb(169, 245, 167);
 
     --deep-forest-cl: #014421;
     --sky-cl: #b2f5ead3;
@@ -87,6 +88,10 @@ header a:hover::after {
                 rgba(255, 255, 255, 0) /* var(--super-light-cl) */
         );
     /* padding: 10px; */
+}
+
+.topbar {
+    font-size: 13px;
 }
 
 #menu a {
@@ -410,6 +415,15 @@ footer {
         var(--normal-cl),
         /* var(--dark-cl), */ var(--dark-cl)
     );
+}
+
+.he {
+    transition: all 0.3s ease;
+}
+
+.he:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
 }
 
 #InputEmail::placeholder {

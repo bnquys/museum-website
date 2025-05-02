@@ -1,5 +1,5 @@
 <?php
-    $css = "blog";
+    $css = "blog_gallery";
     $title = $name = "Blog";
     include "components/first.php";
     include "components/navbar.php";

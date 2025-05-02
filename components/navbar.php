@@ -11,16 +11,11 @@
 
 <div class="fixed-top header">
 	<div class="container-fluid border-light border-bottom">
-		<div class="container d-flex justify-content-between mt-1 pb-2">
-			<div>
-				<a href="#" class="d-inline text-light me-2 hover-link"
-					>Visit</a
-				>
-				<a
-					href="./ticket.php"
-					class="d-inline text-light hover-link"
-					>Buy Ticket</a
-				>
+		<div class="topbar container d-flex justify-content-between mt-2 pb-2">
+			<div class>
+				<span class="text-white me-4"><i class="fas fa-clock"></i> Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm</span>
+				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> 415 Barren Springs Drive, Houston</span>
+				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> 281-876-3063</span>
 			</div>
 			<?php if(isset($account)) { ?>
 				<div> <a href="#" class="d-inline text-light hover-link">Hello, <?= $account->getUser()->name?></a></div>
@@ -62,7 +57,7 @@
 		</div>
 	</div>
 	<nav
-		class="navbar navbar-expand-lg bg-body-black bg-opacity-50 ms-2 ms-sm-0"
+		class="navbar navbar-expand-lg bg-opacity-50 ms-2 ms-sm-0"
 	>
 		<div id="menu" class="container">
 			<!-- MENU -->
@@ -133,7 +128,7 @@
 						<a href="contact.php">Contact</a>
 					</li>
 					<li class="nav-item nav-link px-3 btn-ticket hover-link">
-						<a href="ticket.php">Get Ticket</a>
+						<a href="ticket.php">Buy Ticket</a>
 					</li>
 				</ul>
 			</div>

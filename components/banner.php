@@ -10,7 +10,7 @@
         <h1 class="mv-bt pulse"><?=$name?></h1>
         <p class="mv-bt">
             <a href="index.php">Home</a> &rarr;
-            <a href="<?=$css?>.php"><?=$name?></a>
+            <a href="<?=$css?>.php"><?=$title?></a>
         </p>
     </div>
     <div>

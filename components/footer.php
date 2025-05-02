@@ -5,7 +5,7 @@
 			<p class="fs-8 mb-0 w-75 text-center">STAY WITH US.</p>
 			<!-- Email -->
 			<form action="#" class="d-flex align-items-start justify-content-start w-50">
-				<div class="d-flex w-100" style="border-bottom: 2px solid #f2f2d9;">
+				<div class="d-flex w-100" style="border-bottom: 2px solid white;">
 				<input
 					type="email"
 					class="form-control border-0 rounded-0 text-white bg-transparent fw-light fs-7"
@@ -30,48 +30,48 @@
 			<!-- Left: Navigation Links -->
 			<div class="col-md-6 mb-md-0">
 				<ul class="list-unstyled d-flex flex-column justify-content-between h-100 ms-5">	
-				<li><a href="#" class="text-white fs-4">Visit</a></li>
-				<li><a href="#" class="text-white fs-4">Contact</a></li>
-				<li><a href="#" class="text-white fs-4">About</a></li>
-				<li><a href="#" class="text-white fs-4">Ticket</a></li>
-				<li><a href="#" class="text-white fs-4">Blog</a></li>
-				<li><a href="#" class="text-white fs-4">Rights and Reproductions</a></li>
+				<li><a href="index.php" class="text-white fs-4">Visit</a></li>
+				<li><a href="contact.php" class="text-white fs-4">Contact</a></li>
+				<li><a href="about.php" class="text-white fs-4">About</a></li>
+				<li><a href="ticket.php" class="text-white fs-4">Ticket</a></li>
+				<li><a href="blog.php" class="text-white fs-4">Blog</a></li>
+				<li><a href="gallery.php" class="text-white fs-4">Gallery</a></li>
 				</ul>
 			</div>
 
 			<div class="col-md-6 mb-md-0 ">
 				<!-- Row 1: Address & Contact -->
 				<div class="row mb-4 ">
-					<div class="col-md-6">
-					<h6 class="text-uppercase fw-bold">Address</h6>
-					<p class="mb-0">The New York Historical<br />
-						170 Central Park West<br />
-						at Richard Gilder Way (77th Street)<br />
-						New York, NY 10024</p>
-					<a href="#" class="fw-bold text-white text-decoration-underline">Get Directions</a>
+					<div class="he col-md-6 p-3">
+						<h6 class="text-uppercase fw-bold">Address</h6>
+						<p class="mb-0">The New York Historical<br />
+							170 Central Park West<br />
+							at Richard Gilder Way (77th Street)<br />
+							New York, NY 10024</p>
+						<a href="#" class="fw-bold text-white text-decoration-underline">Get Directions</a>
 					</div>
 
-					<div class="col-md-6">
-					<h6 class="text-uppercase fw-bold">Contact</h6>
-					<p>Phone (212) 873-3400<br />
-						TTY (212) 873-7489</p>
+					<div class="he col-md-6 p-3">
+						<h6 class="text-uppercase fw-bold">Contact</h6>
+						<p>Phone (212) 873-3400<br />
+							TTY (212) 873-7489</p>
 					</div>
 				</div>
 
 				<!-- Row 2: Museum & Library Hours -->
 				<div class="row">
-					<div class="col-md-6">
-					<h6 class="text-uppercase fw-bold">Museum & Store Hours</h6>
-					<p class="mb-0">Monday: CLOSED<br />
-						Tuesday – Thursday: 11 am – 5 pm<br />
-						Friday: 11 am – 8 pm<br />
-						Saturday – Sunday: 11 am – 5 pm</p>
+					<div class="he col-md-6 p-3">
+						<h6 class="text-uppercase fw-bold">Museum & Store Hours</h6>
+						<p class="mb-0">Monday: CLOSED<br />
+							Tuesday – Thursday: 11 am – 5 pm<br />
+							Friday: 11 am – 8 pm<br />
+							Saturday – Sunday: 11 am – 5 pm</p>
 					</div>
 
-					<div class="col-md-6">
-					<h6 class="text-uppercase fw-bold">Library Hours</h6>
-					<p>Tuesday – Monday: CLOSED<br />
-						Temporarily Closed</p>
+					<div class="he col-md-6 p-3">
+						<h6 class="text-uppercase fw-bold">Library Hours</h6>
+						<p>Tuesday – Monday: CLOSED<br />
+							Temporarily Closed</p>
 					</div>
 				</div>
 			</div>

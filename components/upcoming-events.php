@@ -9,34 +9,34 @@
 
 <style>
 	.item:nth-child(1) {
-  background-image: url("https://picsum.photos/2000/2000?random=1");
-  background-position: 72% 35%;
-}
+	background-image: url("https://picsum.photos/1500/1500?random=1");
+	background-position: 72% 35%;
+	}
 
-.item:nth-child(2) {
-  background-image: url("https://picsum.photos/2000/2000?random=2");
-  background-position: 60% 8%;
-}
+	.item:nth-child(2) {
+	background-image: url("https://picsum.photos/1500/1500?random=2");
+	background-position: 60% 8%;
+	}
 
-.item:nth-child(3) {
-  background-image: url("https://picsum.photos/2000/2000?random=3");
-  background-position: 52% 8%;
-}
+	.item:nth-child(3) {
+	background-image: url("https://picsum.photos/1500/1500?random=3");
+	background-position: 52% 8%;
+	}
 
-.item:nth-child(4) {
-  background-image: url("https://picsum.photos/2000/2000?random=4");
-  background-position: 45% 8%;
-}
+	.item:nth-child(4) {
+	background-image: url("https://picsum.photos/1500/1500?random=4");
+	background-position: 45% 8%;
+	}
 
-.item:nth-child(5) {
-  background-image: url("https://picsum.photos/2000/2000?random=5");
-  background-position: 45% 25%;
-}
+	.item:nth-child(5) {
+	background-image: url("https://picsum.photos/1500/1500?random=5");
+	background-position: 45% 25%;
+	}
 
-.item:nth-child(6) {
-  background-image: url("https://picsum.photos/2000/2000?random=6");
-  background-position: 65% 2%;
-}
+	.item:nth-child(6) {
+	background-image: url("https://picsum.photos/1500/1500?random=6");
+	background-position: 65% 2%;
+	}
 </style>
 
 <section class="events mv-bt">
