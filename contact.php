@@ -5,114 +5,326 @@
             include "components/navbar.php";
             include "components/banner.php";
         ?>
-		<section class="container-fluid p-5">
-			<div class="d-flex align-item-center justify-content-center gap-5">
-				<div class="frame mt-4 mt-sm-0 me-2 d-flex flex-column gap-3">
-					<div class="d-flex gap-3">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="3.25rem"
-							height="3.25rem"
-							fill="currentColor"
-							class="bi bi-house"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
-							/>
-						</svg>
-						<div>
-							<p class="h4">TDTU</p>
-							<p>19 Nguyen Huu Tho</p>
-						</div>
-					</div>
-					<div class="d-flex gap-3">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="3.25rem"
-							height="3.25rem"
-							fill="currentColor"
-							class="bi bi-telephone"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"
-							/>
-						</svg>
-						<div>
-							<p class="h4">1000000000</p>
-							<p>Mon to Fri 9am to 6 pm</p>
-						</div>
-					</div>
-					<div class="d-flex gap-3">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="3.25rem"
-							height="3.25rem"
-							fill="currentColor"
-							class="bi bi-envelope-at"
-							viewBox="0 0 16 16"
-						>
-							<path
-								d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z"
-							/>
-							<path
-								d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648m-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z"
-							/>
-						</svg>
-						<div>
-							<p class="h4">email@root.com</p>
-							<p>Send us your query anytime!</p>
-						</div>
-					</div>
-				</div>
-				<div class="frame mt-4 mt-sm-0 me-2 d-flex flex-column gap-3 w-25">
-					<div class="form-floating">
-						<input
-							type="text"
-							class="form-control"
-							id="floatingInput"
-							name="name"
-							placeholder="Your name"
-						/>
-						<label for="floatingInput">Your name</label>
-					</div>
-					<div class="form-floating">
-						<input
-							type="email"
-							class="form-control"
-							id="floatingInput"
-							name="email"
-							placeholder="name@example.com"
-						/>
-						<label for="floatingInput">Email address</label>
-					</div>
-					<div class="form-floating">
-						<input
-							type="text"
-							class="form-control"
-							id="floatingInput"
-							name="subject"
-							placeholder="Your subject"
-						/>
-						<label for="floatingInput">Your subject</label>
-					</div>
-				</div>
-				<div class="frame mt-4 mt-sm-0 w-25">
-					<textarea
-						class="form-control"
-						id="exampleFormControlTextarea1"
-						rows="5"
-						placeholder="Message"
-					></textarea>
-					<div class="d-flex flex-row-reverse mt-2">
-						<button type="button" class="btn btn-success">
-							Success
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
+    
+        <!-- Main Content -->
+        <main class="container my-5 fade-in">
+            <div class="row g-4">
+                <!-- Contact Form Column -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm border-0 p-4">
+                        <h2 class="mb-4">
+                            <i class="fas fa-envelope me-2"></i>
+                            Send Us a Message
+                        </h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bolder"
+                                    >Full Name</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bolder"
+                                    >Email Address</label
+                                >
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label fw-bolder"
+                                    >Your Message</label
+                                >
+                                <textarea
+                                    class="form-control"
+                                    id="message"
+                                    rows="5"
+                                    required
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-primary px-4 py-2"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Info Column -->
+                <div class="col-lg-6">
+                    <!-- Contact Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-map-marker-alt fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Address
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                465 Huntington Avenue<br />Boston,
+                                                MA 02115
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-phone-alt fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Phone
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                +1 (617) 267-9300<br />Mon-Fri,
+                                                9am-5pm
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-envelope fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Email
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                info@mfa.org<br />visitors@mfa.org
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-clock fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Hours
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                Mon-Fri: 10am-5pm<br />Sat-Sun:
+                                                9am-6pm
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="card-title mb-3">
+                                <i
+                                    class="fas fa-map-marked-alt me-2"
+                                ></i>
+                                Find Us on the Map
+                            </h5>
+                            <div class="map-container">
+                                <iframe
+                                    class="map-iframe"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.33369134229!2d-71.0958459241444!3d42.33941597138986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3798a893e1e9f%3A0x4dde05e8a4e3f0a9!2sMuseum%20of%20Fine%20Arts%2C%20Boston!5e0!3m2!1sen!2sus!4v1689872032472!5m2!1sen!2sus"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="mt-5 p-5">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold fs-1">Frequently Asked Questions</h2>
+                    <p class="text-muted">
+                        Find quick answers to common questions
+                    </p>
+                </div>
+
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne"
+                            >
+                                What are your current COVID-19 safety measures?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseOne"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                We follow all local health guidelines.
+                                Currently, masks are optional but recommended in
+                                crowded spaces. We've increased cleaning
+                                protocols and provide hand sanitizing stations
+                                throughout the museum.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo"
+                            >
+                                Do you offer discounts for students or seniors?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseTwo"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Yes, we offer discounted admission for students
+                                with valid ID and seniors (65+). Children under
+                                7 are admitted free. Check our website for
+                                current pricing and special discount days.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree"
+                            >
+                                Can I take photos in the museum?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseThree"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Photography without flash is permitted in most
+                                permanent collection galleries for personal use
+                                only. Some special exhibitions may prohibit
+                                photography entirely. No tripods or selfie
+                                sticks are allowed.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour"
+                            >
+                                How do I book a guided tour?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseFour"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Guided tours must be booked at least two weeks
+                                in advance. Please contact our Group Visits
+                                department at groups@mfa.org or call (617)
+                                267-9300 ext. 1 for more information and
+                                reservations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bootstrap 5 JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Form submission handler
+            document
+                .querySelector("form")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById("name").value;
+                    const email = document.getElementById("email").value;
+                    const message = document.getElementById("message").value;
+
+                    alert(`Thanks ${name}, your message has been received!`);
+                    this.reset();
+                });
+        </script>
 
 		<?php 
             include "components/footer.php";

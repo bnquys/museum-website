@@ -1,43 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="a.css">
-  <title>Document</title>
-</head>
-<body>
-  <div id="alo" class="container">
-    <div class="item">
-      <div class="quote">
-        <p>I am Groot.<span>Groot</span></p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="quote">
-        <p>You'r the head of security and your password is 'password'&nbsp;?<span>Peter Parker</span></p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="quote">
-        <p>That really is America's ass.<span>Captain America</span></p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="quote">
-        <p>The hardest choices require the strongest wills.<span>Thanos</span></p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="quote">
-        <p>Genius, billionaire, playboy, philanthropist.<span>Tony Stark</span></p>
-      </div>
-    </div>
-    <div class="item">
-      <div class="quote">
-        <p>We never lose our demons. We only learn to live above them.<span>Ancient One</span></p>
-      </div>
-    </div>
-  </div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Museum of Fine Arts - Contact Us</title>
+        <!-- Bootstrap 5 CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            :root {
+                --dark-cl: #059212;
+                --dark-cl-rgba: rgba(5, 146, 18, 0.6);
+                --normal-cl: #06d001;
+                --normal-cl-rgba: rgba(6, 208, 1, 0.6);
+                --normal-light-cl: rgb(175, 255, 0);
+                --light-cl-rgba: rgba(144, 238, 144, 0.253);
+                --super-light-cl: #d6f8d652;
+                --white-cl: rgb(169, 245, 167);
+                --deep-forest-cl: #014421;
+                --sky-cl: #b2f5ead3;
+                --so-deep-cl: rgb(5, 30, 4);
+            }
+
+            body {
+                background: var(--super-light-cl);
+            }
+
+            h2,
+            h5,
+            label {
+                color: var(--deep-forest-cl) !important;
+            }
+
+            .fas {
+                color: var(--normal-cl);
+            }
+
+            .card {
+                background: var(--super-light-cl);
+                border-radius: 1rem;
+                border: none;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px var(--light-cl-rgba);
+            }
+
+            .btn-primary {
+                background-color: var(--normal-cl);
+                border: none;
+                transition: all 0.3s ease;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--normal-cl);
+                transform: scale(1.05);
+                box-shadow: 0 0 10px var(--normal-light-cl);
+            }
+
+            .form-control {
+                transition: all 0.3s ease;
+            }
+
+            .form-control:focus {
+                border-color: var(--normal-cl);
+                box-shadow: 0 0 10px var(--normal-cl);
+            }
+
+            .accordion-button {
+                background-color: var(--sky-cl);
+                color: var(--deep-forest-cl);
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            .accordion-button:not(.collapsed) {
+                color: var(--so-deep-cl);
+            }
+
+            .accordion-body {
+                background-color: var(--super-light-cl);
+                color: var(--so-deep-cl);
+                transition: all 0.3s ease;
+            }
+
+            .map-container {
+                width: 100%;
+                height: 300px;
+                border-radius: 1rem;
+                overflow: hidden;
+                box-shadow: 0 0 15px var(--light-cl-rgba);
+            }
+
+            .map-iframe {
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
+            .nav-link::after {
+                background-color: var(--dark-cl);
+            }
+
+            .accordion-item {
+                border: 1px solid var(--light-cl-rgba);
+                border-radius: 0.5rem;
+                overflow: hidden;
+            }
+
+            .card-title i,
+            .accordion-header button i {
+                color: var(--normal-cl);
+            }
+
+            /* Animation for fade in */
+            .fade-in {
+                animation: fadeIn 0.7s ease-in forwards;
+                opacity: 0;
+            }
+
+            @keyframes fadeIn {
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .container > .row {
+                animation: fadeIn 1s ease forwards;
+            }
+
+            input, textarea {
+                border: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Main Content -->
+        <main class="container my-5 fade-in">
+            <div class="row g-4">
+                <!-- Contact Form Column -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm border-0 p-4">
+                        <h2 class="mb-4">
+                            <i class="fas fa-envelope me-2"></i>
+                            Send Us a Message
+                        </h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bolder"
+                                    >Full Name</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bolder"
+                                    >Email Address</label
+                                >
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label fw-bolder"
+                                    >Your Message</label
+                                >
+                                <textarea
+                                    class="form-control"
+                                    id="message"
+                                    rows="5"
+                                    required
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-primary px-4 py-2"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Info Column -->
+                <div class="col-lg-6">
+                    <!-- Contact Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-map-marker-alt fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Address
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                465 Huntington Avenue<br />Boston,
+                                                MA 02115
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-phone-alt fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Phone
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                +1 (617) 267-9300<br />Mon-Fri,
+                                                9am-5pm
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-envelope fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Email
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                info@mfa.org<br />visitors@mfa.org
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card contact-card h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-start">
+                                        <div
+                                            class="bg-primary bg-opacity-10 p-3 rounded-circle me-3"
+                                        >
+                                            <i
+                                                class="fas fa-clock fs-4"
+                                            ></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="card-title mb-2">
+                                                Hours
+                                            </h5>
+                                            <p
+                                                class="card-text text-muted mb-0"
+                                            >
+                                                Mon-Fri: 10am-5pm<br />Sat-Sun:
+                                                9am-6pm
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="card-title mb-3">
+                                <i
+                                    class="fas fa-map-marked-alt me-2"
+                                ></i>
+                                Find Us on the Map
+                            </h5>
+                            <div class="map-container">
+                                <iframe
+                                    class="map-iframe"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.33369134229!2d-71.0958459241444!3d42.33941597138986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3798a893e1e9f%3A0x4dde05e8a4e3f0a9!2sMuseum%20of%20Fine%20Arts%2C%20Boston!5e0!3m2!1sen!2sus!4v1689872032472!5m2!1sen!2sus"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="mt-5 pt-5">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">Frequently Asked Questions</h2>
+                    <p class="text-muted">
+                        Find quick answers to common questions
+                    </p>
+                </div>
+
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne"
+                            >
+                                What are your current COVID-19 safety measures?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseOne"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                We follow all local health guidelines.
+                                Currently, masks are optional but recommended in
+                                crowded spaces. We've increased cleaning
+                                protocols and provide hand sanitizing stations
+                                throughout the museum.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo"
+                            >
+                                Do you offer discounts for students or seniors?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseTwo"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Yes, we offer discounted admission for students
+                                with valid ID and seniors (65+). Children under
+                                7 are admitted free. Check our website for
+                                current pricing and special discount days.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree"
+                            >
+                                Can I take photos in the museum?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseThree"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Photography without flash is permitted in most
+                                permanent collection galleries for personal use
+                                only. Some special exhibitions may prohibit
+                                photography entirely. No tripods or selfie
+                                sticks are allowed.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item mb-3 border-0 shadow-sm">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour"
+                            >
+                                How do I book a guided tour?
+                            </button>
+                        </h2>
+                        <div
+                            id="collapseFour"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion"
+                        >
+                            <div class="accordion-body">
+                                Guided tours must be booked at least two weeks
+                                in advance. Please contact our Group Visits
+                                department at groups@mfa.org or call (617)
+                                267-9300 ext. 1 for more information and
+                                reservations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bootstrap 5 JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Form submission handler
+            document
+                .querySelector("form")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById("name").value;
+                    const email = document.getElementById("email").value;
+                    const message = document.getElementById("message").value;
+
+                    alert(`Thanks ${name}, your message has been received!`);
+                    this.reset();
+                });
+        </script>
+    </body>
 </html>

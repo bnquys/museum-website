@@ -23,24 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     animationClasses.forEach((animation) => {
         const elements = document.querySelectorAll(`.mv-${animation}`);
-        let lastScrollTop = window.scrollY;
 
         if (elements.length > 0) {
             const observer = new IntersectionObserver(
-                (entries) => {
-                    let scrollTop = window.scrollY;
-
+                (entries, observer) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add(`show-${animation}`);
-                        } else {
-                            if (scrollTop < lastScrollTop)
-                                entry.target.classList.remove(
-                                    `show-${animation}`
-                                );
+                            observer.unobserve(entry.target); // Stop observing after animation
                         }
                     });
-                    lastScrollTop = scrollTop;
                 },
                 { threshold: 0.4 }
             );
@@ -49,3 +41,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+

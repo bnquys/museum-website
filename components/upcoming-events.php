@@ -43,17 +43,17 @@
 	<div class="container-event">
 		<div class="item">
 			<div class="quote">
-				<p>I am Groot.<span>Groot</span></p>
+				<p>Adopt the pace of nature: her secret is patience.<span>Ralph Waldo Emerson</span></p>
 			</div>
 		</div>
 		<div class="item">
 			<div class="quote">
-				<p>You'r the head of security and your password is 'password'&nbsp;?<span>Peter Parker</span></p>
+				<p>Look deep into nature, and then you will understand everything better.<span>Albert Einstein</span></p>
 			</div>
 		</div>
 		<div class="item">
 			<div class="quote">
-				<p>That really is America's ass.<span>Captain America</span></p>
+				<p>In every walk with nature one receives far more than he seeks.<span>John Muir</span></p>
 			</div>
 		</div>
 		<div class="item">
@@ -63,12 +63,12 @@
 		</div>
 		<div class="item">
 			<div class="quote">
-				<p>Genius, billionaire, playboy, philanthropist.<span>Tony Stark</span></p>
+				<p>The earth has music for those who listen.<span>William Shakespeare</span></p>
 			</div>
 		</div>
 		<div class="item">
 			<div class="quote">
-				<p>We never lose our demons. We only learn to live above them.<span>Ancient One</span></p>
+				<p>To forget how to dig the earth and to tend the soil is to forget ourselves.<span>Mahatma Gandhi</span></p>
 			</div>
 		</div>
 	</div>
