@@ -1,0 +1,8 @@
+*.py
+vendor/
+uploads/
+.vscode/
+assets/
+*.txt
+composer.json
+composer.lock
