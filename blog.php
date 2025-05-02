@@ -4,136 +4,74 @@
     include "components/first.php";
     include "components/navbar.php";
     include "components/banner.php";
-    // require_once "object/Blog.php";
-?>
 
-        <?php
-            // Blog::show(10);
-            
-        ?>
+    require_once "vendor/autoload.php";
+    use Museum\Object\Blog;
+
+    $blogs = Blog::getListBlog(6);
+    // var_dump($blogs);
+?>
         <div class="container my-5">
             <div class="row g-4">
                 <!-- Brief Content 1 -->
+                <?php foreach($blogs as $blog) {?>
                 <div
                     class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-1')"
+                    onclick="openModal('<?= $blog->id?>')"
                 >
                     <img
-                        src="assets/img/g1.jpg"
+                        src="<?= $blog->imgUrl?>"
                         class="img-fluid rounded"
                         alt="Blog Pic"
                         style="width: 150px; height: 150px; object-fit: cover"
                     />
 
                     <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                        <h5 class="blog-title">The Rise of Leaf-Based Algorithms</h5>
+                        <h5 class="blog-title"><?= $blog->title?></h5>
                         <p class="blog-summary text-muted flex-grow-1">
-                            A glimpse into how plants might've invented machine learning way before us.
+                            <?= $blog->summary?>
                         </p>
 
                         <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 April 21, 2025</span>
-                            <span>✍️ Dr. Liana Moss, Botanical Archivist</span>
+                            <span>📅 <?= $blog->uploadDate?></span>
+                            <span>✍️ <?= $blog->username?></span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Brief Content 2 -->
-                <div
-                    class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-2')"
-                >
-                    <img
-                        src="assets/img/g2.jpg"
-                        class="img-fluid rounded"
-                        alt="Blog Pic"
-                        style="width: 150px; height: 150px; object-fit: cover"
-                    />
-
-                    <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                        <h5 class="blog-title">The Secrets of Deep Ocean Bioluminescence</h5>
-                        <p class="blog-summary text-muted flex-grow-1">
-                            Exploring the enchanting light shows of the deep sea's mysterious creatures.
-                        </p>
-                        <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 May 15, 2025</span>
-                            <span>✍️ Dr. Ethan Reed, Archaeologist</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Brief Content 3 -->
-                <div
-                    class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-3')"
-                >
-                    <img
-                        src="assets/img/g3.jpg"
-                        class="img-fluid rounded"
-                        alt="Blog Pic"
-                        style="width: 150px; height: 150px; object-fit: cover"
-                    />
-
-                    <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                    <h5 class="blog-title">The Art of Mindful Gardening</h5>
-                        <p class="blog-summary text-muted flex-grow-1">
-                            Cultivating peace and creativity through the simple act of gardening.
-                        </p>
-                        <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 June 10, 2025</span>
-                            <span>✍️ Dr. Mia Chen, Marine Biologist</span>
-                        </div>                    
-                    </div>
-                </div>
-
-
+                <?php }?>
             </div>
         </div>
         
         <!-- Modal-1 -->
-        <div id="modal-1" class="modal">
+        <?php foreach($blogs as $blog) {?>
+        <div id="<?= $blog->id?>" class="modal">
             <div class="modal-box">
                 <div class="row g-0 h-100">
                     <!-- Left Picture -->
                     <div class="col-xl-4 col-12 modal-img">
-                        <img src="assets/img/g1.jpg" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
+                        <img src="<?= $blog->imgUrl?>" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
                     </div>
 
                     <!-- Full Content -->
                     <div class="col-xl-8 col-12 p-4 modal-content-scroll blog-full">
-                        <h3 class="mb-2 blog-title">The Rise of Leaf-Based Algorithms</h3>
+                        <h3 class="mb-2 blog-title"><?= $blog->title?></h3>
                         <p class="blog-summary mb-3 text-muted">
-                            Nature's neural networks — real roots of intelligence?
+                            <?= $blog->summary?>
                         </p>
 
                         <p class="blog-lorem mb-3">
-                            While researchers race to develop intelligent machines, the forest has
-                            quietly run decentralized systems for millions of years. 
-                            Trees communicate, adapt, and respond to environmental data — and maybe even gossip 👀.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            This article dives deep into the patterns of fungal networks, leaf response
-                            systems, and how these can inspire next-gen bio-AI hybrid models. Prepare for
-                            a wild trip down Motherboard Nature 🌱🤖.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            As cities expand, wildlife adapts in surprising ways. 
-                            This article examines innovative urban designs that support biodiversity and sustainable living.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Explore case studies of cities around the world that have successfully integrated green spaces 
-                            and wildlife corridors, making urban life more harmonious with nature.
+                            <?= $blog->content?>
                         </p>
 
                         <div class="d-flex justify-content-between mt-4 flex-wrap blog-meta">
-                            <span>📅 April 21, 2025</span>
-                            <span>✍️ Dr. Liana Moss, Botanical Archivist</span>
+                            <span>📅 <?= $blog->uploadDate?></span>
+                            <span>✍️ <?= $blog->username?></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <?php }?>
         <!-- Modal-2 -->
         <div id="modal-2" class="modal">
             <div class="modal-box">

@@ -4,8 +4,8 @@ import os
 import sys
 
 # Cấu hình ID
-ID_PREFIX = "BL"
-ID_LENGTH = 5  # VD: BL001, BL002 ...
+ID_PREFIX = "A"
+ID_LENGTH = 4  # VD: BL001, BL002 ...
 
 # Danh sách độ phân giải từ HD đến FullHD
 IMAGE_SIZES = [
@@ -45,7 +45,7 @@ def generate_insert_blog(id, username, used_random_ids):
     image_url = f"https://picsum.photos/{width}/{height}?random={rand_id}"
     is_show = '1'
 
-    insert_query = f"""INSERT INTO `Blog` (`Id`, `Username`, `Title`, `Date`, `Summary`, `Content`, `ImageUrl`, `IsShow`) VALUES ('{id}', '{username}', '{title}', '{date}', '{summary}', '{content}', '{image_url}', '{is_show}');"""
+    insert_query = f"""INSERT INTO `About` (`AboutId`, `Email`, `ImgUrl`, `DateUpload`, `Content`, `IsShow`) VALUES ('{id}', '{username}', '{image_url}', '{date}', '{content}', '{is_show}');"""
     return insert_query
 
 def generate_id(index):
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         print("Vui lòng nhập một số nguyên dương hợp lệ.")
         sys.exit(1)
 
-    username = "humm._.m"
+    username = "anna.nguyen@email.com"
     insert_queries = ["DELETE FROM Blog;"]
     used_random_ids = set()
 

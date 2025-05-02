@@ -4,7 +4,7 @@ namespace Museum\Object;
 
 class FileUploader {
     private $target_dir;
-    private $max_size = 50000000;
+    private $max_size = 40000000;
     private $allowed_file_types = ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'avi', 'mov', 'mkv'];
     private $uploadOk;
     public $error;
@@ -20,7 +20,7 @@ class FileUploader {
     }
 
     public function upload($file) {
-        $this->errors = "";
+        $this->error = "";
         $fileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
         $target_file = $this->target_dir . basename($file["name"]);
 
