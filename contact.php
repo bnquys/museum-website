@@ -193,7 +193,7 @@
             </div>
 
             <!-- FAQ Section -->
-            <section class="mt-5 p-5">
+            <section class="mt-5 p-5 rounded-5">
                 <div class="text-center mb-5">
                     <h2 class="fw-bold fs-1">Frequently Asked Questions</h2>
                     <p class="text-muted">

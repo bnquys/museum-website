@@ -133,7 +133,7 @@ select.form-select:focus {
 }
 
 .guide-card.selected {
-    border: 3px solid var(--normal-light-cl);
+    border: 2px solid var(--normal-light-cl);
     background-color: var(--super-light-cl);
     box-shadow: 0 0 20px var(--normal-cl-rgba);
 }
@@ -270,4 +270,158 @@ h5,
 }
 .checkbox-wrapper-10 .tgl-flip:checked + .tgl-btn:active:after {
     transform: rotateY(20deg);
+}
+
+.button-92 {
+    --c: #fff;
+    /* text color */
+    background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%)
+            var(--_p, 100%) / 300% no-repeat,
+        var(--normal-cl);
+    /* background color */
+    color: #0000;
+    border: none;
+    transform: perspective(500px) rotateY(calc(20deg * var(--_i, -1)));
+    text-shadow: calc(var(--_i, -1) * 0.08em) -0.01em 0 var(--c),
+        calc(var(--_i, -1) * -0.08em) 0.01em 2px #0004;
+    outline-offset: 0.1em;
+    transition: 0.3s;
+}
+
+.button-92:hover,
+.button-92:focus-visible {
+    --_p: 0%;
+    --_i: 1;
+}
+
+.button-92:active {
+    text-shadow: none;
+    color: var(--c);
+    box-shadow: inset 0 0 9e9Q #0005;
+    transition: 0s;
+}
+
+.button-92 {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0;
+    cursor: pointer;
+    padding: 0.1em 0.3em;
+}
+
+.mini-bill {
+    .container {
+        color: var(--dark-cl);
+        position: relative;
+    }
+
+    .container::before,
+    .container::after {
+        content: "";
+        background-color: #70fa7b4c;
+        position: absolute;
+    }
+
+    .container::before {
+        border-radius: 50%;
+        width: 6rem;
+        height: 6rem;
+        top: 30%;
+        right: 7%;
+    }
+
+    .container::after {
+        content: "";
+        position: absolute;
+        height: 3rem;
+        top: 8%;
+        right: 5%;
+        border: 1px solid;
+    }
+
+    .container .box {
+        min-width: 11.875em;
+        width: auto;
+        min-height: 14.875em;
+        height: auto;
+        padding: 1rem;
+        background-color: var(--light-cl-rgba);
+        border: 1px solid var(--normal-cl-rgba);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-radius: 0.7rem;
+        transition: all ease 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .container .box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .container .box .title {
+        font-size: 2rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+    }
+
+    .container .box div strong {
+        display: block;
+        margin-bottom: 0.2rem;
+    }
+
+    .container .box div p {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: 300;
+        letter-spacing: 0.1em;
+    }
+
+    .container .box div span {
+        font-size: 0.7rem;
+        font-weight: 300;
+    }
+
+    .container .box div span:nth-child(3) {
+        font-weight: 500;
+        margin-right: 0.2rem;
+    }
+
+    .container .box:hover {
+        box-shadow: 0px 3px 20px 1px var(--normal-cl-rgba);
+        /* border: 1px solid rgba(255, 255, 255, 0.454); */
+    }
+}
+
+#checkoutOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+
+#checkoutOverlay .overlay-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#checkoutOverlay .overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 300px;
+    width: 90%;
 }

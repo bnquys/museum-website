@@ -3,7 +3,7 @@ body {
 }
 
 h2,
-h5,
+h5:not(footer h5),
 label {
     color: var(--deep-forest-cl) !important;
 }

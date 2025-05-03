@@ -11,7 +11,7 @@ body {
     padding: 15px;
     border-radius: 10px;
     background-color: var(--super-light-cl);
-    box-shadow: 0 4px 15px var(--normal-cl-rgba);
+    box-shadow: 0 2px 5px var(--normal-cl-rgba);
     cursor: pointer;
     transition: all 0.2s ease;
     /* border: 1px solid var(--light-cl-rgba); */
@@ -19,7 +19,7 @@ body {
 
 .blog-card:hover {
 	background-color: var(--light-cl-rgba);
-    transform: translateY(-3px);
+    transform: translateX(3px) translateY(-3px);
     box-shadow: 0 6px 20px var(--dark-cl-rgba);
 }
 
