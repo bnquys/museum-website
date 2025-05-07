@@ -8,30 +8,51 @@
 	use Museum\Object\Blog;
     use Museum\Object\FileUploader;
 	
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$uploader = new FileUploader();
+$action = $_GET['action'] ?? 'list';
+$editId = $_GET['editId'] ?? null;
+$deleteId = $_GET['deleteId'] ?? null;
 
-        $uploadResult = $uploader->upload($_FILES["image"]);
+// Handle blog deletion
+if ($deleteId) {
+    Blog::delete($deleteId);
+    header("Location: blog_dashboard.php");
+    exit;
+}
 
-        if ($uploadResult) {
-            echo "File has been uploaded successfully. File path: " . $uploadResult;
-        } else {
-            echo "Error: " . $uploader->error;
-            exit;
-        }
+// Handle blog submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $uploader = new FileUploader();
+    $uploadResult = $uploader->upload($_FILES["image"]);
 
-        $title = $_POST['title'];
-        $summary = $_POST['summary'];
-        $content = $_POST['content'];
-        $currentDate = date('Y-m-d H:i:s');
-        $username = "bnquys";
-
-        $blog = new Blog(Blog::getNextId(), $username, $title, $summary, $content, $uploadResult, $currentDate);
-
-        Blog::add($blog);
-        header("Location: dashboard.php");
+    if (!$uploadResult) {
+        echo "Upload error: " . $uploader->error;
         exit;
-	}
+    }
+
+    $title = $_POST['title'];
+    $summary = $_POST['summary'];
+    $content = $_POST['content'];
+    $currentDate = date('Y-m-d H:i:s');
+    $username = "bnquys";
+
+    if (isset($_POST['editId'])) {
+        $blog = new Blog($_POST['editId'], $username, $title, $summary, $content, $uploadResult, $currentDate);
+        Blog::update($blog);
+    } else {
+        $blog = new Blog(Blog::getNextId(), $username, $title, $summary, $content, $uploadResult, $currentDate);
+        Blog::add($blog);
+    }
+
+    header("Location: blog_dashboard.php");
+    exit;
+}
+
+// Load blog data for editing
+$editBlog = null;
+if ($editId) {
+    $editBlog = Blog::getById($editId);
+    $action = 'form';
+}
 
 ?>
 <div class="container-fluid bg-success d-md-none sticky-top">
@@ -138,89 +159,93 @@
 
 	<div class="col">
 		<div class="container mt-4">
-			<header class="bg-dark text-white text-center py-4">
-				<h1>Post New Article</h1>
-			</header>
+			<h2 class="mb-4 text-center">Blog Manager</h2>
+			<a href="?action=form" class="btn btn-primary mb-3">Create a new blog</a>
 
-			<div class="container mt-5">
-				<form id="blogForm" action="" method="POST" enctype="multipart/form-data">
-					<div class="form-group mb-3">
-						<label for="title">Tiêu đề:</label>
-						<input type="text" class="form-control" id="title" name="title" required placeholder="Nhập tiêu đề bài viết">
+			<?php if ($action === 'form'): ?>
+				<h3><?= $editBlog ? "Edit Blog #{$editBlog->id}" : "Create New Blog" ?></h3>
+				<form method="POST" enctype="multipart/form-data">
+					<?php if ($editBlog): ?>
+						<input type="hidden" name="editId" value="<?= htmlspecialchars($editBlog->id) ?>">
+					<?php endif; ?>
+					<div class="mb-3">
+						<label for="title">Title:</label>
+						<input type="text" class="form-control" name="title" value="<?= $editBlog->title ?? '' ?>" required>
 					</div>
-
-					<div class="form-group mb-3">
-						<label for="image">Ảnh đại diện:</label>
-						<input type="file" class="form-control" id="image" name="image" accept="image/*">
-						<div id="imagePreview" class="mt-3" style="display: none;">
-							<label>Xem trước ảnh:</label><br>
-							<img id="previewImg" src="" alt="Image Preview" style="max-width: 100%; max-height: 300px;">
-							<button type="button" id="deleteImage" class="btn btn-danger mt-2">Xóa ảnh</button>
-						</div>
+					<div class="mb-3">
+						<label for="image">Image:</label>
+						<input type="file" class="form-control" name="image" accept="image/*">
+						<?php if ($editBlog): ?>
+							<img src="<?= htmlspecialchars($editBlog->imgUrl) ?>" alt="Current Image" style="max-width: 300px; max-height: 150px;" class="mt-2">
+						<?php endif; ?>
 					</div>
-
-					<div class="form-group mb-3">
-						<label for="summary">Tóm tắt:</label>
-						<textarea class="form-control" id="summary" name="summary" rows="5" placeholder="Tóm tắt nội dung bài viết"></textarea>
+					<div class="mb-3">
+						<label for="summary">Summary:</label>
+						<textarea class="form-control" name="summary" id="summary"><?= $editBlog->summary ?? '' ?></textarea>
 					</div>
-
-					<div class="form-group mb-3">
-						<label for="content">Nội dung:</label>
-						<textarea class="form-control" id="content" name="content" rows="10" placeholder="Nội dung chính bài viết"></textarea>
+					<div class="mb-3">
+						<label for="content">Content:</label>
+						<textarea class="form-control" name="content" id="content"><?= $editBlog->content ?? '' ?></textarea>
 					</div>
-
-					<div class="form-group form-check mb-3">
-						<input type="checkbox" class="form-check-input" id="isShow" name="isShow" checked>
-						<label class="form-check-label" for="isShow">Công khai bài viết</label>
-					</div>
-
-					<button type="submit" class="btn btn-primary">Đăng bài</button>
+					<button type="submit" class="btn btn-success"><?= $editBlog ? 'Update' : 'Post' ?></button>
+					<a href="dashboard.php" class="btn btn-secondary">Cancel</a>
 				</form>
-			</div>
 
-			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-			<script>
-				// Khi người dùng chọn tệp ảnh
-				$('#image').change(function(event) {
-					var reader = new FileReader();
+				<script>
+					ClassicEditor
+						.create(document.querySelector('#content'), {
+							ckfinder: {
+								uploadUrl: 'fileupload.php'
+							}
+						})
+						.catch(error => {
+							console.error(error);
+						});
 
-					reader.onload = function(e) {
-						// Hiển thị hình ảnh xem trước
-						$('#previewImg').attr('src', e.target.result);
-						$('#imagePreview').show();  // Hiển thị phần xem trước
-					};
+					ClassicEditor
+						.create(document.querySelector('#summary'), {
+							removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
+							toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
+						})
+						.catch(error => {
+							console.error(error);
+						});
+				</script>
 
-					reader.readAsDataURL(this.files[0]);  // Đọc ảnh
-				});
-
-				// Khi người dùng nhấn nút xóa ảnh
-				$('#deleteImage').click(function() {
-					$('#image').val('');  // Xóa tệp ảnh đã chọn
-					$('#imagePreview').hide();  // Ẩn phần xem trước
-				});
-			</script>
-
-			<script>
-				ClassicEditor
-					.create(document.querySelector('#content'), {
-						ckfinder: {
-							uploadUrl: 'fileupload.php'
-						}
-					})
-					.catch(error => {
-						console.error(error);
-					});
-
-				ClassicEditor
-					.create(document.querySelector('#summary'), {
-						removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
-						toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
-					})
-					.catch(error => {
-						console.error(error);
-					});
-			</script>
-
+			<?php else: ?>
+				<?php $result = Blog::getListBlog(10); ?>
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover align-middle">
+						<thead class="table-dark">
+							<tr>
+								<th>ID</th>
+								<th>Image</th>
+								<th>Username</th>
+								<th>Title</th>
+								<th>Summary</th>
+								<th>Upload Date</th>
+								<th class="text-center">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($result as $blog): ?>
+							<tr>
+								<td><?= htmlspecialchars($blog->id) ?></td>
+								<td><img src="<?= htmlspecialchars($blog->imgUrl) ?>" style="width: 160px; height: 90px; object-fit: cover;" class="img-fluid rounded"></td>
+								<td><?= htmlspecialchars($blog->username) ?></td>
+								<td><?= htmlspecialchars($blog->title) ?></td>
+								<td><?= htmlspecialchars($blog->summary) ?></td>
+								<td><?= htmlspecialchars($blog->uploadDate) ?></td>
+								<td class="text-center">
+									<a href="?editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+									<a href="?deleteId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete blog #<?= htmlspecialchars($blog->id) ?>?')">Delete</a>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			<?php endif; ?>
 		</div>
 
 	</div>
