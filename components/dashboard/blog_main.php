@@ -7,7 +7,7 @@
 
 <div class="container mt-4">
     <h2 class="mb-4 text-center">Blog Manager</h2>
-	<a href="dashboard1.php" class="btn btn-primary">Create a new blog</a>
+	<a href="dashboard.php" class="btn btn-primary">Create a new blog</a>
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
             <thead class="table-dark">

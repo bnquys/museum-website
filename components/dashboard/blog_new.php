@@ -147,41 +147,4 @@ if (isset($_GET['editId'])) {
 
         reader.readAsDataURL(this.files[0]);  
     });
-
-    $('#deleteImage').click(function() {
-    var confirmation = confirm("Are you sure you want to delete this image?");
-    if (confirmation) {
-        // Gửi yêu cầu AJAX để xóa ảnh
-        $.ajax({
-    type: 'POST',
-    url: 'components/dashboard/delete_image.php',
-    data: { id: '<?= $blog->id ?>' },
-    success: function(response) {
-        console.log(response);  // Kiểm tra phản hồi từ server
-        try {
-            var res = JSON.parse(response);  // Phân tích JSON
-            if (res.success) {
-                $('#previewImg').attr('src', '');
-                $('#imagePreview').hide();
-                alert("Image deleted successfully.");
-            } else {
-                console.log("Error: " + res.message);
-                alert("Failed to delete the image: " + res.message);
-            }
-        } catch (e) {
-            console.log("Error parsing JSON:", e);
-            alert("Unexpected error occurred while processing the response.");
-        }
-    },
-    error: function(xhr, status, error) {
-        console.log("AJAX Error: " + error);
-        alert("Error while deleting the image.");
-    }
-});
-
-
-    }
-});
-
-
 </script>

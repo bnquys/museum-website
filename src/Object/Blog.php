@@ -28,7 +28,7 @@
         public static function getListBlog($limit) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT Id, Username, Title, Summary, Content, ImageUrl, Date, IsShow FROM Blog WHERE IsShow = TRUE ORDER BY Id DESC LIMIT ?");
+            $stmt = $conn->prepare("SELECT Id, Username, Title, Summary, Content, ImageUrl, UploadDate, IsShow FROM Blog WHERE IsShow = TRUE ORDER BY Id DESC LIMIT ?");
             if (!$stmt) {
                 die("Prepare failed: " . $conn->error);
             }
@@ -49,7 +49,7 @@
                     $row["Summary"],
                     $row["Content"],
                     $row["ImageUrl"],
-                    $row["Date"],
+                    $row["UploadDate"],
                     $row["IsShow"]
                 );
             }
@@ -91,7 +91,7 @@
             $isShow = $blog->isShow;
         
             $stmt = $conn->prepare(
-                "INSERT INTO Blog (Id, Username, Title, Summary, Content, ImageUrl, Date, IsShow) 
+                "INSERT INTO Blog (Id, Username, Title, Summary, Content, ImageUrl, UploadDate, IsShow) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?) 
                 ON DUPLICATE KEY UPDATE 
                     Username = VALUES(Username), 
@@ -99,7 +99,7 @@
                     Summary = VALUES(Summary), 
                     Content = VALUES(Content), 
                     ImageUrl = VALUES(ImageUrl), 
-                    Date = VALUES(Date),  
+                    UploadDate = VALUES(UploadDate),  
                     IsShow = VALUES(IsShow)"
             );
         
@@ -149,7 +149,7 @@
         public static function getById($id) {
             $conn = Database::Connect();
         
-            $stmt = $conn->prepare("SELECT Id, Username, Title, Summary, Content, ImageUrl, Date, IsShow FROM Blog WHERE Id = ?");
+            $stmt = $conn->prepare("SELECT Id, Username, Title, Summary, Content, ImageUrl, UploadDate, IsShow FROM Blog WHERE Id = ?");
             if (!$stmt) {
                 die("Prepare failed: " . $conn->error);
             }
@@ -171,7 +171,7 @@
                     $row["Summary"],
                     $row["Content"],
                     $row["ImageUrl"],
-                    $row["Date"],
+                    $row["UploadDate"],
                     $row["IsShow"]
                 );
             } else {

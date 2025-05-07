@@ -10,7 +10,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,8 +48,10 @@
 
 		<!-- Link jQuery for DropDown menu -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		
 
+		<!-- Link CKEditor -->
+		<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+		
 		<link rel="stylesheet" href="./assets/css/move.css" />
 	</head>
 	<body>
