@@ -117,6 +117,8 @@
 				case 'blog':
 					include "components/dashboard/blog_dashboard.php";
 					break;
+				case 'ticket':
+					include "components/dashboard/ticket_dashboard.php";
 			}
 		}
 

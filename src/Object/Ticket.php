@@ -23,11 +23,21 @@ class Ticket {
 
     public static function getListTicket($limit) {
         $conn = Database::Connect();
-        $stmt = $conn->prepare("SELECT Id, Email, Name, VisitDate, Price, IsShow FROM Ticket WHERE IsShow = TRUE ORDER BY Id DESC LIMIT ?");
-        if (!$stmt) die("Prepare failed: " . $conn->error);
+        
+        $stmt = $conn->prepare("
+            SELECT Id, Email, Name, VisitDate, Price, IsShow 
+            FROM Ticket 
+            ORDER BY IsShow DESC, Id DESC 
+            LIMIT ?
+        ");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
 
         $stmt->bind_param("i", $limit);
-        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
 
         $result = $stmt->get_result();
         $list = [];
@@ -44,8 +54,10 @@ class Ticket {
 
         $stmt->close();
         $conn->close();
+
         return $list;
     }
+
 
     public static function delete($id) {
         $conn = Database::Connect();
