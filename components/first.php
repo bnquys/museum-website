@@ -51,6 +51,9 @@
 		<!-- Link jQuery for DropDown menu -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		
+		<!-- Link CKEditor -->
+		<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+		
 
 	</head>
 	<body>
