@@ -1,59 +1,8 @@
 <?php
 	// session_start();
-	$name = "Dashboard";
+	$title = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
-
-	require_once realpath(__DIR__."/vendor/autoload.php");
-	use Museum\Object\Blog;
-    use Museum\Object\FileUploader;
-	
-$action = $_GET['action'] ?? 'list';
-$editId = $_GET['editId'] ?? null;
-$deleteId = $_GET['deleteId'] ?? null;
-
-// Handle blog deletion
-if ($deleteId) {
-    Blog::delete($deleteId);
-    header("Location: blog_dashboard.php");
-    exit;
-}
-
-// Handle blog submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $uploader = new FileUploader();
-    $uploadResult = $uploader->upload($_FILES["image"]);
-
-    if (!$uploadResult) {
-        echo "Upload error: " . $uploader->error;
-        exit;
-    }
-
-    $title = $_POST['title'];
-    $summary = $_POST['summary'];
-    $content = $_POST['content'];
-    $currentDate = date('Y-m-d H:i:s');
-    $username = "bnquys";
-
-    if (isset($_POST['editId'])) {
-        $blog = new Blog($_POST['editId'], $username, $title, $summary, $content, $uploadResult, $currentDate);
-        Blog::update($blog);
-    } else {
-        $blog = new Blog(Blog::getNextId(), $username, $title, $summary, $content, $uploadResult, $currentDate);
-        Blog::add($blog);
-    }
-
-    header("Location: blog_dashboard.php");
-    exit;
-}
-
-// Load blog data for editing
-$editBlog = null;
-if ($editId) {
-    $editBlog = Blog::getById($editId);
-    $action = 'form';
-}
-
 ?>
 <div class="container-fluid bg-success d-md-none sticky-top">
 	<nav class="nav">
@@ -124,27 +73,27 @@ if ($editId) {
 			</button>
 			<ul class="list-group" id="list-group">
 				<li class="list-group-item">
-					<a href="#" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=blog" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
-						<p class="m-0">An item</p>
+						<p class="m-0">Blog</p>
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="#" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=event" class="d-flex gap-2 text-light">
 						<i class="bi bi-envelope"></i>
-						<p class="m-0">A second item</p>
+						<p class="m-0">Event</p>
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="#" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=ticket" class="d-flex gap-2 text-light">
 						<i class="bi bi-android2"></i>
-						<p class="m-0">A third item</p>
+						<p class="m-0">Ticket</p>
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="#" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
-						<p class="m-0">A fourth item</p>
+						<p class="m-0">Galary</p>
 					</a>
 				</li>
 				<li class="list-group-item">
@@ -158,97 +107,24 @@ if ($editId) {
 	</div>
 
 	<div class="col">
-		<div class="container mt-4">
-			<h2 class="mb-4 text-center">Blog Manager</h2>
-			<a href="?action=form" class="btn btn-primary mb-3">Create a new blog</a>
+		<?php
+		
+		if (isset($_GET['page'])) {
+			$func = $_GET['page'];
 
-			<?php if ($action === 'form'): ?>
-				<h3><?= $editBlog ? "Edit Blog #{$editBlog->id}" : "Create New Blog" ?></h3>
-				<form method="POST" enctype="multipart/form-data">
-					<?php if ($editBlog): ?>
-						<input type="hidden" name="editId" value="<?= htmlspecialchars($editBlog->id) ?>">
-					<?php endif; ?>
-					<div class="mb-3">
-						<label for="title">Title:</label>
-						<input type="text" class="form-control" name="title" value="<?= $editBlog->title ?? '' ?>" required>
-					</div>
-					<div class="mb-3">
-						<label for="image">Image:</label>
-						<input type="file" class="form-control" name="image" accept="image/*">
-						<?php if ($editBlog): ?>
-							<img src="<?= htmlspecialchars($editBlog->imgUrl) ?>" alt="Current Image" style="max-width: 300px; max-height: 150px;" class="mt-2">
-						<?php endif; ?>
-					</div>
-					<div class="mb-3">
-						<label for="summary">Summary:</label>
-						<textarea class="form-control" name="summary" id="summary"><?= $editBlog->summary ?? '' ?></textarea>
-					</div>
-					<div class="mb-3">
-						<label for="content">Content:</label>
-						<textarea class="form-control" name="content" id="content"><?= $editBlog->content ?? '' ?></textarea>
-					</div>
-					<button type="submit" class="btn btn-success"><?= $editBlog ? 'Update' : 'Post' ?></button>
-					<a href="dashboard.php" class="btn btn-secondary">Cancel</a>
-				</form>
+			switch ($func) {
+				case 'blog':
+					include "components/dashboard/blog_dashboard.php";
+					break;
+			
+			}
+		}
 
-				<script>
-					ClassicEditor
-						.create(document.querySelector('#content'), {
-							ckfinder: {
-								uploadUrl: 'fileupload.php'
-							}
-						})
-						.catch(error => {
-							console.error(error);
-						});
-
-					ClassicEditor
-						.create(document.querySelector('#summary'), {
-							removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
-							toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
-						})
-						.catch(error => {
-							console.error(error);
-						});
-				</script>
-
-			<?php else: ?>
-				<?php $result = Blog::getListBlog(10); ?>
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover align-middle">
-						<thead class="table-dark">
-							<tr>
-								<th>ID</th>
-								<th>Image</th>
-								<th>Username</th>
-								<th>Title</th>
-								<th>Summary</th>
-								<th>Upload Date</th>
-								<th class="text-center">Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ($result as $blog): ?>
-							<tr>
-								<td><?= htmlspecialchars($blog->id) ?></td>
-								<td><img src="<?= htmlspecialchars($blog->imgUrl) ?>" style="width: 160px; height: 90px; object-fit: cover;" class="img-fluid rounded"></td>
-								<td><?= htmlspecialchars($blog->username) ?></td>
-								<td><?= htmlspecialchars($blog->title) ?></td>
-								<td><?= htmlspecialchars($blog->summary) ?></td>
-								<td><?= htmlspecialchars($blog->uploadDate) ?></td>
-								<td class="text-center">
-									<a href="?editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
-									<a href="?deleteId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete blog #<?= htmlspecialchars($blog->id) ?>?')">Delete</a>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
-			<?php endif; ?>
-		</div>
-
+		?>
 	</div>
-
 </div>
+
+
+
+
 <?php include "components/last.php";?>
