@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	// session_start();
 	$title = "Dashboard";
 	$css = "dashboard";
@@ -116,7 +117,6 @@
 				case 'blog':
 					include "components/dashboard/blog_dashboard.php";
 					break;
-			
 			}
 		}
 
@@ -127,4 +127,7 @@
 
 
 
-<?php include "components/last.php";?>
+<?php 
+	include "components/last.php";
+	ob_end_flush();
+?>

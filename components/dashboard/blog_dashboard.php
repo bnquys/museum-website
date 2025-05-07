@@ -23,7 +23,7 @@
             $uploadResult = $uploader->upload($_FILES["image"]);
 
             if (!$uploadResult) {
-                echo "Upload error: " . $uploader->error;
+                // echo "Upload error: " . $uploader->error;
                 exit;
             }
 
@@ -140,8 +140,8 @@
                         <td><?= htmlspecialchars($blog->summary) ?></td>
                         <td><?= htmlspecialchars($blog->uploadDate) ?></td>
                         <td class="text-center">
-                            <a href="?editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
-                            <a href="?deleteId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete blog #<?= htmlspecialchars($blog->id) ?>?')">Delete</a>
+                            <a href="?page=blog&editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="?page=blog&deleteId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete blog #<?= htmlspecialchars($blog->id) ?>?')">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
