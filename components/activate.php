@@ -30,7 +30,7 @@
 
 			$user = new User(
 				$userData['name'],
-				$userData['birthYear'],
+				$userData['birthDate'],
 				$userData['phoneNumber'],
 				$userData['email']
 			);

@@ -18,7 +18,7 @@
 				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> 281-876-3063</span>
 			</div>
 			<?php if(isset($account)) { ?>
-				<div> <a href="#" class="d-inline text-light hover-link">Hello, <?= $account->getUser()->name?></a></div>
+				<div> <a href="user.php?id=<?=$account->email?>" class="d-inline text-light hover-link">Hello, <?= $account->getUser()->name?></a></div>
 			<?php } else { ?>
 				<div>
 					<!-- FB ICON -->

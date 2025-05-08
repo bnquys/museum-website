@@ -2,6 +2,17 @@
     $css = "user";
     $title = $name = "User";
     include "components/first.php"; 
+
+    require_once realpath(__DIR__."/vendor/autoload.php");
+    use Museum\Object\User;
+
+    $user = null;
+    if (isset($_GET['id'])) {
+        $email = $_GET['id'];
+        $user = User::getByEmail($email);
+    }
+
+
 ?>
 
 <body>
@@ -11,8 +22,8 @@
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <h1 class="display-4 fw-bold">
-                            <i class="bi bi-person-circle me-3"></i>Hehe
-                            Profile
+                            <i class="bi bi-person-circle me-3"></i>
+                            <?= htmlspecialchars($user?->name ?? '') ?> Profile
                         </h1>
                         <p class="lead">
                             Update your personal information and preferences
@@ -49,8 +60,8 @@
                                         type="text"
                                         class="form-control"
                                         id="fullName"
-                                        placeholder="John Doe"
-                                        maxlength="50"
+                                        name="name"
+                                        value="<?= htmlspecialchars($user?->name ?? '') ?>"
                                         required
                                     />
                                 </div>
@@ -67,7 +78,8 @@
                                         type="email"
                                         class="form-control"
                                         id="email"
-                                        placeholder="john.doe@example.com"
+                                        name="email"
+                                        value="<?= htmlspecialchars($user?->email ?? '') ?>"
                                         required
                                     />
                                     <div class="form-text">
@@ -87,23 +99,8 @@
                                         type="tel"
                                         class="form-control"
                                         id="phone"
-                                        placeholder="(123) 456-7890"
-                                    />
-                                </div>
-
-                                <!-- Address Section -->
-                                <div class="mb-4">
-                                    <label for="address" class="form-label">
-                                        <i
-                                            class="bi bi-house-door-fill profile-icon"
-                                        ></i
-                                        >Address
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="address"
-                                        placeholder="123 Museum Ave"
+                                        name="phoneNumber"
+                                        value="<?= htmlspecialchars($user?->phoneNumber ?? '') ?>"
                                     />
                                 </div>
 

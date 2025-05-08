@@ -7,13 +7,13 @@
 
         public $id;
         public $name;
-        public $birthYear;
+        public $birthDate;
         public $phoneNumber;
         public $email;
 
-        public function __construct($name, $birthYear, $phoneNumber, $email) {
+        public function __construct($name, $birthDate, $phoneNumber, $email) {
             $this->name = self::formatFullName($name);
-            $this->birthYear = $birthYear;
+            $this->birthDate = $birthDate;
             $this->phoneNumber = $phoneNumber;
             $this->email = $email;
         }
@@ -21,8 +21,9 @@
         public static function add(User $user) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $user->name, $user->email, $user->phoneNumber);
+            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber, BirthDay) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $user->name, $user->email, $user->phoneNumber, $user->birthDate);
+
             $stmt->execute();
 
             $stmt->close();
@@ -68,8 +69,29 @@
             
             $fullName = ucwords(strtolower($fullName));
 		
-		return $fullName;
-	}
+            return $fullName;
+        }
+
+        public static function getByEmail(string $email): ?self {
+            $conn = Database::Connect();
+
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDay FROM " . self::TABLE . " WHERE Email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $user = null;
+
+            if ($row = $result->fetch_assoc()) {
+                $user = new self($row['Name'], $row['BirthDay'], $row['PhoneNumber'], $row['Email']);
+            }
+
+            $stmt->close();
+            $conn->close();
+
+            return $user;
+        }
+
     }
 
 ?>

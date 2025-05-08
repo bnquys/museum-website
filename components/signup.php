@@ -10,14 +10,14 @@
 	use Museum\Object\Mailer;
 	use Museum\Object\User;
 
-	$name = $birthYear = $phoneNumber = $email = $username = $password = $confirmPass = "";
+	$name = $birthDate = $phoneNumber = $email = $username = $password = $confirmPass = "";
 	$emailError = $usernameError = $passwordError = "";
 	// $nameError = $birthYearError = $phoneNumberError = "";
 	$formSubmitted = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$name = format_input($_POST["name"]);
-		$birthYear = format_input($_POST["birthYear"]);
+		$birthDate = format_input($_POST["birthDate"]);
 		$phoneNumber = format_input($_POST["phoneNumber"]);
 		$email = format_input($_POST["email"]);
 		$username = format_input($_POST["username"]);
@@ -56,8 +56,8 @@
 			$valid = false;
 		}
 
-		if (!isValidYearAndAge($birthYear)) {
-			$birthYearError = "Please enter a valid birth year";
+		if (!isValidBirthDate($birthDate)) {
+			$birthDateError = "Please enter a valid date of birth";
 			$valid = false;
 		}
 
@@ -85,7 +85,7 @@
 				],
 				'user' => [
 					'name' => $name,
-					'birthYear' => $birthYear,
+					'birthDate' => $birthDate,
 					'phoneNumber' => $phoneNumber,
 					'email' => $email
 				]
@@ -122,19 +122,17 @@
 			/>
 			<div class="invalid-feedback text-danger"><?= $nameError ?? ''?></div>
 
-			<label for="birth-year" class="form-label text-light"
-				>Birth Year</label
-			>
-			<input
-				type="number"
-				name="birthYear"
-				id="birth-year"
-				class="form-control <?= isset($birthYearError) ? 'is-invalid' : '' ?>"
-				min="1900"
-				max=<?= date("Y")?>
-				value="<?= $birthYear?>"
-				required
-			/>
+		<label for="birthDate" class="form-label text-light">Date of Birth</label>
+		<input
+			type="date"
+			name="birthDate"
+			id="birthDate"
+			class="form-control <?= isset($birthDateError) ? 'is-invalid' : '' ?>"
+			value="<?= $birthDate ?>"
+			required
+		/>
+		<div class="invalid-feedback text-danger"><?= $birthDateError ?? '' ?></div>
+
 			<div class="invalid-feedback text-danger"><?= $birthYearError ?? '' ?></div>
 
 			<label for="phone-number" class="form-label text-light"
@@ -275,6 +273,19 @@
 
 	function isValidPasswordLength($password) {
 		return strlen($password) >= 8 && strlen($password) <= 20;
+	}
+
+	function isValidBirthDate($date) {
+		$timestamp = strtotime($date);
+		if (!$timestamp) return false;
+
+		$today = strtotime(date("Y-m-d"));
+		if ($timestamp >= $today) return false;
+
+		$age = date("Y") - date("Y", $timestamp);
+		if ($age < 0 || $age > 120) return false;
+
+		return true;
 	}
 
 ?>

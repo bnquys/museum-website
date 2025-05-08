@@ -27,9 +27,8 @@
         public static function add(Account $account) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Username, Email, Password, CodeActivate) VALUE (?, ?, ?, ?)");
-            $activateCode = self::generateRandomNumbers(6);
-            $stmt->bind_param("ssss", $account->username, $account->email, $account->password, $activateCode);
+            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Username, Email, Password) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $account->username, $account->email, $account->password);
             $stmt->execute();
 
             $stmt->close();
@@ -110,7 +109,7 @@
         public function getUser() {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber FROM " . User::TABLE . " WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDay FROM " . User::TABLE . " WHERE Email = ?");
             $stmt->bind_param("s", $this->email);
             $stmt->execute();
             
@@ -118,7 +117,7 @@
             
             if ($result->num_rows === 1) {
                 $row = $result->fetch_assoc();
-                $user = new User($row['Name'], null, $row['PhoneNumber'], $row['Email']);
+                $user = new User($row['Name'], $row['BirthDay'], $row['PhoneNumber'], $row['Email']);
                 
                 $stmt->close();
                 $conn->close();
