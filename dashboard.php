@@ -74,6 +74,12 @@
 			</button>
 			<ul class="list-group" id="list-group">
 				<li class="list-group-item">
+					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
+						<i class="bi bi-file-earmark-post"></i>
+						<p class="m-0">About</p>
+					</a>
+				</li>
+				<li class="list-group-item">
 					<a href="dashboard.php?page=blog" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
 						<p class="m-0">Blog</p>
@@ -97,12 +103,6 @@
 						<p class="m-0">Galary</p>
 					</a>
 				</li>
-				<li class="list-group-item">
-					<a href="#" class="d-flex gap-2 text-light">
-						<i class="bi bi-book"></i>
-						<p class="m-0">And a fifth one</p>
-					</a>
-				</li>
 			</ul>
 		</aside>
 	</div>
@@ -119,6 +119,10 @@
 					break;
 				case 'ticket':
 					include "components/dashboard/ticket_dashboard.php";
+					break;
+				case 'museum':
+					include "components/dashboard/about_dashboard.php";
+					break;
 			}
 		}
 
