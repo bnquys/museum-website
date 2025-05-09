@@ -19,7 +19,7 @@
         $imagePath = $_POST['old_image'] ?? '';
 
         if (!empty($_FILES['image']['tmp_name'])) {
-            $uploader = new FileUploader("assets/uploads/blog");
+            $uploader = new FileUploader("assets/uploads/blog/");
             $uploadResult = $uploader->upload($_FILES["image"]);
 
             if (!$uploadResult) {
@@ -97,7 +97,7 @@
             ClassicEditor
                 .create(document.querySelector('#content'), {
                     ckfinder: {
-                        uploadUrl: '<?= realpath(__DIR__."/blog_fileupload.php")?>'
+                        uploadUrl: '/components/dashboard/blog_fileupload.php'
                     }
                 })
                 .catch(error => {
