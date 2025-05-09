@@ -1,7 +1,7 @@
 <?php
 require_once realpath(__DIR__ . "/../../vendor/autoload.php");
 
-use Museum\Utilis\JsonDataManager;
+use Museum\Utils\JsonDataManager;
 
 $dataManager = new JsonDataManager(__DIR__ . '/../../assets/data/museum_data.json');
 $museum = $dataManager->read('museum_info');

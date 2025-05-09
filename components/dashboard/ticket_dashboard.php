@@ -12,13 +12,22 @@ if ($deleteId) {
     exit;
 }
 
+if (isset($_GET['move']) && isset($_GET['id'])) {
+    $direction = $_GET['move'];
+    $id = $_GET['id'];
+    Ticket::moveOrder($id, $direction);
+    header("Location: dashboard.php?page=ticket");
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = $_POST['editId'] ?? Ticket::getNextId();
     $name = $_POST['name'];
     $price = $_POST['price'];
+    $description = $_POST['description'] ?? '';
     $isShow = isset($_POST['isShow']) ? 1 : 0;
 
-    $ticket = new Ticket($id, null, $name, null, $price, $isShow);
+    $ticket = new Ticket($id, $name, $price, $description, $isShow);
     Ticket::add($ticket);
 
     header("Location: dashboard.php?page=ticket");
@@ -50,17 +59,20 @@ if ($editId) {
                 <label for="price">Price:</label>
                 <input type="number" step="0.01" class="form-control" name="price" required value="<?= $editTicket->price ?? '0' ?>">
             </div>
-            <?php if ($editTicket): ?>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" name="isShow" id="isShow" <?= $editTicket->isShow ? 'checked' : '' ?>>
-                <label class="form-check-label" for="isShow">Hiển thị (IsShow)</label>
+            <div class="mb-3">
+                <label for="description">Description:</label>
+                <textarea class="form-control" name="description"><?= $editTicket->description ?? '' ?></textarea>
             </div>
-            <?php endif; ?>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="isShow" id="isShow"
+                    <?= ($editTicket && $editTicket->isShow) || !$editTicket ? 'checked' : '' ?>>
+                <label class="form-check-label" for="isShow">Is Show</label>
+            </div>
             <button type="submit" class="btn btn-success"><?= $editTicket ? 'Update' : 'Create' ?></button>
             <a href="dashboard.php?page=ticket" class="btn btn-secondary">Cancel</a>
         </form>
     <?php else: ?>
-        <?php $result = Ticket::getListTicket(10); ?>
+        <?php $result = Ticket::getListTicket(100); ?>
         <div class="table-responsive">
             <table class="table table-bordered align-middle">
                 <thead class="table-dark">
@@ -68,6 +80,8 @@ if ($editId) {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Description</th>
+                        <th>Order</th>
                         <th>Is Show</th>
                         <th class="text-center">Actions</th>
                     </tr>
@@ -78,6 +92,11 @@ if ($editId) {
                         <td><?= htmlspecialchars($ticket->id) ?></td>
                         <td><?= htmlspecialchars($ticket->name) ?></td>
                         <td><?= htmlspecialchars($ticket->price) ?></td>
+                        <td><?= htmlspecialchars($ticket->description) ?></td>
+                        <td class="text-center">
+                            <a href="?page=ticket&move=up&id=<?= urlencode($ticket->id) ?>" class="btn btn-sm btn-outline-secondary">⬆</a>
+                            <a href="?page=ticket&move=down&id=<?= urlencode($ticket->id) ?>" class="btn btn-sm btn-outline-secondary">⬇</a>
+                        </td>
                         <td><?= $ticket->isShow ? 'Yes' : 'No' ?></td>
                         <td class="text-center">
                             <a href="?page=ticket&editId=<?= urlencode($ticket->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>

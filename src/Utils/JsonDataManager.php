@@ -1,5 +1,5 @@
 <?php
-namespace Museum\Utilis;
+namespace Museum\Utils;
 
 class JsonDataManager {
     private $filePath;

@@ -10,7 +10,7 @@
     // Handle blog deletion
     if ($deleteId) {
         Blog::delete($deleteId);
-        header("Location: dashboard.php");
+        header("Location: dashboard.php?page=blog");
         exit;
     }
 
@@ -45,7 +45,7 @@
             Blog::add($blog);
         }
 
-        header("Location: dashboard.php");
+        header("Location: dashboard.php?page=blog");
         exit;
     }
 

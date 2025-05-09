@@ -1,6 +1,7 @@
 <?php
     namespace Museum\Object;
-
+    use Museum\Utils\Database;
+    
     class Blog {
         public const PREFIX = "BL";
         public const CODE_LENGTH = "5";

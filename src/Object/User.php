@@ -21,7 +21,7 @@
         public static function add(User $user) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber, BirthDay) VALUES (?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber, BirthDate) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $user->name, $user->email, $user->phoneNumber, $user->birthDate);
 
             $stmt->execute();
@@ -75,7 +75,7 @@
         public static function getByEmail(string $email): ?self {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDay FROM " . self::TABLE . " WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDate FROM " . self::TABLE . " WHERE Email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
 
@@ -83,7 +83,7 @@
             $user = null;
 
             if ($row = $result->fetch_assoc()) {
-                $user = new self($row['Name'], $row['BirthDay'], $row['PhoneNumber'], $row['Email']);
+                $user = new self($row['Name'], $row['BirthDate'], $row['PhoneNumber'], $row['Email']);
             }
 
             $stmt->close();

@@ -1,5 +1,5 @@
 <?php
-    namespace Museum\Object;
+    namespace Museum\Utils;
     use mysqli;
     
     class Database {
