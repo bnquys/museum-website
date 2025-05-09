@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     4/23/2025 11:17:11 PM                        */
+/* Created on:     09-May-25 06:24:06 PM                        */
 /*==============================================================*/
 
 
@@ -39,6 +39,7 @@ create table Artifact
    History              text,
    ImageUrl             text,
    IsShow               boolean default TRUE,
+   DisplayOrder         bigint default 0,
    primary key (Id)
 );
 
@@ -55,6 +56,7 @@ create table Blog
    Content              text,
    ImageUrl             text default '',
    IsShow               boolean default TRUE,
+   DisplayOrder         bigint default 0,
    primary key (Id)
 );
 
@@ -67,8 +69,21 @@ create table Client
    Username             varchar(50),
    Name                 text,
    PhoneNumber          varchar(20),
-   BirthDay             date,
+   BirthDate            date,
    primary key (Email)
+);
+
+/*==============================================================*/
+/* Table: Comment                                               */
+/*==============================================================*/
+create table Comment
+(
+   Username             varchar(50) not null,
+   Id                   varchar(20) not null,
+   Content              text not null,
+   CreatedAt            datetime default CURRENT_TIMESTAMP,
+   IsShow               boolean default TRUE,
+   primary key (Username, Id)
 );
 
 /*==============================================================*/
@@ -76,10 +91,12 @@ create table Client
 /*==============================================================*/
 create table ContactForms
 (
-   Username             varchar(50) not null,
+   Id                   varchar(20) not null,
+   Username             varchar(50),
    Message              text,
    CreatedAt            datetime default CURRENT_TIMESTAMP,
-   primary key (Username)
+   IsSeen               boolean default FALSE,
+   primary key (Id)
 );
 
 /*==============================================================*/
@@ -89,8 +106,10 @@ create table Contain
 (
    TicId                varchar(20) not null,
    Id                   varchar(20) not null,
+   Email                varchar(50) not null,
    Quantity             int default 0,
-   primary key (TicId, Id)
+   VisitDate            datetime default CURRENT_TIMESTAMP,
+   primary key (TicId, Id, Email)
 );
 
 /*==============================================================*/
@@ -137,6 +156,7 @@ create table Events
    TimeStart            datetime default CURRENT_TIMESTAMP,
    TimeEnd              datetime default CURRENT_TIMESTAMP,
    Location             text,
+   DisplayOrder         bigint default 0,
    primary key (Id)
 );
 
@@ -155,7 +175,6 @@ create table Exhibitions
 create table Guides
 (
    Email                varchar(50) not null,
-   Id                   varchar(20) not null,
    Expertise            text,
    Introduction         text,
    primary key (Email)
@@ -169,17 +188,6 @@ create table Language
    Id                   varchar(20) not null,
    Name                 text,
    primary key (Id)
-);
-
-/*==============================================================*/
-/* Table: Navbar                                                */
-/*==============================================================*/
-create table Navbar
-(
-   Name                 varchar(100) not null,
-   Href                 text,
-   IsShow               boolean default TRUE,
-   primary key (Name)
 );
 
 /*==============================================================*/
@@ -219,18 +227,16 @@ create table PaymentMethod
 );
 
 /*==============================================================*/
-/* Table: Reviews                                               */
+/* Table: Review                                                */
 /*==============================================================*/
-create table Reviews
+create table Review
 (
-   Id                   varchar(20) not null,
-   EveId                varchar(20) not null,
    Username             varchar(50) not null,
-   Rating               float default 0,
+   Id                   varchar(20) not null,
    Comment              text,
    CreatedAt            datetime default CURRENT_TIMESTAMP,
    IsShow               boolean default TRUE,
-   primary key (Id)
+   primary key (Username, Id)
 );
 
 /*==============================================================*/
@@ -271,11 +277,11 @@ create table Tag
 create table Ticket
 (
    Id                   varchar(20) not null,
-   Email                varchar(50),
    Name                 text,
-   VisitDate            datetime default CURRENT_TIMESTAMP,
    Price                float default 0,
+   Description          text,
    IsShow               boolean default TRUE,
+   DisplayOrder         bigint default 0,
    primary key (Id)
 );
 
@@ -315,8 +321,17 @@ alter table Blog add constraint FK_BLOG_POST_ACCOUNT foreign key (Username)
 alter table Client add constraint FK_CLIENT_HAS_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
 
+alter table Comment add constraint FK_COMMENT_COMMENT_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
+
+alter table Comment add constraint FK_COMMENT_COMMENT_BLOG foreign key (Id)
+      references Blog (Id) on delete restrict on update restrict;
+
 alter table ContactForms add constraint FK_CONTACTF_CONTACT_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
+
+alter table Contain add constraint FK_CONTAIN_CONTAIN_GUIDES foreign key (Email)
+      references Guides (Email) on delete restrict on update restrict;
 
 alter table Contain add constraint FK_CONTAIN_CONTAIN_ORDERS foreign key (Id)
       references Orders (Id) on delete restrict on update restrict;
@@ -339,9 +354,6 @@ alter table Events add constraint FK_EVENTS_TYPE_EVENTTYP foreign key (EveId)
 alter table Exhibitions add constraint FK_EXHIBITI_TYPE_EVENTS foreign key (Id)
       references Events (Id) on delete restrict on update restrict;
 
-alter table Guides add constraint FK_GUIDES_HIRE_TICKET foreign key (Id)
-      references Ticket (Id) on delete restrict on update restrict;
-
 alter table Guides add constraint FK_GUIDES_INHERITAN_CLIENT foreign key (Email)
       references Client (Email) on delete restrict on update restrict;
 
@@ -360,11 +372,11 @@ alter table Payment add constraint FK_PAYMENT_METHOD_PAYMENTM foreign key (PayId
 alter table Payment add constraint FK_PAYMENT_PAY_ORDERS foreign key (OrdId)
       references Orders (Id) on delete restrict on update restrict;
 
-alter table Reviews add constraint FK_REVIEWS_REVIEW_EVENTS foreign key (EveId)
-      references Events (Id) on delete restrict on update restrict;
-
-alter table Reviews add constraint FK_REVIEWS_WRITE_ACCOUNT foreign key (Username)
+alter table Review add constraint FK_REVIEW_REVIEW_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
+
+alter table Review add constraint FK_REVIEW_REVIEW_EVENTS foreign key (Id)
+      references Events (Id) on delete restrict on update restrict;
 
 alter table Role add constraint FK_ROLE_ROLE_CLIENT foreign key (Email)
       references Client (Email) on delete restrict on update restrict;
@@ -374,9 +386,6 @@ alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
 
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
-
-alter table Ticket add constraint FK_TICKET_HIRE_GUIDES foreign key (Email)
-      references Guides (Email) on delete restrict on update restrict;
 
 alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
       references Blog (Id) on delete restrict on update restrict;
