@@ -110,7 +110,7 @@
         public function getUser() {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDay FROM " . User::TABLE . " WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDate FROM " . User::TABLE . " WHERE Email = ?");
             $stmt->bind_param("s", $this->email);
             $stmt->execute();
             
@@ -118,7 +118,7 @@
             
             if ($result->num_rows === 1) {
                 $row = $result->fetch_assoc();
-                $user = new User($row['Name'], $row['BirthDay'], $row['PhoneNumber'], $row['Email']);
+                $user = new User($row['Name'], $row['BirthDate'], $row['PhoneNumber'], $row['Email']);
                 
                 $stmt->close();
                 $conn->close();

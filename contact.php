@@ -4,6 +4,11 @@
     include "components/first.php";
     include "components/navbar.php";
     include "components/banner.php";
+    use Museum\Object\Account;
+
+    if (isset($_SESSION['login'])) {
+		$account = Account::getByUsername($_SESSION['login']);
+	}
 ?>
 
 <!-- Main Content -->
@@ -25,6 +30,7 @@
                             type="text"
                             class="form-control"
                             id="name"
+                            value="<?php if (isset($account)) {echo $account->getUser()->name;}?>"
                             required
                         />
                     </div>
@@ -36,6 +42,7 @@
                             type="email"
                             class="form-control"
                             id="email"
+                            value="<?php if (isset($account)) {echo $account->getUser()->email;}?>"
                             required
                         />
                     </div>
