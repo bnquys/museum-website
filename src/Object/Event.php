@@ -1,5 +1,6 @@
 <?php
 namespace Museum\Object;
+use Museum\Utils\Database;
 
 class Event {
     public const PREFIX = "EV";

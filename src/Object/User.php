@@ -1,5 +1,6 @@
 <?php
     namespace Museum\Object;
+    use Museum\Utils\Database;
 
     class User {
         public const TABLE = "Client";

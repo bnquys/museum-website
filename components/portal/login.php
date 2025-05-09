@@ -3,9 +3,9 @@
 	// ini_set('display_errors', 1);
 
 	$title = "Login";
-	include realpath(__DIR__."/first.php");
+	include realpath(__DIR__."/../first.php");
 
-	require_once realpath(__DIR__."/../vendor/autoload.php");
+	require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Account;
 
 	$username = $password = "";
@@ -79,7 +79,7 @@
 			<div class="d-flex justify-content-center">
 				<input type="submit" class="btn btn-success my-3" value="Submit"></input>
 			</div>
-			<p class="text-light text-center mb-0 mt-2">Forgot your account? <a href="#">Click here</a></p>
+			<p class="text-light text-center mb-0 mt-2">Forgot your account? <a href="login.php?pg=forgot">Click here</a></p>
 
 		</div>
 		<p class="text-light text-center mt-1 border-top pt-2">

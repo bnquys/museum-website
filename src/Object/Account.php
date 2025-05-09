@@ -1,5 +1,6 @@
 <?php
     namespace Museum\Object;
+    use Museum\Utils\Database;
 
     class Account {
         public const TABLE = "Account";
@@ -130,5 +131,19 @@
             return null;
         }
 
+        public static function updatePasswordByEmail(string $email, string $newPassword): bool {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("UPDATE " . self::TABLE . " SET Password = ? WHERE Email = ?");
+            $stmt->bind_param("ss", $newPassword, $email);
+        
+            $success = $stmt->execute();
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $success;
+        }
+        
     }
 ?>
