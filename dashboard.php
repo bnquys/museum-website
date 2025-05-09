@@ -4,6 +4,8 @@
 	$title = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
+
+	$userAdmin = $accountLogin->username;
 ?>
 <div class="container-fluid bg-success d-md-none sticky-top">
 	<nav class="nav">
@@ -127,7 +129,6 @@
 
 	<div class="col">
 		<?php
-		
 		if (isset($_GET['page'])) {
 			$func = $_GET['page'];
 

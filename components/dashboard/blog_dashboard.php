@@ -19,7 +19,7 @@
         $imagePath = $_POST['old_image'] ?? '';
 
         if (!empty($_FILES['image']['tmp_name'])) {
-            $uploader = new FileUploader();
+            $uploader = new FileUploader("assets/uploads/blog");
             $uploadResult = $uploader->upload($_FILES["image"]);
 
             if (!$uploadResult) {
@@ -35,13 +35,12 @@
         $summary = $_POST['summary'];
         $content = $_POST['content'];
         $currentDate = date('Y-m-d H:i:s');
-        $username = "bnquys";
 
         if (isset($_POST['editId'])) {
-            $blog = new Blog($_POST['editId'], $username, $title, $summary, $content, $imagePath, $currentDate);
+            $blog = new Blog($_POST['editId'], $userAdmin, $title, $summary, $content, $imagePath, $currentDate);
             Blog::add($blog);
         } else {
-            $blog = new Blog(Blog::getNextId(), $username, $title, $summary, $content, $uploadResult, $currentDate);
+            $blog = new Blog(Blog::getNextId(), $userAdmin, $title, $summary, $content, $uploadResult, $currentDate);
             Blog::add($blog);
         }
 
@@ -98,7 +97,7 @@
             ClassicEditor
                 .create(document.querySelector('#content'), {
                     ckfinder: {
-                        uploadUrl: 'fileupload.php'
+                        uploadUrl: '<?= realpath(__DIR__."/blog_fileupload.php")?>'
                     }
                 })
                 .catch(error => {

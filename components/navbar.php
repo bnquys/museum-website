@@ -1,12 +1,7 @@
 <?php
 	require_once realpath(__DIR__."/../vendor/autoload.php");
-	use Museum\Object\Account;
 
 	$account = null;
-
-	if (isset($_SESSION['login'])) {
-		$account = Account::getByUsername($_SESSION['login']);
-	}
 ?>
 
 <div class="fixed-top header">
@@ -17,8 +12,8 @@
 				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> 415 Barren Springs Drive, Houston</span>
 				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> 281-876-3063</span>
 			</div>
-			<?php if(isset($account)) { ?>
-				<div> <a href="user.php?id=<?=$account->email?>" class="d-inline text-light hover-link">Hello, <?= $account->getUser()->name?></a></div>
+			<?php if(isset($accountLogin)) { ?>
+				<div> <a href="user.php" class="d-inline text-light hover-link">Hello, <?= $accountLogin->getUser()->name?></a></div>
 			<?php } else { ?>
 				<div>
 					<!-- FB ICON -->

@@ -4,15 +4,6 @@
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
-    use Museum\Object\User;
-
-    $user = null;
-    if (isset($_GET['id'])) {
-        $email = $_GET['id'];
-        $user = User::getByEmail($email);
-    }
-
-
 ?>
 
 <body>
@@ -23,7 +14,7 @@
                     <div class="col-md-8">
                         <h1 class="display-4 fw-bold">
                             <i class="bi bi-person-circle me-3"></i>
-                            <?= htmlspecialchars($user?->name ?? '') ?> Profile
+                            <?= htmlspecialchars($accountLogin?->getUser()->name ?? '') ?> Profile
                         </h1>
                         <p class="lead">
                             Update your personal information and preferences
@@ -61,7 +52,7 @@
                                         class="form-control"
                                         id="fullName"
                                         name="name"
-                                        value="<?= htmlspecialchars($user?->name ?? '') ?>"
+                                        value="<?= htmlspecialchars($accountLogin?->getUser()->name ?? '') ?>"
                                         required
                                     />
                                 </div>
@@ -79,7 +70,7 @@
                                         class="form-control"
                                         id="email"
                                         name="email"
-                                        value="<?= htmlspecialchars($user?->email ?? '') ?>"
+                                        value="<?= htmlspecialchars($accountLogin?->getUser()->email ?? '') ?>"
                                         required
                                     />
                                     <div class="form-text">
@@ -100,7 +91,7 @@
                                         class="form-control"
                                         id="phone"
                                         name="phoneNumber"
-                                        value="<?= htmlspecialchars($user?->phoneNumber ?? '') ?>"
+                                        value="<?= htmlspecialchars($accountLogin?->getUser()->phoneNumber ?? '') ?>"
                                     />
                                 </div>
 
