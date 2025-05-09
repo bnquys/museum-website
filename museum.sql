@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     09-May-25 06:24:06 PM                        */
+/* Created on:     5/10/2025 12:02:22 AM                        */
 /*==============================================================*/
 
 
@@ -22,6 +22,7 @@ create table Account
 (
    Username             varchar(50) not null,
    Email                varchar(50) not null,
+   Id                   varchar(20) not null,
    Password             text,
    ActivateCode         varchar(20),
    IsActive             boolean default TRUE,
@@ -92,7 +93,8 @@ create table Comment
 create table ContactForms
 (
    Id                   varchar(20) not null,
-   Username             varchar(50),
+   Email                text,
+   Name                 text,
    Message              text,
    CreatedAt            datetime default CURRENT_TIMESTAMP,
    IsSeen               boolean default FALSE,
@@ -106,10 +108,10 @@ create table Contain
 (
    TicId                varchar(20) not null,
    Id                   varchar(20) not null,
-   Email                varchar(50) not null,
+   Email                varchar(50),
    Quantity             int default 0,
    VisitDate            datetime default CURRENT_TIMESTAMP,
-   primary key (TicId, Id, Email)
+   primary key (TicId, Id)
 );
 
 /*==============================================================*/
@@ -129,6 +131,7 @@ create table EventStatus
 (
    Id                   varchar(20) not null,
    Status               text,
+   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -157,6 +160,7 @@ create table Events
    TimeEnd              datetime default CURRENT_TIMESTAMP,
    Location             text,
    DisplayOrder         bigint default 0,
+   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -187,6 +191,7 @@ create table Language
 (
    Id                   varchar(20) not null,
    Name                 text,
+   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -223,6 +228,7 @@ create table PaymentMethod
 (
    Id                   varchar(20) not null,
    Method               text,
+   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -245,8 +251,8 @@ create table Review
 create table Role
 (
    Id                   varchar(20) not null,
-   Email                varchar(50) not null,
    Name                 text,
+   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -290,9 +296,9 @@ create table Ticket
 /*==============================================================*/
 create table ToTag
 (
+   TagId                varchar(20) not null,
    Id                   varchar(20) not null,
-   BloId                varchar(20) not null,
-   primary key (Id, BloId)
+   primary key (TagId, Id)
 );
 
 /*==============================================================*/
@@ -312,6 +318,9 @@ create table Voucher
 alter table Academy add constraint FK_ACADEMY_TYPE_EVENTS foreign key (Id)
       references Events (Id) on delete restrict on update restrict;
 
+alter table Account add constraint FK_ACCOUNT_DECENTRAL_ROLE foreign key (Id)
+      references Role (Id) on delete restrict on update restrict;
+
 alter table Account add constraint FK_ACCOUNT_HAS_CLIENT foreign key (Email)
       references Client (Email) on delete restrict on update restrict;
 
@@ -326,9 +335,6 @@ alter table Comment add constraint FK_COMMENT_COMMENT_ACCOUNT foreign key (Usern
 
 alter table Comment add constraint FK_COMMENT_COMMENT_BLOG foreign key (Id)
       references Blog (Id) on delete restrict on update restrict;
-
-alter table ContactForms add constraint FK_CONTACTF_CONTACT_ACCOUNT foreign key (Username)
-      references Account (Username) on delete restrict on update restrict;
 
 alter table Contain add constraint FK_CONTAIN_CONTAIN_GUIDES foreign key (Email)
       references Guides (Email) on delete restrict on update restrict;
@@ -378,18 +384,15 @@ alter table Review add constraint FK_REVIEW_REVIEW_ACCOUNT foreign key (Username
 alter table Review add constraint FK_REVIEW_REVIEW_EVENTS foreign key (Id)
       references Events (Id) on delete restrict on update restrict;
 
-alter table Role add constraint FK_ROLE_ROLE_CLIENT foreign key (Email)
-      references Client (Email) on delete restrict on update restrict;
-
 alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
       references Guides (Email) on delete restrict on update restrict;
 
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
+alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (Id)
       references Blog (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (Id)
+alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (TagId)
       references Tag (Id) on delete restrict on update restrict;
 
