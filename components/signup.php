@@ -7,7 +7,7 @@
 
 	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
-	use Museum\Object\Mailer;
+	use Museum\Utils\Mailer;
 	use Museum\Object\User;
 
 	$name = $birthDate = $phoneNumber = $email = $username = $password = $confirmPass = "";

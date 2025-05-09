@@ -1,5 +1,5 @@
 <?php
-    namespace Museum\Object;
+    namespace Museum\Utils;
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;

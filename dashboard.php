@@ -76,6 +76,12 @@
 				<li class="list-group-item">
 					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
+						<p class="m-0">General</p>
+					</a>
+				</li>
+				<li class="list-group-item">
+					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
+						<i class="bi bi-file-earmark-post"></i>
 						<p class="m-0">About</p>
 					</a>
 				</li>
@@ -100,7 +106,19 @@
 				<li class="list-group-item">
 					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
-						<p class="m-0">Galary</p>
+						<p class="m-0">Gallery</p>
+					</a>
+				</li>
+				<li class="list-group-item">
+					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+						<i class="bi bi-balloon"></i>
+						<p class="m-0">Guiders</p>
+					</a>
+				</li>
+				<li class="list-group-item">
+					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+						<i class="bi bi-balloon"></i>
+						<p class="m-0">Contact Message</p>
 					</a>
 				</li>
 			</ul>

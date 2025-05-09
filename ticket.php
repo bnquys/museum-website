@@ -45,12 +45,12 @@ include "components/banner.php";
                     />
                 </div>
                 <div class="col-md-4">
-                    <label for="visitTime" class="form-label fs-5"
-                        >Select Time Slot</label
-                    >
-                    <select id="visitTime" class="form-select mx-auto">
-                        <option value="">-- Select a date first --</option>
-                    </select>
+                    <label for="visitTime" class="form-label fs-5">Select Time</label>
+                    <input
+                        type="time"
+                        id="visitTime"
+                        class="form-control mx-auto"
+                    />
                 </div>
             </div>
         </div>
@@ -362,26 +362,26 @@ include "components/banner.php";
         const visitDate = document.getElementById("visitDate");
         const visitTime = document.getElementById("visitTime");
 
-        const availability = {
-            "2025-04-16": ["09:00 AM", "10:30 AM", "01:00 PM", "03:00 PM"],
-            "2025-04-17": ["10:00 AM", "12:00 PM", "02:00 PM"],
-            "2025-04-18": ["08:30 AM", "11:00 AM", "01:30 PM", "04:00 PM"],
-            // Default fallback
-            default: ["09:00 AM", "11:00 AM", "02:00 PM"],
-        };
+        // const availability = {
+        //     "2025-04-16": ["09:00 AM", "10:30 AM", "01:00 PM", "03:00 PM"],
+        //     "2025-04-17": ["10:00 AM", "12:00 PM", "02:00 PM"],
+        //     "2025-04-18": ["08:30 AM", "11:00 AM", "01:30 PM", "04:00 PM"],
+        //     // Default fallback
+        //     default: ["09:00 AM", "11:00 AM", "02:00 PM"],
+        // };
 
-        visitDate.addEventListener("change", () => {
-            const selected = visitDate.value;
-            const times = availability[selected] || availability["default"];
+        // visitDate.addEventListener("change", () => {
+        //     const selected = visitDate.value;
+        //     const times = availability[selected] || availability["default"];
 
-            visitTime.innerHTML = "";
-            times.forEach((time) => {
-                const opt = document.createElement("option");
-                opt.value = time;
-                opt.textContent = time;
-                visitTime.appendChild(opt);
-            });
-        });
+        //     visitTime.innerHTML = "";
+        //     times.forEach((time) => {
+        //         const opt = document.createElement("option");
+        //         opt.value = time;
+        //         opt.textContent = time;
+        //         visitTime.appendChild(opt);
+        //     });
+        // });
 
         // Initially hide the guide list
         $(".guide-list").hide();

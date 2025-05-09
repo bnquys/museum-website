@@ -1,6 +1,6 @@
 <?php
 
-namespace Museum\Object;
+namespace Museum\Utils;
 
 class FileUploader {
     private $target_dir;

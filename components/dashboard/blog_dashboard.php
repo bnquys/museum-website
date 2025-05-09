@@ -1,7 +1,7 @@
 <?php
 	require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Blog;
-    use Museum\Object\FileUploader;
+    use Museum\Utils\FileUploader;
         
     $action = $_GET['action'] ?? 'list';
     $editId = $_GET['editId'] ?? null;
