@@ -17,23 +17,22 @@
             $this->email = $email;
         }
 
+        public static function update(Account $account): bool {
+            $conn = Database::Connect();
+            $stmt = $conn->prepare("UPDATE " . self::TABLE . " SET Password = ?, Email = ? WHERE Username = ?");
+            $stmt->bind_param("sss", $account->password, $account->email, $account->username);
+            $success = $stmt->execute();
+            $stmt->close();
+            $conn->close();
+            return $success;
+        }
+        
         public static function forLogin(string $username, string $password) {
             return new self($username, null, $password);
         }
 
         public static function forSignup(string $username, string $email, string $password) {
             return new self($username, $email, $password);
-        }
-
-        public static function add(Account $account) {
-            $conn = Database::Connect();
-
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Username, Email, Password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $account->username, $account->email, $account->password);
-            $stmt->execute();
-
-            $stmt->close();
-            $conn->close();
         }
 
         public static function getByUsername(string $username): ?self {

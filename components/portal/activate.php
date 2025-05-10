@@ -1,68 +1,69 @@
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-	$title = "Activate";
-	include realpath(__DIR__."/../first.php");
+    $title = "Activate";
+    include realpath(__DIR__."/../first.php");
 
-	require_once realpath(__DIR__."/../../vendor/autoload.php");
-	use Museum\Object\Account;
-	use Museum\Object\User;
+    require_once realpath(__DIR__."/../../vendor/autoload.php");
 
-	$activateError = "";
+    use Museum\Object\Account;
+    use Museum\Object\User;
+    use Museum\Utils\UserRegistrationManager;
 
-	// Kiểm tra nếu không có session nào hợp lệ thì chuyển về login
-	if (!isset($_SESSION['register']) && !isset($_SESSION['forgot'])) {
-		header("Location: login.php");
-		exit;
-	}
+    $activateError = "";
 
-	// Lấy email để hiển thị
-	if (isset($_SESSION['register'])) {
-		$emailDisplay = $_SESSION['register']['user']['email'];
-	} elseif (isset($_SESSION['forgot'])) {
-		$emailDisplay = $_SESSION['forgot']['email'];
-	}
+    // Kiểm tra nếu không có session nào hợp lệ thì chuyển về login
+    if (!isset($_SESSION['register']) && !isset($_SESSION['forgot'])) {
+        header("Location: login.php");
+        exit;
+    }
 
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$activateCode = format_input($_POST["activateCode"]);
+    // Lấy email để hiển thị
+    if (isset($_SESSION['register'])) {
+        $emailDisplay = $_SESSION['register']['user']['email'];
+    } elseif (isset($_SESSION['forgot'])) {
+        $emailDisplay = $_SESSION['forgot']['email'];
+    }
 
-		if (isset($_SESSION['register']) && $activateCode == $_SESSION['register']['account']['activateCode']) {
-			// Trường hợp xác minh đăng ký tài khoản
-			$accountData = $_SESSION['register']['account'];
-			$userData = $_SESSION['register']['user'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $activateCode = format_input($_POST["activateCode"]);
 
-			$account = Account::forSignup(
-				$accountData['username'],
-				$userData['email'],
-				$accountData['password']
-			);
+        if (isset($_SESSION['register']) && $activateCode == $_SESSION['register']['account']['activateCode']) {
+            // Trường hợp xác minh đăng ký tài khoản
+            $accountData = $_SESSION['register']['account'];
+            $userData = $_SESSION['register']['user'];
 
-			$user = new User(
-				$userData['name'],
-				$userData['birthDate'],
-				$userData['phoneNumber'],
-				$userData['email']
-			);
+            $account = Account::forSignup(
+                $accountData['username'],
+                $userData['email'],
+                $accountData['password']
+            );
 
-			User::add($user);
-			Account::add($account);
-			$user->setForeignKey($account);
+            $user = new User(
+                $userData['name'],
+                $userData['birthDate'],
+                $userData['phoneNumber'],
+                $userData['email']
+            );
 
-			$_SESSION['login'] = $account->username;
-			unset($_SESSION['register']);
+            if (!UserRegistrationManager::registerUser($user, $account)) {
+                $activateError = "Failed to register user.";
+            } else {
+                $_SESSION['login'] = $account->username;
+                unset($_SESSION['register']);
+                header("Location: index.php");
+                // exit;
+            }
 
-			header("Location: index.php");
-			exit;
-
-		} elseif (isset($_SESSION['forgot']) && $activateCode == $_SESSION['forgot']['code']) {
-			// Trường hợp xác minh quên mật khẩu
-			header("Location: login.php?pg=resetpass");
-			exit;
-		} else {
-			$activateError = "Wrong activation code!";
-		}
-	}
+        } elseif (isset($_SESSION['forgot']) && $activateCode == $_SESSION['forgot']['code']) {
+            // Trường hợp xác minh quên mật khẩu
+            header("Location: login.php?pg=resetpass");
+            exit;
+        } else {
+            $activateError = "Wrong activation code!";
+        }
+    }
 ?>
 
 <!-- HTML -->

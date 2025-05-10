@@ -19,17 +19,15 @@
             $this->email = $email;
         }
 
-        public static function add(User $user) {
+        public static function update(User $user): bool {
             $conn = Database::Connect();
-
-            $stmt = $conn->prepare("INSERT INTO ". self::TABLE ." (Name, Email, PhoneNumber, BirthDate) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $user->name, $user->email, $user->phoneNumber, $user->birthDate);
-
-            $stmt->execute();
-
+            $stmt = $conn->prepare("UPDATE " . self::TABLE . " SET Name = ?, PhoneNumber = ?, BirthDate = ? WHERE Email = ?");
+            $stmt->bind_param("ssss", $user->name, $user->phoneNumber, $user->birthDate, $user->email);
+            $success = $stmt->execute();
             $stmt->close();
             $conn->close();
-        }
+            return $success;
+        }        
 
         public function setForeignKey(Account $account) {
             $conn = Database::Connect();
