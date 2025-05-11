@@ -5,6 +5,11 @@ $name = "In Person Tickets";
 include "components/first.php";
 include "components/navbar.php";
 include "components/banner.php";
+
+require_once "vendor/autoload.php";
+use Museum\Object\Ticket;
+
+$tickets = Ticket::getListTicket();
 ?>
 <!-- Ticket Pricing Section -->
 <section class="container-fluid">
@@ -61,112 +66,29 @@ include "components/banner.php";
                 <h2 class="col-12 mv-lr">Choose your participants</h2>
             </div>
 
-            <!-- Children 5 and under -->
-            <div class="row align-items-center mt-4 mb-4">
-                <div class="col-12 col-md-6">
-                    <p class="ticket-type mv-lr">Children (5 and under)</p>
-                    <p class="ticket-desc">
-                        Children under 5 are <strong>FREE</strong>.
-                    </p>
-                </div>
-                <div class="col-4 col-md-2 price text-center">$0</div>
-                <div class="col-4 col-md-2">
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        value="0"
-                        data-price="0"
-                    />
-                </div>
-                <div class="col-4 col-md-2 text-center">
-                    <span class="fs-3">FREE</span>
-                </div>
-            </div>
-
             <!-- Children 6-11 -->
+            <?php foreach ($tickets as $ticket) {?>
             <div class="row align-items-center mb-4">
                 <div class="col-12 col-md-6">
-                    <p class="ticket-type mv-lr">Children (6-11)</p>
-                    <p class="ticket-desc">Ages 6 - 11</p>
+                    <p class="ticket-type mv-lr"><?= $ticket->name?></p>
+                    <p class="ticket-desc"><?= $ticket->description?></p>
                 </div>
-                <div class="col-4 col-md-2 price text-center">$7</div>
+                <div class="col-4 col-md-2 price text-center">$<?= $ticket->price?></div>
                 <div class="col-4 col-md-2">
                     <input
                         type="number"
                         class="form-control"
                         min="0"
                         value="0"
-                        data-price="7"
+                        data-price="<?= $ticket->price?>"
                     />
                 </div>
                 <div class="col-4 col-md-2 text-center">
                     <span class="row-total">$0.00</span>
                 </div>
             </div>
+            <?php }?>
 
-            <!-- Adult -->
-            <div class="row align-items-center mb-4">
-                <div class="col-12 col-md-6">
-                    <p class="ticket-type mv-lr">Adult</p>
-                    <p class="ticket-desc">Day-pass</p>
-                </div>
-                <div class="col-4 col-md-2 price text-center">$15</div>
-                <div class="col-4 col-md-2">
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        value="0"
-                        data-price="15"
-                    />
-                </div>
-                <div class="col-4 col-md-2 text-center">
-                    <span class="row-total">$0.00</span>
-                </div>
-            </div>
-
-            <!-- Seniors & Veterans -->
-            <div class="row align-items-center mb-4">
-                <div class="col-12 col-md-6">
-                    <p class="ticket-type mv-lr">Seniors & Veterans</p>
-                    <p class="ticket-desc">55+ and Veterans</p>
-                </div>
-                <div class="col-4 col-md-2 price text-center">$12</div>
-                <div class="col-4 col-md-2">
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        value="0"
-                        data-price="12"
-                    />
-                </div>
-                <div class="col-4 col-md-2 text-center">
-                    <span class="row-total">$0.00</span>
-                </div>
-            </div>
-
-            <!-- SCI Employee -->
-            <div class="row align-items-center mb-4">
-                <div class="col-12 col-md-6">
-                    <p class="ticket-type mv-lr">SCI Employee</p>
-                    <p class="ticket-desc">Day-pass</p>
-                </div>
-                <div class="col-4 col-md-2 price text-center">$10</div>
-                <div class="col-4 col-md-2">
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        value="0"
-                        data-price="10"
-                    />
-                </div>
-                <div class="col-4 col-md-2 text-center">
-                    <span class="row-total">$0.00</span>
-                </div>
-            </div>
         </div>
 
         <!-- Tour Guide Selection -->

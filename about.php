@@ -1,6 +1,6 @@
 <?php
 	$css = "about";
-	$title = $name = "About Us";
+	$title = $banner = "About Us";
 	include "components/first.php";
 	include "components/navbar.php";
 	include "components/banner.php";

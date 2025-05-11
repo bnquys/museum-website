@@ -22,7 +22,7 @@ class Ticket {
         $this->displayOrder = $displayOrder;
     }
 
-    public static function getListTicket($limit) {
+    public static function getListTicket($limit = 10000) {
         $conn = Database::Connect();
         $stmt = $conn->prepare("
             SELECT Id, Name, Price, Description, IsShow, DisplayOrder

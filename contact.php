@@ -1,9 +1,34 @@
 <?php
     $css = "contact";
-    $title = $name = "Contact";
+    $title = $banner = "Contact";
     include "components/first.php";
     include "components/navbar.php";
     include "components/banner.php";
+
+    require_once "vendor/autoload.php";
+    use Museum\Object\ContactForm;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = trim($_POST['name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $message = trim($_POST['message'] ?? '');
+    
+        $nameValue = htmlspecialchars($name);
+        $emailValue = htmlspecialchars($email);
+        $messageValue = htmlspecialchars($message);
+    
+        $id = ContactForm::getNextId();
+        $createdAt = date("Y-m-d H:i:s");
+        $contactForm = new ContactForm($id, $email, $name, $message, $createdAt, false);
+
+        ContactForm::add($contactForm);
+
+        $successMessage = '<div class="alert alert-success text-center mt-4">Your message has been sent successfully!</div>';
+
+        $nameValue = $emailValue = $messageValue = "";
+        
+    }
+    
 ?>
 
 <!-- Main Content -->
@@ -16,7 +41,7 @@
                     <i class="fas fa-envelope me-2"></i>
                     Send Us a Message
                 </h2>
-                <form>
+                <form method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label fw-bolder"
                             >Full Name</label
@@ -25,6 +50,7 @@
                             type="text"
                             class="form-control"
                             id="name"
+                            name="name"
                             value="<?php if (isset($accountLogin)) {echo $accountLogin->getUser()->name;}?>"
                             required
                         />
@@ -37,6 +63,7 @@
                             type="email"
                             class="form-control"
                             id="email"
+                            name="email"
                             value="<?php if (isset($accountLogin)) {echo $accountLogin->getUser()->email;}?>"
                             required
                         />
@@ -48,6 +75,7 @@
                         <textarea
                             class="form-control"
                             id="message"
+                            name="message"
                             rows="5"
                             required
                         ></textarea>
@@ -312,21 +340,6 @@
 
 <!-- Bootstrap 5 JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Form submission handler
-    document
-        .querySelector("form")
-        .addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-
-            alert(`Thanks ${name}, your message has been received!`);
-            this.reset();
-        });
-</script>
 
 <?php 
     include "components/footer.php";

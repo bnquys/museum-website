@@ -1,6 +1,6 @@
 <?php
     $css = "blog_gallery";
-    $title = $name = "Gallery";
+    $title = $banner = "Gallery";
     include "components/first.php"; 
     include "components/navbar.php";
     include "components/banner.php";
