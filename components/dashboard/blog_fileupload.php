@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Museum\Utils\UrlHelper;
+
 $data = array();
 if(isset($_FILES['upload']['name']))
 {
@@ -10,7 +13,7 @@ if(isset($_FILES['upload']['name']))
 		if(move_uploaded_file($_FILES['upload']['tmp_name'], $file_path))
 		{
 			$data['file']= $file_name;
-			$data['url']= $file_path;
+			$data['url']= str_replace('../../', '', $file_path);
 			$data['uploaded']= 1;
 		}
 		else

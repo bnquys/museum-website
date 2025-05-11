@@ -146,7 +146,7 @@
                         <td><img src="<?= htmlspecialchars($blog->imgUrl) ?>" style="width: 160px; height: 90px; object-fit: cover;" class="img-fluid rounded"></td>
                         <td><?= htmlspecialchars($blog->username) ?></td>
                         <td><?= htmlspecialchars($blog->title) ?></td>
-                        <td><?= htmlspecialchars($blog->summary) ?></td>
+                        <td><?= $blog->summary?></td>
                         <td><?= htmlspecialchars($blog->uploadDate) ?></td>
                         <td class="text-center">
                             <a href="?page=blog&editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
