@@ -3,39 +3,41 @@ namespace Museum\Utils;
 
 class CKeditorUploader
 {
-    public $error = '';
-    public $allowedExtensions = ['jpg', 'jpeg', 'png'];
+    private $allowedExtensions = ['jpg', 'jpeg', 'png']; // giữ giống fileupload.php
 
-    public function upload($file, $uploadDir = 'uploads/')
+    public function upload(array $file, string $uploadDir = '../../assets/uploads/blog/'): array
     {
-        $data = array();
+        $response = ['uploaded' => 0];
 
-        if (isset($file['name'])) {
-            $file_name = basename($file['name']);
-            $upload_dir = __DIR__ . '/'. $uploadDir;
-            $file_path = $upload_dir . $file_name;
-            $file_url = $uploadDir . $file_name; 
-            $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
-            if (in_array($file_extension, $this->allowedExtensions)) {
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0755, true);
-                }
-
-                if (move_uploaded_file($file['tmp_name'], $file_path)) {
-                    $data['file'] = $file_name;
-                    $data['url'] = $file_url;
-                    $data['uploaded'] = 1;
-                } else {
-                    $data['uploaded'] = 0;
-                    $data['error']['message'] = 'Error! File not uploaded';
-                }
-            } else {
-                $data['uploaded'] = 0;
-                $data['error']['message'] = 'Invalid extension';
-            }
+        if (!isset($file['name'])) {
+            $response['error']['message'] = 'No file provided.';
+            return $response;
         }
 
-        return $data;
+        $fileName = basename($file['name']);
+        $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $this->allowedExtensions)) {
+            $response['error']['message'] = 'Invalid extension';
+            return $response;
+        }
+
+        $uploadPath = rtrim($uploadDir, '/') . '/';
+
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        $targetPath = $uploadPath . $fileName;
+
+        if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+            $response['uploaded'] = 1;
+            $response['file'] = $fileName;
+            $response['url'] = $targetPath; // Giống fileupload.php
+        } else {
+            $response['error']['message'] = 'Error! File not uploaded';
+        }
+
+        return $response;
     }
 }

@@ -1,7 +1,17 @@
 <?php
+    function browser_path(string $filename): string {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $path = rtrim(dirname($_SERVER['REQUEST_URI']), '/');
+    
+        return $protocol . '://' . $host . $path . '/' . ltrim($filename, '/');
+    }
+    
+
 	require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Blog;
     use Museum\Utils\FileUploader;
+    use Museum\Utils\UrlHelper;
         
     $action = $_GET['action'] ?? 'list';
     $editId = $_GET['editId'] ?? null;
@@ -97,7 +107,7 @@
             ClassicEditor
                 .create(document.querySelector('#content'), {
                     ckfinder: {
-                        uploadUrl: '/components/dashboard/blog_fileupload.php'
+                        uploadUrl: '<?= UrlHelper::browserpath('components/dashboard/blog_fileupload.php')?>'
                     }
                 })
                 .catch(error => {
