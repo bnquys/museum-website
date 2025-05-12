@@ -1,0 +1,15 @@
+<script src="./assets/js/dropdown-menu.js"></script>
+<script src="assets/js/dashboard.js"></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"
+    integrity="sha512-WNZwVebQjhSxEzwbettGuQgWxbpYdoLf7mH+25A7sfQbbxKeS5SQ9QBf97zOY4nOlwtksgDA/czSTmfj4DUEiQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+></script>
+<script src="./assets/js/card-slider.js"></script>
+<script src="./assets/js/bootstrap.bundle.js"></script>
+<script src="./assets/js/sip.js"></script>
+<script src="assets/js/register.js"></script>
+</body>
+</html>

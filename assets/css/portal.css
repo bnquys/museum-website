@@ -1,0 +1,92 @@
+* {
+    /* font-family: 'Gelasio', serif; */
+}
+
+.bg-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+#form {
+    width: 375px;
+    height: auto;
+    background: linear-gradient(
+        270deg,
+        rgba(0, 128, 0, 0.5),
+        rgba(128, 128, 128, 0.5)
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+label {
+    margin: 1rem 0 0.25rem 0 !important;
+}
+
+input,
+.btn-success {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    border: 0 solid rgba(255, 255, 255, 0.99) !important;
+    border-bottom-width: 1px !important;
+    font-weight: 500 !important;
+    color: white !important;
+}
+
+input::placeholder {
+    font-weight: 300 !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    font-style: italic;
+}
+
+input:active {
+    outline: transparent !important;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+button, input[type="submit"] {
+	text-transform: uppercase;
+}
+
+.text-danger {
+    font-weight: 500;
+    color: red !important;
+}
+
+.btn-success {
+    border-color: white;
+}
+
+.btn-success:hover {
+    font-weight: 600;
+    transform: scale(1.15);
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+a {
+    background: linear-gradient(270deg, white, var(--dark-cl));
+    background-size: 400% 400%;
+    background-clip: text;
+    color: transparent;
+    font-weight: 1000;
+    animation: gradientShift 3s ease infinite;
+}
