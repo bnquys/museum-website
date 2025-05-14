@@ -2,6 +2,7 @@
 use Museum\Object\Account;
 use Museum\Object\User;
 use Museum\Utils\Mailer;
+use Museum\Utils\UrlHelper;
 use Museum\Utils\UserRegistrationManager;
 
 $activateError = "";
@@ -79,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			type="text"
 			name="activateCode"
 			class="form-control <?= $activateError !== "" ? 'is-invalid' : '' ?>"
-			required
 		/>
 		<div class="invalid-feedback text-danger"><?= $activateError ?></div>
 
@@ -92,5 +92,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			Have an account? <a href="login.php" id="btn-sign-in">Login</a><br>
 			Or back to <a href="index.php">Home</a>
 		</p>
+		<p class="text-light mt-3">
+			Didn't receive the code?
+			<button id="resendBtn" class="btn btn-link p-0 text-decoration-underline">Resend Code</button>
+			<span id="countdown" class="text-warning ms-2"></span>
+		</p>
+
 	</form>
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const resendBtn = document.getElementById("resendBtn");
+		const countdownEl = document.getElementById("countdown");
+
+		let timer;
+		const cooldownSeconds = 30;
+
+		function startCountdown() {
+			let remaining = cooldownSeconds;
+			resendBtn.disabled = true;
+			countdownEl.textContent = `(${remaining}s)`;
+
+			timer = setInterval(() => {
+				remaining--;
+				countdownEl.textContent = `(${remaining}s)`;
+
+				if (remaining <= 0) {
+					clearInterval(timer);
+					countdownEl.textContent = "";
+					resendBtn.disabled = false;
+				}
+			}, 1000);
+		}
+
+		resendBtn.addEventListener("click", function (e) {
+			e.preventDefault();
+
+			fetch("<?= UrlHelper::browserpath(__DIR__."/resend-code.php")?>")
+				.then(res => res.json())
+				.then(data => {
+					alert(data.message);
+					startCountdown();
+				})
+				.catch(err => {
+					console.error(err);
+					alert("Failed to resend code. Please try again later.");
+				});
+		});
+
+		startCountdown();
+	});
+	</script>
+
 </div>
