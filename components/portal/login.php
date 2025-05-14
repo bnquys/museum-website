@@ -2,9 +2,6 @@
 	// error_reporting(E_ALL);
 	// ini_set('display_errors', 1);
 
-	$title = "Login";
-	include realpath(__DIR__."/../first.php");
-
 	require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Account;
 
@@ -13,8 +10,8 @@
 	$passwordIncorrect = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$username = format_input($_POST["username"]);
-		$password = format_input($_POST["password"]);
+		// $username = format_input($_POST["username"]);
+		// $password = format_input($_POST["password"]);
 	
 		$account = Account::forLogin($username, $password);
 
@@ -83,7 +80,7 @@
 
 		</div>
 		<p class="text-light text-center mt-1 border-top pt-2">
-			Create an account? <a href="login.php?pg=signup" id="btn-sign-in">Sign Up</a> <br>
+			Create an account? <a href="portal.php?pg=signup" id="btn-sign-in">Sign Up</a> <br>
 			Or back to <a href="index.php">Home</a>
 		</p>
 	</form>

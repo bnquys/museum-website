@@ -41,7 +41,7 @@
             $conn->close();
         }
 
-        public static function verifyEmail(string $email) {
+        public static function emailExists(string $email) {
             $conn = Database::Connect();
 
             $stmt = $conn->prepare("SELECT 1 FROM ". self::TABLE ." WHERE Email = ?");

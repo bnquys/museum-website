@@ -16,7 +16,7 @@
             and the impact of modern life on the environment.
         </p>
         <a
-            href="login.php"
+            href="portal.php"
             class="btn btn-success rounded-0 fw-bold text-uppercase"
         >
             Get Started
