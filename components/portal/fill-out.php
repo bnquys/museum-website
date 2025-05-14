@@ -5,6 +5,13 @@ $name = $birthDate = $phoneNumber = $email = "";
 $nameError = $phoneNumberError = $emailError = "";
 $valid = true;
 
+if (isset($_SESSION['fillout']) && $_SERVER["REQUEST_METHOD"] !== "POST") {
+    $name = $_SESSION['fillout']['name'] ?? '';
+    $birthDate = $_SESSION['fillout']['birthDate'] ?? '';
+    $phoneNumber = $_SESSION['fillout']['phoneNumber'] ?? '';
+    $email = $_SESSION['fillout']['email'] ?? '';
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = trim($_POST["name"]);
     $birthDate = trim($_POST["birthDate"]);
@@ -47,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		method="post"
 	>
 		<h1 class="text-center text-light fw-bold">Sign up</h1>
-		<div id="fill-out">
+		<div>
 			<label for="name" class="form-label text-light"
 				>Your name</label
 			>
