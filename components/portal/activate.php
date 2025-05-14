@@ -1,76 +1,62 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+use Museum\Object\Account;
+use Museum\Object\User;
+use Museum\Utils\Mailer;
+use Museum\Utils\UserRegistrationManager;
 
-    $title = "Activate";
-    include realpath(__DIR__."/../first.php");
+$activateError = "";
 
-    require_once realpath(__DIR__."/../../vendor/autoload.php");
+if (!isset($_SESSION['register'])) {
+    header("Location: login.php");
+    exit;
+}
 
-    use Museum\Object\Account;
-    use Museum\Object\User;
-    use Museum\Utils\UserRegistrationManager;
+$register = $_SESSION['register'];
+$emailDisplay = $register['user']['email'];
 
-    $activateError = "";
+// Gửi mã xác nhận nếu chưa gửi
+// Mailer::sendMail($emailDisplay, $register['user']['name'], "Mã xác nhận của bạn", $register['account']['activateCode']);
+if (!isset($_SESSION['activate_sent'])) {
+    Mailer::sendMail($emailDisplay, $register['user']['name'], "Mã xác nhận của bạn", $register['account']['activateCode']);
+    $_SESSION['activate_sent'] = true;
+}
 
-    // Kiểm tra nếu không có session nào hợp lệ thì chuyển về login
-    if (!isset($_SESSION['register']) && !isset($_SESSION['forgot'])) {
-        header("Location: login.php");
-        exit;
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $code = trim($_POST["activateCode"]);
 
-    // Lấy email để hiển thị
-    if (isset($_SESSION['register'])) {
-        $emailDisplay = $_SESSION['register']['user']['email'];
-    } elseif (isset($_SESSION['forgot'])) {
-        $emailDisplay = $_SESSION['forgot']['email'];
-    }
+    if ($code === $register['account']['activateCode']) {
+        $account = Account::forSignup(
+            $register['account']['username'],
+            $register['user']['email'],
+            $register['account']['password']
+        );
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $activateCode = format_input($_POST["activateCode"]);
+        $user = new User(
+            $register['user']['name'],
+            $register['user']['birthDate'],
+            $register['user']['phoneNumber'],
+            $register['user']['email']
+        );
 
-        if (isset($_SESSION['register']) && $activateCode == $_SESSION['register']['account']['activateCode']) {
-            // Trường hợp xác minh đăng ký tài khoản
-            $accountData = $_SESSION['register']['account'];
-            $userData = $_SESSION['register']['user'];
-
-            $account = Account::forSignup(
-                $accountData['username'],
-                $userData['email'],
-                $accountData['password']
-            );
-
-            $user = new User(
-                $userData['name'],
-                $userData['birthDate'],
-                $userData['phoneNumber'],
-                $userData['email']
-            );
-
-            if (!UserRegistrationManager::registerUser($user, $account)) {
-                $activateError = "Failed to register user.";
-            } else {
-                $_SESSION['login'] = $account->username;
-                unset($_SESSION['register']);
-                header("Location: index.php");
-                // exit;
-            }
-
-        } elseif (isset($_SESSION['forgot']) && $activateCode == $_SESSION['forgot']['code']) {
-            // Trường hợp xác minh quên mật khẩu
-            header("Location: login.php?pg=resetpass");
+        if (UserRegistrationManager::registerUser($user, $account)) {
+            $_SESSION['login'] = $account->username;
+            unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['fillout']);
+            header("Location: index.php");
             exit;
         } else {
-            $activateError = "Wrong activation code!";
+            $activateError = "Đăng ký thất bại.";
         }
+    } else {
+        $activateError = "Mã xác nhận sai.";
     }
+}
 ?>
 
 <!-- HTML -->
 <div class="position-relative">
 	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 	<form
-		action="login.php?pg=activate"
+		action="portal.php?pg=activate"
 		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
 		id="form"
 		method="post"
@@ -98,7 +84,7 @@
 		<div class="invalid-feedback text-danger"><?= $activateError ?></div>
 
 		<div class="d-flex justify-content-around">
-			<a href="login.php" class="btn btn-success my-3">Back</a>
+			<a href="portal.php?pg=create-account" class="btn btn-success my-3">Back</a>
 			<input type="submit" class="btn btn-success my-3" value="Submit">
 		</div>
 
