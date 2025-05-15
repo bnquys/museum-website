@@ -5,8 +5,6 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
-    require 'vendor/autoload.php';
-
     class Mailer {
         private const SMTP_USERNAME = "2uy.9dragons@gmail.com";
         private const SMTP_PASSWORD = "wsrddulmrywnkkun";
