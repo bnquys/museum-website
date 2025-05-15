@@ -76,6 +76,12 @@
 			</button>
 			<ul class="list-group" id="list-group">
 				<li class="list-group-item">
+					<a href="index.php" class="d-flex gap-2 text-light">
+						<i class="bi bi-file-earmark-post"></i>
+						<p class="m-0">Back to website</p>
+					</a>
+				</li>
+				<li class="list-group-item">
 					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
 						<p class="m-0">General</p>
@@ -106,7 +112,7 @@
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=artifact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
 						<p class="m-0">Gallery</p>
 					</a>
@@ -150,6 +156,9 @@
 					break;
 				case 'museum':
 					include "components/dashboard/about_dashboard.php";
+					break;
+				case 'artifact':
+					include 'components/dashboard/artifact_dashboard.php';
 					break;
 			}
 		}
