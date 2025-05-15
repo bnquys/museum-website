@@ -1,8 +1,4 @@
 <?php
-	// error_reporting(E_ALL);
-	// ini_set('display_errors', 1);
-
-	require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Account;
 
 	$username = $password = "";
@@ -10,8 +6,8 @@
 	$passwordIncorrect = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		// $username = format_input($_POST["username"]);
-		// $password = format_input($_POST["password"]);
+		$username = trim($_POST["username"]);
+		$password = trim($_POST["password"]);
 	
 		$account = Account::forLogin($username, $password);
 
@@ -20,7 +16,7 @@
 		} else {
 			if ($account->exists()) {
 				$_SESSION['login'] = $username;
-				header('Location: dashboard.php');
+				header('Location: index.php');
 				exit;
 			} else {
 				$passwordIncorrect = true;

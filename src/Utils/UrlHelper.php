@@ -23,11 +23,19 @@ class UrlHelper
     {
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-        $path = rtrim(dirname($_SERVER['REQUEST_URI']), '/');
     
-        $clean_filename = self::normalizePath($filename);
+        // Đường dẫn tuyệt đối thực tế (ví dụ: /var/www/html/museum-website)
+        $documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
+        $absolutePath = realpath($filename);
     
-        return $protocol . '://' . $host . $path . '/' . $clean_filename;
+        if ($documentRoot && $absolutePath && strpos($absolutePath, $documentRoot) === 0) {
+            $relativePath = str_replace('\\', '/', substr($absolutePath, strlen($documentRoot)));
+        } else {
+            // fallback: chỉ dùng tên file
+            $relativePath = basename($filename);
+        }
+    
+        return $protocol . '://' . $host . $relativePath;
     }
     
 }
