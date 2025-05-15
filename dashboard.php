@@ -123,6 +123,12 @@
 						<p class="m-0">Contact Message</p>
 					</a>
 				</li>
+				<li class="list-group-item">
+					<a href="dashboard.php?page=carousel" class="d-flex gap-2 text-light">
+						<i class="bi bi-balloon"></i>
+						<p class="m-0">Carousel</p>
+					</a>
+				</li>
 			</ul>
 		</aside>
 	</div>
@@ -138,6 +144,9 @@
 					break;
 				case 'ticket':
 					include "components/dashboard/ticket_dashboard.php";
+					break;
+				case 'carousel':
+					include 'components/dashboard/carousel_dashboard.php';
 					break;
 				case 'museum':
 					include "components/dashboard/about_dashboard.php";
