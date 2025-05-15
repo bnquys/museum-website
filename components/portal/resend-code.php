@@ -20,8 +20,8 @@ $email = $_SESSION['register']['user']['email'];
 $name = $_SESSION['register']['user']['name'];
 
 // Gửi email
-$subject = "Mã xác nhận của bạn";
-$body = "Mã xác nhận mới của bạn là: $newCode";
+$subject = "Your confirmation code";
+$body = "Your new confirmation code is: $newCode";
 
 try {
     Mailer::sendMail($email, $name, $subject, $body);

@@ -2,7 +2,8 @@ import os
 import sys
 
 # Fixed output directory for converted .txt files
-OUTPUT_DIR = "C:\\Users\\admin\\Documents"  # Bạn có thể đổi lại nếu muốn
+# OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
+OUTPUT_DIR = "/home/quys/Documents/convert_txt" 
 
 def convert_to_txt(input_file_path):
     try:

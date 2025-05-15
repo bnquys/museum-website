@@ -5,8 +5,9 @@ import sys
 IGNORE_DIRS = {'.vscode', '.git', 'vendor', 'assets'}
 
 # Fixed output path (you can change this)
-OUTPUT_DIR = "C:\\Users\\admin\\Documents"
-OUTPUT_FILENAME = "tree_result.txt"
+# OUTPUT_DIR = "C:\\Users\\admin\\Documents"
+OUTPUT_DIR = "/home/quys/Documents/convert_txt"
+OUTPUT_FILENAME = "directory_tree.txt"
 
 def write_tree(root_path, output_file):
     """

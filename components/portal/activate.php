@@ -14,11 +14,12 @@ if (!isset($_SESSION['register'])) {
 
 $register = $_SESSION['register'];
 $emailDisplay = $register['user']['email'];
+$isChangePassword = $_SESSION['is_change_password'] ?? false;
 
 // Gửi mã xác nhận nếu chưa gửi
 // Mailer::sendMail($emailDisplay, $register['user']['name'], "Mã xác nhận của bạn", $register['account']['activateCode']);
 if (!isset($_SESSION['activate_sent'])) {
-    Mailer::sendMail($emailDisplay, $register['user']['name'], "Mã xác nhận của bạn", $register['account']['activateCode']);
+    Mailer::sendMail($emailDisplay, $register['user']['name'], "Your confirmation code", $register['account']['activateCode']);
     $_SESSION['activate_sent'] = true;
 }
 
@@ -26,31 +27,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $code = trim($_POST["activateCode"]);
 
     if ($code === $register['account']['activateCode']) {
-        $account = Account::forSignup(
-            $register['account']['username'],
-            $register['user']['email'],
-            $register['account']['password']
-        );
+        if ($isChangePassword) {
+            if (Account::updatePasswordByEmail($register['account']['email'], $register['account']['password'])) {
+                // Cập nhật xong, login lại và xóa session liên quan
+                $_SESSION['login'] = $register['account']['username'];
+                unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['change_pass'], $_SESSION['is_change_password']);
+                header("Location: index.php");
+                exit;
+            } else {
+                $activateError = "Unable to update password.";
+            }
 
-        $user = new User(
-            $register['user']['name'],
-            $register['user']['birthDate'],
-            $register['user']['phoneNumber'],
-            $register['user']['email']
-        );
-
-        if (UserRegistrationManager::registerUser($user, $account)) {
-            $_SESSION['login'] = $account->username;
-            unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['fillout']);
-            header("Location: index.php");
-            exit;
         } else {
-            $activateError = "Đăng ký thất bại.";
+            $account = Account::forSignup(
+                $register['account']['username'],
+                $register['user']['email'],
+                $register['account']['password']
+            );
+
+            $user = new User(
+                $register['user']['name'],
+                $register['user']['birthDate'],
+                $register['user']['phoneNumber'],
+                $register['user']['email']
+            );
+
+            if (UserRegistrationManager::registerUser($user, $account)) {
+                $_SESSION['login'] = $account->username;
+                unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['fillout']);
+                header("Location: index.php");
+                exit;
+            } else {
+                $activateError = "Registration failed.";
+            }
         }
+
     } else {
-        $activateError = "Mã xác nhận sai.";
+        $activateError = "Incorrect confirmation code.";
     }
 }
+
 ?>
 
 <!-- HTML -->

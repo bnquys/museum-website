@@ -1,26 +1,44 @@
 <?php
 use Museum\Object\Account;
 
-if (!isset($_SESSION['fillout'])) {
-    header("Location: portal.php?pg=fill-out");
-    exit;
-} 
-
 $username = $password = $confirmPass = "";
 $usernameError = $passwordError = "";
 $valid = true;
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST" && isset($_SESSION['register']['account']['username'])) {
+$isChangePassword = false;
+$email = "";
+
+// Kiểm tra nếu đang đổi mật khẩu từ user.php
+if (isset($_SESSION['change_pass'])) {
+    $isChangePassword = true;
+    $changeData = $_SESSION['change_pass'];
+    $username = $changeData['username'];
+    $email = $changeData['email'];
+}
+
+// Nếu không phải đổi mật khẩu và không có dữ liệu điền từ form -> chuyển về fill-out
+if (!isset($_SESSION['fillout']) && !$isChangePassword) {
+    header("Location: portal.php?pg=fill-out");
+    exit;
+}
+
+// Nếu là GET và đã có dữ liệu cũ trong session (chế độ đăng ký)
+if (
+    $_SERVER["REQUEST_METHOD"] !== "POST" &&
+    !$isChangePassword &&
+    isset($_SESSION['register']['account']['username'])
+) {
     $username = $_SESSION['register']['account']['username'];
 }
 
+// Xử lý form
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
     $confirmPass = trim($_POST["confirmPass"]);
 
-    // Kiểm tra tên tài khoản
-    if (Account::isUsernameExists($username)) {
+    // Nếu là tạo tài khoản mới thì kiểm tra username có tồn tại
+    if (!$isChangePassword && Account::isUsernameExists($username)) {
         $usernameError = "Username is already taken.";
         $valid = false;
     }
@@ -46,11 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'account' => [
                 'username' => $username,
                 'password' => $password,
-                'activateCode' => Account::generateRandomNumbers(6) // chuẩn bị trước
+                'email' => $email ?: $_SESSION['fillout']['email'],
+                'activateCode' => Account::generateRandomNumbers(6)
             ],
-            'user' => $_SESSION['fillout']
+            'user' => $isChangePassword ? $_SESSION['change_pass'] : $_SESSION['fillout']
         ];
-        // unset($_SESSION['fillout']);
+        $_SESSION['is_change_password'] = $isChangePassword;
         header("Location: portal.php?pg=activate");
         exit;
     }
@@ -67,53 +86,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         method="post"
     >
         <div>
-            <h1 class="text-center text-light fw-bold">Sign up</h1>
+        <h1 class="text-center text-light fw-bold">
+            <?= $isChangePassword ? 'Change Password' : 'Sign Up' ?>
+        </h1>
 
-            <label for="username" class="form-label text-light"
-                >Username</label
-            >
+        <!-- Username -->
+        <label for="username" class="form-label text-light">Username</label>
+        <?php if ($isChangePassword): ?>
             <input
                 type="text"
-                class="form-control <?= !isset($usernameError) ? 'is-invalid' : '' ?>"
+                class="form-control"
+                id="username"
+                value="<?= htmlspecialchars($username) ?>"
+                readonly disabled
+            />
+            <!-- Hidden input để đảm bảo form gửi dữ liệu -->
+            <input type="hidden" name="username" value="<?= htmlspecialchars($username) ?>" />
+        <?php else: ?>
+            <input
+                type="text"
+                class="form-control <?= $usernameError ? 'is-invalid' : '' ?>"
                 id="username"
                 name="username"
-                value="<?= $username?>"
+                value="<?= htmlspecialchars($username) ?>"
                 required
             />
-            <div class="invalid-feedback"><?= $usernameError ?? '' ?></div>
-    
-            <label for="password" class="form-label text-light"
-                >Password</label
-            >
-            <input
-                type="password"
-                id="password"
-                class="form-control <?= !isset($passwordError) ? 'is-invalid' : '' ?>"
-                aria-describedby="passwordHelpBlock"
-                name="password"
-                required
-            />
-            <div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
-    
-            <label for="confirm-pass" class="form-label text-light"
-                >Confirm Password</label
-            >
-            <input
-                type="password"
-                id="confirm-pass"
-                class="form-control <?= !isset($passwordError) ? 'is-invalid' : '' ?>"
-                name="confirmPass"
-                aria-describedby="passwordHelpBlock"
-                required
-            />
-            <div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
-    
-            <div class="d-flex justify-content-around">
+        <?php endif; ?>
+
+        <div class="invalid-feedback"><?= $usernameError ?? '' ?></div>
+
+        <!-- Password -->
+        <label for="password" class="form-label text-light">Password</label>
+        <input
+            type="password"
+            id="password"
+            class="form-control <?= $passwordError ? 'is-invalid' : '' ?>"
+            name="password"
+            required
+        />
+        <div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
+
+        <!-- Confirm Password -->
+        <label for="confirm-pass" class="form-label text-light">Confirm Password</label>
+        <input
+            type="password"
+            id="confirm-pass"
+            class="form-control <?= $passwordError ? 'is-invalid' : '' ?>"
+            name="confirmPass"
+            required
+        />
+        <div class="invalid-feedback text-danger"><?= $passwordError ?? '' ?></div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-around">
+            <?php if (!$isChangePassword): ?>
                 <a href="portal.php?pg=fill-out" class="btn btn-success my-3">Back</a>
-                <input id ="btn-activate" class="btn btn-success my-3" type="submit" value="Submit">
-            </div>
-    
+            <?php else: ?>
+                <a href="user.php" class="btn btn-success my-3">Cancel</a>
+            <?php endif; ?>
+            <input id="btn-activate" class="btn btn-success my-3" type="submit" value="Submit">
+        </div>
         </div>
     </form>
-    
 </div>

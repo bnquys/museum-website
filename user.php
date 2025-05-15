@@ -4,6 +4,30 @@
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'log-out':
+                unset($_SESSION['login']);
+                header("Location: index.php");
+                exit;
+    
+            case 'change-password':
+                $_SESSION['change_pass'] = [
+                    'username' => $accountLogin->username,
+                    'email' => $accountLogin->email,
+                    'name' => $accountLogin->getUser()->name,
+                    'birthDate' => $accountLogin->getUser()->birthDate,
+                    'phoneNumber' => $accountLogin->getUser()->phoneNumber
+                ];
+    
+                header("Location: portal.php?pg=create-account");
+                exit;
+    
+            default:
+                break;
+        }
+    }
+    
 ?>
 
 <body>
@@ -120,7 +144,7 @@
                         <div class="card-body">
                             <div class="list-group list-group-flush">
                                 <a
-                                    href="#"
+                                    href="?action=change-password"
                                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                                 >
                                     <span
@@ -149,6 +173,20 @@
                                         ><i class="bi bi-trash-fill me-2"></i
                                         >Delete Account</span
                                     >
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a
+                                    href="dashboard.php"
+                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                >
+                                    <span><i class="bi bi-speedometer2 me-2"></i>Go to Dashboard</span>
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                                <a
+                                    href="?action=log-out"
+                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger"
+                                >
+                                    <span><i class="bi bi-box-arrow-right me-2"></i>Log Out</span>
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
                             </div>

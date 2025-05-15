@@ -13,6 +13,8 @@
 	if (isset($_SESSION['login'])) {
 		$accountLogin = Account::getByUsername($_SESSION['login']);
 	}
+
+	// echo '<pre>'. print_r($_SESSION) .'</pre>';
 ?>
 
 <!DOCTYPE html>

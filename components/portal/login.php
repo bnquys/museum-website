@@ -6,8 +6,8 @@
 	$passwordIncorrect = false;
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$username = $_POST["username"];
-		$password = $_POST["password"];
+		$username = trim($_POST["username"]);
+		$password = trim($_POST["password"]);
 	
 		$account = Account::forLogin($username, $password);
 
@@ -16,7 +16,7 @@
 		} else {
 			if ($account->exists()) {
 				$_SESSION['login'] = $username;
-				header('Location: dashboard.php');
+				header('Location: index.php');
 				exit;
 			} else {
 				$passwordIncorrect = true;
