@@ -13,8 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($days as $day) {
         $opening_hours[$day] = [
             'opening' => $_POST["{$day}_opening"],
-            'closing' => $_POST["{$day}_closing"]
-        ];
+            'closing' => $_POST["{$day}_closing"],
+            'closed' => isset($_POST["{$day}_closed"])
+        ];        
     }
 
     $updateData = [
@@ -22,8 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         'address' => $_POST['address'],
         'email' => $_POST['email'],
         'phone' => $_POST['phone'],
+        'summary' => $_POST['summary'] ?? '',
         'opening_hours' => $opening_hours
     ];
+    
 
     $dataManager->update('museum_info', $updateData);
     header("Location: dashboard.php?page=museum");
@@ -67,17 +70,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         foreach ($days as $key => $label) {
             $opening = $museum['opening_hours'][$key]['opening'] ?? '';
             $closing = $museum['opening_hours'][$key]['closing'] ?? '';
+            $closed = $museum['opening_hours'][$key]['closed'] ?? false;
+            $checked = $closed ? 'checked' : '';
+            
             echo "
-            <div class='mb-2'>
+            <div class='mb-3'>
                 <label>{$label}</label>
-                <div class='d-flex'>
-                    <input type='time' name='{$key}_opening' class='form-control' value='{$opening}' required>
+                <div class='d-flex align-items-center'>
+                    <input type='time' name='{$key}_opening' class='form-control' value='{$opening}'>
                     <span class='mx-2'>to</span>
-                    <input type='time' name='{$key}_closing' class='form-control' value='{$closing}' required>
+                    <input type='time' name='{$key}_closing' class='form-control' value='{$closing}'>
+                    <div class='form-check ms-3'>
+                        <input class='form-check-input' type='checkbox' name='{$key}_closed' value='1' {$checked}>
+                        <label class='form-check-label'>Closed</label>
+                    </div>
                 </div>
             </div>";
         }
         ?>
+        
+        <div class="mb-3">
+            <label for="summary">Opening Hours Summary</label>
+            <textarea name="summary" class="form-control" rows="3"><?= htmlspecialchars($museum['summary'] ?? '') ?></textarea>
+        </div>
 
         <button type="submit" class="btn btn-success mt-3">Update Info</button>
     </form>

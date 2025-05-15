@@ -7,33 +7,41 @@
         "phone": "(028) 37 755 035",
         "opening_hours": {
             "monday": {
-                "opening": "08:00",
-                "closing": "17:00"
+                "opening": "10:00",
+                "closing": "16:00",
+                "closed": false
             },
             "tuesday": {
-                "opening": "08:00",
-                "closing": "17:00"
+                "opening": "10:00",
+                "closing": "16:00",
+                "closed": false
             },
             "wednesday": {
-                "opening": "08:00",
-                "closing": "17:00"
+                "opening": "10:00",
+                "closing": "16:00",
+                "closed": false
             },
             "thursday": {
-                "opening": "08:00",
-                "closing": "17:00"
+                "opening": "10:00",
+                "closing": "16:00",
+                "closed": false
             },
             "friday": {
-                "opening": "08:00",
-                "closing": "17:00"
+                "opening": "10:00",
+                "closing": "16:00",
+                "closed": false
             },
             "saturday": {
-                "opening": "09:00",
-                "closing": "18:00"
+                "opening": "11:00",
+                "closing": "17:00",
+                "closed": false
             },
             "sunday": {
-                "opening": "09:00",
-                "closing": "18:00"
+                "opening": "11:00",
+                "closing": "17:00",
+                "closed": false
             }
-        }
+        },
+        "summary": "Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm"
     }
 ]

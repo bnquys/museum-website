@@ -1,16 +1,18 @@
 <?php
 	require_once realpath(__DIR__."/../vendor/autoload.php");
+	use Museum\Utils\JsonDataManager;
 
-	$account = null;
+	$dataManager = new JsonDataManager(__DIR__ . '/../assets/data/museum_data.json');
+	$museum = $dataManager->read('museum_info');
 ?>
 
 <div class="fixed-top header">
 	<div class="container-fluid border-light border-bottom">
 		<div class="topbar container d-flex justify-content-between mt-2 pb-2">
 			<div class>
-				<span class="text-white me-4"><i class="fas fa-clock"></i> Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm</span>
-				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> 415 Barren Springs Drive, Houston</span>
-				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> 281-876-3063</span>
+				<span class="text-white me-4"><i class="fas fa-clock"></i> <?= htmlspecialchars($museum["summary"])?></span>
+				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($museum["address"])?></span>
+				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($museum["phone"])?></span>
 			</div>
 			<?php if(isset($accountLogin)) { ?>
 				<div> <a href="user.php" class="d-inline text-light hover-link">Hello, <?= $accountLogin->getUser()->name?></a></div>
@@ -65,7 +67,7 @@
 					width="35"
 					height="35"
 				/><span class="ps-lg-3 ps-2 glowing-text"
-					>Our Museum</span
+					><?= htmlspecialchars($museum["name"])?></span
 				></a
 			>
 
