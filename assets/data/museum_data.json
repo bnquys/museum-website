@@ -1,18 +1,39 @@
 [
-	{
-		"id": "museum_info",
-		"name": "Our Museum",
-		"address": "465 Huntington Avenue Boston, MA 02115 ",
-		"email": "info@mfa.org",
-		"phone": "+1 (617) 267-9300",
-		"opening_hours": {
-			"monday": { "opening": "08:00", "closing": "17:00" },
-			"tuesday": { "opening": "08:00", "closing": "17:00" },
-			"wednesday": { "opening": "08:00", "closing": "17:00" },
-			"thursday": { "opening": "08:00", "closing": "17:00" },
-			"friday": { "opening": "08:00", "closing": "17:00" },
-			"saturday": { "opening": "09:00", "closing": "18:00" },
-			"sunday": { "opening": "09:00", "closing": "18:00" }
-		}
-	}
+    {
+        "id": "museum_info",
+        "name": "Our Museum",
+        "address": "19 Nguyễn Hữu Thọ, phường Tân Phong, Quận 7, TP. Hồ Chí Minh",
+        "email": "tonducthanguniversity@tdtu.edu.vn",
+        "phone": "(028) 37 755 035",
+        "opening_hours": {
+            "monday": {
+                "opening": "08:00",
+                "closing": "17:00"
+            },
+            "tuesday": {
+                "opening": "08:00",
+                "closing": "17:00"
+            },
+            "wednesday": {
+                "opening": "08:00",
+                "closing": "17:00"
+            },
+            "thursday": {
+                "opening": "08:00",
+                "closing": "17:00"
+            },
+            "friday": {
+                "opening": "08:00",
+                "closing": "17:00"
+            },
+            "saturday": {
+                "opening": "09:00",
+                "closing": "18:00"
+            },
+            "sunday": {
+                "opening": "09:00",
+                "closing": "18:00"
+            }
+        }
+    }
 ]
