@@ -70,7 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'id' => 'carousel_text',
             'opening_date' => $_POST['opening_date'] ?? '',
             'title' => $_POST['title'] ?? '',
-            'description' => $_POST['intro_description'] ?? ''
+            'description' => $_POST['intro_description'] ?? '',
+            'interval' => isset($_POST['interval_seconds']) ? (int)$_POST['interval_seconds'] * 1000 : 3000
         ]);
     
         header("Location: dashboard.php?page=carousel");
@@ -175,6 +176,10 @@ usort($carouselItems, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
             <div class="mb-3">
                 <label for="intro_description" class="form-label">Description</label>
                 <textarea name="intro_description" class="form-control" rows="3"><?= htmlspecialchars($introText['description']) ?></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="interval_seconds" class="form-label">Slide Interval (seconds)</label>
+                <input type="number" min="1" name="interval_seconds" class="form-control" value="<?= isset($introText['interval']) ? (int)($introText['interval'] / 1000) : 3 ?>">
             </div>
             <button type="submit" name="intro_text_submit" class="btn btn-primary">Save Text</button>
         </form>

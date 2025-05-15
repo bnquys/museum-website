@@ -1,3 +1,13 @@
+<?php
+
+require_once 'vendor/autoload.php';
+
+$imageManager = new JsonDataManager(__DIR__ . '/../../assets/data/carousel_img.json');
+$textManager = new JsonDataManager(__DIR__ . '/../../assets/data/carousel_text.json');
+$introText = $textManager->read('carousel_text');
+
+?>
+
 <div
     id="carouselExample"
     class="carousel slide carousel-fade"
