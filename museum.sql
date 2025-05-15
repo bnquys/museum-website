@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     5/14/2025 5:46:28 PM                         */
+/* Created on:     5/15/2025 9:53:16 PM                         */
 /*==============================================================*/
 
 
@@ -219,6 +219,7 @@ create table Payment
    PayId                varchar(20),
    PayDate              datetime default CURRENT_TIMESTAMP,
    TotalCost            float default 0,
+   IsPaid               boolean default FALSE,
    primary key (Id)
 );
 
@@ -297,9 +298,9 @@ create table Ticket
 /*==============================================================*/
 create table ToTag
 (
+   TagId                varchar(20) not null,
    Id                   varchar(20) not null,
-   BloId                varchar(20) not null,
-   primary key (Id, BloId)
+   primary key (TagId, Id)
 );
 
 /*==============================================================*/
@@ -391,9 +392,9 @@ alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
+alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (Id)
       references Blog (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (Id)
+alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (TagId)
       references Tag (Id) on delete restrict on update restrict;
 
