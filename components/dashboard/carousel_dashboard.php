@@ -134,7 +134,7 @@ usort($carouselItems, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
                     <tr>
                         <td><?= htmlspecialchars($item['id']) ?></td>
                         <td>
-                            <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="Image" style="width: 160px; height: 90px; object-fit: cover;">
+                            <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['description']) ?>" style="width: 160px; height: 90px; object-fit: cover;">
                         </td>
                         <td><?= htmlspecialchars($item['description']) ?></td>
                         <td class="text-center">
