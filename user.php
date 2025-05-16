@@ -4,7 +4,9 @@
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
-    use Museum\Utils\FileUploader;
+
+use Museum\Object\Language;
+use Museum\Utils\FileUploader;
 
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
@@ -216,6 +218,48 @@
                                         <div class="invalid-feedback"><?= $errors['birthDate'] ?></div>
                                     <?php endif; ?>
                                 </div>
+
+                                <!-- Checkbox to indicate user is a Guide -->
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="isGuideCheckbox"> I am a Guide
+                                    </label>
+                                </div>
+
+                                <!-- Additional fields shown only if user is a Guide -->
+                                <div id="guideFields" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="intro">Introduction:</label>
+                                        <textarea id="intro" name="intro" class="form-control" rows="3" placeholder="Write a brief introduction..."></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="experience">Experience:</label>
+                                        <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Languages Spoken:</label>
+                                        <div id="languageOptions" class="d-flex flex-wrap gap-2">
+                                        <?php 
+                                            $languages = Language::getAll();
+                                            foreach ($languages as $lang): ?>
+                                            <label class="btn btn-outline-primary">
+                                                <input type="checkbox" name="languages[]" value="<?= htmlspecialchars($lang->id) ?>">
+                                                <?= htmlspecialchars($lang->name) ?>
+                                            </label>
+                                        <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- JavaScript to toggle guide-specific fields -->
+                                <script>
+                                    document.getElementById('isGuideCheckbox').addEventListener('change', function () {
+                                        const guideFields = document.getElementById('guideFields');
+                                        guideFields.style.display = this.checked ? 'block' : 'none';
+                                    });
+                                </script>
 
                                 <!-- Form Buttons -->
                                 <div class="d-flex justify-content-center mt-5">
