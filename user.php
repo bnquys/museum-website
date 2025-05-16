@@ -30,36 +30,56 @@
         }
     }
 
+    $errors = [];
+    $name = $_POST['name'] ?? '';
+    $phone = $_POST['phoneNumber'] ?? '';
+    $birthDate = $_POST['birthDate'] ?? '';
+    $valid = true;
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['login'])) {
-        $user = $accountLogin->getUser();
     
-        // Cập nhật thông tin cơ bản
-        $name = $_POST['name'] ?? $user->name;
-        $phone = $_POST['phoneNumber'] ?? $user->phoneNumber;
-        $birthDate = $_POST['birthDate'] ?? $user->birthDate;
+        // Validate name
+        if (empty($name) || !preg_match("/^[a-zA-ZÀ-ỹ\s]+$/u", $name)) {
+            $errors['name'] = "Tên không hợp lệ. Chỉ cho phép chữ cái và khoảng trắng.";
+            $valid = false;
+        }
     
-        $user->name = $name;
-        $user->phoneNumber = $phone;
-        $user->birthDate = $birthDate;
+        // Validate phone number
+        if (!preg_match('/^0\d{9}$/', $phone)) {
+            $errors['phoneNumber'] = "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.";
+            $valid = false;
+        }
     
-        // Upload avatar nếu có
-        if (isset($_POST['reset_avatar']) && $_POST['reset_avatar'] === '1') {
-            $user->setAvatar('https://placehold.co/394x394/orange/white?text=Avatar');
-        } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-            $uploader = new FileUploader("assets/uploads/avatar/");
-            $path = $uploader->upload($_FILES['avatar']);
-            if ($path) {
-                $user->setAvatar($path);
+        // Validate birthDate
+        if (!empty($birthDate)) {
+            $date = DateTime::createFromFormat('Y-m-d', $birthDate);
+            if (!$date || $date > new DateTime() || $date < new DateTime('-120 years')) {
+                $errors['birthDate'] = "Ngày sinh không hợp lệ.";
+                $valid = false;
             }
-        }        
+        }
     
-        // Cập nhật thông tin vào DB
-        $user::update($user);
+        if ($valid) {
+            $user = $accountLogin->getUser();
+            $user->name = $name;
+            $user->phoneNumber = $phone;
+            $user->birthDate = $birthDate;
     
-        header("Location: user.php");
-        exit;
+            if (isset($_POST['reset_avatar']) && $_POST['reset_avatar'] === '1') {
+                $user->setAvatar('https://placehold.co/394x394/orange/white?text=Avatar');
+            } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                $uploader = new FileUploader("assets/uploads/avatar/");
+                $path = $uploader->upload($_FILES['avatar']);
+                if ($path) {
+                    $user->setAvatar($path);
+                }
+            }
+    
+            $user::update($user);
+            header("Location: user.php");
+            exit;
+        }
     }
-      
     
 ?>
 
@@ -123,19 +143,19 @@
                                 <!-- Name Section -->
                                 <div class="mb-4">
                                     <label for="fullName" class="form-label">
-                                        <i
-                                            class="bi bi-person-fill profile-icon"
-                                        ></i
-                                        >Full Name
+                                        <i class="bi bi-person-fill profile-icon"></i>Full Name
                                     </label>
                                     <input
                                         type="text"
-                                        class="form-control"
+                                        class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>"
                                         id="fullName"
                                         name="name"
-                                        value="<?= htmlspecialchars($accountLogin?->getUser()->name ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['name'] ?? $accountLogin?->getUser()->name ?? '') ?>"
                                         required
                                     />
+                                    <?php if (!empty($errors['name'])): ?>
+                                        <div class="invalid-feedback"><?= $errors['name'] ?></div>
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Contact Information -->
@@ -160,33 +180,41 @@
                                         else.
                                     </div>
                                 </div>
-
+                                
+                                <!-- Phone Number -->
                                 <div class="mb-4">
                                     <label for="phone" class="form-label">
-                                        <i
-                                            class="bi bi-telephone-fill profile-icon"
-                                        ></i
-                                        >Phone Number
+                                        <i class="bi bi-telephone-fill profile-icon"></i>Phone Number
                                     </label>
                                     <input
                                         type="tel"
-                                        class="form-control"
+                                        class="form-control <?= isset($errors['phoneNumber']) ? 'is-invalid' : '' ?>"
                                         id="phone"
                                         name="phoneNumber"
-                                        value="<?= htmlspecialchars($accountLogin?->getUser()->phoneNumber ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $accountLogin?->getUser()->phoneNumber ?? '') ?>"
                                     />
+                                    <?php if (!empty($errors['phoneNumber'])): ?>
+                                        <div class="invalid-feedback"><?= $errors['phoneNumber'] ?></div>
+                                    <?php endif; ?>
                                 </div>
+
+                                <!-- Birth Date -->
                                 <div class="mb-4">
                                     <label for="birthDate" class="form-label">
                                         <i class="bi bi-calendar-date-fill profile-icon"></i>Birth Date
                                     </label>
                                     <input
                                         type="date"
-                                        class="form-control"
+                                        class="form-control <?= isset($errors['birthDate']) ? 'is-invalid' : '' ?>"
                                         id="birthDate"
                                         name="birthDate"
-                                        value="<?= htmlspecialchars($accountLogin?->getUser()->birthDate ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['birthDate'] ?? $accountLogin?->getUser()->birthDate ?? '') ?>"
+                                        min="<?= date('Y-m-d', strtotime('-120 years')) ?>"
+                                        max="<?= date('Y-m-d') ?>"
                                     />
+                                    <?php if (!empty($errors['birthDate'])): ?>
+                                        <div class="invalid-feedback"><?= $errors['birthDate'] ?></div>
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Form Buttons -->
