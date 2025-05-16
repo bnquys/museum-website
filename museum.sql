@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     5/16/2025 5:30:46 PM                         */
+/* Created on:     5/17/2025 6:31:51 AM                         */
 /*==============================================================*/
 
 
@@ -111,7 +111,6 @@ create table Contain
    Id                   varchar(20) not null,
    Email                varchar(50),
    Quantity             int default 0,
-   VisitDate            datetime default CURRENT_TIMESTAMP,
    primary key (TicId, Id)
 );
 
@@ -126,35 +125,12 @@ create table Display
 );
 
 /*==============================================================*/
-/* Table: EventStatus                                           */
-/*==============================================================*/
-create table EventStatus
-(
-   Id                   varchar(20) not null,
-   Status               text,
-   IsShow               boolean default TRUE,
-   primary key (Id)
-);
-
-/*==============================================================*/
-/* Table: EventType                                             */
-/*==============================================================*/
-create table EventType
-(
-   Id                   varchar(20) not null,
-   Name                 text,
-   IsShow               boolean default TRUE,
-   primary key (Id)
-);
-
-/*==============================================================*/
 /* Table: Events                                                */
 /*==============================================================*/
 create table Events
 (
    Id                   varchar(20) not null,
-   EveId                varchar(20),
-   EveId2               varchar(20),
+   Username             varchar(50) not null,
    Title                text,
    Description          text,
    TimeStart            datetime default CURRENT_TIMESTAMP,
@@ -207,6 +183,7 @@ create table Orders
    VouId                varchar(20),
    PayId                varchar(20),
    Username             varchar(50),
+   VisitDate            datetime default CURRENT_TIMESTAMP,
    CreatedDate          datetime default CURRENT_TIMESTAMP,
    primary key (Id)
 );
@@ -218,21 +195,9 @@ create table Payment
 (
    Id                   varchar(20) not null,
    OrdId                varchar(20) not null,
-   PayId                varchar(20),
    PayDate              datetime default CURRENT_TIMESTAMP,
    TotalCost            float default 0,
    IsPaid               boolean default FALSE,
-   primary key (Id)
-);
-
-/*==============================================================*/
-/* Table: PaymentMethod                                         */
-/*==============================================================*/
-create table PaymentMethod
-(
-   Id                   varchar(20) not null,
-   Method               text,
-   IsShow               boolean default TRUE,
    primary key (Id)
 );
 
@@ -300,9 +265,9 @@ create table Ticket
 /*==============================================================*/
 create table ToTag
 (
-   TagId                varchar(20) not null,
    Id                   varchar(20) not null,
-   primary key (TagId, Id)
+   BloId                varchar(20) not null,
+   primary key (Id, BloId)
 );
 
 /*==============================================================*/
@@ -355,11 +320,8 @@ alter table Display add constraint FK_DISPLAY_DISPLAY_ARTIFACT foreign key (Id)
 alter table Display add constraint FK_DISPLAY_DISPLAY_EXHIBITI foreign key (ExhId)
       references Exhibitions (Id) on delete restrict on update restrict;
 
-alter table Events add constraint FK_EVENTS_STATUS_EVENTSTA foreign key (EveId2)
-      references EventStatus (Id) on delete restrict on update restrict;
-
-alter table Events add constraint FK_EVENTS_TYPE_EVENTTYP foreign key (EveId)
-      references EventType (Id) on delete restrict on update restrict;
+alter table Events add constraint FK_EVENTS_NOTIFY_ACCOUNT foreign key (Username)
+      references Account (Username) on delete restrict on update restrict;
 
 alter table Exhibitions add constraint FK_EXHIBITI_TYPE_EVENTS foreign key (Id)
       references Events (Id) on delete restrict on update restrict;
@@ -376,17 +338,14 @@ alter table Orders add constraint FK_ORDERS_MAKE_ACCOUNT foreign key (Username)
 alter table Orders add constraint FK_ORDERS_PAY_PAYMENT foreign key (PayId)
       references Payment (Id) on delete restrict on update restrict;
 
-alter table Payment add constraint FK_PAYMENT_METHOD_PAYMENTM foreign key (PayId)
-      references PaymentMethod (Id) on delete restrict on update restrict;
-
 alter table Payment add constraint FK_PAYMENT_PAY_ORDERS foreign key (OrdId)
       references Orders (Id) on delete restrict on update restrict;
 
 alter table Review add constraint FK_REVIEW_REVIEW_ACCOUNT foreign key (Username)
       references Account (Username) on delete restrict on update restrict;
 
-alter table Review add constraint FK_REVIEW_REVIEW_EVENTS foreign key (Id)
-      references Events (Id) on delete restrict on update restrict;
+alter table Review add constraint FK_REVIEW_REVIEW_ARTIFACT foreign key (Id)
+      references Artifact (Id) on delete restrict on update restrict;
 
 alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
       references Guides (Email) on delete restrict on update restrict;
@@ -394,9 +353,9 @@ alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (Id)
+alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
       references Blog (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (TagId)
+alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (Id)
       references Tag (Id) on delete restrict on update restrict;
 
