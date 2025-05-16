@@ -1,7 +1,7 @@
 <?php
 $css = "ticket";
 $title = "Ticket";
-$name = "In Person Tickets";
+$banner = "In Person Tickets";
 include "components/first.php";
 include "components/navbar.php";
 include "components/banner.php";
@@ -66,7 +66,6 @@ $tickets = Ticket::getListTicket();
                 <h2 class="col-12 mv-lr">Choose your participants</h2>
             </div>
 
-            <!-- Children 6-11 -->
             <?php foreach ($tickets as $ticket) {?>
             <div class="row align-items-center mb-4">
                 <div class="col-12 col-md-6">
