@@ -143,6 +143,28 @@
             $conn->close();
         
             return $success;
+        }   
+        
+        public function getGuide(): ?Guide {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("SELECT Expertise, Introduction FROM Guides WHERE Email = ? AND IsWorking = TRUE");
+            $stmt->bind_param("s", $this->email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            $guide = null;
+        
+            if ($row = $result->fetch_assoc()) {
+                $guide = new Guide($this->name, $this->birthDate, $this->phoneNumber, $this->email, $this->avatar);
+                $guide->setExpertise($row['Expertise'] ?? '');
+                $guide->setIntroduction($row['Introduction'] ?? '');
+            }
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $guide;
         }        
 
     }
