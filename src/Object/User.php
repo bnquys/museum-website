@@ -3,25 +3,24 @@
     use Museum\Utils\Database;
 
     class User {
-        public const TABLE = "Client";
-        public const LENGTH = 10;
-
         public $id;
         public $name;
         public $birthDate;
         public $phoneNumber;
         public $email;
+        public $avatar;
 
-        public function __construct($name, $birthDate, $phoneNumber, $email) {
+        public function __construct($name, $birthDate, $phoneNumber, $email, $avatar = null) {
             $this->name = self::formatFullName($name);
             $this->birthDate = $birthDate;
             $this->phoneNumber = $phoneNumber;
             $this->email = $email;
+            $this->avatar = $avatar;
         }
 
         public static function update(User $user): bool {
             $conn = Database::Connect();
-            $stmt = $conn->prepare("UPDATE " . self::TABLE . " SET Name = ?, PhoneNumber = ?, BirthDate = ? WHERE Email = ?");
+            $stmt = $conn->prepare("UPDATE Client SET Name = ?, PhoneNumber = ?, BirthDate = ? WHERE Email = ?");
             $stmt->bind_param("ssss", $user->name, $user->phoneNumber, $user->birthDate, $user->email);
             $success = $stmt->execute();
             $stmt->close();
@@ -32,7 +31,7 @@
         public function setForeignKey(Account $account) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("UPDATE ". self::TABLE ." SET Username = ? WHERE Email = ?");
+            $stmt = $conn->prepare("UPDATE Client SET Username = ? WHERE Email = ?");
             $stmt->bind_param("ss", $account->username, $this->email);
 
             $stmt->execute();
@@ -44,7 +43,7 @@
         public static function emailExists(string $email) {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT 1 FROM ". self::TABLE ." WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT 1 FROM Client WHERE Email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -74,7 +73,7 @@
         public static function getByEmail(string $email): ?self {
             $conn = Database::Connect();
 
-            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDate FROM " . self::TABLE . " WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT Name, Email, PhoneNumber, BirthDate, Avatar FROM Client WHERE Email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
 
@@ -82,7 +81,7 @@
             $user = null;
 
             if ($row = $result->fetch_assoc()) {
-                $user = new self($row['Name'], $row['BirthDate'], $row['PhoneNumber'], $row['Email']);
+                $user = new self($row['Name'], $row['BirthDate'], $row['PhoneNumber'], $row['Email'], $row['Avatar']);
             }
 
             $stmt->close();
@@ -90,6 +89,23 @@
 
             return $user;
         }
+
+        public function setAvatar(string $avatarPath): bool {
+            $conn = Database::Connect();
+            $stmt = $conn->prepare("UPDATE Client SET Avatar = ? WHERE Email = ?");
+            $stmt->bind_param("ss", $avatarPath, $this->email);
+        
+            $success = $stmt->execute();
+        
+            if ($success) {
+                $this->avatar = $avatarPath;
+            }
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $success;
+        }        
 
     }
 
