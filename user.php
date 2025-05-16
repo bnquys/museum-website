@@ -43,13 +43,15 @@
         $user->birthDate = $birthDate;
     
         // Upload avatar nếu có
-        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_POST['reset_avatar']) && $_POST['reset_avatar'] === '1') {
+            $user->setAvatar('https://placehold.co/394x394/orange/white?text=Avatar');
+        } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
             $uploader = new FileUploader("assets/uploads/avatar/");
             $path = $uploader->upload($_FILES['avatar']);
             if ($path) {
                 $user->setAvatar($path);
             }
-        }
+        }        
     
         // Cập nhật thông tin vào DB
         $user::update($user);
@@ -111,6 +113,11 @@
                                         name="avatar"
                                         accept="image/*"
                                     />
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-avatar">
+                                            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Default Avatar
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <!-- Name Section -->
@@ -263,18 +270,46 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
-            document.querySelector('input[name="avatar"]').addEventListener('change', function(event) {
+            const defaultAvatar = 'https://placehold.co/394x394/orange/white?text=Avatar';
+            const avatarInput = document.getElementById('avatar');
+            const avatarPreview = document.getElementById('avatar-preview');
+            const form = document.getElementById('profileForm');
+
+            // Xem trước khi chọn file
+            avatarInput.addEventListener('change', function (event) {
                 const file = event.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const preview = document.getElementById('avatar-preview');
-                        preview.src = e.target.result;
+                    reader.onload = function (e) {
+                        avatarPreview.src = e.target.result;
                     };
                     reader.readAsDataURL(file);
+
+                    // Xóa cờ reset nếu người dùng chọn ảnh mới
+                    const resetInput = document.getElementById('reset-avatar-flag');
+                    if (resetInput) {
+                        resetInput.remove();
+                    }
+                }
+            });
+
+            // Xử lý đặt lại ảnh mặc định
+            document.getElementById('reset-avatar').addEventListener('click', function () {
+                avatarPreview.src = defaultAvatar;
+                avatarInput.value = '';
+
+                // Thêm cờ ẩn vào form
+                if (!document.getElementById('reset-avatar-flag')) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'reset_avatar';
+                    hiddenInput.id = 'reset-avatar-flag';
+                    hiddenInput.value = '1';
+                    form.appendChild(hiddenInput);
                 }
             });
         </script>
+
 
 
     </body>
