@@ -102,8 +102,11 @@
                 if ($guide) {
                     $intro = $_POST['intro'] ?? '';
                     $experience = $_POST['experience'] ?? '';
+                    $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
+            
                     $guide->setIntroduction($intro);
                     $guide->setExpertise($experience);
+                    $guide->setPrice($price);
                 }
             } 
             
@@ -284,6 +287,20 @@
                                     <div class="form-group">
                                         <label for="experience">Experience:</label>
                                         <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."><?= htmlspecialchars($experienceValue)?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="price">Guide Price (USD):</label>
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="price"
+                                            name="price"
+                                            min="0"
+                                            step="0.01"
+                                            value="<?= htmlspecialchars($_POST['price'] ?? $guideData?->getPrice() ?? '') ?>"
+                                            placeholder="Enter your hourly rate"
+                                        />
                                     </div>
 
                                     <div class="form-group">

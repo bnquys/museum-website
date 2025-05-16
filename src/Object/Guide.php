@@ -132,21 +132,17 @@ class Guide extends User {
     }
 
     public function updateLanguages(array $languageIds): void {
-        // Load current languages
         $currentLanguages = $this->getLanguages();
         $currentIds = array_map(fn($lang) => $lang->id, $currentLanguages);
     
-        // Load all languages (to get name by id)
         $allLanguages = \Museum\Object\Language::getAll();
     
-        // Remove unchecked languages
         foreach ($currentLanguages as $lang) {
             if (!in_array($lang->id, $languageIds)) {
                 $this->removeLanguage($lang);
             }
         }
     
-        // Add newly selected languages
         foreach ($languageIds as $id) {
             if (!in_array($id, $currentIds)) {
                 foreach ($allLanguages as $lang) {
@@ -157,6 +153,36 @@ class Guide extends User {
                 }
             }
         }
+    }    
+
+    public function getPrice(): ?float {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("SELECT Price FROM Guides WHERE Email = ?");
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $price = null;
+        if ($row = $result->fetch_assoc()) {
+            $price = (float) $row['Price'];
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $price;
+    }
+    
+    public function setPrice(float $price): bool {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("UPDATE Guides SET Price = ? WHERE Email = ?");
+        $stmt->bind_param("ds", $price, $this->email); // 'd' for double/float, 's' for string
+        $success = $stmt->execute();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $success;
     }    
 }
 ?>
