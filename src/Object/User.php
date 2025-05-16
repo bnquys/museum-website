@@ -105,7 +105,36 @@
             $conn->close();
         
             return $success;
-        }        
+        }    
+        
+        public function isGuide(): bool {
+            $conn = Database::Connect();
+            $stmt = $conn->prepare("SELECT 1 FROM Guides WHERE Email = ?");
+            $stmt->bind_param("s", $this->email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        
+            $isGuide = $result->num_rows > 0;
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $isGuide;
+        }
+        
+        public function saveAsGuide(string $expertise = '', string $introduction = ''): bool {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("REPLACE INTO Guides (Email, Expertise, Introduction) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $this->email, $expertise, $introduction);
+        
+            $success = $stmt->execute();
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $success;
+        }
 
     }
 
