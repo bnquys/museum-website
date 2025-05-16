@@ -7,9 +7,20 @@ include "components/navbar.php";
 include "components/banner.php";
 
 require_once "vendor/autoload.php";
-use Museum\Object\Ticket;
 
-$tickets = Ticket::getListTicket();
+use Museum\Object\Guide;
+use Museum\Object\Ticket;
+use Museum\Object\Language;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    echo "Checkout submitted! <br>";
+    echo "<pre>";
+    echo print_r($_POST);
+    echo "</pre>";
+
+    $wantGuide = isset($_POST['want_guide']) ? true : false;
+}
+
 ?>
 <!-- Ticket Pricing Section -->
 <section class="container-fluid">
@@ -29,7 +40,7 @@ $tickets = Ticket::getListTicket();
         </p>
     </div>
 
-    <form class="container" id="ticketForm">
+    <form class="container" id="ticketForm" method="post">
         <!-- Choose Date and Time -->
         <div class="section">
             <div class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center">
@@ -46,6 +57,8 @@ $tickets = Ticket::getListTicket();
                     <input
                         type="date"
                         id="visitDate"
+                        name="visitDate"
+                        min="<?= date('Y-m-d');?>"
                         class="form-control mx-auto"
                     />
                 </div>
@@ -54,6 +67,7 @@ $tickets = Ticket::getListTicket();
                     <input
                         type="time"
                         id="visitTime"
+                        name="visitTime"
                         class="form-control mx-auto"
                     />
                 </div>
@@ -66,7 +80,10 @@ $tickets = Ticket::getListTicket();
                 <h2 class="col-12 mv-lr">Choose your participants</h2>
             </div>
 
-            <?php foreach ($tickets as $ticket) {?>
+            <?php
+                $tickets = Ticket::getListTicket();
+                foreach ($tickets as $ticket) {
+            ?>
             <div class="row align-items-center mb-4">
                 <div class="col-12 col-md-6">
                     <p class="ticket-type mv-lr"><?= $ticket->name?></p>
@@ -76,6 +93,7 @@ $tickets = Ticket::getListTicket();
                 <div class="col-4 col-md-2">
                     <input
                         type="number"
+                        name="ticket_qty[<?= $ticket->id ?>]"
                         class="form-control"
                         min="0"
                         value="0"
@@ -98,7 +116,7 @@ $tickets = Ticket::getListTicket();
                 <h2 class="mv-lr">Want a tour guide ?</h2>
                 <!-- Yes/No -->
                 <div class="checkbox-wrapper-10 ms-3">
-                    <input class="tgl tgl-flip" id="cb5" type="checkbox" />
+                    <input class="tgl tgl-flip" id="cb5" type="checkbox" name="want_guide" value="1"/>
                     <label
                         class="tgl-btn"
                         data-tg-off="Nope"
@@ -110,132 +128,37 @@ $tickets = Ticket::getListTicket();
 
             <!-- List Guiders -->
             <div class="row row-cols-1 row-cols-md-4 g-4 mt-2 guide-list">
-                <!-- Guide 1 -->
+                <?php 
+                    $guides = Guide::getTopGuides(4);
+                    foreach ($guides as $guide):
+                ?>
                 <div class="col mv-scale">
                     <div
                         class="card h-100 p-2 guide-card"
-                        data-price="30"
-                        data-guide="alex"
+                        data-price="<?= $guide->getPrice() ?>"
+                        data-guide="<?= htmlspecialchars($guide->email) ?>"
                     >
                         <img
-                            src="assets/img/male1.jpg"
+                            src="<?= $guide->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar' ?>"
                             class="card-img-top"
-                            alt="Alex"
+                            alt="<?= htmlspecialchars($guide->name) ?>"
                         />
                         <div class="card-body">
-                            <h5 class="card-title">Alex</h5>
-                            <p>
-                                <strong>Expertise:</strong> History,
-                                Architecture
-                            </p>
-                            <p><strong>Languages:</strong> English, Spanish</p>
-                            <p>
-                                <strong>Intro:</strong> Loves storytelling &
-                                spicy fun facts 🌶️
-                            </p>
-                            <p><strong>Price:</strong> $30</p>
+                            <h5 class="card-title"><?= htmlspecialchars($guide->name) ?></h5>
+                            <p><strong>Expertise:</strong> <?= htmlspecialchars($guide->getExpertise() ?? 'N/A') ?></p>
+                            <p><strong>Languages:</strong> <?= Language::toNameString($guide->getLanguages()) ?></p>
+                            <p><strong>Intro:</strong> <?= htmlspecialchars($guide->getIntroduction() ?? 'N/A') ?></p>
+                            <p><strong>Price:</strong> $<?= number_format($guide->getPrice(), 2) ?></p>
                             <input
                                 type="radio"
                                 name="guide"
                                 class="form-check-input guide-radio d-none"
-                                value="alex"
+                                value="<?= htmlspecialchars($guide->email) ?>"
                             />
                         </div>
                     </div>
                 </div>
-
-                <!-- Guide 2 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="35"
-                        data-guide="bella"
-                    >
-                        <img
-                            src="assets/img/female1.jpg"
-                            class="card-img-top"
-                            alt="Bella"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Bella</h5>
-                            <p><strong>Expertise:</strong> Nature, Wildlife</p>
-                            <p><strong>Languages:</strong> English, French</p>
-                            <p>
-                                <strong>Intro:</strong> Forest queen 🌿 talks to
-                                animals (low-key)
-                            </p>
-                            <p><strong>Price:</strong> $35</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="bella"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guide 3 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="25"
-                        data-guide="chris"
-                    >
-                        <img
-                            src="assets/img/male2.jpg"
-                            class="card-img-top"
-                            alt="Chris"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Chris</h5>
-                            <p><strong>Expertise:</strong> Food Tours</p>
-                            <p><strong>Languages:</strong> English, Korean</p>
-                            <p>
-                                <strong>Intro:</strong> Will make you eat things
-                                you didn’t know existed 🍜
-                            </p>
-                            <p><strong>Price:</strong> $25</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="chris"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guide 4 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="40"
-                        data-guide="dana"
-                    >
-                        <img
-                            src="assets/img/female2.jpg"
-                            class="card-img-top"
-                            alt="Dana"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Dana</h5>
-                            <p><strong>Expertise:</strong> Art, Museums</p>
-                            <p><strong>Languages:</strong> English, Italian</p>
-                            <p>
-                                <strong>Intro:</strong> Walking encyclopedia of
-                                painting memes 🖼️
-                            </p>
-                            <p><strong>Price:</strong> $40</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="dana"
-                            />
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach;?>
             </div>
         </div>
 
@@ -259,7 +182,7 @@ $tickets = Ticket::getListTicket();
                 style="color: red; display: none; margin-bottom: 10px; max-width: 20vw;"
                 class="fw-bold"
             ></p>
-            <div class="button-92" role="button">Checkout now !</div>
+            <button type="submit" class="button-92">Checkout now !</button>
         </div>
     </form>
 
@@ -464,7 +387,7 @@ $tickets = Ticket::getListTicket();
         calculateTotal();
     });
 
-    document.querySelector(".button-92").addEventListener("click", function () {
+    document.querySelector(".button-92").addEventListener("click", function (event) {
         const visitDate = document.getElementById("visitDate").value;
         const visitTime = document.getElementById("visitTime").value;
         const inputs = document.querySelectorAll('input[type="number"]');
@@ -477,19 +400,18 @@ $tickets = Ticket::getListTicket();
             }
         });
 
-        // Validation check
+        // Nếu thiếu dữ liệu → hiển thị lỗi và chặn submit
         if (!visitDate || !visitTime || !hasParticipant) {
-            errorMsg.textContent =
-                "Please select Date, Time, and at least one participant before checking out.";
+            event.preventDefault(); // 🔴 Chặn gửi form
+            errorMsg.textContent = "Please select Date, Time, and at least one participant before checking out.";
             errorMsg.style.display = "block";
             return;
         }
 
-        // Clear error and proceed
+        // ✅ Đủ điều kiện → ẩn lỗi và tiếp tục submit
         errorMsg.style.display = "none";
-        document.getElementById("checkoutOverlay").style.display = "block";
-        document.body.style.overflow = "hidden";
     });
+
 
     document
         .getElementById("checkoutOverlay")

@@ -71,6 +71,13 @@ class Guide extends User {
         return $success;
     }
 
+    /**
+     * Retrieves a list of languages spoken by the guide.
+     * Only languages that are currently set to be visible (IsShow = TRUE) are included.
+     * The data is fetched by joining the `Speak` and `Language` tables based on the guide's email.
+     *
+     * @return Language[] An array of Language objects that the guide can speak.
+     */
     public function getLanguages(): array {
         $this->languages = [];
         $conn = Database::Connect();
@@ -184,5 +191,54 @@ class Guide extends User {
     
         return $success;
     }    
+    
+    public static function fromEmail(string $email): ?self {
+        $user = User::getByEmail($email);
+        if (!$user || !$user->isGuide()) return null;
+    
+        return $user->getGuide(); 
+    }
+
+    /**
+     * Retrieves the top guides based on the number of times they have been hired.
+     * If multiple guides have the same hire count, they are ranked by their price in ascending order.
+     * Only guides currently marked as working (IsWorking = TRUE) are considered.
+     *
+     * @param int $limit The maximum number of top guides to return (default is 10).
+     * @return Guide[] An array of Guide objects representing the top-ranked guides.
+     */
+    public static function getTopGuides(int $limit = 10): array {
+        $conn = Database::Connect();
+    
+        $query = "
+            SELECT g.Email, COUNT(DISTINCT c.Id) AS HireCount, g.Price
+            FROM Guides g
+            LEFT JOIN Contain c ON g.Email = c.Email
+            WHERE g.IsWorking = TRUE
+            GROUP BY g.Email, g.Price
+            ORDER BY HireCount DESC, g.Price ASC
+            LIMIT ?
+        ";
+    
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $guides = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $guide = self::fromEmail($row['Email']);
+            if ($guide) {
+                $guides[] = $guide;
+            }
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $guides;
+    }    
+    
 }
 ?>
