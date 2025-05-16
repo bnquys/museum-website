@@ -5,8 +5,8 @@
 
     require_once realpath(__DIR__."/vendor/autoload.php");
 
-use Museum\Object\Language;
-use Museum\Utils\FileUploader;
+    use Museum\Object\Language;
+    use Museum\Utils\FileUploader;
 
     if (isset($_GET['action'])) {
         switch ($_GET['action']) {
@@ -38,17 +38,19 @@ use Museum\Utils\FileUploader;
     $birthDate = $_POST['birthDate'] ?? '';
     $valid = true;
     
+    $userLogin = $accountLogin?->getUser();
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['login'])) {
     
         // Validate name
         if (empty($name) || !preg_match("/^[a-zA-ZÀ-ỹ\s]+$/u", $name)) {
-            $errors['name'] = "Tên không hợp lệ. Chỉ cho phép chữ cái và khoảng trắng.";
+            $errors['name'] = "Invalid name. Only letters and spaces are allowed.";
             $valid = false;
         }
     
         // Validate phone number
         if (!preg_match('/^0\d{9}$/', $phone)) {
-            $errors['phoneNumber'] = "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.";
+            $errors['phoneNumber'] = "Phone number must start with 0 and contain exactly 10 digits.";
             $valid = false;
         }
     
@@ -56,7 +58,14 @@ use Museum\Utils\FileUploader;
         if (!empty($birthDate)) {
             $date = DateTime::createFromFormat('Y-m-d', $birthDate);
             if (!$date || $date > new DateTime() || $date < new DateTime('-120 years')) {
-                $errors['birthDate'] = "Ngày sinh không hợp lệ.";
+                $errors['birthDate'] = "Invalid birth date.";
+                $valid = false;
+            }
+        }
+
+        if (isset($_POST['isGuide'])) {
+            if (empty($_POST['languages']) || !is_array($_POST['languages']) || count($_POST['languages']) === 0) {
+                $errors['languages'] = "Please select at least one language.";
                 $valid = false;
             }
         }
@@ -76,8 +85,35 @@ use Museum\Utils\FileUploader;
                     $user->setAvatar($path);
                 }
             }
+
+            if (isset($_POST['isGuide'])) {
+                $user->saveAsGuide();
+            } else {
+                $user->removeGuide();
+            }
     
             $user::update($user);
+
+            if ($user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide) {
+                    $intro = $_POST['intro'] ?? '';
+                    $experience = $_POST['experience'] ?? '';
+                    $guide->setIntroduction($intro);
+                    $guide->setExpertise($experience);
+                }
+            } 
+            
+            if ($valid && isset($_POST['isGuide']) && $user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide && isset($_POST['languages']) && is_array($_POST['languages'])) {
+                    $selectedLangs = $_POST['languages'];
+                    $currentLangs = $guide->getLanguages(); // Array of Language objects
+            
+                    $guide->updateLanguages($_POST['languages']);
+                }
+            }                       
+            
             header("Location: user.php");
             exit;
         }
@@ -93,7 +129,7 @@ use Museum\Utils\FileUploader;
                     <div class="col-md-8">
                         <h1 class="display-4 fw-bold">
                             <i class="bi bi-person-circle me-3"></i>
-                            <?= htmlspecialchars($accountLogin?->getUser()->name ?? '') ?> Profile
+                            <?= htmlspecialchars($userLogin->name ?? '') ?> Profile
                         </h1>
                         <p class="lead">
                             Update your personal information and preferences
@@ -116,7 +152,7 @@ use Museum\Utils\FileUploader;
                             </h3>
                         </div>
                         <div class="card-body">
-                            <?php $avatar = $accountLogin?->getUser()->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar'; ?>
+                            <?php $avatar = $userLogin->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar'; ?>
                             <div class="text-center mb-4">
                                 <img id="avatar-preview" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="rounded-circle" width="120" height="120" />
                             </div>
@@ -152,7 +188,7 @@ use Museum\Utils\FileUploader;
                                         class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>"
                                         id="fullName"
                                         name="name"
-                                        value="<?= htmlspecialchars($_POST['name'] ?? $accountLogin?->getUser()->name ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['name'] ?? $userLogin->name ?? '') ?>"
                                         required
                                     />
                                     <?php if (!empty($errors['name'])): ?>
@@ -173,7 +209,7 @@ use Museum\Utils\FileUploader;
                                         class="form-control"
                                         id="email"
                                         name="email"
-                                        value="<?= htmlspecialchars($accountLogin?->getUser()->email ?? '') ?>"
+                                        value="<?= htmlspecialchars($userLogin->email ?? '') ?>"
                                         required
                                         readonly
                                     />
@@ -193,7 +229,7 @@ use Museum\Utils\FileUploader;
                                         class="form-control <?= isset($errors['phoneNumber']) ? 'is-invalid' : '' ?>"
                                         id="phone"
                                         name="phoneNumber"
-                                        value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $accountLogin?->getUser()->phoneNumber ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $userLogin->phoneNumber ?? '') ?>"
                                     />
                                     <?php if (!empty($errors['phoneNumber'])): ?>
                                         <div class="invalid-feedback"><?= $errors['phoneNumber'] ?></div>
@@ -210,7 +246,7 @@ use Museum\Utils\FileUploader;
                                         class="form-control <?= isset($errors['birthDate']) ? 'is-invalid' : '' ?>"
                                         id="birthDate"
                                         name="birthDate"
-                                        value="<?= htmlspecialchars($_POST['birthDate'] ?? $accountLogin?->getUser()->birthDate ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['birthDate'] ?? $userLogin->birthDate ?? '') ?>"
                                         min="<?= date('Y-m-d', strtotime('-120 years')) ?>"
                                         max="<?= date('Y-m-d') ?>"
                                     />
@@ -222,20 +258,26 @@ use Museum\Utils\FileUploader;
                                 <!-- Checkbox to indicate user is a Guide -->
                                 <div class="form-group">
                                     <label>
-                                        <input type="checkbox" id="isGuideCheckbox"> I am a Guide
+                                        <input type="checkbox" id="isGuideCheckbox" name="isGuide" 
+                                            <?= $userLogin->isGuide() ? 'checked' : '' ?>> I am a Guide
                                     </label>
                                 </div>
 
                                 <!-- Additional fields shown only if user is a Guide -->
-                                <div id="guideFields" style="display: none;">
+                                <?php
+                                    $guideData = $userLogin->isGuide() ? $userLogin->getGuide() : null;
+                                    $introValue = $guideData?->getIntroduction() ?? '';
+                                    $experienceValue = $guideData?->getExpertise() ?? '';
+                                ?>
+                                <div id="guideFields" style="display: <?= $userLogin->isGuide() ? 'block' : 'none' ?>;">
                                     <div class="form-group">
                                         <label for="intro">Introduction:</label>
-                                        <textarea id="intro" name="intro" class="form-control" rows="3" placeholder="Write a brief introduction..."></textarea>
+                                        <textarea id="intro" name="intro" class="form-control" rows="3" placeholder="Write a brief introduction..."><?= htmlspecialchars($introValue) ?></textarea>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="experience">Experience:</label>
-                                        <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."></textarea>
+                                        <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."><?= htmlspecialchars($experienceValue)?></textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -243,13 +285,21 @@ use Museum\Utils\FileUploader;
                                         <div id="languageOptions" class="d-flex flex-wrap gap-2">
                                         <?php 
                                             $languages = Language::getAll();
-                                            foreach ($languages as $lang): ?>
-                                            <label class="btn btn-outline-primary">
-                                                <input type="checkbox" name="languages[]" value="<?= htmlspecialchars($lang->id) ?>">
+                                            $selectedLangs = $guideData?->getLanguages() ?? [];
+                                            $selectedLangIds = array_map(fn($l) => $l->id, $selectedLangs);
+
+                                            foreach ($languages as $lang): 
+                                                $checked = in_array($lang->id, $selectedLangIds) ? 'checked' : '';
+                                        ?>
+                                            <label class="btn btn-outline-primary <?= $checked ? 'active' : '' ?>">
+                                                <input type="checkbox" name="languages[]" value="<?= htmlspecialchars($lang->id) ?>" <?= $checked ?>>
                                                 <?= htmlspecialchars($lang->name) ?>
                                             </label>
                                         <?php endforeach; ?>
                                         </div>
+                                        <?php if (!empty($errors['languages'])): ?>
+                                            <div class="text-danger mt-2"><?= htmlspecialchars($errors['languages']) ?></div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
 
@@ -381,9 +431,6 @@ use Museum\Utils\FileUploader;
                 }
             });
         </script>
-
-
-
     </body>
 
 

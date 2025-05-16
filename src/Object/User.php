@@ -144,6 +144,19 @@
         
             return $success;
         }   
+
+        public function removeGuide(): bool {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("UPDATE Guides SET IsWorking = FALSE WHERE Email = ?");
+            $stmt->bind_param("s", $this->email);
+            $success = $stmt->execute();
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $success;
+        }        
         
         public function getGuide(): ?Guide {
             $conn = Database::Connect();

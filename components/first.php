@@ -3,13 +3,6 @@
 	require realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
 
-    // function format_input($data) {
-    //     $data = trim($data);
-    //     $data = stripslashes($data);
-    //     $data = htmlspecialchars($data);
-    //     return $data;
-    // }
-
 	if (isset($_SESSION['login'])) {
 		$accountLogin = Account::getByUsername($_SESSION['login']);
 	}

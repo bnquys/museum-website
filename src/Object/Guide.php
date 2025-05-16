@@ -130,5 +130,33 @@ class Guide extends User {
 
         return $success;
     }
+
+    public function updateLanguages(array $languageIds): void {
+        // Load current languages
+        $currentLanguages = $this->getLanguages();
+        $currentIds = array_map(fn($lang) => $lang->id, $currentLanguages);
+    
+        // Load all languages (to get name by id)
+        $allLanguages = \Museum\Object\Language::getAll();
+    
+        // Remove unchecked languages
+        foreach ($currentLanguages as $lang) {
+            if (!in_array($lang->id, $languageIds)) {
+                $this->removeLanguage($lang);
+            }
+        }
+    
+        // Add newly selected languages
+        foreach ($languageIds as $id) {
+            if (!in_array($id, $currentIds)) {
+                foreach ($allLanguages as $lang) {
+                    if ($lang->id === $id) {
+                        $this->addLanguage($lang);
+                        break;
+                    }
+                }
+            }
+        }
+    }    
 }
 ?>
