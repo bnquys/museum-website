@@ -11,14 +11,20 @@ require_once "vendor/autoload.php";
 use Museum\Object\Guide;
 use Museum\Object\Ticket;
 use Museum\Object\Language;
+use Museum\Object\Order;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    echo "Checkout submitted! <br>";
-    echo "<pre>";
-    echo print_r($_POST);
-    echo "</pre>";
-
+    $visitDate = $_POST['visitDate'];
+    $visitTime = $_POST['visitTime'];
+    $ticketQuantities = $_POST['ticket_qty'];
     $wantGuide = isset($_POST['want_guide']) ? true : false;
+    $selectedGuide = $_POST['guide'] ?? null;
+
+    if (!empty($accountLogin)) {
+        $username = $accountLogin->username;
+        $order = new Order($username, $ticketQuantities, $visitDate, $visitTime, $selectedGuide);
+        $order->create();
+    }
 }
 
 ?>
