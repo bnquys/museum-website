@@ -14,7 +14,6 @@ class Order {
 
     public $ticketList;
     public $visitDate;
-    public $visitTime;
     public $guideEmail;
 
     public function __construct(string $username, array $ticketList, string $visitDate, string $visitTime, ?string $guideEmail = null) {
@@ -25,8 +24,9 @@ class Order {
         $this->createdDate = null;
 
         $this->ticketList = array_filter($ticketList, function ($quantity) {return $quantity > 0;});
+        $this->visitDate = $visitDate . ' ' . $visitTime;
+        
         $this->visitDate = $visitDate;
-        $this->visitTime = $visitTime;
         $this->guideEmail = $guideEmail;
     }
 
