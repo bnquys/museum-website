@@ -5,6 +5,7 @@ use Museum\Utils\Database;
 class Guide extends User {
     private $expertise;
     private $introduction;
+    private $languages = [];
 
     public function getExpertise(): ?string {
         $conn = Database::Connect();
@@ -67,6 +68,66 @@ class Guide extends User {
 
         $stmt->close();
         $conn->close();
+        return $success;
+    }
+
+    public function getLanguages(): array {
+        $this->languages = [];
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT l.Id, l.Name 
+                                FROM Speak s 
+                                JOIN Language l ON s.Id = l.Id 
+                                WHERE s.Email = ? AND l.IsShow = TRUE");
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $this->languages[] = new Language($row['Id'], $row['Name']);
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): bool {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT 1 FROM Speak WHERE Email = ? AND Id = ?");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $exists = $result->num_rows > 0;
+        $stmt->close();
+
+        if ($exists) {
+            $conn->close();
+            return false;
+        }
+
+        $stmt = $conn->prepare("INSERT INTO Speak (Email, Id) VALUES (?, ?)");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $success = $stmt->execute();
+
+        $stmt->close();
+        $conn->close();
+
+        return $success;
+    }
+
+    public function removeLanguage(Language $language): bool {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("DELETE FROM Speak WHERE Email = ? AND Id = ?");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $success = $stmt->execute();
+
+        $stmt->close();
+        $conn->close();
+
         return $success;
     }
 }
