@@ -83,6 +83,9 @@
                 $path = $uploader->upload($_FILES['avatar']);
                 if ($path) {
                     $user->setAvatar($path);
+                } else {
+                    $errors['avatar'] = $uploader->error ?: "Failed to upload avatar.";
+                    $valid = false;
                 }
             }
 
@@ -171,6 +174,9 @@
                                         name="avatar"
                                         accept="image/*"
                                     />
+                                    <?php if (!empty($errors['avatar'])): ?>
+                                        <div class="text-danger mt-2"><?= htmlspecialchars($errors['avatar']) ?></div>
+                                    <?php endif; ?>
                                     <div class="mt-2">
                                         <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-avatar">
                                             <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Default Avatar
