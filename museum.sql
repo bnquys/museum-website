@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     5/15/2025 9:53:16 PM                         */
+/* Created on:     5/16/2025 5:30:46 PM                         */
 /*==============================================================*/
 
 
@@ -71,7 +71,7 @@ create table Client
    Name                 text,
    PhoneNumber          national varchar(255),
    BirthDate            date,
-   Avatar               national varchar(255),
+   Avatar               text,
    primary key (Email)
 );
 
@@ -182,6 +182,8 @@ create table Guides
    Email                varchar(50) not null,
    Expertise            text,
    Introduction         text,
+   IsWorking            boolean default TRUE,
+   Price                float default 0,
    primary key (Email)
 );
 
