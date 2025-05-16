@@ -13,17 +13,28 @@ class Language {
 
     public function add(): bool {
         $conn = Database::Connect();
-
-        $stmt = $conn->prepare("REPLACE INTO Language (Id, Name, IsShow) VALUES (?, ?, TRUE)");
-        $stmt->bind_param("ss", $this->id, $this->name);
-
+    
+        $stmt = $conn->prepare("SELECT 1 FROM Language WHERE Id = ?");
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $exists = $result->num_rows > 0;
+        $stmt->close();
+    
+        if ($exists) {
+            $stmt = $conn->prepare("UPDATE Language SET Name = ?, IsShow = TRUE WHERE Id = ?");
+            $stmt->bind_param("ss", $this->name, $this->id);
+        } else {
+            $stmt = $conn->prepare("INSERT INTO Language (Id, Name, IsShow) VALUES (?, ?, TRUE)");
+            $stmt->bind_param("ss", $this->id, $this->name);
+        }
+    
         $success = $stmt->execute();
-
         $stmt->close();
         $conn->close();
-
+    
         return $success;
-    }
+    }    
 
     public function remove(): bool {
         $conn = Database::Connect();

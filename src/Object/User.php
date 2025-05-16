@@ -109,32 +109,41 @@
         
         public function isGuide(): bool {
             $conn = Database::Connect();
-            $stmt = $conn->prepare("SELECT 1 FROM Guides WHERE Email = ?");
+            $stmt = $conn->prepare("SELECT 1 FROM Guides WHERE Email = ? AND IsWorking = TRUE");
             $stmt->bind_param("s", $this->email);
             $stmt->execute();
             $result = $stmt->get_result();
-        
             $isGuide = $result->num_rows > 0;
         
             $stmt->close();
             $conn->close();
-        
             return $isGuide;
         }
         
-        public function saveAsGuide(string $expertise = '', string $introduction = ''): bool {
+        public function saveAsGuide(): bool {
             $conn = Database::Connect();
         
-            $stmt = $conn->prepare("REPLACE INTO Guides (Email, Expertise, Introduction) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $this->email, $expertise, $introduction);
+            $stmt = $conn->prepare("SELECT 1 FROM Guides WHERE Email = ?");
+            $stmt->bind_param("s", $this->email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $exists = $result->num_rows > 0;
+            $stmt->close();
+        
+            if ($exists) {
+                $stmt = $conn->prepare("UPDATE Guides SET IsWorking = TRUE WHERE Email = ?");
+                $stmt->bind_param("s", $this->email);
+            } else {
+                $stmt = $conn->prepare("INSERT INTO Guides (Email, IsWorking) VALUES (?, TRUE)");
+                $stmt->bind_param("s", $this->email);
+            }
         
             $success = $stmt->execute();
-        
             $stmt->close();
             $conn->close();
         
             return $success;
-        }
+        }        
 
     }
 
