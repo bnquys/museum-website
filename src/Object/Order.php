@@ -26,7 +26,6 @@ class Order {
         $this->ticketList = array_filter($ticketList, function ($quantity) {return $quantity > 0;});
         $this->visitDate = $visitDate . ' ' . $visitTime;
         
-        $this->visitDate = $visitDate;
         $this->guideEmail = $guideEmail;
     }
 

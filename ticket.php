@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $css = "ticket";
 $title = "Ticket";
 $banner = "In Person Tickets";
@@ -24,6 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = $accountLogin->username;
         $order = new Order($username, $ticketQuantities, $visitDate, $visitTime, $selectedGuide);
         $order->create();
+
+        header("Location: ticket.php?success=1");
+        exit;
     }
 }
 
@@ -429,7 +433,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
 </script>
+<script>
+    if (window.location.search.includes('success=1')) {
+        history.replaceState(null, '', window.location.pathname);
+    }
+</script>
 <?php 
 include "components/footer.php";
 include "components/last.php";
+ob_end_flush();
 ?>
