@@ -1,13 +1,17 @@
 <?php
 	session_start();
-	require realpath(__DIR__."/../vendor/autoload.php");
+	
+	// echo '<pre>';
+	// echo print_r($_SESSION);
+	// echo '</pre>';
+
+	require_once realpath(__DIR__."/../vendor/autoload.php");
 	use Museum\Object\Account;
 
 	if (isset($_SESSION['login'])) {
 		$accountLogin = Account::getByUsername($_SESSION['login']);
 	}
 
-	// echo '<pre>'. print_r($_SESSION) .'</pre>';
 ?>
 
 <!DOCTYPE html>
