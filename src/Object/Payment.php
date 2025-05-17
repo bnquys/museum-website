@@ -21,6 +21,41 @@ class Payment {
     }
 
     /**
+     * Retrieves all payment records from the database.
+     *
+     * This method queries the Payment table and returns an array of Payment objects.
+     * The records are ordered by PayDate in descending order (most recent first).
+     *
+     * @return Payment[] An array of Payment objects.
+     */
+    public static function getAll(): array {
+        $conn = Database::Connect();
+
+        // SQL query to get all payments ordered by PayDate in descending order
+        $sql = "SELECT * FROM Payment ORDER BY IsPaid, PayDate DESC";
+        $result = $conn->query($sql);
+
+        if (!$result) {
+            die("Query failed: " . $conn->error);
+        }
+
+        $payments = [];
+
+        // Fetch each record and create Payment object for each row
+        while ($row = $result->fetch_assoc()) {
+            $payment = new self($row['OrdId']);
+            $payment->id = $row['Id'];
+            $payment->payDate = $row['PayDate'];
+            $payment->totalCost = (float)$row['TotalCost'];
+            $payment->isPaid = (bool)$row['IsPaid'];
+            $payments[] = $payment;
+        }
+
+        $conn->close();
+        return $payments;
+    }
+
+    /**
      * Insert this payment into the database.
      *
      * @return void
@@ -115,6 +150,41 @@ class Payment {
         }
 
         return round($total, 2);
+    }
+
+    /**
+     * Marks the payment as "paid" by updating the IsPaid field in the database.
+     *
+     * This method updates the payment status to "paid" (IsPaid = TRUE) for the given payment ID.
+     *
+     * @param string $paymentId The ID of the payment to mark as paid.
+     * @return bool True if the update was successful, False otherwise.
+     */
+    public static function paid(string $paymentId): bool {
+        $conn = Database::Connect();
+
+        // Prepare SQL statement to update IsPaid field
+        $stmt = $conn->prepare("UPDATE Payment SET IsPaid = TRUE WHERE Id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        // Bind the payment ID and execute the query
+        $stmt->bind_param("s", $paymentId);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+
+        // Check if any row was updated
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+            $conn->close();
+            return true;  // Payment marked as paid successfully
+        } else {
+            $stmt->close();
+            $conn->close();
+            return false;  // No payment record was updated (e.g., invalid ID)
+        }
     }
 
 }

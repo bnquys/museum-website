@@ -112,6 +112,12 @@
 					</a>
 				</li>
 				<li class="list-group-item">
+					<a href="dashboard.php?page=payment" class="d-flex gap-2 text-light">
+						<i class="bi bi-android2"></i>
+						<p class="m-0">Payment</p>
+					</a>
+				</li>
+				<li class="list-group-item">
 					<a href="dashboard.php?page=artifact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
 						<p class="m-0">Gallery</p>
@@ -159,6 +165,9 @@
 					break;
 				case 'artifact':
 					include 'components/dashboard/artifact_dashboard.php';
+					break;
+				case 'payment':
+					include 'components/dashboard/payment_dashboard.php';
 					break;
 			}
 		}
