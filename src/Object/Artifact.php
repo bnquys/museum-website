@@ -24,7 +24,7 @@ class Artifact {
         $this->displayOrder = $displayOrder;
     }
 
-    public static function getList($limit = 10000) {
+    public static function getList($limit = 100000) {
         $conn = Database::Connect();
         $stmt = $conn->prepare("SELECT Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder FROM Artifact ORDER BY IsShow DESC, DisplayOrder DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
@@ -32,7 +32,7 @@ class Artifact {
         $result = $stmt->get_result();
         $list = [];
         while ($row = $result->fetch_assoc()) {
-            $list[] = new Artifact($row["Id"], $row["Title"], $row["Description"], $row["History"], $row["ImageUrl"], $row["IsShow"], $row["DisplayOrder"]);
+            $list[] = new Artifact($row["Id"], $row["Title"], $row["Description"] ?? '', $row["History"] ?? '', $row["ImageUrl"], $row["IsShow"], $row["DisplayOrder"]);
         }
         $stmt->close(); $conn->close();
         return $list;
@@ -58,12 +58,33 @@ class Artifact {
 
     public static function add($item) {
         $conn = Database::Connect();
-        if ($item->displayOrder == 0) {
-            $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM Artifact");
-            $stmt->execute();
-            $item->displayOrder = $stmt->get_result()->fetch_assoc()['total'];
-            $stmt->close();
+
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Artifact WHERE Id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
         }
+    
+        $stmt->bind_param("s", $item->id);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $isInsert = ($row['count'] == 0);
+        $stmt->close();
+    
+        if ($isInsert && $item->displayOrder == 0) {
+            $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM Artifact");
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
+    
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            $item->displayOrder = $row['total'];
+            $stmt->close();
+        } 
 
         $stmt = $conn->prepare("INSERT INTO Artifact (Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder)
             VALUES (?, ?, ?, ?, ?, ?, ?)
