@@ -118,9 +118,9 @@
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=account" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
-						<p class="m-0">Guiders</p>
+						<p class="m-0">Account</p>
 					</a>
 				</li>
 				<li class="list-group-item">
@@ -165,6 +165,9 @@
 					break;
 				case 'event':
 					include 'components/dashboard/event_dashboard.php';
+					break;
+				case 'account':
+					include 'components/dashboard/account_dashboard.php';
 					break;
 			}
 		}
