@@ -124,7 +124,7 @@
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=contact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
 						<p class="m-0">Contact Message</p>
 					</a>
@@ -168,6 +168,9 @@
 					break;
 				case 'account':
 					include 'components/dashboard/account_dashboard.php';
+					break;
+				case 'contact':
+					include 'components/dashboard/contact_dashboard.php';
 					break;
 			}
 		}
