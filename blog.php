@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    header("Location: blog.php");
-    exit();
+    header("Location: blog.php?id=" . urlencode($blogId) . "&scrolldown=1");
+    exit();      
 }
 ?>
 
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endforeach;?>
         <script>
             // Open a specific modal by ID
-            function openModal(modalId) {
+            function openModal(modalId, scrollToComment = false) {
                 const modal = document.getElementById(modalId);
                 if (!modal) return;
                 modal.style.display = 'flex';
@@ -167,6 +167,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         modal.removeEventListener('click', handler);
                     }
                 });
+
+                // Nếu có yêu cầu thì cuộn xuống phần comment
+                if (scrollToComment) {
+                    setTimeout(() => {
+                        const commentSection = modal.querySelector(".blog-comments");
+                        if (commentSection) {
+                            commentSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }, 300);
+                }
             }
 
             function closeModal(modalId) {
@@ -180,16 +190,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             function toggleEdit(commentId) {
                 const block = document.getElementById(`comment-block-${commentId}`);
                 const form = document.getElementById(`edit-form-${commentId}`);
-                const createForm = document.getElementById(`create-form-${commentId}`);
 
-                if (block && form && createForm) {
+                if (block && form) {
                     block.classList.toggle('d-none');
                     form.classList.toggle('d-none');
-                    createForm.classList.toggle('d-none');
                 }
             }
         </script>
-        
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const blogId = urlParams.get("id");
+                const shouldScroll = urlParams.get("scrolldown") === "1";
+
+                if (blogId) {
+                    openModal(blogId, shouldScroll);
+
+                    // Xóa tham số khỏi URL sau khi xử lý xong
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            });
+        </script>
 
         <?php 
             include "components/footer.php";
