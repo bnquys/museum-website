@@ -62,6 +62,7 @@ use Museum\Utils\HtmlManipulator;
 
                             $htmlContent = new HtmlManipulator($blog->content);
                             $htmlContent->addClass('p', 'blog-lorem mb-3');
+                            $htmlContent->addClass('img', 'w-100');
                             echo $htmlContent->getHtml();
                         ?>
 
