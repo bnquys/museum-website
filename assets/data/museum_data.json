@@ -46,10 +46,10 @@
     },
     {
         "id": "museum_about",
-        "image": "assets\/img\/g1.jpg",
+        "image": "assets\/img\/879-1920x1080.jpg",
         "introduction": {
-            "title": "hehe",
-            "content": "huhuhuhuhu\r\n3545345"
+            "title": "<h3>We Realize that<br>there are reduced<br>Wastege Stand out<\/h3>",
+            "content": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit eveniet fugiat quo quas placeat praesentium nisi adipisci perferendis enim qui omnis voluptas quam quisquam neque, vero magnam aliquam id laboriosam. Eligendi atque, voluptates dolorem praesentium molestiae deserunt ab, quibusdam eum, voluptatem ullam rem mollitia recusandae quam cum tenetur cumque sequi.<\/p>"
         }
     }
 ]

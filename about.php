@@ -1,10 +1,17 @@
 <?php
+
+
 	$css = "about";
 	$title = $banner = "About Us";
 	include "components/first.php";
 	include "components/navbar.php";
 	include "components/banner.php";
 	include "components/function-quote.php";
+
+use Museum\Utils\HtmlManipulator;
+use Museum\Utils\JsonDataManager;
+	$dataManager = new JsonDataManager('assets/data/museum_data.json');
+	$about = $dataManager->read('museum_about');
 ?>
 
 	<section class="container-fluid py-5 mb-5 bg-green-light">
@@ -17,7 +24,7 @@
 		>
 			<div id="frame" class="mb-5">
 				<img
-					src="https://picsum.photos/1920/1080"
+					src="<?= htmlspecialchars($about['image'])?>"
 					alt=""
 					class="shadow-lg mv-rl"
 					id="banner-img"
@@ -27,19 +34,12 @@
 				class="shadow-lg img-responsive mt-5 mt-xl-0 mv-lr"
 				style="padding: 6rem"
 			>
-				<h3>
-					We Realize that <br />there are reduced <br />Wastege
-					Stand out
-				</h3>
-				<p class="text-gray mt-4">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Suscipit eveniet fugiat quo quas placeat praesentium
-					nisi adipisci perferendis enim qui omnis voluptas quam
-					quisquam neque, vero magnam aliquam id laboriosam.
-					Eligendi atque, voluptates dolorem praesentium molestiae
-					deserunt ab, quibusdam eum, voluptatem ullam rem
-					mollitia recusandae quam cum tenetur cumque sequi.
-				</p>
+				<?= $about['introduction']['title']?>
+				<?php 
+					$html = new HtmlManipulator($about['introduction']['content']);
+					$html->addClass('p', 'text-gray mt-4');
+					echo $html->getHtml();
+				?>
 			</div>
 		</div>
 	</section>

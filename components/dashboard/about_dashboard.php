@@ -149,14 +149,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="about_title">Introduction Title</label>
-                    <input type="text" class="form-control" name="about_title" value="<?= htmlspecialchars($about['introduction']['title'] ?? '') ?>">
+                    <textarea id="about_title" class="form-control" name="about_title" rows="2"><?= htmlspecialchars($about['introduction']['title'] ?? '') ?></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label for="about_content">Introduction Content</label>
-                    <textarea class="form-control" name="about_content" rows="6"><?= htmlspecialchars($about['introduction']['content'] ?? '') ?></textarea>
+                    <textarea id="about_content" class="form-control" name="about_content" rows="6"><?= htmlspecialchars($about['introduction']['content'] ?? '') ?></textarea>
                 </div>
             </div>
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('#about_title'), {
+                        removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
+                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                ClassicEditor
+                    .create(document.querySelector('#about_content'), {
+                        removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
+                        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
+
         </div>
 
         <button type="submit" name="update_about" class="btn btn-primary mt-3">Update About Info</button>
