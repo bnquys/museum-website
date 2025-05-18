@@ -187,5 +187,38 @@ class Payment {
         }
     }
 
+    /**
+     * Load a Payment object by Order ID
+     *
+     * @param string $orderId
+     * @return Payment|null
+     */
+    public static function fromOrderId(string $orderId): ?self {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("SELECT * FROM Payment WHERE OrdId = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $orderId);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+
+        $row = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        $conn->close();
+
+        if (!$row) return null;
+
+        $payment = new self($row['OrdId']);
+        $payment->id = $row['Id'];
+        $payment->payDate = $row['PayDate'];
+        $payment->totalCost = (float)$row['TotalCost'];
+        $payment->isPaid = (bool)$row['IsPaid'];
+
+        return $payment;
+    }
+
 }
 ?>

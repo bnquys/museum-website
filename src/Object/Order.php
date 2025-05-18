@@ -200,5 +200,148 @@ class Order {
         $conn->close();
     }
     
+    /**
+     * Create an Order object (and linked Payment object) from a given Order ID.
+     *
+     * @param string $orderId
+     * @return Order|null
+     */
+    public static function fromId(string $orderId): ?Order {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("
+            SELECT Id, VouId, PayId, Username, VisitDate, CreatedDate
+            FROM Orders
+            WHERE Id = ?
+        ");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $orderId);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $stmt->close();
+        $conn->close();
+
+        if (!$row) return null;
+
+        // Khởi tạo đối tượng Order
+        $order = new self($row['Username'], [], explode(' ', $row['VisitDate'])[0], explode(' ', $row['VisitDate'])[1] ?? "00:00:00");
+        $order->id = $row['Id'];
+        $order->vouId = $row['VouId'];
+        $order->payId = $row['PayId'];
+        $order->createdDate = $row['CreatedDate'];
+        $order->visitDate = $row['VisitDate'];
+        return $order;
+    }
+
+    /**
+     * Get list of Ticket objects for this Order.
+     *
+     * @param string $orderId
+     * @return Ticket[]
+     */
+    public function getTickets(): array {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("
+            SELECT t.Id, t.Name, t.Price, t.Description, t.IsShow, t.DisplayOrder
+            FROM Contain c
+            JOIN Ticket t ON c.TicId = t.Id
+            WHERE c.Id = ?
+        ");
+
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $tickets = [];
+        while ($row = $result->fetch_assoc()) {
+            $tickets[] = new Ticket(
+                $row["Id"],
+                $row["Name"],
+                $row["Price"],
+                $row["Description"],
+                $row["IsShow"],
+                $row["DisplayOrder"]
+            );
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $tickets;
+    }
+
+    /**
+     * Get the Guide object assigned to this Order.
+     *
+     * @param string $orderId
+     * @return Guide|null
+     */
+    public static function getGuide(string $orderId): ?Guide {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("
+            SELECT DISTINCT Email
+            FROM Contain
+            WHERE Id = ? AND Email IS NOT NULL
+            LIMIT 1
+        ");
+
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $orderId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $stmt->close();
+        $conn->close();
+
+        if (!$row || !$row['Email']) return null;
+
+        return Guide::fromEmail($row['Email']);
+    }
+
+    /**
+     * Get quantity of a specific ticket in this order.
+     *
+     * @param string $ticketId The ID of the ticket to look up.
+     * @return int The quantity of that ticket in this order (0 if not found).
+     */
+    public function getTicketQuantity(string $ticketId): int {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT Quantity FROM Contain WHERE Id = ? AND TicId = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("ss", $this->id, $ticketId);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $stmt->close();
+        $conn->close();
+
+        return $row ? (int)$row['Quantity'] : 0;
+    }
+
+
 }
 ?>

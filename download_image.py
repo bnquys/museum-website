@@ -6,7 +6,8 @@ import re
 from datetime import datetime
 
 # Output directory (change if needed)
-OUTPUT_DIR = "C:\\Users\\admin\\Documents"
+OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite\\image"
+# OUTPUT_DIR = "C:\\Users\\admin\\Documents"
 
 def log(message, status="INFO"):
     """Log message with status and timestamp."""
