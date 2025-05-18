@@ -136,5 +136,41 @@ class Comment
     
         $conn->close();
         return null;
-    }    
+    }   
+    
+    public static function hasUserCommented($id, $username) {
+        $conn = Database::Connect();
+        $source = self::detectSource($conn, $id);
+        if ($source === null) {
+            $conn->close();
+            return false;
+        }
+    
+        if ($source === "blog") {
+            $stmt = $conn->prepare("
+                SELECT 1 FROM Comment
+                WHERE Id = ? AND Username = ? AND IsShow = TRUE
+                LIMIT 1
+            ");
+        } elseif ($source === "artifact") {
+            $stmt = $conn->prepare("
+                SELECT 1 FROM Review
+                WHERE Id = ? AND Username = ? AND IsShow = TRUE
+                LIMIT 1
+            ");
+        } else {
+            $conn->close();
+            return false;
+        }
+    
+        if (!$stmt) throw new \Exception("Prepare failed: " . $conn->error);
+        $stmt->bind_param("ss", $id, $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $hasCommented = $result->num_rows > 0;
+        $stmt->close();
+        $conn->close();
+        return $hasCommented;
+    }
+    
 }
