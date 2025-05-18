@@ -93,4 +93,72 @@ class HtmlManipulator
         }
         return $innerHTML;
     }
+
+    /**
+     * Replaces the tag name of elements matched by the selector.
+     *
+     * For example: replace <div> with <section>, or <span> with <strong>.
+     *
+     * @param string $selector CSS selector to find target elements.
+     * @param string $newTag   The new tag name to replace with.
+     */
+    public function replaceTag($selector, $newTag)
+    {
+        $xpathQuery = $this->cssConverter->toXPath($selector);
+        $nodes = $this->xpath->query($xpathQuery);
+
+        foreach ($nodes as $node) {
+            /** @var DOMElement $node */
+
+            // Create new element with desired tag
+            $newElement = $this->dom->createElement($newTag);
+
+            // Copy attributes
+            foreach ($node->attributes as $attr) {
+                $newElement->setAttribute($attr->nodeName, $attr->nodeValue);
+            }
+
+            // Move child nodes
+            while ($node->firstChild) {
+                $newElement->appendChild($node->removeChild($node->firstChild));
+            }
+
+            // Replace old node with new node
+            $node->parentNode->replaceChild($newElement, $node);
+        }
+    }
+
+    /**
+     * Removes the HTML tag of elements matched by the selector,
+     * keeping the inner content (text or child elements).
+     *
+     * For example: <span>Hello</span> => Hello
+     *
+     * @param string $selector CSS selector to find elements to unwrap.
+     */
+    public function removeTag($selector)
+    {
+        $xpathQuery = $this->cssConverter->toXPath($selector);
+        $nodes = $this->xpath->query($xpathQuery);
+
+        // Because we're modifying the DOM, collect elements first
+        $toRemove = [];
+        foreach ($nodes as $node) {
+            /** @var DOMElement $node */
+            $toRemove[] = $node;
+        }
+
+        foreach ($toRemove as $node) {
+            $parent = $node->parentNode;
+
+            // Move all child nodes before the element
+            while ($node->firstChild) {
+                $parent->insertBefore($node->removeChild($node->firstChild), $node);
+            }
+
+            // Remove the original tag
+            $parent->removeChild($node);
+        }
+    }
+
 }
