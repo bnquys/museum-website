@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL5.0Custom                               */
-/* Created on:     5/17/2025 6:31:51 AM                         */
+/* Created on:     5/18/2025 8:21:51 PM                         */
 /*==============================================================*/
 
 
@@ -132,7 +132,9 @@ create table Events
    Id                   varchar(20) not null,
    Username             varchar(50) not null,
    Title                text,
+   Summary              text,
    Description          text,
+   ImageUrl             text,
    TimeStart            datetime default CURRENT_TIMESTAMP,
    TimeEnd              datetime default CURRENT_TIMESTAMP,
    Location             text,
@@ -265,9 +267,9 @@ create table Ticket
 /*==============================================================*/
 create table ToTag
 (
+   TagId                varchar(20) not null,
    Id                   varchar(20) not null,
-   BloId                varchar(20) not null,
-   primary key (Id, BloId)
+   primary key (TagId, Id)
 );
 
 /*==============================================================*/
@@ -353,9 +355,9 @@ alter table Speak add constraint FK_SPEAK_SPEAK_GUIDES foreign key (Email)
 alter table Speak add constraint FK_SPEAK_SPEAK_LANGUAGE foreign key (Id)
       references Language (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (BloId)
+alter table ToTag add constraint FK_TOTAG_TOTAG_BLOG foreign key (Id)
       references Blog (Id) on delete restrict on update restrict;
 
-alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (Id)
+alter table ToTag add constraint FK_TOTAG_TOTAG_TAG foreign key (TagId)
       references Tag (Id) on delete restrict on update restrict;
 
