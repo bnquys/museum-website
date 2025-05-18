@@ -145,7 +145,7 @@ if ($editId) {
                         <td><img src="<?= htmlspecialchars($event->imgUrl) ?>" style="width: 160px; height: 90px; object-fit: cover;" class="img-fluid rounded"></td>
                         <td><?= htmlspecialchars($event->username) ?></td>
                         <td><?= htmlspecialchars($event->title) ?></td>
-                        <td><?= $event->summary ?></td>
+                        <td><?= htmlspecialchars($event->summary) ?></td>
                         <td><?= htmlspecialchars($event->timeStart) ?></td>
                         <td><?= htmlspecialchars($event->timeEnd) ?></td>
                         <td><?= htmlspecialchars($event->location) ?></td>

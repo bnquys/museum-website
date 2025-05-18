@@ -220,5 +220,113 @@ class Event {
         $stmt->close();
         $conn->close();
     }
+
+    public function saveAsAcademy($price = 0.0, $speaker = "") {
+        self::add($this); // Save to Events table
+    
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("
+            INSERT INTO Academy (Id, Price, Speaker)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                Price = VALUES(Price),
+                Speaker = VALUES(Speaker)
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("sds", $this->id, $price, $speaker);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $stmt->close();
+        $conn->close();
+    }
+
+    public function saveAsExhibition() {
+        self::add($this); // Save to Events table
+    
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("
+            INSERT INTO Exhibitions (Id)
+            VALUES (?)
+            ON DUPLICATE KEY UPDATE
+                Id = VALUES(Id) -- Dummy update to avoid error
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("s", $this->id);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $stmt->close();
+        $conn->close();
+    }
+    
+    /**
+     * Returns the specific subclass of this event if applicable.
+     *
+     * This method checks if the current event is categorized as an Academy or Exhibition
+     * by querying the corresponding tables in the database. If it is, it returns an instance
+     * of the corresponding subclass (`Academy` or `Exhibition`). Otherwise, it returns the
+     * base `Event` instance.
+     *
+     * @return Event|Academy|Exhibition
+     */
+    public function getType(): Event {
+        $conn = Database::Connect();
+    
+        // Check if the event is an Academy
+        $stmt = $conn->prepare("SELECT 1 FROM Academy WHERE Id = ?");
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $stmt->close();
+            $conn->close();
+            return new Academy(
+                $this->id,
+                $this->username,
+                $this->title,
+                $this->summary,
+                $this->description,
+                $this->imgUrl,
+                $this->timeStart,
+                $this->timeEnd,
+                $this->location,
+                $this->displayOrder,
+                $this->isShow
+            );
+        }
+        $stmt->close();
+        
+        // Check if the event is an Exhibition
+        $stmt = $conn->prepare("SELECT 1 FROM Exhibitions WHERE Id = ?");
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $stmt->close();
+            $conn->close();
+            return new Exhibition(
+                $this->id,
+                $this->username,
+                $this->title,
+                $this->summary,
+                $this->description,
+                $this->imgUrl,
+                $this->timeStart,
+                $this->timeEnd,
+                $this->location,
+                $this->displayOrder,
+                $this->isShow
+            );
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        // Return base Event if no specific type found
+        return $this;
+    }    
 }
 ?>
