@@ -3,7 +3,8 @@ import sys
 from datetime import datetime
 
 # Fixed output directory for converted .txt files
-OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
+OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite" 
+# OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
 # OUTPUT_DIR = "/home/quys/Documents/convert_txt"
 
 def log(message, status="INFO"):
@@ -40,7 +41,7 @@ def convert_to_txt(input_file_path):
         # Write to .txt with original path as a comment
         with open(output_file_path, 'w', encoding='utf-8') as outfile:
             abs_input_path = os.path.abspath(input_file_path)
-            outfile.write(f"/* Original file path: {abs_input_path} */\n\n")
+            outfile.write(f"/* Original file path: \"{abs_input_path}\" */\n\n")
             outfile.write(content)
 
         log(f"File '{input_file_path}' has been converted to '{output_file_path}' with path comment added.", status="SUCCESS")
