@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Order Details</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="container py-4">
+		<h2 class="mb-4">Order Details</h2>
+
+		<!-- Order Info -->
+		<div class="mb-5">
+			<h4>Order Information</h4>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<strong>Order ID:</strong> ORD12345
+				</li>
+				<li class="list-group-item">
+					<strong>Customer Username:</strong> nguyenvanabc
+				</li>
+				<li class="list-group-item">
+					<strong>Visit Date:</strong> May 20, 2025
+				</li>
+				<li class="list-group-item">
+					<strong>Order Created:</strong> May 18, 2025
+				</li>
+				<li class="list-group-item">
+					<strong>Voucher Applied:</strong> VOU2025
+				</li>
+			</ul>
+		</div>
+
+		<!-- Payment Info -->
+		<div class="mb-5">
+			<h4>Payment Information</h4>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<strong>Payment ID:</strong> PAY001
+				</li>
+				<li class="list-group-item">
+					<strong>Payment Date:</strong> May 18, 2025
+				</li>
+				<li class="list-group-item">
+					<strong>Total Cost:</strong> 250,000 VND
+				</li>
+				<li class="list-group-item">
+					<strong>Status:</strong>
+					<span class="badge bg-success">Paid</span>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Ticket List -->
+		<div>
+			<h4>Tickets</h4>
+			<table class="table table-bordered table-striped">
+				<thead class="table-light">
+					<tr>
+						<th scope="col">Ticket ID</th>
+						<th scope="col">Name</th>
+						<th scope="col">Description</th>
+						<th scope="col">Price</th>
+						<th scope="col">Quantity</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>TIC001</td>
+						<td>Adult Ticket</td>
+						<td>Admission ticket for adults</td>
+						<td>100,000 VND</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>TIC002</td>
+						<td>Child Ticket</td>
+						<td>Admission ticket for children under 12</td>
+						<td>50,000 VND</td>
+						<td>1</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

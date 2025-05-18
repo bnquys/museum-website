@@ -1,52 +1,62 @@
 import os
 import sys
+from datetime import datetime
 
 # Fixed output directory for converted .txt files
+OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite" 
 # OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
-OUTPUT_DIR = "/home/quys/Documents/convert_txt" 
+# OUTPUT_DIR = "/home/quys/Documents/convert_txt"
+
+def log(message, status="INFO"):
+    """Log message with status and timestamp."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{status}] [{timestamp}] {message}")
 
 def convert_to_txt(input_file_path):
     try:
-        # Kiểm tra file tồn tại hay không
+        # Check if file exists
         if not os.path.isfile(input_file_path):
-            print(f"Error: File '{input_file_path}' does not exist.")
+            log(f"File '{input_file_path}' does not exist.", status="ERROR")
             return
 
-        # Chỉ hỗ trợ file .php hoặc .sql
+        # Only support .php or .sql files
         valid_extensions = ['.php', '.sql']
         _, ext = os.path.splitext(input_file_path)
         if ext.lower() not in valid_extensions:
-            print(f"Error: Only files with extensions {valid_extensions} are supported.")
+            log(f"Only files with extensions {valid_extensions} are supported.", status="ERROR")
             return
 
-        # Tạo thư mục output nếu chưa tồn tại
+        # Create output directory if it doesn't exist
         os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-        # Tạo đường dẫn file output
+        # Generate output file path
         base_name = os.path.basename(input_file_path)
         file_name_without_ext = os.path.splitext(base_name)[0]
         output_file_path = os.path.join(OUTPUT_DIR, f"{file_name_without_ext}.txt")
 
-        # Đọc nội dung file gốc
+        # Read original file content
         with open(input_file_path, 'r', encoding='utf-8') as infile:
             content = infile.read()
 
-        # Ghi nội dung sang file .txt với comment đường dẫn đầy đủ ở đầu
+        # Write to .txt with original path as a comment
         with open(output_file_path, 'w', encoding='utf-8') as outfile:
             abs_input_path = os.path.abspath(input_file_path)
-            outfile.write(f"/* Original file path: {abs_input_path} */\n\n")  # Comment dòng đầu tiên
+            outfile.write(f"/* Original file path: \"{abs_input_path}\" */\n\n")
             outfile.write(content)
 
-        print(f"File '{input_file_path}' has been converted to '{output_file_path}' with path comment added.")
+        log(f"File '{input_file_path}' has been converted to '{output_file_path}' with path comment added.", status="SUCCESS")
 
     except PermissionError:
-        print("Error: Permission denied. Cannot access the file or directory.")
+        log("Permission denied. Cannot access the file or directory.", status="ERROR")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        log(f"Unexpected error: {e}", status="ERROR")
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) != 2:
-        print("Usage: python convert_to_txt.py <source_file_path>")
+        log("Usage: python convert_to_txt.py <source_file_path>", status="ERROR")
     else:
         input_path = sys.argv[1]
         convert_to_txt(input_path)
+        
+if __name__ == "__main__":
+    main()
