@@ -43,5 +43,13 @@
             }
         },
         "summary": "Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm"
+    },
+    {
+        "id": "museum_about",
+        "image": "assets\/img\/g1.jpg",
+        "introduction": {
+            "title": "hehe",
+            "content": "huhuhuhuhu\r\n3545345"
+        }
     }
 ]

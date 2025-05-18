@@ -20,7 +20,7 @@ def convert_to_txt(input_file_path):
             return
 
         # Only support .php or .sql files
-        valid_extensions = ['.php', '.sql']
+        valid_extensions = ['.php', '.sql', '.json']
         _, ext = os.path.splitext(input_file_path)
         if ext.lower() not in valid_extensions:
             log(f"Only files with extensions {valid_extensions} are supported.", status="ERROR")

@@ -88,12 +88,6 @@
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
-						<i class="bi bi-file-earmark-post"></i>
-						<p class="m-0">About</p>
-					</a>
-				</li>
-				<li class="list-group-item">
 					<a href="dashboard.php?page=blog" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
 						<p class="m-0">Blog</p>
