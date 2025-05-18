@@ -1,7 +1,4 @@
 <?php
-
-use Museum\Utils\UrlHelper;
-
 $data = array();
 if(isset($_FILES['upload']['name']))
 {

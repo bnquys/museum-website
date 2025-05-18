@@ -163,6 +163,9 @@
 				case 'payment':
 					include 'components/dashboard/payment_dashboard.php';
 					break;
+				case 'event':
+					include 'components/dashboard/event_dashboard.php';
+					break;
 			}
 		}
 
