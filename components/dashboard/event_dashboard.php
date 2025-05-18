@@ -1,6 +1,10 @@
 <?php
 require_once realpath(__DIR__ . "/../../vendor/autoload.php");
 use Museum\Object\Event;
+use Museum\Object\Academy;
+use Museum\Object\Exhibition;
+use Museum\Object\Artifact;
+
 use Museum\Utils\FileUploader;
 use Museum\Utils\UrlHelper;
 
@@ -46,13 +50,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $timeEnd = $_POST['time_end'];
     $location = $_POST['location'];
 
+    $eventType = $_POST['event_type'] ?? 'academy'; // default is academy
+
+    $speaker = $_POST['speaker'] ?? '';
+    $price = isset($_POST['price']) ? floatval($_POST['price']) : 0.0;
+
     if (isset($_POST['editId'])) {
         $event = new Event($_POST['editId'], $userAdmin, $title, $summary, $description, $imagePath, $timeStart, $timeEnd, $location);
     } else {
         $event = new Event(Event::getNextId(), $userAdmin, $title, $summary, $description, $imagePath, $timeStart, $timeEnd, $location);
     }
 
-    Event::add($event);
+    if ($eventType === 'academy') {
+        $event->saveAsAcademy($price, $speaker);
+    } elseif ($eventType === 'exhibition') {
+        $event->saveAsExhibition();
+            
+        $selectedArtifactIds = $_POST['artifacts'] ?? [];
+
+        $exhibition = new Exhibition(
+            $event->id, $event->username, $event->title, $event->summary, $event->description,
+            $event->imgUrl, $event->timeStart, $event->timeEnd, $event->location,
+            $event->displayOrder, $event->isShow
+        );
+        $exhibition->updateArtifacts($selectedArtifactIds);
+    } else {
+        Event::add($event);
+    }
+    
     header("Location: dashboard.php?page=event");
     exit;
 }
@@ -106,6 +131,60 @@ if ($editId) {
                 <label for="location">Location:</label>
                 <input type="text" class="form-control" name="location" value="<?= $editEvent->location ?? '' ?>">
             </div>
+            <div class="mb-3">
+                <label class="form-label">Event Type:</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="event_type" id="typeAcademy" value="academy"
+                        <?= (!isset($editEvent) || $editEvent->getType() instanceof Academy) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="typeAcademy">Academy</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="event_type" id="typeExhibition" value="exhibition"
+                        <?= (isset($editEvent) && $editEvent->getType() instanceof Exhibition) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="typeExhibition">Exhibition</label>
+                </div>
+            </div>
+            <div id="academy-fields" class="mb-3">
+                <div class="mb-2">
+                    <label for="speaker">Speaker:</label>
+                    <input type="text" class="form-control" name="speaker" value="<?= ($editEvent instanceof Academy) ? htmlspecialchars($editEvent->getSpeaker()) : '' ?>">
+                </div>
+                <div class="mb-2">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" name="price" step="0.01" min="0" value="<?= ($editEvent instanceof Academy) ? htmlspecialchars($editEvent->getPrice()) : '0.00' ?>">
+                </div>
+            </div>
+            <div id="exhibition-fields" class="mb-3">
+                <label class="form-label">Select Artifacts:</label>
+                <div class="d-flex flex-wrap gap-3">
+                    <?php
+                    $artifacts = Artifact::getList();
+                    $selectedArtifacts = [];
+
+                    if ($editEvent && $editEvent->getType() instanceof Exhibition) {
+                        $exhibition = $editEvent->getType(); 
+                        $selectedArtifacts = array_map(fn($a) => $a->id, $exhibition->getArtifacts());
+                    }
+                    foreach ($artifacts as $artifact):
+                        $checked = in_array($artifact->id, $selectedArtifacts) ? 'checked' : '';
+                    ?>
+                        <label class="btn btn-outline-secondary <?= $checked ? 'active' : '' ?>" style="width: 200px; text-align: left;">
+                            <input type="checkbox" name="artifacts[]" value="<?= htmlspecialchars($artifact->id) ?>" class="d-none" <?= $checked ?>>
+                            <div class="d-flex flex-column">
+                                <?php if ($artifact->imageUrl): ?>
+                                    <img src="<?= htmlspecialchars($artifact->imageUrl) ?>" style="height: 100px; object-fit: cover;" class="rounded mb-2">
+                                <?php endif; ?>
+                                <strong><?= htmlspecialchars($artifact->title) ?></strong>
+                                <div class="card-text small">
+                                    <?= $artifact->description ?>
+                                </div>
+                            </div>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+
             <button type="submit" class="btn btn-success"><?= $editEvent ? 'Update' : 'Create' ?></button>
             <a href="dashboard.php?page=event" class="btn btn-secondary">Cancel</a>
         </form>
@@ -182,4 +261,34 @@ document.querySelector('input[name="image"]').addEventListener('change', functio
         reader.readAsDataURL(file);
     }
 });
+</script>
+<script>
+function toggleEventTypeFields() {
+    const isAcademy = document.getElementById('typeAcademy').checked;
+    document.getElementById('academy-fields').style.display = isAcademy ? 'block' : 'none';
+    document.getElementById('exhibition-fields').style.display = isAcademy ? 'none' : 'block';
+}
+
+function applyCheckboxStyles() {
+    document.querySelectorAll('#exhibition-fields input[type="checkbox"]').forEach(checkbox => {
+        const parentLabel = checkbox.closest('label');
+
+        // Đặt trạng thái ban đầu
+        parentLabel.classList.toggle('active', checkbox.checked);
+
+        // Gắn sự kiện change
+        checkbox.addEventListener('change', () => {
+            parentLabel.classList.toggle('active', checkbox.checked);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    toggleEventTypeFields();
+    applyCheckboxStyles(); // Gọi trực tiếp thay vì setTimeout
+});
+
+// Đổi loại event sẽ gọi lại toggle
+document.getElementById('typeAcademy').addEventListener('change', toggleEventTypeFields);
+document.getElementById('typeExhibition').addEventListener('change', toggleEventTypeFields);
 </script>
