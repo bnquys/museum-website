@@ -24,7 +24,7 @@ class Artifact {
         $this->displayOrder = $displayOrder;
     }
 
-    public static function getList($limit = 10000) {
+    public static function getList($limit = 100000) {
         $conn = Database::Connect();
         $stmt = $conn->prepare("SELECT Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder FROM Artifact ORDER BY IsShow DESC, DisplayOrder DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
@@ -32,7 +32,7 @@ class Artifact {
         $result = $stmt->get_result();
         $list = [];
         while ($row = $result->fetch_assoc()) {
-            $list[] = new Artifact($row["Id"], $row["Title"], $row["Description"], $row["History"], $row["ImageUrl"], $row["IsShow"], $row["DisplayOrder"]);
+            $list[] = new Artifact($row["Id"], $row["Title"], $row["Description"] ?? '', $row["History"] ?? '', $row["ImageUrl"], $row["IsShow"], $row["DisplayOrder"]);
         }
         $stmt->close(); $conn->close();
         return $list;
@@ -56,15 +56,46 @@ class Artifact {
         $stmt->close(); $conn->close();
     }
 
+    /**
+     * Inserts a new Artifact or updates an existing one.
+     *
+     * If the artifact does not exist, it is inserted and assigned a display order based on
+     * the current count of artifacts (starting from 0). If the artifact already exists and
+     * its display order is zero, the existing value from the database is preserved.
+     *
+     * This method ensures that displayOrder remains stable unless explicitly overridden.
+     *
+     * @param Artifact $item The artifact object to insert or update.
+     * @return void
+     */
     public static function add($item) {
         $conn = Database::Connect();
-        if ($item->displayOrder == 0) {
+    
+        // Kiểm tra xem artifact đã tồn tại chưa
+        $stmt = $conn->prepare("SELECT DisplayOrder FROM Artifact WHERE Id = ?");
+        $stmt->bind_param("s", $item->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+    
+        $isInsert = !$row;
+    
+        // Nếu là thêm mới và chưa có displayOrder → set bằng tổng số artifact hiện có
+        if ($isInsert && $item->displayOrder == 0) {
             $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM Artifact");
             $stmt->execute();
-            $item->displayOrder = $stmt->get_result()->fetch_assoc()['total'];
+            $countRow = $stmt->get_result()->fetch_assoc();
+            $item->displayOrder = $countRow['total'];
             $stmt->close();
         }
-
+    
+        // Nếu là cập nhật và displayOrder vẫn = 0 (chưa được set) → giữ nguyên
+        if (!$isInsert && $item->displayOrder == 0 && isset($row['DisplayOrder'])) {
+            $item->displayOrder = $row['DisplayOrder'];
+        }
+    
+        // Chèn hoặc cập nhật artifact
         $stmt = $conn->prepare("INSERT INTO Artifact (Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
@@ -77,8 +108,10 @@ class Artifact {
         ");
         $stmt->bind_param("ssssssi", $item->id, $item->title, $item->description, $item->history, $item->imageUrl, $item->isShow, $item->displayOrder);
         $stmt->execute();
-        $stmt->close(); $conn->close();
+        $stmt->close();
+        $conn->close();
     }
+    
 
     public static function getNextId() {
         $conn = Database::Connect();

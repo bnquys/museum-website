@@ -81,10 +81,28 @@ class Ticket {
 
     public static function add($ticket) {
         $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Ticket WHERE Id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
     
-        // Nếu là ticket mới (DisplayOrder = 0) → thêm vào cuối danh sách hiện tại (tức DisplayOrder lớn nhất + 1)
-        if ($ticket->displayOrder == 0) {
+        $stmt->bind_param("s", $ticket->id);
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $isInsert = ($row['count'] == 0); // true nếu là insert mới
+        $stmt->close();
+    
+        if ($isInsert && $ticket->displayOrder == 0) {
             $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM Ticket");
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
+    
             $stmt->execute();
             $row = $stmt->get_result()->fetch_assoc();
             $ticket->displayOrder = $row['total'];

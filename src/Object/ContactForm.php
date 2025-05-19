@@ -25,7 +25,7 @@ class ContactForm {
     public static function getListContactForms($limit) {
         $conn = Database::Connect();
 
-        $stmt = $conn->prepare("SELECT Id, Email, Name, Message, CreatedAt, IsSeen FROM ContactForms WHERE IsSeen = FALSE ORDER BY CreatedAt DESC LIMIT ?");
+        $stmt = $conn->prepare("SELECT Id, Email, Name, Message, CreatedAt, IsSeen FROM ContactForms ORDER BY IsSeen DESC, CreatedAt DESC LIMIT ?");
         if (!$stmt) {
             die("Prepare failed: " . $conn->error);
         }
@@ -165,5 +165,23 @@ class ContactForm {
 
         return $contactForm;
     }
+
+    public static function markAsSeen($id) {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("UPDATE ContactForms SET IsSeen = TRUE WHERE Id = ?");
+        
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+    
+        $stmt->bind_param('s', $id);
+        
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+    
+        $stmt->close();
+        $conn->close();
+    }    
 }
 ?>

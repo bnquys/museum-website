@@ -43,5 +43,13 @@
             }
         },
         "summary": "Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm"
+    },
+    {
+        "id": "museum_about",
+        "image": "assets\/img\/879-1920x1080.jpg",
+        "introduction": {
+            "title": "<h3>We Realize that<br>there are reduced<br>Wastege Stand out<\/h3>",
+            "content": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit eveniet fugiat quo quas placeat praesentium nisi adipisci perferendis enim qui omnis voluptas quam quisquam neque, vero magnam aliquam id laboriosam. Eligendi atque, voluptates dolorem praesentium molestiae deserunt ab, quibusdam eum, voluptatem ullam rem mollitia recusandae quam cum tenetur cumque sequi.<\/p>"
+        }
     }
 ]

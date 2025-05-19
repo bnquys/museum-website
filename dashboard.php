@@ -88,12 +88,6 @@
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=museum" class="d-flex gap-2 text-light">
-						<i class="bi bi-file-earmark-post"></i>
-						<p class="m-0">About</p>
-					</a>
-				</li>
-				<li class="list-group-item">
 					<a href="dashboard.php?page=blog" class="d-flex gap-2 text-light">
 						<i class="bi bi-file-earmark-post"></i>
 						<p class="m-0">Blog</p>
@@ -112,19 +106,25 @@
 					</a>
 				</li>
 				<li class="list-group-item">
+					<a href="dashboard.php?page=payment" class="d-flex gap-2 text-light">
+						<i class="bi bi-android2"></i>
+						<p class="m-0">Payment</p>
+					</a>
+				</li>
+				<li class="list-group-item">
 					<a href="dashboard.php?page=artifact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
 						<p class="m-0">Gallery</p>
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=account" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
-						<p class="m-0">Guiders</p>
+						<p class="m-0">Account</p>
 					</a>
 				</li>
 				<li class="list-group-item">
-					<a href="dashboard.php?page=galary" class="d-flex gap-2 text-light">
+					<a href="dashboard.php?page=contact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
 						<p class="m-0">Contact Message</p>
 					</a>
@@ -159,6 +159,18 @@
 					break;
 				case 'artifact':
 					include 'components/dashboard/artifact_dashboard.php';
+					break;
+				case 'payment':
+					include 'components/dashboard/payment_dashboard.php';
+					break;
+				case 'event':
+					include 'components/dashboard/event_dashboard.php';
+					break;
+				case 'account':
+					include 'components/dashboard/account_dashboard.php';
+					break;
+				case 'contact':
+					include 'components/dashboard/contact_dashboard.php';
 					break;
 			}
 		}

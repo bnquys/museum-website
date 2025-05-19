@@ -4,6 +4,8 @@
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
+
+    use Museum\Object\Language;
     use Museum\Utils\FileUploader;
 
     if (isset($_GET['action'])) {
@@ -36,17 +38,19 @@
     $birthDate = $_POST['birthDate'] ?? '';
     $valid = true;
     
+    $userLogin = $accountLogin?->getUser();
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['login'])) {
     
         // Validate name
         if (empty($name) || !preg_match("/^[a-zA-ZÀ-ỹ\s]+$/u", $name)) {
-            $errors['name'] = "Tên không hợp lệ. Chỉ cho phép chữ cái và khoảng trắng.";
+            $errors['name'] = "Invalid name. Only letters and spaces are allowed.";
             $valid = false;
         }
     
         // Validate phone number
         if (!preg_match('/^0\d{9}$/', $phone)) {
-            $errors['phoneNumber'] = "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số.";
+            $errors['phoneNumber'] = "Phone number must start with 0 and contain exactly 10 digits.";
             $valid = false;
         }
     
@@ -54,7 +58,14 @@
         if (!empty($birthDate)) {
             $date = DateTime::createFromFormat('Y-m-d', $birthDate);
             if (!$date || $date > new DateTime() || $date < new DateTime('-120 years')) {
-                $errors['birthDate'] = "Ngày sinh không hợp lệ.";
+                $errors['birthDate'] = "Invalid birth date.";
+                $valid = false;
+            }
+        }
+
+        if (isset($_POST['isGuide'])) {
+            if (empty($_POST['languages']) || !is_array($_POST['languages']) || count($_POST['languages']) === 0) {
+                $errors['languages'] = "Please select at least one language.";
                 $valid = false;
             }
         }
@@ -72,10 +83,43 @@
                 $path = $uploader->upload($_FILES['avatar']);
                 if ($path) {
                     $user->setAvatar($path);
+                } else {
+                    $errors['avatar'] = $uploader->error ?: "Failed to upload avatar.";
+                    $valid = false;
                 }
+            }
+
+            if (isset($_POST['isGuide'])) {
+                $user->saveAsGuide();
+            } else {
+                $user->removeGuide();
             }
     
             $user::update($user);
+
+            if ($user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide) {
+                    $intro = $_POST['intro'] ?? '';
+                    $experience = $_POST['experience'] ?? '';
+                    $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
+            
+                    $guide->setIntroduction($intro);
+                    $guide->setExpertise($experience);
+                    $guide->setPrice($price);
+                }
+            } 
+            
+            if ($valid && isset($_POST['isGuide']) && $user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide && isset($_POST['languages']) && is_array($_POST['languages'])) {
+                    $selectedLangs = $_POST['languages'];
+                    $currentLangs = $guide->getLanguages(); // Array of Language objects
+            
+                    $guide->updateLanguages($_POST['languages']);
+                }
+            }                       
+            
             header("Location: user.php");
             exit;
         }
@@ -91,7 +135,7 @@
                     <div class="col-md-8">
                         <h1 class="display-4 fw-bold">
                             <i class="bi bi-person-circle me-3"></i>
-                            <?= htmlspecialchars($accountLogin?->getUser()->name ?? '') ?> Profile
+                            <?= htmlspecialchars($userLogin->name ?? '') ?> Profile
                         </h1>
                         <p class="lead">
                             Update your personal information and preferences
@@ -114,7 +158,7 @@
                             </h3>
                         </div>
                         <div class="card-body">
-                            <?php $avatar = $accountLogin?->getUser()->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar'; ?>
+                            <?php $avatar = $userLogin->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar'; ?>
                             <div class="text-center mb-4">
                                 <img id="avatar-preview" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="rounded-circle" width="120" height="120" />
                             </div>
@@ -133,6 +177,9 @@
                                         name="avatar"
                                         accept="image/*"
                                     />
+                                    <?php if (!empty($errors['avatar'])): ?>
+                                        <div class="text-danger mt-2"><?= htmlspecialchars($errors['avatar']) ?></div>
+                                    <?php endif; ?>
                                     <div class="mt-2">
                                         <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-avatar">
                                             <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Default Avatar
@@ -150,7 +197,7 @@
                                         class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>"
                                         id="fullName"
                                         name="name"
-                                        value="<?= htmlspecialchars($_POST['name'] ?? $accountLogin?->getUser()->name ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['name'] ?? $userLogin->name ?? '') ?>"
                                         required
                                     />
                                     <?php if (!empty($errors['name'])): ?>
@@ -171,7 +218,7 @@
                                         class="form-control"
                                         id="email"
                                         name="email"
-                                        value="<?= htmlspecialchars($accountLogin?->getUser()->email ?? '') ?>"
+                                        value="<?= htmlspecialchars($userLogin->email ?? '') ?>"
                                         required
                                         readonly
                                     />
@@ -191,7 +238,7 @@
                                         class="form-control <?= isset($errors['phoneNumber']) ? 'is-invalid' : '' ?>"
                                         id="phone"
                                         name="phoneNumber"
-                                        value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $accountLogin?->getUser()->phoneNumber ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $userLogin->phoneNumber ?? '') ?>"
                                     />
                                     <?php if (!empty($errors['phoneNumber'])): ?>
                                         <div class="invalid-feedback"><?= $errors['phoneNumber'] ?></div>
@@ -208,7 +255,7 @@
                                         class="form-control <?= isset($errors['birthDate']) ? 'is-invalid' : '' ?>"
                                         id="birthDate"
                                         name="birthDate"
-                                        value="<?= htmlspecialchars($_POST['birthDate'] ?? $accountLogin?->getUser()->birthDate ?? '') ?>"
+                                        value="<?= htmlspecialchars($_POST['birthDate'] ?? $userLogin->birthDate ?? '') ?>"
                                         min="<?= date('Y-m-d', strtotime('-120 years')) ?>"
                                         max="<?= date('Y-m-d') ?>"
                                     />
@@ -216,6 +263,76 @@
                                         <div class="invalid-feedback"><?= $errors['birthDate'] ?></div>
                                     <?php endif; ?>
                                 </div>
+
+                                <!-- Checkbox to indicate user is a Guide -->
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="isGuideCheckbox" name="isGuide" 
+                                            <?= $userLogin->isGuide() ? 'checked' : '' ?>> I am a Guide
+                                    </label>
+                                </div>
+
+                                <!-- Additional fields shown only if user is a Guide -->
+                                <?php
+                                    $guideData = $userLogin->isGuide() ? $userLogin->getGuide() : null;
+                                    $introValue = $guideData?->getIntroduction() ?? '';
+                                    $experienceValue = $guideData?->getExpertise() ?? '';
+                                ?>
+                                <div id="guideFields" style="display: <?= $userLogin->isGuide() ? 'block' : 'none' ?>;">
+                                    <div class="form-group">
+                                        <label for="intro">Introduction:</label>
+                                        <textarea id="intro" name="intro" class="form-control" rows="3" placeholder="Write a brief introduction..."><?= htmlspecialchars($introValue) ?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="experience">Experience:</label>
+                                        <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."><?= htmlspecialchars($experienceValue)?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="price">Guide Price (USD):</label>
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="price"
+                                            name="price"
+                                            min="0"
+                                            step="0.01"
+                                            value="<?= htmlspecialchars($_POST['price'] ?? $guideData?->getPrice() ?? '') ?>"
+                                            placeholder="Enter your hourly rate"
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Languages Spoken:</label>
+                                        <div id="languageOptions" class="d-flex flex-wrap gap-2">
+                                        <?php 
+                                            $languages = Language::getAll();
+                                            $selectedLangs = $guideData?->getLanguages() ?? [];
+                                            $selectedLangIds = array_map(fn($l) => $l->id, $selectedLangs);
+
+                                            foreach ($languages as $lang): 
+                                                $checked = in_array($lang->id, $selectedLangIds) ? 'checked' : '';
+                                        ?>
+                                            <label class="btn btn-outline-primary <?= $checked ? 'active' : '' ?>">
+                                                <input type="checkbox" name="languages[]" value="<?= htmlspecialchars($lang->id) ?>" <?= $checked ?>>
+                                                <?= htmlspecialchars($lang->name) ?>
+                                            </label>
+                                        <?php endforeach; ?>
+                                        </div>
+                                        <?php if (!empty($errors['languages'])): ?>
+                                            <div class="text-danger mt-2"><?= htmlspecialchars($errors['languages']) ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+
+                                <!-- JavaScript to toggle guide-specific fields -->
+                                <script>
+                                    document.getElementById('isGuideCheckbox').addEventListener('change', function () {
+                                        const guideFields = document.getElementById('guideFields');
+                                        guideFields.style.display = this.checked ? 'block' : 'none';
+                                    });
+                                </script>
 
                                 <!-- Form Buttons -->
                                 <div class="d-flex justify-content-center mt-5">
@@ -337,9 +454,6 @@
                 }
             });
         </script>
-
-
-
     </body>
 
 

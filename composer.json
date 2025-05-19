@@ -5,6 +5,7 @@
 		}
 	},
 	"require": {
-		"phpmailer/phpmailer": "^6.9"
+		"phpmailer/phpmailer": "^6.9",
+		"symfony/css-selector": "^6.0"
 	}
 }

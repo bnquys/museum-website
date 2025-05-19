@@ -5,6 +5,7 @@ use Museum\Utils\Database;
 class Guide extends User {
     private $expertise;
     private $introduction;
+    private $languages = [];
 
     public function getExpertise(): ?string {
         $conn = Database::Connect();
@@ -69,5 +70,175 @@ class Guide extends User {
         $conn->close();
         return $success;
     }
+
+    /**
+     * Retrieves a list of languages spoken by the guide.
+     * Only languages that are currently set to be visible (IsShow = TRUE) are included.
+     * The data is fetched by joining the `Speak` and `Language` tables based on the guide's email.
+     *
+     * @return Language[] An array of Language objects that the guide can speak.
+     */
+    public function getLanguages(): array {
+        $this->languages = [];
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT l.Id, l.Name 
+                                FROM Speak s 
+                                JOIN Language l ON s.Id = l.Id 
+                                WHERE s.Email = ? AND l.IsShow = TRUE");
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $this->languages[] = new Language($row['Id'], $row['Name']);
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $this->languages;
+    }
+
+    public function addLanguage(Language $language): bool {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("SELECT 1 FROM Speak WHERE Email = ? AND Id = ?");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $exists = $result->num_rows > 0;
+        $stmt->close();
+
+        if ($exists) {
+            $conn->close();
+            return false;
+        }
+
+        $stmt = $conn->prepare("INSERT INTO Speak (Email, Id) VALUES (?, ?)");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $success = $stmt->execute();
+
+        $stmt->close();
+        $conn->close();
+
+        return $success;
+    }
+
+    public function removeLanguage(Language $language): bool {
+        $conn = Database::Connect();
+
+        $stmt = $conn->prepare("DELETE FROM Speak WHERE Email = ? AND Id = ?");
+        $stmt->bind_param("ss", $this->email, $language->id);
+        $success = $stmt->execute();
+
+        $stmt->close();
+        $conn->close();
+
+        return $success;
+    }
+
+    public function updateLanguages(array $languageIds): void {
+        $currentLanguages = $this->getLanguages();
+        $currentIds = array_map(fn($lang) => $lang->id, $currentLanguages);
+    
+        $allLanguages = \Museum\Object\Language::getAll();
+    
+        foreach ($currentLanguages as $lang) {
+            if (!in_array($lang->id, $languageIds)) {
+                $this->removeLanguage($lang);
+            }
+        }
+    
+        foreach ($languageIds as $id) {
+            if (!in_array($id, $currentIds)) {
+                foreach ($allLanguages as $lang) {
+                    if ($lang->id === $id) {
+                        $this->addLanguage($lang);
+                        break;
+                    }
+                }
+            }
+        }
+    }    
+
+    public function getPrice(): ?float {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("SELECT Price FROM Guides WHERE Email = ?");
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $price = null;
+        if ($row = $result->fetch_assoc()) {
+            $price = (float) $row['Price'];
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $price;
+    }
+    
+    public function setPrice(float $price): bool {
+        $conn = Database::Connect();
+        $stmt = $conn->prepare("UPDATE Guides SET Price = ? WHERE Email = ?");
+        $stmt->bind_param("ds", $price, $this->email); // 'd' for double/float, 's' for string
+        $success = $stmt->execute();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $success;
+    }    
+    
+    public static function fromEmail(string $email): ?self {
+        $user = User::getByEmail($email);
+        if (!$user || !$user->isGuide()) return null;
+    
+        return $user->getGuide(); 
+    }
+
+    /**
+     * Retrieves the top guides based on the number of times they have been hired.
+     * If multiple guides have the same hire count, they are ranked by their price in ascending order.
+     * Only guides currently marked as working (IsWorking = TRUE) are considered.
+     *
+     * @param int $limit The maximum number of top guides to return (default is 10).
+     * @return Guide[] An array of Guide objects representing the top-ranked guides.
+     */
+    public static function getTopGuides(int $limit = 10): array {
+        $conn = Database::Connect();
+    
+        $query = "
+            SELECT g.Email, COUNT(DISTINCT c.Id) AS HireCount, g.Price
+            FROM Guides g
+            LEFT JOIN Contain c ON g.Email = c.Email
+            WHERE g.IsWorking = TRUE
+            GROUP BY g.Email, g.Price
+            ORDER BY HireCount DESC, g.Price ASC
+            LIMIT ?
+        ";
+    
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $guides = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $guide = self::fromEmail($row['Email']);
+            if ($guide) {
+                $guides[] = $guide;
+            }
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $guides;
+    }    
+    
 }
 ?>
