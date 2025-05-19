@@ -1,4 +1,3 @@
-- Carousel -> dời Slide Interval ...
 - Vứt Time at Blog
 - Allow CKeditor in Replie-Msg of Contact
 - Add Reject at Payment Checking and
