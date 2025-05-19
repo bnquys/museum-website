@@ -30,14 +30,14 @@
 								name="date"
 								class="d-inline p-1 text-white fw-light pe-2 ps-2"
 							>
-								📅 <?= $blog->uploadDate?>
+								<?= $blog->uploadDate?>
 							</>
 							<h5 class="card-title mt-3">
 								<?= $blog->title?>
 							</h5>
 							<p class="text-end text-gray fst-italic me-1 mt-3">
-								— ✍️ <?= $blog->username?>
-							</p>
+								— By <?= $blog->username?>
+							<i class="fas fa-feather-alt"></i></p>
 						</div>
 					</div>
 				</a>

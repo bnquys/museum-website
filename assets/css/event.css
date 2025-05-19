@@ -62,10 +62,6 @@ body {
         z-index: 1;
     }
 
-    .card .author {
-        font-size: 12px;
-    }
-
     .card .title {
         margin-top: 10px;
     }

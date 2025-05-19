@@ -420,6 +420,10 @@ section h2[name="title"] {
 
 footer * {
     font-family: "Gelasio", serif;
+
+    h5, h4 {
+        color: white !important;
+    }
 }
 
 footer {

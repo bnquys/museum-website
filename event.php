@@ -20,7 +20,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -48,7 +47,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -76,7 +74,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -104,7 +101,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -132,7 +128,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -160,7 +155,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a
@@ -188,7 +182,6 @@
             </div>
             <div class="data">
                 <div class="content">
-                    <span class="author">Jane Doe</span>
                     <h1 class="title">
                         <a href="#"
                             >Stranger Things: The sound of the Upside Down</a

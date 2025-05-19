@@ -34,7 +34,7 @@
 					alt="Icon"
 					width="35"
 					height="35"
-				/><span class="ps-lg-3 ps-2 glowing-text"
+				/><span class="ps-lg-3 ps-2"
 					><?= htmlspecialchars($museum["name"])?></span
 				></a
 			>
