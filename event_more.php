@@ -10,7 +10,7 @@
     <div class="event-header">
         <div class="container position-relative z-index-2">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <span class="info-badge mb-4 d-inline-block"
                         >Special Exhibition</span
                     >
