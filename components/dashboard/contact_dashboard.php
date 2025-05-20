@@ -15,9 +15,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
-    // Mailer::sendMail($toEmail, $toName, $subject, $message);
-    header("Location: dashboard.php?page=contact");
+    $mailer = new Mailer($toEmail, $toName);
+    $mailer->setSubject($subject);
+    $mailer->setBody($message);
+
+    $result = $mailer->send();
+
+    if ($result === true) {
+        header("Location: dashboard.php?page=contact&success=1");
+    } else {
+        echo "<div class='alert alert-danger'>Error sending mail: $result</div>";
+    }
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if ($_GET['success'] ?? false) {
+        echo '<div class="alert alert-success">Reply sent successfully!</div>';
+    }
 }
 
 $contact = null;
@@ -57,12 +72,22 @@ if ($seenId) {
 
             <div class="mb-3">
                 <label for="message">Message:</label>
-                <textarea class="form-control" name="message" rows="6" required></textarea>
+                <textarea class="form-control" name="message" rows="20" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Send Reply</button>
             <a href="dashboard.php?page=contact" class="btn btn-secondary">Cancel</a>
         </form>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('textarea[name="message"]'), {
+                    toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'link']
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+
     <?php else: ?>
         <?php $messages = ContactForm::getListContactForms(20); ?>
         <div class="table-responsive">
