@@ -1,8 +1,6 @@
-- Carousel -> dời Slide Interval ...
 - Vứt Time at Blog
 - Allow CKeditor in Replie-Msg of Contact
 - Add Reject at Payment Checking and
 send Mail if ticket Accepted or Rejected
-- Root - Premium account can Authorize account service
 [Optional]- Just allow Change password whenever Old password is corrected
 [Super Optional] - Load more on Gallery and Blog and Event and Guiders in Ticket

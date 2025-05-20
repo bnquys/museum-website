@@ -341,7 +341,5 @@ class Order {
 
         return $row ? (int)$row['Quantity'] : 0;
     }
-
-
 }
 ?>

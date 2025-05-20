@@ -1,3 +1,7 @@
+<?php
+    $museum = $dataManager->read('museum_info');
+?>
+
 <div id="card" class="container my-5">
     <div class="row justify-content-evenly">
         <div class="col-md-4 mv-tb">
@@ -28,9 +32,7 @@
                 </div>
                 <div class="card-hover text-center">
 					<h5 style="word-spacing: 2px; line-height: 1.5;">
-						<strong>Mon-Fri:</strong> 10am - 4pm <br>
-						<strong>Saturday:</strong> 10am - 5pm <br>
-						<strong>Sunday:</strong> 12pm - 5pm
+                        <?= str_replace(',', '<br>', $museum['summary'])?>
 					</h5>
                 </div>
             </div>

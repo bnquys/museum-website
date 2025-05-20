@@ -24,7 +24,17 @@ $subject = "Your confirmation code";
 $body = "Your new confirmation code is: $newCode";
 
 try {
-    Mailer::sendMail($email, $name, $subject, $body);
+    $mailer = new Mailer($email, $name);
+	$mailer->setSubject($subject);
+
+	$data = [
+		'user_name' => $name,
+		'activation_code' => $newCode
+	];
+
+	$mailer->setBodyFromTemplate(__DIR__.'/active_template.html', $data);
+	$mailer->send();
+
     echo json_encode([
         "message" => "Verification code resent successfully.",
         "code" => $newCode

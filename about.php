@@ -7,8 +7,9 @@
 	include "components/navbar.php";
 	include "components/banner.php";
 
-use Museum\Utils\HtmlManipulator;
-use Museum\Utils\JsonDataManager;
+	use Museum\Utils\HtmlManipulator;
+	use Museum\Utils\JsonDataManager;
+	
 	$dataManager = new JsonDataManager('assets/data/museum_data.json');
 	$about = $dataManager->read('museum_about');
 ?>

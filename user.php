@@ -1,10 +1,16 @@
 <?php
     $css = "user";
-    $title = $name = "<Name> Profile";
+    $title = $name = "Profile";
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
 
+    if (!isset($accountLogin)) {
+        header('Location: portal.php');
+        exit;
+    }
+
+    use Museum\Object\AccountRole;
     use Museum\Object\Language;
     use Museum\Utils\FileUploader;
 
@@ -174,9 +180,9 @@
                     </h3>
                     <ul class="nav flex-column">
                         <li class="nav-item active p-2 mb-1">
-                            <a class="nav-link d-flex align-items-center" href="#">
+                            <a class="nav-link d-flex align-items-center" href="index.php">
                                 <i class="bi bi-person-fill me-3"></i>
-                                <span>Profile</span>
+                                <span>Back to home</span>
                             </a>
                         </li>
                         <li class="nav-item p-2 mb-1">

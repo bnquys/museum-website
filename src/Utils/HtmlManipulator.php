@@ -84,6 +84,10 @@ class HtmlManipulator
         return $this->innerHTML($body);
     }
 
+    public function print() : void {
+        echo $this->getHtml();
+    }
+
     /**
      * Extracts inner HTML from a given DOM element.
      *
