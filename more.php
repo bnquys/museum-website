@@ -1,4 +1,5 @@
 <?php
+    ob_start();
     $css = "event_more";
     $title = "<Title of Events>| Museum Event"; 
     include "components/first.php"; 
@@ -216,105 +217,44 @@
 
 <!-- Related Events -->
 <section class="related-events">
-	<div class="container">
-		<h2 class="section-title text-center mb-5">You Might Also Like</h2>
-
-		<div class="row g-4">
-			<div class="col-md-4">
-				<div class="event-card h-100">
-					<img
-						src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-						class="event-img w-100"
-						alt="Rainforest event"
-					/>
-					<div class="p-4">
-						<span class="info-badge mb-3 d-inline-block"
-							>Lecture Series</span
-						>
-						<h3 class="h4">Rainforest Conservation</h3>
-						<p class="mb-4">
-							Learn about efforts to protect the world's most
-							biodiverse ecosystems.
-						</p>
-						<div
-							class="d-flex justify-content-between align-items-center"
-						>
-							<span class="text-muted"
-								><i class="bi bi-calendar-event me-2"></i> July
-								10, 2023</span
-							>
-							<a href="#" class="btn btn-sm btn-custom"
-								>Details <i class="bi bi-arrow-right ms-1"></i
-							></a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="event-card h-100">
-					<img
-						src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-						class="event-img w-100"
-						alt="Herbology event"
-					/>
-					<div class="p-4">
-						<span class="info-badge mb-3 d-inline-block"
-							>Workshop</span
-						>
-						<h3 class="h4">Medicinal Herbology</h3>
-						<p class="mb-4">
-							Discover the healing power of plants in this
-							hands-on workshop.
-						</p>
-						<div
-							class="d-flex justify-content-between align-items-center"
-						>
-							<span class="text-muted"
-								><i class="bi bi-calendar-event me-2"></i>
-								August 5, 2023</span
-							>
-							<a href="#" class="btn btn-sm btn-custom"
-								>Details <i class="bi bi-arrow-right ms-1"></i
-							></a>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-4">
-				<div class="event-card h-100">
-					<img
-						src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-						class="event-img w-100"
-						alt="Photography event"
-					/>
-					<div class="p-4">
-						<span class="info-badge mb-3 d-inline-block"
-							>Special Event</span
-						>
-						<h3 class="h4">Botanical Photography</h3>
-						<p class="mb-4">
-							Capture the beauty of plants with expert guidance
-							from our resident photographer.
-						</p>
-						<div
-							class="d-flex justify-content-between align-items-center"
-						>
-							<span class="text-muted"
-								><i class="bi bi-calendar-event me-2"></i>
-								September 15, 2023</span
-							>
-							<a href="#" class="btn btn-sm btn-custom"
-								>Details <i class="bi bi-arrow-right ms-1"></i
-							></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <h2 class="section-title text-center mb-5">You Might Also Like</h2>
+        <div class="row g-4">
+            <?php
+                $relatedEvents = array_filter(
+                    Event::getRandomEvents(3),
+                    fn($e) => $e->id !== $content->id // loại bỏ chính sự kiện đang xem
+                );             
+                foreach ($relatedEvents as $event): 
+            ?>
+                <div class="col-md-4">
+                    <div class="event-card h-100">
+                        <img
+                            src="<?= htmlspecialchars($event->imgUrl) ?>"
+                            class="event-img w-100"
+                            alt="<?= htmlspecialchars($event->title) ?>"
+                        />
+                        <div class="p-4">
+                            <span class="info-badge mb-3 d-inline-block"><?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?></span>
+                            <h3 class="h4"><?= htmlspecialchars($event->title) ?></h3>
+                            <p class="mb-4"><?= htmlspecialchars(strip_tags($event->summary)) ?></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">
+                                    <i class="bi bi-calendar-event me-2"></i>
+                                    <?= date("F j, Y", strtotime($event->timeStart)) ?>
+                                </span>
+                                <a href="more.php?type=<?= $type ?>&id=<?= $event->id ?>" class="btn btn-sm btn-custom">
+                                    Details <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </section>
+
 
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -380,8 +320,13 @@
 		observer.observe(card);
 	});
 </script>
-
+<script>
+    $(document).ready(function () {
+        $('title').text('<?= $content->title?> | Museum');
+    });
+</script>
 <?php
     include "components/footer.php";
     include "components/last.php";
+    ob_end_flush();
 ?>

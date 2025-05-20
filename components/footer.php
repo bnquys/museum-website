@@ -1,3 +1,9 @@
+<?php
+	use Museum\Utils\JsonDataManager;
+	$dataManager = new JsonDataManager(__DIR__ . '/../assets/data/museum_data.json');
+	$museum = $dataManager->read('museum_info');
+?>
+
 <footer class="container-fluid py-5">
 	<div class="container">
 		<!-- Stay with email -->
@@ -44,12 +50,7 @@
 					<div class="col-md-4 mb-4 mb-md-0">
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-map-marker-alt me-2"></i> Address</h4>
-							<address class="text-white-50">
-								The New York Historical<br>
-								170 Central Park West<br>
-								at Richard Gilder Way (77th Street)<br>
-								New York, NY 10024
-							</address>
+							<address class="text-white-50"><?= $museum['address']?></address>
 						</div>
 					</div>
 					
@@ -58,9 +59,8 @@
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-phone-alt me-2"></i> Contact</h4>
 							<p class="text-white-50">
-								Phone: (212) 873-3400<br>
-								TTY: (212) 873-7489<br>
-								Email: info@ourmuseum.org
+								Phone: <?= $museum['phone']?><br>
+								Email: <?= $museum['email']?>
 							</p>
 							<a href="contact.php" class="btn btn-sm mt-3" style="background-color: var(--normal-cl); color: white;">
 								<i class="fas fa-envelope me-2"></i> Contact Us
@@ -73,14 +73,7 @@
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-clock me-2"></i> Hours</h4>
 							<p class="text-white-50 mb-1"><strong>Museum & Store:</strong></p>
-							<p class="text-white-50 small">
-								Mon: Closed<br>
-								Tue-Thu: 11am–5pm<br>
-								Fri: 11am–8pm<br>
-								Sat-Sun: 11am–5pm
-							</p>
-							<p class="text-white-50 mb-1 mt-2"><strong>Library:</strong></p>
-							<p class="text-white-50 small">Temporarily Closed</p>
+							<p class="text-white-50 small"><?= str_replace(',', '<br>', $museum['summary'])?></p>
 						</div>
 					</div>
 				</div>

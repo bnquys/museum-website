@@ -405,5 +405,44 @@ class Event {
         // Return base Event if no specific type found
         return $this;
     }    
+
+    public static function getRandomEvents($limit = 3) {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("
+            SELECT * FROM Events
+            WHERE IsShow = TRUE
+            ORDER BY RAND()
+            LIMIT ?
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("i", $limit);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $list = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $list[] = new Event(
+                $row["Id"],
+                $row["Username"],
+                $row["Title"],
+                $row["Summary"],
+                $row["Description"],
+                $row["ImageUrl"],
+                $row["TimeStart"],
+                $row["TimeEnd"],
+                $row["Location"],
+                $row["DisplayOrder"],
+                $row["IsShow"]
+            );
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $list;
+    }    
 }
 ?>
