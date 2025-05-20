@@ -1,0 +1,17 @@
+[
+    {
+        "id": 2,
+        "question": "Do you offer discounts for students or seniors?",
+        "answer": "Yes, we offer discounted admission for students\r\n                        with valid ID and seniors (65+). Children under\r\n                        7 are admitted free. Check our website for\r\n                        current pricing and special discount days."
+    },
+    {
+        "id": 1,
+        "question": "Can I take photos in the museum?",
+        "answer": "Yes, we offer discounted admission for students with valid ID and seniors (65+). Children under 7 are admitted free. Check our website for current pricing and special discount days."
+    },
+    {
+        "id": 3,
+        "question": "What are your current COVID-19 safety measures?",
+        "answer": "We follow all local health guidelines. Currently, masks are optional but recommended in crowded spaces. We've increased cleaning protocols and provide hand sanitizing stations throughout the museum."
+    }
+]

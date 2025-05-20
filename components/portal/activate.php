@@ -1,76 +1,88 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+use Museum\Object\Account;
+use Museum\Object\User;
+use Museum\Utils\Mailer;
+use Museum\Utils\UrlHelper;
+use Museum\Utils\UserRegistrationManager;
 
-    $title = "Activate";
-    include realpath(__DIR__."/../first.php");
+$activateError = "";
 
-    require_once realpath(__DIR__."/../../vendor/autoload.php");
+if (!isset($_SESSION['register'])) {
+    header("Location: login.php");
+    exit;
+}
 
-    use Museum\Object\Account;
-    use Museum\Object\User;
-    use Museum\Utils\UserRegistrationManager;
+$register = $_SESSION['register'];
+$emailDisplay = $register['user']['email'];
+$isChangePassword = $_SESSION['is_change_password'] ?? false;
 
-    $activateError = "";
+// Gửi mã xác nhận nếu chưa gửi
+if (!isset($_SESSION['activate_sent'])) {
+	$mailer = new Mailer($emailDisplay, $register['user']['name']);
+	$mailer->setSubject("Your confirmation code");
 
-    // Kiểm tra nếu không có session nào hợp lệ thì chuyển về login
-    if (!isset($_SESSION['register']) && !isset($_SESSION['forgot'])) {
-        header("Location: login.php");
-        exit;
-    }
+	$data = [
+		'user_name' => $register['user']['name'],
+		'activation_code' => $register['account']['activateCode']
+	];
 
-    // Lấy email để hiển thị
-    if (isset($_SESSION['register'])) {
-        $emailDisplay = $_SESSION['register']['user']['email'];
-    } elseif (isset($_SESSION['forgot'])) {
-        $emailDisplay = $_SESSION['forgot']['email'];
-    }
+	$mailer->setBodyFromTemplate(__DIR__.'/active_template.html', $data);
+	$mailer->send();
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $activateCode = format_input($_POST["activateCode"]);
+    $_SESSION['activate_sent'] = true;
+}
 
-        if (isset($_SESSION['register']) && $activateCode == $_SESSION['register']['account']['activateCode']) {
-            // Trường hợp xác minh đăng ký tài khoản
-            $accountData = $_SESSION['register']['account'];
-            $userData = $_SESSION['register']['user'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $code = trim($_POST["activateCode"]);
 
+    if ($code === $register['account']['activateCode']) {
+        if ($isChangePassword) {
+            if (Account::updatePasswordByEmail($register['account']['email'], $register['account']['password'])) {
+                // Cập nhật xong, login lại và xóa session liên quan
+                $_SESSION['login'] = $register['account']['username'];
+                unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['change_pass'], $_SESSION['is_change_password']);
+                header("Location: index.php");
+                exit;
+            } else {
+                $activateError = "Unable to update password.";
+            }
+
+        } else {
             $account = Account::forSignup(
-                $accountData['username'],
-                $userData['email'],
-                $accountData['password']
+                $register['account']['username'],
+                $register['user']['email'],
+                $register['account']['password']
             );
 
             $user = new User(
-                $userData['name'],
-                $userData['birthDate'],
-                $userData['phoneNumber'],
-                $userData['email']
+                $register['user']['name'],
+                $register['user']['birthDate'],
+                $register['user']['phoneNumber'],
+                $register['user']['email']
             );
 
-            if (!UserRegistrationManager::registerUser($user, $account)) {
-                $activateError = "Failed to register user.";
-            } else {
+            if (UserRegistrationManager::registerUser($user, $account)) {
                 $_SESSION['login'] = $account->username;
-                unset($_SESSION['register']);
+                unset($_SESSION['register'], $_SESSION['activate_sent'], $_SESSION['fillout']);
                 header("Location: index.php");
-                // exit;
+                exit;
+            } else {
+                $activateError = "Registration failed.";
             }
-
-        } elseif (isset($_SESSION['forgot']) && $activateCode == $_SESSION['forgot']['code']) {
-            // Trường hợp xác minh quên mật khẩu
-            header("Location: login.php?pg=resetpass");
-            exit;
-        } else {
-            $activateError = "Wrong activation code!";
         }
+
+    } else {
+        $activateError = "Incorrect confirmation code.";
     }
+}
+
 ?>
 
 <!-- HTML -->
 <div class="position-relative">
 	<img class="bg-img" src="assets/img/bgg.jpg" alt="" />
 	<form
-		action="login.php?pg=activate"
+		action="portal.php?pg=activate"
 		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
 		id="form"
 		method="post"
@@ -93,12 +105,11 @@
 			type="text"
 			name="activateCode"
 			class="form-control <?= $activateError !== "" ? 'is-invalid' : '' ?>"
-			required
 		/>
 		<div class="invalid-feedback text-danger"><?= $activateError ?></div>
 
 		<div class="d-flex justify-content-around">
-			<a href="login.php" class="btn btn-success my-3">Back</a>
+			<a href="portal.php?pg=create-account" class="btn btn-success my-3">Back</a>
 			<input type="submit" class="btn btn-success my-3" value="Submit">
 		</div>
 
@@ -106,5 +117,61 @@
 			Have an account? <a href="login.php" id="btn-sign-in">Login</a><br>
 			Or back to <a href="index.php">Home</a>
 		</p>
+		<p class="text-light mt-3">
+			Didn't receive the code?
+			<button id="resendBtn" class="btn btn-link p-0 text-decoration-underline">Resend Code</button>
+			<span id="countdown" class="text-warning ms-2"></span>
+		</p>
+
 	</form>
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const resendBtn = document.getElementById("resendBtn");
+		const countdownEl = document.getElementById("countdown");
+
+		let timer;
+		const cooldownSeconds = 30;
+
+		function startCountdown() {
+			let remaining = cooldownSeconds;
+			resendBtn.disabled = true;
+			countdownEl.textContent = `(${remaining}s)`;
+
+			timer = setInterval(() => {
+				remaining--;
+				countdownEl.textContent = `(${remaining}s)`;
+
+				if (remaining <= 0) {
+					clearInterval(timer);
+					countdownEl.textContent = "";
+					resendBtn.disabled = false;
+				}
+			}, 1000);
+		}
+
+		resendBtn.addEventListener("click", function (e) {
+			e.preventDefault();
+
+			fetch("<?= UrlHelper::browserpath(__DIR__."/resend-code.php")?>")
+				.then(res => res.json())
+				.then(data => {
+					alert(data.message);
+					startCountdown();
+				})
+				.catch(err => {
+					console.error(err);
+					alert("Failed to resend code. Please try again later.");
+				});
+		});
+
+		startCountdown();
+	});
+	</script>
+
 </div>
+<script>
+    $(document).ready(function () {
+        $('title').text('Activate | Museum');
+    });
+</script>

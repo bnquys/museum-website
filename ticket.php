@@ -1,15 +1,39 @@
 <?php
+ob_start();
 $css = "ticket";
 $title = "Ticket";
-$name = "In Person Tickets";
+$banner = "In Person Tickets";
 include "components/first.php";
 include "components/navbar.php";
 include "components/banner.php";
 
 require_once "vendor/autoload.php";
-use Museum\Object\Ticket;
 
-$tickets = Ticket::getListTicket();
+use Museum\Object\Guide;
+use Museum\Object\Ticket;
+use Museum\Object\Language;
+use Museum\Object\Order;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST['confirm_paid'])) {
+        $visitDate = $_POST['visitDate'];
+        $visitTime = $_POST['visitTime'];
+        $ticketQuantities = $_POST['ticket_qty'];
+        $wantGuide = isset($_POST['want_guide']) ? true : false;
+        $selectedGuide = $_POST['guide'] ?? null;
+
+        if (!empty($accountLogin)) {
+            $username = $accountLogin->username;
+            $order = new Order($username, $ticketQuantities, $visitDate, $visitTime, $selectedGuide);
+            $order->create();
+
+            header("Location: ticket.php?success=1");
+            // echo json_encode(["status" => "success"]);
+            exit;
+        }
+    }
+}
+
 ?>
 <!-- Ticket Pricing Section -->
 <section class="container-fluid">
@@ -29,7 +53,7 @@ $tickets = Ticket::getListTicket();
         </p>
     </div>
 
-    <form class="container" id="ticketForm">
+    <form class="container" id="ticketForm" method="post">
         <!-- Choose Date and Time -->
         <div class="section">
             <div class="row fw-bold border-bottom pb-2 mb-3 mt-5 text-center">
@@ -46,6 +70,8 @@ $tickets = Ticket::getListTicket();
                     <input
                         type="date"
                         id="visitDate"
+                        name="visitDate"
+                        min="<?= date('Y-m-d');?>"
                         class="form-control mx-auto"
                     />
                 </div>
@@ -54,6 +80,7 @@ $tickets = Ticket::getListTicket();
                     <input
                         type="time"
                         id="visitTime"
+                        name="visitTime"
                         class="form-control mx-auto"
                     />
                 </div>
@@ -66,8 +93,10 @@ $tickets = Ticket::getListTicket();
                 <h2 class="col-12 mv-lr">Choose your participants</h2>
             </div>
 
-            <!-- Children 6-11 -->
-            <?php foreach ($tickets as $ticket) {?>
+            <?php
+                $tickets = Ticket::getListTicket();
+                foreach ($tickets as $ticket) {
+            ?>
             <div class="row align-items-center mb-4">
                 <div class="col-12 col-md-6">
                     <p class="ticket-type mv-lr"><?= $ticket->name?></p>
@@ -77,6 +106,7 @@ $tickets = Ticket::getListTicket();
                 <div class="col-4 col-md-2">
                     <input
                         type="number"
+                        name="ticket_qty[<?= $ticket->id ?>]"
                         class="form-control"
                         min="0"
                         value="0"
@@ -99,7 +129,7 @@ $tickets = Ticket::getListTicket();
                 <h2 class="mv-lr">Want a tour guide ?</h2>
                 <!-- Yes/No -->
                 <div class="checkbox-wrapper-10 ms-3">
-                    <input class="tgl tgl-flip" id="cb5" type="checkbox" />
+                    <input class="tgl tgl-flip" id="cb5" type="checkbox" name="want_guide" value="1"/>
                     <label
                         class="tgl-btn"
                         data-tg-off="Nope"
@@ -111,132 +141,37 @@ $tickets = Ticket::getListTicket();
 
             <!-- List Guiders -->
             <div class="row row-cols-1 row-cols-md-4 g-4 mt-2 guide-list">
-                <!-- Guide 1 -->
+                <?php 
+                    $guides = Guide::getTopGuides(4);
+                    foreach ($guides as $guide):
+                ?>
                 <div class="col mv-scale">
                     <div
                         class="card h-100 p-2 guide-card"
-                        data-price="30"
-                        data-guide="alex"
+                        data-price="<?= $guide->getPrice() ?>"
+                        data-guide="<?= htmlspecialchars($guide->email) ?>"
                     >
                         <img
-                            src="assets/img/male1.jpg"
+                            src="<?= $guide->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar' ?>"
                             class="card-img-top"
-                            alt="Alex"
+                            alt="<?= htmlspecialchars($guide->name) ?>"
                         />
                         <div class="card-body">
-                            <h5 class="card-title">Alex</h5>
-                            <p>
-                                <strong>Expertise:</strong> History,
-                                Architecture
-                            </p>
-                            <p><strong>Languages:</strong> English, Spanish</p>
-                            <p>
-                                <strong>Intro:</strong> Loves storytelling &
-                                spicy fun facts 🌶️
-                            </p>
-                            <p><strong>Price:</strong> $30</p>
+                            <h5 class="card-title"><?= htmlspecialchars($guide->name) ?></h5>
+                            <p><strong>Expertise:</strong> <?= htmlspecialchars($guide->getExpertise() ?? 'N/A') ?></p>
+                            <p><strong>Languages:</strong> <?= Language::toNameString($guide->getLanguages()) ?></p>
+                            <p><strong>Intro:</strong> <?= htmlspecialchars($guide->getIntroduction() ?? 'N/A') ?></p>
+                            <p><strong>Price:</strong> $<?= number_format($guide->getPrice(), 2) ?></p>
                             <input
                                 type="radio"
                                 name="guide"
                                 class="form-check-input guide-radio d-none"
-                                value="alex"
+                                value="<?= htmlspecialchars($guide->email) ?>"
                             />
                         </div>
                     </div>
                 </div>
-
-                <!-- Guide 2 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="35"
-                        data-guide="bella"
-                    >
-                        <img
-                            src="assets/img/female1.jpg"
-                            class="card-img-top"
-                            alt="Bella"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Bella</h5>
-                            <p><strong>Expertise:</strong> Nature, Wildlife</p>
-                            <p><strong>Languages:</strong> English, French</p>
-                            <p>
-                                <strong>Intro:</strong> Forest queen 🌿 talks to
-                                animals (low-key)
-                            </p>
-                            <p><strong>Price:</strong> $35</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="bella"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guide 3 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="25"
-                        data-guide="chris"
-                    >
-                        <img
-                            src="assets/img/male2.jpg"
-                            class="card-img-top"
-                            alt="Chris"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Chris</h5>
-                            <p><strong>Expertise:</strong> Food Tours</p>
-                            <p><strong>Languages:</strong> English, Korean</p>
-                            <p>
-                                <strong>Intro:</strong> Will make you eat things
-                                you didn’t know existed 🍜
-                            </p>
-                            <p><strong>Price:</strong> $25</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="chris"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guide 4 -->
-                <div class="col mv-scale">
-                    <div
-                        class="card h-100 p-2 guide-card"
-                        data-price="40"
-                        data-guide="dana"
-                    >
-                        <img
-                            src="assets/img/female2.jpg"
-                            class="card-img-top"
-                            alt="Dana"
-                        />
-                        <div class="card-body">
-                            <h5 class="card-title">Dana</h5>
-                            <p><strong>Expertise:</strong> Art, Museums</p>
-                            <p><strong>Languages:</strong> English, Italian</p>
-                            <p>
-                                <strong>Intro:</strong> Walking encyclopedia of
-                                painting memes 🖼️
-                            </p>
-                            <p><strong>Price:</strong> $40</p>
-                            <input
-                                type="radio"
-                                name="guide"
-                                class="form-check-input guide-radio d-none"
-                                value="dana"
-                            />
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach;?>
             </div>
         </div>
 
@@ -259,51 +194,69 @@ $tickets = Ticket::getListTicket();
                 id="checkoutError"
                 style="color: red; display: none; margin-bottom: 10px; max-width: 20vw;"
                 class="fw-bold"
-            ></p>
-            <div class="button-92" role="button">Checkout now !</div>
+            >
+            </p>
+            <?php if (!isset($accountLogin)):?>
+                <p class='text-danger'>You must <a href="portal.php?pg=login">Login</a> or <a href="portal.php?pg=signup">Sign up</a> to checkout!</p>
+            <?php else:?>
+                <button type="submit" class="button-92">Checkout now !</button>
+            <?php endif;?>
         </div>
     </form>
 
     <!-- Checkout Overlay -->
     <div id="checkoutOverlay" style="display: none">
         <div class="overlay-bg"></div>
-        <div class="overlay-content text-center">
-            <h4>Scan to Complete Your Purchase</h4>
-            <img
-                src="https://api.qrserver.com/v1/create-qr-code/?data=SamplePaymentLink123&size=200x200"
-                alt="QR Code"
-            />
-            <p class="mt-3">
-                Please scan this QR code to finalize your booking.
-            </p>
+        <div class="overlay-content container py-4 px-5 rounded shadow-lg bg-white" style="max-width: 800px; display: flex; gap: 2rem;">
+            <!-- Terms Section -->
+            <div class="text-start" style="flex: 1;">
+                <h5 class="fw-bold mb-3">Terms & Notes</h5>
+                <ul class="text-muted fs-5 ps-3">
+                    <li>Please complete your payment within 15 minutes.</li>
+                    <li>Tickets are valid only for the selected date and time.</li>
+                    <li>Guide bookings are non-refundable once confirmed.</li>
+                    <li>Show this QR code at the entrance.</li>
+                    <li>Keep your confirmation email as proof of purchase.</li>
+                </ul>
+                <button
+                    id="markPaidBtn"
+                    class="btn btn-success mt-4 px-4 py-2 fw-bold"
+                    title="Are you sure you've completed your payment?"
+                    data-bs-toggle="tooltip"
+                >
+                    Mark as Paid
+                </button>
+                <p id="btnTimer" class="text-muted small mt-2"></p>
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="text-center" style="flex: 1;" id="qrContent">
+                <div id="qrAmount" class="text-danger fw-bold fs-3 mb-2">$0.00</div>
+                <h5 class="fw-bold mb-3">Scan to Pay</h5>
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?data=SamplePaymentLink123&size=200x200"
+                    alt="QR Code"
+                    class="mb-3"
+                />
+                <p class="text-muted small">
+                    Use your banking app or e-wallet to complete payment.
+                </p>
+                <p id="qrTimer" class="text-muted small mt-2"></p>
+            </div>
+            <!-- Timeout Message -->
+            <div class="text-center d-none" id="qrExpiredMessage" style="flex: 1;">
+                <h5 class="fw-bold text-danger mb-3">Time Expired</h5>
+                <p class="text-muted">The QR code has expired. Please restart the checkout process.</p>
+            </div>
+
         </div>
     </div>
+
 </section>
 <script>
     $(document).ready(function () {
         const visitDate = document.getElementById("visitDate");
         const visitTime = document.getElementById("visitTime");
-
-        // const availability = {
-        //     "2025-04-16": ["09:00 AM", "10:30 AM", "01:00 PM", "03:00 PM"],
-        //     "2025-04-17": ["10:00 AM", "12:00 PM", "02:00 PM"],
-        //     "2025-04-18": ["08:30 AM", "11:00 AM", "01:30 PM", "04:00 PM"],
-        //     // Default fallback
-        //     default: ["09:00 AM", "11:00 AM", "02:00 PM"],
-        // };
-
-        // visitDate.addEventListener("change", () => {
-        //     const selected = visitDate.value;
-        //     const times = availability[selected] || availability["default"];
-
-        //     visitTime.innerHTML = "";
-        //     times.forEach((time) => {
-        //         const opt = document.createElement("option");
-        //         opt.value = time;
-        //         opt.textContent = time;
-        //         visitTime.appendChild(opt);
-        //     });
-        // });
 
         // Initially hide the guide list
         $(".guide-list").hide();
@@ -441,14 +394,20 @@ $tickets = Ticket::getListTicket();
 
             if (hasAnyData) {
                 miniBill.innerHTML = `
-            ${dateTimeHTML}
-            ${participantsHTML}
-            ${guideHTML}
-            <p class="fw-bold fs-5 mt-1">Total: $${total.toFixed(2)}</p>
-        `;
+                    ${dateTimeHTML}
+                    ${participantsHTML}
+                    ${guideHTML}
+                    <p class="fw-bold fs-5 mt-1">Total: $${total.toFixed(2)}</p>
+                `;
             } else {
                 miniBill.innerHTML = "<p>No items selected.</p>";
             }
+            // Cập nhật số tiền trên mã QR
+            const qrAmountEl = document.getElementById("qrAmount");
+            if (qrAmountEl) {
+                qrAmountEl.textContent = `$${total.toFixed(2)}`;
+            }
+
         }
 
         const inputs = document.querySelectorAll('input[type="number"]');
@@ -461,35 +420,32 @@ $tickets = Ticket::getListTicket();
         visitDate.addEventListener("change", calculateTotal);
         visitTime.addEventListener("change", calculateTotal);
 
-        // 👇 This runs calculateTotal() immediately on page load
         calculateTotal();
-    });
 
-    document.querySelector(".button-92").addEventListener("click", function () {
-        const visitDate = document.getElementById("visitDate").value;
-        const visitTime = document.getElementById("visitTime").value;
-        const inputs = document.querySelectorAll('input[type="number"]');
-        const errorMsg = document.getElementById("checkoutError");
+        $('#markPaidBtn').on('click', function () {
+            Swal.fire({
+                title: 'Confirm Payment',
+                text: 'Are you sure you’ve completed your payment?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, I paid',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = $('#ticketForm').serialize();
 
-        let hasParticipant = false;
-        inputs.forEach((input) => {
-            if (parseInt(input.value) > 0) {
-                hasParticipant = true;
-            }
+                    $.post('ticket.php', formData + '&confirm_paid=1', function (response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your booking has been recorded.',
+                            icon: 'success'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    });
+                }
+            });
         });
 
-        // Validation check
-        if (!visitDate || !visitTime || !hasParticipant) {
-            errorMsg.textContent =
-                "Please select Date, Time, and at least one participant before checking out.";
-            errorMsg.style.display = "block";
-            return;
-        }
-
-        // Clear error and proceed
-        errorMsg.style.display = "none";
-        document.getElementById("checkoutOverlay").style.display = "block";
-        document.body.style.overflow = "hidden";
     });
 
     document
@@ -502,7 +458,104 @@ $tickets = Ticket::getListTicket();
             }
         });
 </script>
+<script>
+    if (window.location.search.includes('success=1')) {
+        history.replaceState(null, '', window.location.pathname);
+    }
+</script>
+<script>
+    function startPaymentTimer() {
+        const markBtn = document.getElementById("markPaidBtn");
+        const qrSection = document.getElementById("qrContent");
+        const expiredMsg = document.getElementById("qrExpiredMessage");
+        const qrTimerDisplay = document.getElementById("qrTimer");
+        const btnTimerDisplay = document.getElementById("btnTimer");
+
+        // === Button Timer (5s) ===
+        let btnSeconds = 5;
+        markBtn.disabled = true;
+
+        const btnInterval = setInterval(() => {
+            btnTimerDisplay.textContent = `You can click "Mark as Paid" in ${btnSeconds} second(s)...`;
+            btnSeconds--;
+            if (btnSeconds < 0) {
+                clearInterval(btnInterval);
+                markBtn.disabled = false;
+                btnTimerDisplay.textContent = "";
+            }
+        }, 1000);
+
+        // === QR Expiry Timer (5 minutes) ===
+        let qrSecondsRemaining = 5 * 60;
+
+        function updateQrCountdown() {
+            const min = Math.floor(qrSecondsRemaining / 60);
+            const sec = qrSecondsRemaining % 60;
+            qrTimerDisplay.textContent = `QR code expires in ${min}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        updateQrCountdown();
+
+        const qrInterval = setInterval(() => {
+            qrSecondsRemaining--;
+
+            if (qrSecondsRemaining <= 0) {
+                clearInterval(qrInterval);
+
+                qrSection.classList.add("d-none");
+                expiredMsg.classList.remove("d-none");
+                qrTimerDisplay.textContent = "";
+                return;
+            }
+
+            updateQrCountdown();
+        }, 1000);
+    }
+
+    // Trigger on Checkout click
+    document.querySelector(".button-92").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const visitDate = document.getElementById("visitDate").value;
+        const visitTime = document.getElementById("visitTime").value;
+        const inputs = document.querySelectorAll('input[type="number"]');
+        const errorMsg = document.getElementById("checkoutError");
+
+        let hasParticipant = false;
+        inputs.forEach((input) => {
+            if (parseInt(input.value) > 0) {
+                hasParticipant = true;
+            }
+        });
+
+        if (!visitDate || !visitTime || !hasParticipant) {
+            errorMsg.textContent = "Please select Date, Time, and at least one participant before checking out.";
+            errorMsg.style.display = "block";
+            return;
+        }
+
+        errorMsg.style.display = "none";
+
+        // Reset display
+        document.getElementById("qrContent").classList.remove("d-none");
+        document.getElementById("qrExpiredMessage").classList.add("d-none");
+
+        document.getElementById("checkoutOverlay").style.display = "block";
+        document.body.style.overflow = "hidden";
+
+        startPaymentTimer();
+    });
+
+    // Bootstrap tooltip
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+</script>
+
 <?php 
 include "components/footer.php";
 include "components/last.php";
+ob_end_flush();
 ?>

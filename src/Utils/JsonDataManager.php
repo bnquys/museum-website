@@ -83,15 +83,16 @@ class JsonDataManager {
      */
     public function delete(string $id): bool {
         $data = $this->readAll();
-        $newData = array_filter($data, fn($record) => $record['id'] !== $id);
-
+        $newData = array_filter($data, fn($record) => (string)$record['id'] !== (string)$id);
+    
         if (count($newData) === count($data)) {
             return false; // Không tìm thấy ID
         }
-
+    
         $this->writeData(array_values($newData));
         return true;
     }
+    
 
     /**
      * Ghi dữ liệu ra file JSON
@@ -99,4 +100,24 @@ class JsonDataManager {
     private function writeData(array $data): void {
         file_put_contents($this->filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
+
+    public function swap($id1, $id2): void {
+        $data = $this->readAll();
+    
+        $index1 = $index2 = null;
+        foreach ($data as $i => $item) {
+            if ((string)$item['id'] === (string)$id1) $index1 = $i;
+            if ((string)$item['id'] === (string)$id2) $index2 = $i;
+        }
+    
+        if ($index1 !== null && $index2 !== null) {
+            $tmp = $data[$index1];
+            $data[$index1] = $data[$index2];
+            $data[$index2] = $tmp;
+    
+            $this->writeData($data);
+        }
+    }
+
+    
 }

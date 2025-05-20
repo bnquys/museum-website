@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Tickets - Green Heritage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --dark-cl: #059212;
+                --dark-cl-rgba: rgba(5, 146, 18, 0.6);
+                --normal-cl: #06d001;
+                --normal-cl-rgba: rgba(6, 208, 1, 0.6);
+                --normal-light-cl: rgb(175, 255, 0);
+                --light-cl-rgba: rgba(144, 238, 144, 0.253);
+                --super-light-cl: #d6f8d652;
+                --white-cl: rgb(169, 245, 167);
+                --deep-forest-cl: #014421;
+                --sky-cl: #b2f5ead3;
+                --so-deep-cl: rgb(5, 30, 4);
+            }
+
+            body {
+                font-family: 'Georgia', serif;
+                @apply bg-[var(--super-light-cl)] text-[var(--so-deep-cl)];
+            }
+
+            .flip-toggle {
+                position: relative;
+                padding: 0;
+                width: 90px;
+                height: 50px;
+                perspective: 200px;
+            }
+
+            .flip-toggle input {
+                position: absolute;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                z-index: 2;
+            }
+
+            .flip-toggle .flip-card {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transition: transform 0.4s ease;
+                transform: rotateY(0deg);
+            }
+
+            .flip-toggle input:checked ~ .flip-card {
+                transform: rotateY(180deg);
+            }
+
+            .flip-toggle .flip-face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 25px;
+                font-weight: bold;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .flip-toggle .flip-front {
+                background-color: var(--normal-cl);
+                color: white;
+                transform: rotateY(0deg);
+            }
+
+            .flip-toggle .flip-back {
+                background-color: #f8f9fa;
+                color: var(--deep-forest-cl);
+                transform: rotateY(180deg);
+            }
+
+            .guide-card {
+                transition: all 0.3s ease;
+                transform: scale(1);
+            }
+
+            .guide-card:hover {
+                transform: scale(1.03);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            }
+
+            .guide-card.selected {
+                border: 3px solid var(--normal-cl);
+                box-shadow: 0 0 0 3px var(--normal-light-cl);
+            }
+
+            .ticket-row {
+                transition: all 0.3s ease;
+            }
+
+            .ticket-row:hover {
+                background-color: var(--light-cl-rgba);
+                border-radius: 8px;
+            }
+
+            .checkout-btn {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .checkout-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+
+            .checkout-btn:active {
+                transform: translateY(0);
+            }
+
+            .checkout-btn::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 5px;
+                height: 5px;
+                background: rgba(255, 255, 255, 0.5);
+                opacity: 0;
+                border-radius: 100%;
+                transform: scale(1, 1) translate(-50%, -50%);
+                transform-origin: 50% 50%;
+            }
+
+            .checkout-btn:focus:not(:active)::after {
+                animation: ripple 1s ease-out;
+            }
+
+            @keyframes ripple {
+                0% {
+                    transform: scale(0, 0);
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: scale(20, 20);
+                    opacity: 0;
+                }
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .overlay-content {
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                max-width: 90%;
+                width: 400px;
+                position: relative;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+
+            .overlay.active .overlay-content {
+                transform: translateY(0);
+            }
+
+            .mini-bill {
+                transition: all 0.3s ease;
+                max-height: 0;
+                overflow: hidden;
+            }
+
+            .mini-bill.active {
+                max-height: 500px;
+                padding: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-[var(--deep-forest-cl)] text-[var(--white-cl)] sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-leaf mr-2"></i> Green Heritage
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Home</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Exhibitions</a>
+                    <a href="#" class="font-bold text-[var(--normal-light-cl)] transition">Tickets</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Collections</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Visit</a>
+                </div>
+                <button class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-[var(--dark-cl-rgba)] to-[var(--normal-cl-rgba)] bg-[url('https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center py-20 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Plan Your Visit</h1>
+            <p class="text-xl max-w-2xl mx-auto">Book your tickets to explore the wonders of nature through our world-class exhibitions and collections.</p>
+        </div>
+    </section>
+
+    <!-- Ticket Booking Form -->
+    <section class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-[var(--deep-forest-cl)] text-white p-6">
+                <h2 class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-ticket-alt mr-3"></i> Ticket Booking
+                </h2>
+                <p class="text-[var(--white-cl)] mt-2">Secure your admission to the Green Heritage Museum</p>
+            </div>
+
+            <!-- Form Content -->
+            <form id="ticketForm" method="post" class="p-6">
+                <!-- Date & Time Section -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-[var(--normal-cl)] text-white flex items-center justify-center mr-3">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold">Select Date & Time</h3>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="visitDate" class="block text-sm font-medium mb-2">Visit Date</label>
+                            <div class="relative">
+                                <input type="date" id="visitDate" name="visitDate" min="<?= date('Y-m-d');?>" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent">
+                                <i class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="visitTime" class="block text-sm font-medium mb-2">Visit Time</label>
+                            <div class="relative">
+                                <input type="time" id="visitTime" name="visitTime" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent">
+                                <i class="fas fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tickets Section -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-[var(--normal-cl)] text-white flex items-center justify-center mr-3">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold">Select Tickets</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Sample Ticket 1 -->
+                        <div class="ticket-row p-4 border border-gray-200 rounded-lg">
+                            <div class="grid md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-6">
+                                    <h4 class="font-bold text-lg">Adult Ticket</h4>
+                                    <p class="text-gray-600 text-sm">Ages 18-64</p>
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold text-[var(--deep-forest-cl)]">
+                                    $25.00
+                                </div>
+                                <div class="md:col-span-2">
+                                    <input type="number" name="ticket_qty[1]" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)]" min="0" value="0" data-price="25">
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold">
+                                    <span class="row-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Ticket 2 -->
+                        <div class="ticket-row p-4 border border-gray-200 rounded-lg">
+                            <div class="grid md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-6">
+                                    <h4 class="font-bold text-lg">Child Ticket</h4>
+                                    <p class="text-gray-600 text-sm">Ages 5-17</p>
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold text-[var(--deep-forest-cl)]">
+                                    $15.00
+                                </div>
+                                <div class="md:col-span-2">
+                                    <input type="number" name="ticket_qty[2]" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)]" min="0" value="0" data-price="15">
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold">
+                                    <span class="row-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Ticket 3 -->
+                        <div class="ticket-row p-4 border border-gray-200 rounded-lg">
+                            <div class="grid md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-6">
+                                    <h4 class="font-bold text-lg">Senior Ticket</h4>
+                                    <p class="text-gray-600 text-sm">Ages 65+</p>
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold text-[var(--deep-forest-cl)]">
+                                    $20.00
+                                </div>
+                                <div class="md:col-span-2">
+                                    <input type="number" name="ticket_qty[3]" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)]" min="0" value="0" data-price="20">
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold">
+                                    <span class="row-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sample Ticket 4 -->
+                        <div class="ticket-row p-4 border border-gray-200 rounded-lg">
+                            <div class="grid md:grid-cols-12 gap-4 items-center">
+                                <div class="md:col-span-6">
+                                    <h4 class="font-bold text-lg">Family Pass</h4>
+                                    <p class="text-gray-600 text-sm">2 Adults + 2 Children</p>
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold text-[var(--deep-forest-cl)]">
+                                    $60.00
+                                </div>
+                                <div class="md:col-span-2">
+                                    <input type="number" name="ticket_qty[4]" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)]" min="0" value="0" data-price="60">
+                                </div>
+                                <div class="md:col-span-2 text-center font-bold">
+                                    <span class="row-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tour Guide Section -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 rounded-full bg-[var(--normal-cl)] text-white flex items-center justify-center mr-3">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold">Add a Tour Guide</h3>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-gray-700">Would you like to book a personal tour guide for your visit?</p>
+                        <div class="flip-toggle">
+                            <input type="checkbox" id="wantGuide" name="want_guide" value="1">
+                            <div class="flip-card">
+                                <div class="flip-face flip-front">Yes</div>
+                                <div class="flip-face flip-back">No</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="guideSection" class="hidden">
+                        <h4 class="font-medium mb-4 text-[var(--deep-forest-cl)]">Available Guides</h4>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Guide 1 -->
+                            <div class="guide-card cursor-pointer p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                                         alt="Guide" class="w-16 h-16 rounded-full object-cover">
+                                    <div>
+                                        <h5 class="font-bold">Dr. Sarah Chen</h5>
+                                        <p class="text-sm text-gray-600 mb-1">Botanical History Expert</p>
+                                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-language mr-1"></i> English, Mandarin</p>
+                                        <p class="font-bold text-[var(--normal-cl)]">$50.00</p>
+                                        <input type="radio" name="guide" class="hidden" value="sarah.chen@example.com">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Guide 2 -->
+                            <div class="guide-card cursor-pointer p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                                         alt="Guide" class="w-16 h-16 rounded-full object-cover">
+                                    <div>
+                                        <h5 class="font-bold">Prof. James Wilson</h5>
+                                        <p class="text-sm text-gray-600 mb-1">Archaeology Specialist</p>
+                                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-language mr-1"></i> English, Spanish</p>
+                                        <p class="font-bold text-[var(--normal-cl)]">$45.00</p>
+                                        <input type="radio" name="guide" class="hidden" value="james.wilson@example.com">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Guide 3 -->
+                            <div class="guide-card cursor-pointer p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" 
+                                         alt="Guide" class="w-16 h-16 rounded-full object-cover">
+                                    <div>
+                                        <h5 class="font-bold">Dr. Amina Khalid</h5>
+                                        <p class="text-sm text-gray-600 mb-1">Ancient Medicine Expert</p>
+                                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-language mr-1"></i> English, Arabic</p>
+                                        <p class="font-bold text-[var(--normal-cl)]">$55.00</p>
+                                        <input type="radio" name="guide" class="hidden" value="amina.khalid@example.com">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Guide 4 -->
+                            <div class="guide-card cursor-pointer p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                                         alt="Guide" class="w-16 h-16 rounded-full object-cover">
+                                    <div>
+                                        <h5 class="font-bold">Maria Rodriguez</h5>
+                                        <p class="text-sm text-gray-600 mb-1">Art & Culture Specialist</p>
+                                        <p class="text-sm text-gray-600 mb-2"><i class="fas fa-language mr-1"></i> English, Spanish, Portuguese</p>
+                                        <p class="font-bold text-[var(--normal-cl)]">$40.00</p>
+                                        <input type="radio" name="guide" class="hidden" value="maria.rodriguez@example.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="bg-[var(--light-cl-rgba)] p-6 rounded-lg mb-8">
+                    <div class="flex justify-between items-center mb-4 cursor-pointer" id="summaryToggle">
+                        <h3 class="font-bold text-lg flex items-center">
+                            <i class="fas fa-receipt mr-2"></i> Order Summary
+                        </h3>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </div>
+                    
+                    <div class="mini-bill" id="miniBill">
+                        <div id="miniBillDetails" class="text-sm">
+                            <p class="text-gray-600">No items selected yet.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-[var(--normal-cl)] pt-4 mt-4">
+                        <div class="flex justify-between font-bold text-lg">
+                            <span>Total:</span>
+                            <span id="totalAmount">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="checkoutError" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
+                    <p>Please select Date, Time, and at least one participant before checking out.</p>
+                </div>
+
+                <!-- Checkout Button -->
+                <button type="submit" class="checkout-btn w-full bg-[var(--deep-forest-cl)] hover:bg-[var(--dark-cl)] text-white py-4 px-6 rounded-lg font-bold text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[var(--normal-cl)] focus:ring-opacity-50">
+                    Proceed to Checkout <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Checkout Overlay -->
+    <div class="overlay" id="checkoutOverlay">
+        <div class="overlay-bg absolute inset-0"></div>
+        <div class="overlay-content">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="text-xl font-bold mb-4 text-[var(--deep-forest-cl)]">Complete Your Purchase</h3>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data=SamplePaymentLink123&size=200x200" 
+                 alt="QR Code" class="mx-auto mb-4">
+            <p class="text-gray-600 mb-6">Scan this QR code with your mobile device to complete payment.</p>
+            <p class="text-sm text-gray-500">Or <a href="#" class="text-[var(--normal-cl)] font-medium">click here</a> to pay on our website.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--deep-forest-cl)] text-[var(--white-cl)] py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Green Heritage
+                    </h3>
+                    <p class="mb-4">Exploring the botanical wonders of our world through research, education, and preservation.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Visit</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Hours & Tickets</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Directions</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Accessibility</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Group Visits</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Museum Map</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Explore</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Exhibitions</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Collections</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Research</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Education</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Gardens</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <address class="not-italic">
+                        <p class="mb-2">123 Nature Way</p>
+                        <p class="mb-2">Greensville, GH 12345</p>
+                        <p class="mb-2">Phone: (555) 123-4567</p>
+                        <p class="mb-4">Email: info@greenheritage.org</p>
+                    </address>
+                    <a href="#" class="inline-block bg-[var(--normal-cl)] hover:bg-[var(--dark-cl)] text-white px-4 py-2 rounded-full text-sm font-medium transition">
+                        <i class="fas fa-envelope mr-2"></i> Contact Us
+                    </a>
+                </div>
+            </div>
+            
+            <hr class="border-[var(--dark-cl)] my-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2023 Green Heritage Museum. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Terms of Use</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle guide section
+            const wantGuide = document.getElementById('wantGuide');
+            const guideSection = document.getElementById('guideSection');
+            
+            wantGuide.addEventListener('change', function() {
+                if(this.checked) {
+                    guideSection.classList.remove('hidden');
+                    guideSection.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    guideSection.classList.add('hidden');
+                    // Unselect any selected guide
+                    document.querySelectorAll('.guide-card.selected').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    document.querySelectorAll('input[name="guide"]:checked').forEach(radio => {
+                        radio.checked = false;
+                    });
+                }
+                calculateTotal();
+            });
+
+            // Guide selection
+            document.querySelectorAll('.guide-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Toggle selection
+                    if(this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        this.querySelector('input[type="radio"]').checked = false;
+                    } else {
+                        // Deselect all other guides first
+                        document.querySelectorAll('.guide-card').forEach(c => {
+                            c.classList.remove('selected');
+                            c.querySelector('input[type="radio"]').checked = false;
+                        });
+                        // Select this one
+                        this.classList.add('selected');
+                        this.querySelector('input[type="radio"]').checked = true;
+                    }
+                    calculateTotal();
+                });
+            });
+
+            // Toggle order summary
+            const summaryToggle = document.getElementById('summaryToggle');
+            const miniBill = document.getElementById('miniBill');
+            const chevron = summaryToggle.querySelector('i');
+            
+            summaryToggle.addEventListener('click', function() {
+                miniBill.classList.toggle('active');
+                chevron.classList.toggle('rotate-180');
+            });
+
+            // Calculate total function
+            function calculateTotal() {
+                let total = 0;
+                let participants = [];
+                const miniBillDetails = document.getElementById('miniBillDetails');
+                
+                // Process ticket selections
+                document.querySelectorAll('input[type="number"][name^="ticket_qty"]').forEach(input => {
+                    const qty = parseInt(input.value) || 0;
+                    const price = parseFloat(input.dataset.price);
+                    const row = input.closest('.ticket-row');
+                    const type = row.querySelector('h4').textContent.trim();
+                    
+                    const rowTotal = qty * price;
+                    total += rowTotal;
+                    
+                    // Update row total display
+                    const rowTotalSpan = row.querySelector('.row-total');
+                    if (rowTotalSpan) {
+                        rowTotalSpan.textContent = `$${rowTotal.toFixed(2)}`;
+                    }
+                    
+                    if (qty > 0) {
+                        participants.push(`${qty} × ${type} - $${rowTotal.toFixed(2)}`);
+                    }
+                });
+                
+                // Process guide selection
+                const selectedGuide = document.querySelector('.guide-card.selected');
+                let guideHTML = '';
+                
+                if (selectedGuide) {
+                    const guideName = selectedGuide.querySelector('h5').textContent.trim();
+                    const guidePrice = parseFloat(selectedGuide.querySelector('p:last-child').textContent.replace('$', ''));
+                    total += guidePrice;
+                    guideHTML = `<p class="mb-1"><strong>Guide:</strong> ${guideName} - $${guidePrice.toFixed(2)}</p>`;
+                }
+                
+                // Get selected date and time
+                const selectedDate = document.getElementById('visitDate').value;
+                const selectedTime = document.getElementById('visitTime').value;
+                
+                // Build Date and Time section
+                let dateTimeHTML = '';
+                if (selectedDate || selectedTime) {
+                    dateTimeHTML += `<p class="mb-1"><strong>Date & Time:</strong></p><ul class="list-disc list-inside mb-2">`;
+                    if (selectedDate) {
+                        const formattedDate = new Date(selectedDate).toLocaleDateString(undefined, {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        dateTimeHTML += `<li>${formattedDate}</li>`;
+                    }
+                    if (selectedTime) {
+                        dateTimeHTML += `<li>Time: ${selectedTime}</li>`;
+                    }
+                    dateTimeHTML += `</ul>`;
+                }
+                
+                // Build Participants section
+                let participantsHTML = '';
+                if (participants.length > 0) {
+                    participantsHTML += `<p class="mb-1"><strong>Tickets:</strong></p><ul class="list-disc list-inside mb-2">`;
+                    participantsHTML += participants.map(item => `<li>${item}</li>`).join('');
+                    participantsHTML += `</ul>`;
+                }
+                
+                // Final Mini Bill render
+                const hasAnyData = selectedDate || selectedTime || participants.length > 0 || selectedGuide;
+                
+                if (hasAnyData) {
+                    miniBillDetails.innerHTML = `
+                        ${dateTimeHTML}
+                        ${participantsHTML}
+                        ${guideHTML}
+                    `;
+                } else {
+                    miniBillDetails.innerHTML = '<p class="text-gray-600">No items selected yet.</p>';
+                }
+                
+                // Update total display
+                document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+            }
+            
+            // Add event listeners for inputs
+            document.querySelectorAll('input[type="number"][name^="ticket_qty"]').forEach(input => {
+                input.addEventListener('input', calculateTotal);
+            });
+            
+            // Add these to update bill when date/time changes
+            document.getElementById('visitDate').addEventListener('change', calculateTotal);
+            document.getElementById('visitTime').addEventListener('change', calculateTotal);
+            
+            // Form submission
+            document.getElementById('ticketForm').addEventListener('submit', function(event) {
+                const visitDate = document.getElementById('visitDate').value;
+                const visitTime = document.getElementById('visitTime').value;
+                const inputs = document.querySelectorAll('input[type="number"][name^="ticket_qty"]');
+                const errorMsg = document.getElementById('checkoutError');
+                
+                let hasParticipant = false;
+                inputs.forEach(input => {
+                    if (parseInt(input.value) > 0) {
+                        hasParticipant = true;
+                    }
+                });
+                
+                // Validate form
+                if (!visitDate || !visitTime || !hasParticipant) {
+                    event.preventDefault();
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                
+                // If validation passes, show overlay (simulating payment)
+                event.preventDefault();
+                document.getElementById('checkoutOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close overlay
+            document.querySelector('#checkoutOverlay button').addEventListener('click', function() {
+                document.getElementById('checkoutOverlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Initial calculation
+            calculateTotal();
+        });
+    </script>
+</body>
+</html>

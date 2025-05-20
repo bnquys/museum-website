@@ -1,18 +1,17 @@
 <?php
 	session_start();
-	require realpath(__DIR__."/../vendor/autoload.php");
-	use Museum\Object\Account;
+	
+	// echo '<pre>';
+	// echo print_r($_SESSION);
+	// echo '</pre>';
 
-    function format_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+	require_once realpath(__DIR__."/../vendor/autoload.php");
+	use Museum\Object\Account;
 
 	if (isset($_SESSION['login'])) {
 		$accountLogin = Account::getByUsername($_SESSION['login']);
 	}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +19,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><?=$title?></title>
+		<title><?=$title?> | Our Museum</title>
 		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
 
 		<link rel="stylesheet" href="assets/css/carousel-banner.css" />
@@ -60,6 +59,17 @@
 		<!-- Link CKEditor -->
 		<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 		
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
+		<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<style>
+			.swal2-container {
+				z-index: 9999 !important;
+			}
+		</style>
 	</head>
 	<body>

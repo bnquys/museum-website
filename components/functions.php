@@ -1,3 +1,7 @@
+<?php
+    $museum = $dataManager->read('museum_info');
+?>
+
 <div id="card" class="container my-5">
     <div class="row justify-content-evenly">
         <div class="col-md-4 mv-tb">
@@ -28,15 +32,8 @@
                 </div>
                 <div class="card-hover text-center">
 					<h5 style="word-spacing: 2px; line-height: 1.5;">
-						<strong>Mon–Fri:</strong> 10am – 4pm <br>
-						<strong>Saturday:</strong> 10am – 5pm <br>
-						<strong>Sunday:</strong> 12pm – 5pm
+                        <?= str_replace(',', '<br>', $museum['summary'])?>
 					</h5>
-                    <!-- <button
-                        class="btn btn-success rounded-0 fw-bold text-uppercase fs-6"
-                    >
-                        Learn More
-                    </button> -->
                 </div>
             </div>
         </div>
@@ -66,7 +63,7 @@
                             Ongoing Exhibition
                         </h5>
                         <p class="card-text text-center">
-                            Explore our current showcase on nature’s
+                            Explore our current showcase on nature's
                             transformation through time.
                         </p>
                     </div>
@@ -74,7 +71,7 @@
                 <div class="card-hover text-center">
 					<h5 style="word-spacing: 2px; line-height: 1.5;">
 						Here, we focus on <br> 
-						nature’s <strong>story—its change</strong> <br>
+						nature's <strong>story—its change</strong> <br>
 						and our evolving place <br> within it.
 					</h5>
                     <button

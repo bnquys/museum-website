@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitbaf0b1b659e688a64051c5ee9742a77e
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Component\\CssSelector\\' => 30,
+        ),
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
@@ -18,6 +22,10 @@ class ComposerStaticInitbaf0b1b659e688a64051c5ee9742a77e
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Component\\CssSelector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/css-selector',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',

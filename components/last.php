@@ -10,6 +10,5 @@
 <script src="./assets/js/card-slider.js"></script>
 <script src="./assets/js/bootstrap.bundle.js"></script>
 <script src="./assets/js/sip.js"></script>
-<script src="assets/js/register.js"></script>
 </body>
 </html>

@@ -2,15 +2,17 @@ body {
     background: var(--super-light-cl);
 }
 
-h2,
-h5:not(footer h5),
-label {
-    color: var(--deep-forest-cl) !important;
+main {
+    h2,
+    h5,
+    label {
+        color: var(--deep-forest-cl) !important;
+    }
+    .fas {
+        color: var(--normal-cl);
+    }
 }
 
-.fas {
-    color: var(--normal-cl);
-}
 
 .card {
     background: var(--super-light-cl);
@@ -110,6 +112,7 @@ label {
     animation: fadeIn 1s ease forwards;
 }
 
-input, textarea {
+input,
+textarea {
     border: none !important;
 }

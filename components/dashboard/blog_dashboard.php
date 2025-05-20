@@ -1,14 +1,5 @@
 <?php
-    function browser_path(string $filename): string {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-        $path = rtrim(dirname($_SERVER['REQUEST_URI']), '/');
-    
-        return $protocol . '://' . $host . $path . '/' . ltrim($filename, '/');
-    }
-    
-
-	require_once realpath(__DIR__."/../../vendor/autoload.php");
+    require_once realpath(__DIR__."/../../vendor/autoload.php");
 	use Museum\Object\Blog;
     use Museum\Utils\FileUploader;
     use Museum\Utils\UrlHelper;
@@ -23,6 +14,14 @@
         header("Location: dashboard.php?page=blog");
         exit;
     }
+
+    if (isset($_GET['move']) && isset($_GET['id'])) {
+        $direction = $_GET['move'];
+        $id = $_GET['id'];
+        Blog::moveOrder($id, $direction);
+        header("Location: dashboard.php?page=blog");
+        exit;
+    }    
 
     // Handle blog submission
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -149,6 +148,8 @@
                         <td><?= $blog->summary?></td>
                         <td><?= htmlspecialchars($blog->uploadDate) ?></td>
                         <td class="text-center">
+                            <a href="?page=blog&move=up&id=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-secondary">⬆</a>
+                            <a href="?page=blog&move=down&id=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-secondary">⬇</a>
                             <a href="?page=blog&editId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                             <a href="?page=blog&deleteId=<?= urlencode($blog->id) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete blog #<?= htmlspecialchars($blog->id) ?>?')">Delete</a>
                         </td>
