@@ -93,7 +93,7 @@
 						<a href="contact.php">Contact</a>
 					</li>
 					<li class="nav-item nav-link px-3 btn-ticket hover-link">
-						<a href="ticket.php">Buy Ticket</a>
+						<a href="ticket.php"><i class="fas fa-ticket-alt me-2"></i> Buy Ticket</a>
 					</li>
 				</ul>
 			</div>

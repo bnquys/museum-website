@@ -34,11 +34,6 @@
 					<h5 style="word-spacing: 2px; line-height: 1.5;">
                         <?= str_replace(',', '<br>', $museum['summary'])?>
 					</h5>
-                    <!-- <button
-                        class="btn btn-success rounded-0 fw-bold text-uppercase fs-6"
-                    >
-                        Learn More
-                    </button> -->
                 </div>
             </div>
         </div>

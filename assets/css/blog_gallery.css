@@ -1,8 +1,4 @@
 body {
-    /* font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; */
     background-color: var(--super-light-cl);
 }
 
@@ -14,7 +10,6 @@ body {
     box-shadow: 0 2px 5px var(--normal-cl-rgba);
     cursor: pointer;
     transition: all 0.2s ease;
-    /* border: 1px solid var(--light-cl-rgba); */
 }
 
 .blog-card:hover {

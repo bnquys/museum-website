@@ -207,13 +207,7 @@
                         Find Us on the Map
                     </h5>
                     <div class="map-container">
-                        <iframe
-                            class="map-iframe"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.33369134229!2d-71.0958459241444!3d42.33941597138986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e3798a893e1e9f%3A0x4dde05e8a4e3f0a9!2sMuseum%20of%20Fine%20Arts%2C%20Boston!5e0!3m2!1sen!2sus!4v1689872032472!5m2!1sen!2sus"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62720.52997299296!2d106.65814220387907!3d10.731928689916376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528b2747a81a3%3A0x33c1813055acb613!2sTon%20Duc%20Thang%20University!5e0!3m2!1sen!2sus!4v1747726435851!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>

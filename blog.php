@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         src="<?= $blog->imgUrl?>"
                         class="img-fluid rounded"
                         alt="Blog Pic"
-                        style="width: 150px; height: 150px; object-fit: cover"
+                        style="width: 300px; height: 200px; object-fit: cover"
                     />
 
                     <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">

@@ -19,7 +19,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><?=$title?></title>
+		<title><?=$title?> | Our Museum</title>
 		<link rel="icon" type="image/x-icon" href="assets/img/museum.ico">
 
 		<link rel="stylesheet" href="assets/css/carousel-banner.css" />
@@ -59,6 +59,12 @@
 		<!-- Link CKEditor -->
 		<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 		
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
+		<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+		
 	</head>
 	<body>

@@ -20,11 +20,13 @@
 					<div
 						class="card border-0 rounded-0 bg-transparent"
 					>
-						<img
-							src="<?= $blog->imgUrl?>"
-							class="card-img-top rounded-0"
-							alt="..."
-						/>
+						<div class="blog-img-container">
+							<img
+								src="<?= $blog->imgUrl?>"
+								class="card-img-top rounded-0"
+								alt="..."
+							/>
+						</div>
 						<div class="card-body pb-0 px-0 rounded-0">
 							<p
 								name="date"
@@ -32,7 +34,7 @@
 							>
 								<?= $blog->uploadDate?>
 							</>
-							<h5 class="card-title mt-3">
+							<h5 class=" mt-3">
 								<?= $blog->title?>
 							</h5>
 							<p class="text-end text-gray fst-italic me-1 mt-3">

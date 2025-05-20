@@ -1,10 +1,96 @@
-aside {
-	height: 100vh;
-	/* background-color: blue; */
-	position: sticky;
+body {
+    background-color: #f5fdf4;
 }
 
-#list-group > li {
-	background-color: transparent;
-	border: 0;
+.nature-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(255, 3, 3, 0.1);
+    border-left: 4px solid var(--dark-cl);
+    transition: all 0.3s ease;
+}
+
+.nature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(5, 146, 18, 0.15);
+}
+
+.sidebar {
+    background: linear-gradient(
+        to bottom,
+        var(--deep-forest-cl),
+        var(--dark-cl)
+    );
+	overflow-y: auto;
+	scrollbar-color: var(--normal-cl) transparent;
+    scrollbar-width: thin;
+}
+
+.sidebar-item {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-item:hover {
+    background: var(--dark-cl-rgba);
+    border-left: 3px solid var(--normal-light-cl);
+}
+
+.sidebar-item.active {
+    background: var(--dark-cl-rgba);
+    border-left: 3px solid var(--normal-light-cl);
+}
+
+.btn-nature {
+    background: var(--dark-cl);
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.btn-nature:hover {
+    background: var(--normal-cl);
+    transform: translateY(-2px);
+}
+
+.text-nature {
+    color: var(--dark-cl);
+}
+
+.bg-nature-light {
+    background: var(--super-light-cl);
+}
+
+.border-nature {
+    border-color: var(--normal-cl);
+}
+
+.glow {
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(6, 208, 1, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 8px rgba(6, 208, 1, 0);
+    }
+}
+
+.stat-card-icon {
+    background: var(--light-cl-rgba);
+    color: var(--dark-cl);
+}
+
+.mobile-menu-btn {
+    background: var(--dark-cl);
+    color: white;
+}
+
+.offcanvas-nature {
+    background: linear-gradient(
+        to bottom,
+        var(--deep-forest-cl),
+        var(--dark-cl)
+    );
 }
