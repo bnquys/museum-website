@@ -15,9 +15,9 @@
 				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($museum["phone"])?></span>
 			</div>
 			<?php if(isset($accountLogin)) { ?>
-				<div> <a href="user.php" class="d-inline text-light hover-link">Hello, <?= $accountLogin->getUser()->name?></a></div>
+				<div> <a href="user.php" class="d-inline text-white user me-1"><i class="fa-solid fa-user"></i> <?= $accountLogin->getUser()->name?></a></div>
 			<?php } else { ?>
-				<div> <a href="portal.php" class="d-inline text-light hover-link">Login here</a></div>
+				<div> <a href="portal.php" class="d-inline text-white user me-1">Login here</a></div>
 			<?php }?>
 		</div>
 	</div>
