@@ -65,6 +65,83 @@ class Event {
         return $list;
     }
 
+    public static function getUpcomingEvents($limit = 6) {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("
+            SELECT * FROM Events 
+            WHERE IsShow = TRUE AND TimeStart > NOW() 
+            ORDER BY TimeStart DESC 
+            LIMIT ?
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("i", $limit);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $list = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $list[] = new Event(
+                $row["Id"],
+                $row["Username"],
+                $row["Title"],
+                $row["Summary"],
+                $row["Description"],
+                $row["ImageUrl"],
+                $row["TimeStart"],
+                $row["TimeEnd"],
+                $row["Location"],
+                $row["DisplayOrder"],
+                $row["IsShow"]
+            );
+        }
+    
+        $stmt->close();
+        $conn->close();
+        return $list;
+    } 
+    
+    public static function getOngoingExhibitions($limit = 6) {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("
+            SELECT E.* FROM Events E
+            JOIN Exhibitions EX ON EX.Id = E.Id
+            WHERE E.IsShow = TRUE AND E.TimeStart <= NOW() AND E.TimeEnd >= NOW()
+            ORDER BY E.TimeStart ASC
+            LIMIT ?
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $list = [];
+        while ($row = $result->fetch_assoc()) {
+            $list[] = new Event(
+                $row["Id"],
+                $row["Username"],
+                $row["Title"],
+                $row["Summary"],
+                $row["Description"],
+                $row["ImageUrl"],
+                $row["TimeStart"],
+                $row["TimeEnd"],
+                $row["Location"],
+                $row["DisplayOrder"],
+                $row["IsShow"]
+            );
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $list;
+    }    
+
     public static function getById($id) {
         $conn = Database::Connect();
 
@@ -327,6 +404,72 @@ class Event {
     
         // Return base Event if no specific type found
         return $this;
+    }    
+
+    public static function getRandomEvents($limit = 3) {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("
+            SELECT * FROM Events
+            WHERE IsShow = TRUE
+            ORDER BY RAND()
+            LIMIT ?
+        ");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        $stmt->bind_param("i", $limit);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $list = [];
+    
+        while ($row = $result->fetch_assoc()) {
+            $list[] = new Event(
+                $row["Id"],
+                $row["Username"],
+                $row["Title"],
+                $row["Summary"],
+                $row["Description"],
+                $row["ImageUrl"],
+                $row["TimeStart"],
+                $row["TimeEnd"],
+                $row["Location"],
+                $row["DisplayOrder"],
+                $row["IsShow"]
+            );
+        }
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $list;
+    }    
+
+    public static function countThisWeekEvents() {
+        $conn = Database::Connect();
+    
+        // Tính ngày đầu tuần (Monday) và cuối tuần (Sunday)
+        $stmt = $conn->prepare("
+            SELECT COUNT(*) as total FROM Events
+            WHERE IsShow = TRUE AND (
+                (TimeStart >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                 AND TimeStart <= DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY))
+                OR
+                (TimeEnd >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                 AND TimeEnd <= DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY))
+            )
+        ");
+    
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $row ? (int)$row['total'] : 0;
     }    
 }
 ?>

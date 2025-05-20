@@ -16,7 +16,7 @@
 				foreach($blogs as $blog):
 			?>
 			<div class="col-md-3 mv-tb">
-				<a href="#">
+				<a href="more.php?type=blog&id=<?= $blog->id?>">
 					<div
 						class="card border-0 rounded-0 bg-transparent"
 					>

@@ -5,6 +5,9 @@
 	$css = "dashboard";
 	include "components/first.php";
 	use Museum\Object\AccountRole;
+use Museum\Object\Blog;
+use Museum\Object\ContactForm;
+use Museum\Object\Event;
 
     if (isset($accountLogin)) {
 		$userAdmin = $accountLogin->username;
@@ -209,10 +212,10 @@
                             <div class="flex justify-between items-start">
                                 <div>
                                     <p class="text-gray-500">Events</p>
-                                    <h3 class="text-2xl font-bold mt-2 text-nature">24</h3>
+                                    <h3 class="text-2xl font-bold mt-2 text-nature"><?= count(Event::getListEvent())?></h3>
                                     <p class="text-green-500 text-sm mt-1 flex items-center">
                                         <i class="fas fa-arrow-up mr-1"></i>
-                                        <span>3 new this week</span>
+                                        <span><?= Event::countThisWeekEvents()?> new this week</span>
                                     </p>
                                 </div>
                                 <div class="stat-card-icon w-12 h-12 rounded-full flex items-center justify-center">
@@ -225,10 +228,10 @@
                             <div class="flex justify-between items-start">
                                 <div>
                                     <p class="text-gray-500">Blog Posts</p>
-                                    <h3 class="text-2xl font-bold mt-2 text-nature">56</h3>
+                                    <h3 class="text-2xl font-bold mt-2 text-nature"><?= count(Blog::getListBlog())?></h3>
                                     <p class="text-green-500 text-sm mt-1 flex items-center">
                                         <i class="fas fa-arrow-up mr-1"></i>
-                                        <span>2 new today</span>
+                                        <span><?= count(Blog::getBlogsThisWeek())?> new this week</span>
                                     </p>
                                 </div>
                                 <div class="stat-card-icon w-12 h-12 rounded-full flex items-center justify-center">
@@ -241,10 +244,10 @@
                             <div class="flex justify-between items-start">
                                 <div>
                                     <p class="text-gray-500">Messages</p>
-                                    <h3 class="text-2xl font-bold mt-2 text-nature">12</h3>
+                                    <h3 class="text-2xl font-bold mt-2 text-nature"><?= count(ContactForm::getListContactForms(100000))?></h3>
                                     <p class="text-yellow-500 text-sm mt-1 flex items-center">
                                         <i class="fas fa-circle mr-1"></i>
-                                        <span>5 unread</span>
+                                        <span><?= ContactForm::countUnseenForms()?> unread</span>
                                     </p>
                                 </div>
                                 <div class="stat-card-icon w-12 h-12 rounded-full flex items-center justify-center">
