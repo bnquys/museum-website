@@ -4,22 +4,24 @@ body {
     line-height: 1.7;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-weight: 600;
-}
+.eventt {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-weight: 600;
+    }
 
-h2,
-h3,
-h4 {
-    color: var(--deep-forest-cl);
-}
+    h2,
+    h3,
+    h4 {
+        color: var(--deep-forest-cl);
+    }
 
-h5 {
-    color: var(--dark-cl);
+    h5 {
+        color: var(--dark-cl);
+    }
 }
 
 .event-header {

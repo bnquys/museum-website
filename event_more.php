@@ -27,7 +27,7 @@
     </div>
 
     <!-- Main Content -->
-    <section class="py-5">
+    <section class="py-5 eventt">
         <div class="container">
             <div class="row g-4">
                 <!-- Event Details -->

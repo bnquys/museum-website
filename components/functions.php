@@ -32,11 +32,6 @@
 						<strong>Saturday:</strong> 10am - 5pm <br>
 						<strong>Sunday:</strong> 12pm - 5pm
 					</h5>
-                    <!-- <button
-                        class="btn btn-success rounded-0 fw-bold text-uppercase fs-6"
-                    >
-                        Learn More
-                    </button> -->
                 </div>
             </div>
         </div>

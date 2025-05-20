@@ -1,6 +1,6 @@
 <?php
     $css = "user";
-    $title = $name = "<Name> Profile | Our Museum";
+    $title = $name = "<Name> Profile";
     include "components/first.php"; 
 
     require_once realpath(__DIR__."/vendor/autoload.php");
