@@ -32,12 +32,28 @@
                 $mail->isHTML(true);
                 $mail->Subject = $subject;
                 $mail->Body    = $body;
+                $mail->AltBody = strip_tags($body);
 
                 $mail->send();
                 return;
             } catch (Exception $e) {
                 return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
+        }
+
+        public static function sendRenderedMailFromFile($toAddress, $toName, $subject, $templateFilePath, array $data = []) {
+            if (!file_exists($templateFilePath)) {
+                return "Template file not found: $templateFilePath";
+            }
+
+            $templateHTML = file_get_contents($templateFilePath);
+
+            // Thay thế các placeholder dạng {key}
+            foreach ($data as $key => $value) {
+                $templateHTML = str_replace('{' . $key . '}', htmlspecialchars($value), $templateHTML);
+            }
+
+            return self::sendMail($toAddress, $toName, $subject, $templateHTML);
         }
     }
 ?>

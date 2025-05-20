@@ -4,6 +4,7 @@ require_once realpath(__DIR__."/../../vendor/autoload.php");
 use Museum\Object\Order;
 use Museum\Object\Payment;
 use Museum\Object\Ticket;
+use Museum\Utils\Mailer;
 
 // Get the action and id from the URL
 $action = $_GET['action'] ?? 'list';
@@ -13,6 +14,20 @@ $viewId = $_GET['viewId'] ?? null;
 // Handle marking payment as paid
 if ($paidId) {
     $payment = Payment::paid($paidId);
+
+        $data = [
+        'name' => 'John Doe',
+        'id' => 'ABC123456'
+    ];
+
+    Mailer::sendRenderedMailFromFile(
+        '2uy.9dragons@gmail.com',
+        'John Doe',
+        'Ticket Confirmation',
+        __DIR__ . '/booking_email.html',
+        $data
+    );
+
     header("Location: dashboard.php?page=payment");  // Redirect after processing
     exit;
 }
