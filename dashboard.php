@@ -4,8 +4,19 @@
 	$title = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
+	use Museum\Object\AccountRole;
 
-	$userAdmin = $accountLogin->username;
+	if (isset($accountLogin)) {
+		$userAdmin = $accountLogin->username;
+	} else {
+		header('Location: portal.php');
+		exit;
+	}
+
+	if ($accountLogin->hasRole(AccountRole::USER)) {
+		header('Location: notfound404.html');
+		exit;
+	}
 ?>
 <div class="container-fluid bg-success d-md-none sticky-top">
 	<nav class="nav">
@@ -54,7 +65,7 @@
 	</nav>
 </div>
 <div class="row container-fluid">
-	<div class="col-auto p-0 d-none d-md-inline">
+	<div class="col-md-2 p-0 d-none d-md-inline">
 		<aside class="sticky-top bg-success">
 			<button
 				class="d-flex p-2 gap-1 btn btn-transparent text-light"
@@ -117,12 +128,14 @@
 						<p class="m-0">Gallery</p>
 					</a>
 				</li>
-				<li class="list-group-item">
-					<a href="dashboard.php?page=account" class="d-flex gap-2 text-light">
-						<i class="bi bi-balloon"></i>
-						<p class="m-0">Account</p>
-					</a>
-				</li>
+				<?php if($accountLogin->hasRole(AccountRole::ROOT)): ?>
+					<li class="list-group-item">
+						<a href="dashboard.php?page=account" class="d-flex gap-2 text-light">
+							<i class="bi bi-balloon"></i>
+							<p class="m-0">Account</p>
+						</a>
+					</li>
+				<?php endif;?>
 				<li class="list-group-item">
 					<a href="dashboard.php?page=contact" class="d-flex gap-2 text-light">
 						<i class="bi bi-balloon"></i>
@@ -135,11 +148,17 @@
 						<p class="m-0">Carousel</p>
 					</a>
 				</li>
+				<li class="list-group-item">
+					<a href="user.php?action=log-out" class="d-flex gap-2 text-light">
+						<i class="bi bi-balloon"></i>
+						<p class="m-0">Log out</p>
+					</a>
+				</li>
 			</ul>
 		</aside>
 	</div>
 
-	<div class="col">
+	<div class="col-md-10">
 		<?php
 		if (isset($_GET['page'])) {
 			$func = $_GET['page'];
@@ -167,6 +186,10 @@
 					include 'components/dashboard/event_dashboard.php';
 					break;
 				case 'account':
+					if (!$accountLogin->hasRole(AccountRole::ROOT)) {
+						header("Location: notfound404.html");
+						exit;
+					}
 					include 'components/dashboard/account_dashboard.php';
 					break;
 				case 'contact':

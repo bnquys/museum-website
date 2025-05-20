@@ -17,9 +17,18 @@ $emailDisplay = $register['user']['email'];
 $isChangePassword = $_SESSION['is_change_password'] ?? false;
 
 // Gửi mã xác nhận nếu chưa gửi
-// Mailer::sendMail($emailDisplay, $register['user']['name'], "Mã xác nhận của bạn", $register['account']['activateCode']);
 if (!isset($_SESSION['activate_sent'])) {
-    Mailer::sendMail($emailDisplay, $register['user']['name'], "Your confirmation code", $register['account']['activateCode']);
+	$mailer = new Mailer($emailDisplay, $register['user']['name']);
+	$mailer->setSubject("Your confirmation code");
+
+	$data = [
+		'user_name' => $register['user']['name'],
+		'activation_code' => $register['account']['activateCode']
+	];
+
+	$mailer->setBodyFromTemplate(__DIR__.'/active_template.html', $data);
+	$mailer->send();
+
     $_SESSION['activate_sent'] = true;
 }
 

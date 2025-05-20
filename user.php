@@ -5,6 +5,12 @@
 
     require_once realpath(__DIR__."/vendor/autoload.php");
 
+    if (!isset($accountLogin)) {
+        header('Location: portal.php');
+        exit;
+    }
+
+    use Museum\Object\AccountRole;
     use Museum\Object\Language;
     use Museum\Utils\FileUploader;
 
@@ -390,6 +396,7 @@
                                     >
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
+                                <?php if(!$accountLogin->hasRole(AccountRole::USER)):?>
                                 <a
                                     href="dashboard.php"
                                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
@@ -397,6 +404,7 @@
                                     <span><i class="bi bi-speedometer2 me-2"></i>Go to Dashboard</span>
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
+                                <?php endif;?>
                                 <a
                                     href="?action=log-out"
                                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger"
