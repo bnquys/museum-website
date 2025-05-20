@@ -91,6 +91,7 @@
         </div>
 
         <!-- Contact Info Column -->
+        <?php 	$museum = $dataManager->read('museum_info');?>
         <div class="col-lg-6">
             <!-- Contact Cards -->
             <div class="row g-3 mb-4">
@@ -112,8 +113,7 @@
                                     <p
                                         class="card-text text-muted mb-0"
                                     >
-                                        465 Huntington Avenue<br />Boston,
-                                        MA 02115
+                                        <?= $museum['address']?>
                                     </p>
                                 </div>
                             </div>
@@ -138,8 +138,7 @@
                                     <p
                                         class="card-text text-muted mb-0"
                                     >
-                                        +1 (617) 267-9300<br />Mon-Fri,
-                                        9am-5pm
+                                        <?= $museum['phone']?>
                                     </p>
                                 </div>
                             </div>
@@ -164,7 +163,7 @@
                                     <p
                                         class="card-text text-muted mb-0"
                                     >
-                                        info@mfa.org<br />visitors@mfa.org
+                                        <?= $museum['email']?>
                                     </p>
                                 </div>
                             </div>
@@ -189,8 +188,7 @@
                                     <p
                                         class="card-text text-muted mb-0"
                                     >
-                                        Mon-Fri: 10am-5pm<br />Sat-Sun:
-                                        9am-6pm
+                                        <?= str_replace(',', '<br>', $museum['summary'])?>
                                     </p>
                                 </div>
                             </div>

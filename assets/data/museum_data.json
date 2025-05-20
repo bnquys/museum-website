@@ -1,55 +1,55 @@
 [
-    {
-        "id": "museum_info",
-        "name": "Our Museum",
-        "address": "19 Nguyễn Hữu Thọ, phường Tân Phong, Quận 7, TP. Hồ Chí Minh",
-        "email": "tonducthanguniversity@tdtu.edu.vn",
-        "phone": "(028) 37 755 035",
-        "opening_hours": {
-            "monday": {
-                "opening": "10:00",
-                "closing": "16:00",
-                "closed": false
-            },
-            "tuesday": {
-                "opening": "10:00",
-                "closing": "16:00",
-                "closed": false
-            },
-            "wednesday": {
-                "opening": "10:00",
-                "closing": "16:00",
-                "closed": false
-            },
-            "thursday": {
-                "opening": "10:00",
-                "closing": "16:00",
-                "closed": false
-            },
-            "friday": {
-                "opening": "10:00",
-                "closing": "16:00",
-                "closed": false
-            },
-            "saturday": {
-                "opening": "11:00",
-                "closing": "17:00",
-                "closed": false
-            },
-            "sunday": {
-                "opening": "11:00",
-                "closing": "17:00",
-                "closed": false
-            }
-        },
-        "summary": "Open: Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm"
-    },
-    {
-        "id": "museum_about",
-        "image": "assets\/img\/879-1920x1080.jpg",
-        "introduction": {
-            "title": "<h3>We Realize that<br>there are reduced<br>Wastege Stand out<\/h3>",
-            "content": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit eveniet fugiat quo quas placeat praesentium nisi adipisci perferendis enim qui omnis voluptas quam quisquam neque, vero magnam aliquam id laboriosam. Eligendi atque, voluptates dolorem praesentium molestiae deserunt ab, quibusdam eum, voluptatem ullam rem mollitia recusandae quam cum tenetur cumque sequi.<\/p>"
-        }
-    }
+	{
+		"id": "museum_info",
+		"name": "Our Museum",
+		"address": "19 Nguyễn Hữu Thọ, phường Tân Phong, Quận 7, TP. Hồ Chí Minh",
+		"email": "tonducthanguniversity@tdtu.edu.vn",
+		"phone": "(028) 37 755 035",
+		"opening_hours": {
+			"monday": {
+				"opening": "10:00",
+				"closing": "16:00",
+				"closed": false
+			},
+			"tuesday": {
+				"opening": "10:00",
+				"closing": "16:00",
+				"closed": false
+			},
+			"wednesday": {
+				"opening": "10:00",
+				"closing": "16:00",
+				"closed": false
+			},
+			"thursday": {
+				"opening": "10:00",
+				"closing": "16:00",
+				"closed": false
+			},
+			"friday": {
+				"opening": "10:00",
+				"closing": "16:00",
+				"closed": false
+			},
+			"saturday": {
+				"opening": "11:00",
+				"closing": "17:00",
+				"closed": false
+			},
+			"sunday": {
+				"opening": "11:00",
+				"closing": "17:00",
+				"closed": false
+			}
+		},
+		"summary": "Mon-Fri: 10am - 4pm, Sat: 10am - 5pm, Sun: 12pm - 5pm"
+	},
+	{
+		"id": "museum_about",
+		"image": "assets/img/879-1920x1080.jpg",
+		"introduction": {
+			"title": "<h3>We Realize that<br>there are reduced<br>Wastege Stand out</h3>",
+			"content": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit eveniet fugiat quo quas placeat praesentium nisi adipisci perferendis enim qui omnis voluptas quam quisquam neque, vero magnam aliquam id laboriosam. Eligendi atque, voluptates dolorem praesentium molestiae deserunt ab, quibusdam eum, voluptatem ullam rem mollitia recusandae quam cum tenetur cumque sequi.</p>"
+		}
+	}
 ]
