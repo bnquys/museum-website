@@ -1,6 +1,7 @@
 <?php
 require_once realpath(__DIR__."/../../vendor/autoload.php");
 
+use Museum\Object\Account;
 use Museum\Object\Order;
 use Museum\Object\Payment;
 use Museum\Object\Ticket;
@@ -11,16 +12,17 @@ $action = $_GET['action'] ?? 'list';
 $paidId = $_GET['paidId'] ?? null;
 $viewId = $_GET['viewId'] ?? null;
 
+$order = Order::fromId($viewId);
+
 // Handle marking payment as paid
 if ($paidId) {
     $payment = Payment::paid($paidId);
 
-    $customerEmail = '2uy.9dragons@gmail.com';
-    $customerName = 'John Doe';
-    $mailer = new Mailer($customerEmail, $customerName);
+    $customer = Account::getByUsername($order->username)->getUser();
+    $mailer = new Mailer($customer->email, $customer->name);
 
     $data = [
-        'name' => $customerName,
+        'name' => $customer->name,
         'id' => $paidId
     ];
 
@@ -83,7 +85,6 @@ if ($paidId) {
         <h2 class="mb-4">Order Details</h2>
 
         <?php 
-        $order = Order::fromId($viewId);
         $payment = Payment::fromOrderId($viewId);
         ?>
 
