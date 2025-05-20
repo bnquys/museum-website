@@ -124,3 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		</p>
 	</form>
 </div>
+<script>
+    $(document).ready(function () {
+        $('title').text('Sign up | Museum');
+    });
+</script>

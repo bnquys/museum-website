@@ -28,6 +28,91 @@
             $this->displayOrder = $displayOrder;
         }
 
+        public static function getLatestBlog() {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("
+                SELECT Id, Username, Title, Summary, Content, ImageUrl, UploadDate, IsShow, DisplayOrder
+                FROM Blog
+                WHERE IsShow = TRUE
+                ORDER BY UploadDate DESC
+                LIMIT 1
+            ");
+        
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
+        
+            if (!$stmt->execute()) {
+                die("Execute failed: " . $stmt->error);
+            }
+        
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+        
+            $stmt->close();
+            $conn->close();
+        
+            if ($row) {
+                return new Blog(
+                    $row["Id"],
+                    $row["Username"],
+                    $row["Title"],
+                    $row["Summary"],
+                    $row["Content"],
+                    $row["ImageUrl"],
+                    $row["UploadDate"],
+                    $row["IsShow"],
+                    $row["DisplayOrder"]
+                );
+            }
+        
+            return null;
+        }
+        
+        public static function getBlogsThisWeek() {
+            $conn = Database::Connect();
+        
+            $stmt = $conn->prepare("
+                SELECT Id, Username, Title, Summary, Content, ImageUrl, UploadDate, IsShow, DisplayOrder
+                FROM Blog
+                WHERE IsShow = TRUE
+                AND UploadDate >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                AND UploadDate <= DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY)
+                ORDER BY UploadDate DESC
+            ");
+        
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
+        
+            if (!$stmt->execute()) {
+                die("Execute failed: " . $stmt->error);
+            }
+        
+            $result = $stmt->get_result();
+            $list = [];
+        
+            while ($row = $result->fetch_assoc()) {
+                $list[] = new Blog(
+                    $row["Id"],
+                    $row["Username"],
+                    $row["Title"],
+                    $row["Summary"],
+                    $row["Content"],
+                    $row["ImageUrl"],
+                    $row["UploadDate"],
+                    $row["IsShow"],
+                    $row["DisplayOrder"]
+                );
+            }
+        
+            $stmt->close();
+            $conn->close();
+        
+            return $list;
+        }
+        
         public static function getListBlog($limit=100000) {
             $conn = Database::Connect();
 

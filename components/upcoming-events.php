@@ -1,3 +1,8 @@
+<?php
+	use Museum\Object\Event;
+	$upcomings = Event::getUpcomingEvents();
+?>
+
 <section class="container-fluid py-6 pb-0">
 	<div class="container">
 		<h2 name="title" class="text-center mv-bt">Checkout our Upcoming Events</h2>
@@ -7,69 +12,29 @@
 	</div>
 </section>
 
-<style>
-	.item:nth-child(1) {
-	background-image: url("https://picsum.photos/1200/1200?random=1");
-	background-position: 72% 35%;
-	}
 
-	.item:nth-child(2) {
-	background-image: url("https://picsum.photos/1200/1200?random=2");
-	background-position: 60% 8%;
-	}
-
-	.item:nth-child(3) {
-	background-image: url("https://picsum.photos/1200/1200?random=3");
-	background-position: 52% 8%;
-	}
-
-	.item:nth-child(4) {
-	background-image: url("https://picsum.photos/1200/1200?random=4");
-	background-position: 45% 8%;
-	}
-
-	.item:nth-child(5) {
-	background-image: url("https://picsum.photos/1200/1200?random=5");
-	background-position: 45% 25%;
-	}
-
-	.item:nth-child(6) {
-	background-image: url("https://picsum.photos/1200/1200?random=6");
-	background-position: 65% 2%;
-	}
-</style>
 
 <section class="events mv-bt">
 	<div class="container-event">
-		<div class="item">
-			<div class="quote">
-				<p>Adopt the pace of nature: her secret is patience.<span>Ralph Waldo Emerson</span></p>
+		<?php foreach ($upcomings as $index => $event): 
+			// Sinh background-position dựa trên index (0-based)
+			$horizontal = 45 + (10 * ($index % 4)); // ví dụ: 45%, 55%, 65%, 75%
+			$vertical = [8, 25, 35, 2][$index % 4]; // lặp lại 4 vị trí dọc phổ biến
+		?>
+			<div 
+				class="item" 
+				style="
+					background-image: url('<?= $event->imgUrl ?>');
+					background-size: cover;
+					background-position: <?= $horizontal ?>% <?= $vertical ?>%
+				"
+			>
+				<a href="more.php?type=event&id=<?= $event->id ?>" class="quote text-decoration-none text-white">
+					<p class="fw-bold"><?= htmlspecialchars($event->title) ?><br>
+					<span class="fw-light"><?= date('F j, Y', strtotime($event->timeStart)) ?></span></p>
+				</a>
 			</div>
-		</div>
-		<div class="item">
-			<div class="quote">
-				<p>Look deep into nature, and then you will understand everything better.<span>Albert Einstein</span></p>
-			</div>
-		</div>
-		<div class="item">
-			<div class="quote">
-				<p>In every walk with nature one receives far more than he seeks.<span>John Muir</span></p>
-			</div>
-		</div>
-		<div class="item">
-			<div class="quote">
-				<p>The hardest choices require the strongest wills.<span>Thanos</span></p>
-			</div>
-		</div>
-		<div class="item">
-			<div class="quote">
-				<p>The earth has music for those who listen.<span>William Shakespeare</span></p>
-			</div>
-		</div>
-		<div class="item">
-			<div class="quote">
-				<p>To forget how to dig the earth and to tend the soil is to forget ourselves.<span>Mahatma Gandhi</span></p>
-			</div>
-		</div>
+		<?php endforeach; ?>
+
 	</div>
 </section>

@@ -170,3 +170,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	</script>
 
 </div>
+<script>
+    $(document).ready(function () {
+        $('title').text('Activate | Museum');
+    });
+</script>
