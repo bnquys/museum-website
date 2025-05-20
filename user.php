@@ -197,12 +197,14 @@
                                 <span>Visit History</span>
                             </a>
                         </li>
+                        <?php if (!$accountLogin->hasRole(AccountRole::USER)):?>
                         <li class="nav-item p-2 mb-1">
                             <a class="nav-link d-flex align-items-center" href="dashboard.php">
                                 <i class="bi bi-speedometer2 me-3"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
+                        <?php endif;?>
                         <li class="nav-item p-2 mb-1">
                             <a class="nav-link d-flex align-items-center text-danger" href="#">
                                 <i class="bi bi-trash-fill me-3"></i>

@@ -15,19 +15,22 @@ use Museum\Object\Language;
 use Museum\Object\Order;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $visitDate = $_POST['visitDate'];
-    $visitTime = $_POST['visitTime'];
-    $ticketQuantities = $_POST['ticket_qty'];
-    $wantGuide = isset($_POST['want_guide']) ? true : false;
-    $selectedGuide = $_POST['guide'] ?? null;
+    if (isset($_POST['confirm_paid'])) {
+        $visitDate = $_POST['visitDate'];
+        $visitTime = $_POST['visitTime'];
+        $ticketQuantities = $_POST['ticket_qty'];
+        $wantGuide = isset($_POST['want_guide']) ? true : false;
+        $selectedGuide = $_POST['guide'] ?? null;
 
-    if (!empty($accountLogin)) {
-        $username = $accountLogin->username;
-        $order = new Order($username, $ticketQuantities, $visitDate, $visitTime, $selectedGuide);
-        $order->create();
+        if (!empty($accountLogin)) {
+            $username = $accountLogin->username;
+            $order = new Order($username, $ticketQuantities, $visitDate, $visitTime, $selectedGuide);
+            $order->create();
 
-        header("Location: ticket.php?success=1");
-        exit;
+            header("Location: ticket.php?success=1");
+            // echo json_encode(["status" => "success"]);
+            exit;
+        }
     }
 }
 
@@ -204,43 +207,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Checkout Overlay -->
     <div id="checkoutOverlay" style="display: none">
         <div class="overlay-bg"></div>
-        <div class="overlay-content text-center">
-            <h4>Scan to Complete Your Purchase</h4>
-            <img
-                src="https://api.qrserver.com/v1/create-qr-code/?data=SamplePaymentLink123&size=200x200"
-                alt="QR Code"
-            />
-            <p class="mt-3">
-                Please scan this QR code to finalize your booking.
-            </p>
+        <div class="overlay-content container py-4 px-5 rounded shadow-lg bg-white" style="max-width: 800px; display: flex; gap: 2rem;">
+            <!-- Terms Section -->
+            <div class="text-start" style="flex: 1;">
+                <h5 class="fw-bold mb-3">Terms & Notes</h5>
+                <ul class="text-muted fs-5 ps-3">
+                    <li>Please complete your payment within 15 minutes.</li>
+                    <li>Tickets are valid only for the selected date and time.</li>
+                    <li>Guide bookings are non-refundable once confirmed.</li>
+                    <li>Show this QR code at the entrance.</li>
+                    <li>Keep your confirmation email as proof of purchase.</li>
+                </ul>
+                <button
+                    id="markPaidBtn"
+                    class="btn btn-success mt-4 px-4 py-2 fw-bold"
+                    title="Are you sure you've completed your payment?"
+                    data-bs-toggle="tooltip"
+                >
+                    Mark as Paid
+                </button>
+                <p id="btnTimer" class="text-muted small mt-2"></p>
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="text-center" style="flex: 1;" id="qrContent">
+                <div id="qrAmount" class="text-danger fw-bold fs-3 mb-2">$0.00</div>
+                <h5 class="fw-bold mb-3">Scan to Pay</h5>
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?data=SamplePaymentLink123&size=200x200"
+                    alt="QR Code"
+                    class="mb-3"
+                />
+                <p class="text-muted small">
+                    Use your banking app or e-wallet to complete payment.
+                </p>
+                <p id="qrTimer" class="text-muted small mt-2"></p>
+            </div>
+            <!-- Timeout Message -->
+            <div class="text-center d-none" id="qrExpiredMessage" style="flex: 1;">
+                <h5 class="fw-bold text-danger mb-3">Time Expired</h5>
+                <p class="text-muted">The QR code has expired. Please restart the checkout process.</p>
+            </div>
+
         </div>
     </div>
+
 </section>
 <script>
     $(document).ready(function () {
         const visitDate = document.getElementById("visitDate");
         const visitTime = document.getElementById("visitTime");
-
-        // const availability = {
-        //     "2025-04-16": ["09:00 AM", "10:30 AM", "01:00 PM", "03:00 PM"],
-        //     "2025-04-17": ["10:00 AM", "12:00 PM", "02:00 PM"],
-        //     "2025-04-18": ["08:30 AM", "11:00 AM", "01:30 PM", "04:00 PM"],
-        //     // Default fallback
-        //     default: ["09:00 AM", "11:00 AM", "02:00 PM"],
-        // };
-
-        // visitDate.addEventListener("change", () => {
-        //     const selected = visitDate.value;
-        //     const times = availability[selected] || availability["default"];
-
-        //     visitTime.innerHTML = "";
-        //     times.forEach((time) => {
-        //         const opt = document.createElement("option");
-        //         opt.value = time;
-        //         opt.textContent = time;
-        //         visitTime.appendChild(opt);
-        //     });
-        // });
 
         // Initially hide the guide list
         $(".guide-list").hide();
@@ -378,14 +394,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if (hasAnyData) {
                 miniBill.innerHTML = `
-            ${dateTimeHTML}
-            ${participantsHTML}
-            ${guideHTML}
-            <p class="fw-bold fs-5 mt-1">Total: $${total.toFixed(2)}</p>
-        `;
+                    ${dateTimeHTML}
+                    ${participantsHTML}
+                    ${guideHTML}
+                    <p class="fw-bold fs-5 mt-1">Total: $${total.toFixed(2)}</p>
+                `;
             } else {
                 miniBill.innerHTML = "<p>No items selected.</p>";
             }
+            // Cập nhật số tiền trên mã QR
+            const qrAmountEl = document.getElementById("qrAmount");
+            if (qrAmountEl) {
+                qrAmountEl.textContent = `$${total.toFixed(2)}`;
+            }
+
         }
 
         const inputs = document.querySelectorAll('input[type="number"]');
@@ -399,31 +421,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         visitTime.addEventListener("change", calculateTotal);
 
         calculateTotal();
-    });
 
-    document.querySelector(".button-92").addEventListener("click", function (event) {
-        const visitDate = document.getElementById("visitDate").value;
-        const visitTime = document.getElementById("visitTime").value;
-        const inputs = document.querySelectorAll('input[type="number"]');
-        const errorMsg = document.getElementById("checkoutError");
+        $('#markPaidBtn').on('click', function () {
+            Swal.fire({
+                title: 'Confirm Payment',
+                text: 'Are you sure you’ve completed your payment?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, I paid',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = $('#ticketForm').serialize();
 
-        let hasParticipant = false;
-        inputs.forEach((input) => {
-            if (parseInt(input.value) > 0) {
-                hasParticipant = true;
-            }
+                    $.post('ticket.php', formData + '&confirm_paid=1', function (response) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Your booking has been recorded.',
+                            icon: 'success'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    });
+                }
+            });
         });
 
-        if (!visitDate || !visitTime || !hasParticipant) {
-            event.preventDefault(); 
-            errorMsg.textContent = "Please select Date, Time, and at least one participant before checking out.";
-            errorMsg.style.display = "block";
-            return;
-        }
-
-        errorMsg.style.display = "none";
     });
-
 
     document
         .getElementById("checkoutOverlay")
@@ -440,6 +463,97 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         history.replaceState(null, '', window.location.pathname);
     }
 </script>
+<script>
+    function startPaymentTimer() {
+        const markBtn = document.getElementById("markPaidBtn");
+        const qrSection = document.getElementById("qrContent");
+        const expiredMsg = document.getElementById("qrExpiredMessage");
+        const qrTimerDisplay = document.getElementById("qrTimer");
+        const btnTimerDisplay = document.getElementById("btnTimer");
+
+        // === Button Timer (5s) ===
+        let btnSeconds = 5;
+        markBtn.disabled = true;
+
+        const btnInterval = setInterval(() => {
+            btnTimerDisplay.textContent = `You can click "Mark as Paid" in ${btnSeconds} second(s)...`;
+            btnSeconds--;
+            if (btnSeconds < 0) {
+                clearInterval(btnInterval);
+                markBtn.disabled = false;
+                btnTimerDisplay.textContent = "";
+            }
+        }, 1000);
+
+        // === QR Expiry Timer (5 minutes) ===
+        let qrSecondsRemaining = 5 * 60;
+
+        function updateQrCountdown() {
+            const min = Math.floor(qrSecondsRemaining / 60);
+            const sec = qrSecondsRemaining % 60;
+            qrTimerDisplay.textContent = `QR code expires in ${min}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        updateQrCountdown();
+
+        const qrInterval = setInterval(() => {
+            qrSecondsRemaining--;
+
+            if (qrSecondsRemaining <= 0) {
+                clearInterval(qrInterval);
+
+                qrSection.classList.add("d-none");
+                expiredMsg.classList.remove("d-none");
+                qrTimerDisplay.textContent = "";
+                return;
+            }
+
+            updateQrCountdown();
+        }, 1000);
+    }
+
+    // Trigger on Checkout click
+    document.querySelector(".button-92").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const visitDate = document.getElementById("visitDate").value;
+        const visitTime = document.getElementById("visitTime").value;
+        const inputs = document.querySelectorAll('input[type="number"]');
+        const errorMsg = document.getElementById("checkoutError");
+
+        let hasParticipant = false;
+        inputs.forEach((input) => {
+            if (parseInt(input.value) > 0) {
+                hasParticipant = true;
+            }
+        });
+
+        if (!visitDate || !visitTime || !hasParticipant) {
+            errorMsg.textContent = "Please select Date, Time, and at least one participant before checking out.";
+            errorMsg.style.display = "block";
+            return;
+        }
+
+        errorMsg.style.display = "none";
+
+        // Reset display
+        document.getElementById("qrContent").classList.remove("d-none");
+        document.getElementById("qrExpiredMessage").classList.add("d-none");
+
+        document.getElementById("checkoutOverlay").style.display = "block";
+        document.body.style.overflow = "hidden";
+
+        startPaymentTimer();
+    });
+
+    // Bootstrap tooltip
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+</script>
+
 <?php 
 include "components/footer.php";
 include "components/last.php";

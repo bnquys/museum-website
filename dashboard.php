@@ -48,7 +48,7 @@
 	        </div>
         </a>
         <div class="offcanvas-body px-0" id="offcanvas-body">
-            <ul class="list-group">
+            <ul class="list-group" id="sidebar-mobile">
                 <li class="sidebar-item px-4 py-3">
                     <a href="index.php" class="d-flex gap-3 items-center text-white">
                         <i class="fas fa-home"></i>
@@ -125,67 +125,7 @@
                 <p class="text-green-200 text-sm mt-1">Welcome, <?php echo $userAdmin; ?></p>
             </div>
             <nav class="mt-4 flex-1">
-                <ul class="list-group">
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="index.php" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-home"></i>
-                            <span>Back to website</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=museum" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-info-circle"></i>
-                            <span>General</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=blog" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-newspaper"></i>
-                            <span>Blog</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=event" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Event</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=ticket" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-ticket-alt"></i>
-                            <span>Ticket</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=payment" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Payment</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=artifact" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-images"></i>
-                            <span>Gallery</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=account" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-user-cog"></i>
-                            <span>Account</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=contact" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-envelope"></i>
-                            <span>Contact Message</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=carousel" class="d-flex gap-3 items-center text-white text-lg">
-                            <i class="fas fa-sliders-h"></i>
-                            <span>Carousel</span>
-                        </a>
-                    </li>
+                <ul class="list-group" id="sidebar-desktop">
                 </ul>
             </nav>
             <div class="p-6 border-t border-green-600">
@@ -195,7 +135,7 @@
                     </div>
                     <div class="ml-3">
                         <p class="font-medium text-white"><?php echo $userAdmin; ?></p>
-                        <p class="text-xs text-green-200">Admin</p>
+                        <p class="text-xs text-green-200"><?= $accountLogin->roleId?></p>
                     </div>
                 </div>
             </div>
@@ -244,12 +184,6 @@
                         <div>
                             <h2 class="text-2xl font-bold text-nature">Dashboard Overview</h2>
                             <p class="text-gray-600">Welcome back! Here's what's happening today.</p>
-                        </div>
-                        <div class="mt-4 md:mt-0">
-                            <button class="btn-nature px-4 py-2 rounded-lg flex items-center">
-                                <i class="fas fa-plus mr-2"></i>
-                                <span>Quick Action</span>
-                            </button>
                         </div>
                     </div>
                     
@@ -412,6 +346,30 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            const $mobileItems = $('#sidebar-mobile').children().clone();
+
+            $mobileItems.each(function () {
+                $(this).removeClass('px-4').addClass('px-6');
+                const $link = $(this).find('a');
+                $link.removeClass('text-white').addClass('text-white text-lg');
+            });
+
+            $('#sidebar-desktop').append($mobileItems);
+
+            const currentPage = new URLSearchParams(window.location.search).get('page');
+            $('.sidebar-item').each(function () {
+                const href = $(this).find('a').attr('href');
+                if (currentPage && href.includes('page=' + currentPage)) {
+                    $(this).addClass('active');
+                } else if (!currentPage && href === 'index.php') {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
+
 </body>
 
 

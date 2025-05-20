@@ -81,3 +81,8 @@
 		</p>
 	</form>
 </div>
+<script>
+    $(document).ready(function () {
+        $('title').text('Login | Museum');
+    });
+</script>
