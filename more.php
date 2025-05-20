@@ -17,14 +17,15 @@
     switch ($type) {
         case 'blog':
             $content = Blog::getById($id);
-            $type = 'Blog';
             $detail = $content->content;
             break;
         case 'exhibition':
             $content = Event::getById($id)->getType();
+            $detail = $content->description;
             break;
         case 'academy':
             $content = Event::getById($id)->getType();
+            $detail = $content->description;
             break;
         default:
             // Redirect or show error if type is invalid
@@ -39,11 +40,11 @@
 
 ?>
 <!-- Event Header -->
-<div class="event-header">
+<div class="event-header" style="background-image: linear-gradient(135deg, var(--dark-cl-rgba), var(--normal-cl-rgba)), url('<?= $content->imgUrl?>'); background-size: cover; background-position: center; background-attachment: fixed;">
 	<div class="container position-relative z-index-2">
 		<div class="row">
 			<div class="col-lg-12">
-				<span class="info-badge mb-4 d-inline-block"><?= $type?></span>
+				<span class="info-badge mb-4 d-inline-block" style="text-transform:capitalize;"><?= $type?></span>
 				<h1 class="event-title display-3 fw-bold mb-4">
 					<?= htmlspecialchars($content->title)?>
 				</h1>
@@ -64,250 +65,151 @@
 				<div class="event-details-card mb-4">
 					<?php
                         $html = new HtmlManipulator($detail);
-                        $html->addClass('img', "img-fluid rounded-3 mb-4
-					shadow"); $html->addClass('h3', "mt-5 mb-4");
-					$html->addClass('ul','list-unstyled'); $html->addClass('li',
-					"mb-3 py-2"); $html->addClass('h4', 'mt-4 mb-3');
-					$html->print(); ?>
+                        $html->addClass('img', "img-fluid rounded-3 mb-4 shadow"); $html->addClass('h3', "mt-5 mb-4");
+                        $html->addClass('ul','list-unstyled'); $html->addClass('li', "mb-3 py-2"); 
+                        $html->addClass('h4', 'mt-4 mb-3');
+                        $html->print(); ?>
 				</div>
 			</div>
 
-			<!-- Sidebar -->
-			<div class="col-lg-4">
-				<!-- Event Info Card -->
-				<div class="event-card p-4 mb-4">
-					<h3 class="h4 mb-4 fw-bold section-title">
-                        <?= htmlspecialchars($type)?> Information
-					</h3>
-                    
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="event-card p-4 mb-4">
+                    <h3 class="h4 mb-4 fw-bold section-title" style="text-transform:capitalize;">
+                        <?= htmlspecialchars($type) ?> Information
+                    </h3>
+
+                    <!-- Author -->
                     <div class="d-flex align-items-start mb-4">
                         <i class="bi bi-person-square detail-icon"></i>
                         <div>
-							<h5 class="mb-1 fw-bold">Author</h5>
-							<p class="mb-0"><?= $content->username?></p>
-						</div>
-					</div>
+                            <h5 class="mb-1 fw-bold">Author</h5>
+                            <p class="mb-0"><?= htmlspecialchars($content->username) ?></p>
+                        </div>
+                    </div>
 
-					<div class="d-flex align-items-start mb-4">
-                        <i class="bi bi-calendar-event detail-icon"></i>
-						<div>
-                            <h5 class="mb-1 fw-bold">Date</h5>
-							<p class="mb-0"><?= $content->uploadDate?></p>
-						</div>
-					</div>
-                    
-                    <?php if ($type !== "Blog"):?>
-					<div class="d-flex align-items-start mb-4">
-						<i class="bi bi-clock detail-icon"></i>
-						<div>
-							<h5 class="mb-1 fw-bold">Opening Hours</h5>
-							<p class="mb-0">
-								Monday - Friday: 9:00 AM - 6:00 PM<br />
-								Saturday - Sunday: 10:00 AM - 8:00 PM
-							</p>
-						</div>
-					</div>
+                    <!-- Blog Specific Info -->
+                    <?php if ($type === "blog"): ?>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-calendar2-date detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Published On</h5>
+                                <p class="mb-0"><?= date("F j, Y", strtotime($content->uploadDate)) ?></p>
+                            </div>
+                        </div>
 
-					<div class="d-flex align-items-start mb-4">
-						<i class="bi bi-geo-alt detail-icon"></i>
-						<div>
-							<h5 class="mb-1 fw-bold">Location</h5>
-							<p class="mb-0">
-								Green Heritage Museum<br />
-								Botanical Wing, 2nd Floor<br />
-								123 Nature Way, Greensville
-							</p>
-						</div>
-					</div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-file-earmark-text detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Type</h5>
+                                <p class="mb-0">Editorial Blog</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
-					<div class="d-flex align-items-start mb-4">
-						<i class="bi bi-ticket-perforated detail-icon"></i>
-						<div>
-							<h5 class="mb-1 fw-bold">Admission</h5>
-							<p class="mb-0">
-								All exhibitions are free with Museum admission.
-							</p>
-						</div>
-					</div>
-                    <?php endif;?>
-				</div>
+                    <!-- Academy Specific Info -->
+                    <?php if ($type === "academy" && $content instanceof \Museum\Object\Academy): ?>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-mic detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Speaker</h5>
+                                <p class="mb-0"><?= htmlspecialchars($content->getSpeaker() ?? 'Not available') ?></p>
+                            </div>
+                        </div>
 
-				<!-- Countdown -->
-                <?php if ($type !== "Blog"):?>
-				<div class="event-card countdown mb-4">
-					<h4 class="mb-4 text-white">Exhibition Opens In:</h4>
-					<div class="row text-center">
-						<div class="col-3">
-							<div class="countdown-number" id="days">00</div>
-							<div class="countdown-label">Days</div>
-						</div>
-						<div class="col-3">
-							<div class="countdown-number" id="hours">00</div>
-							<div class="countdown-label">Hours</div>
-						</div>
-						<div class="col-3">
-							<div class="countdown-number" id="minutes">00</div>
-							<div class="countdown-label">Minutes</div>
-						</div>
-						<div class="col-3">
-							<div class="countdown-number" id="seconds">00</div>
-							<div class="countdown-label">Seconds</div>
-						</div>
-					</div>
-				</div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-currency-dollar detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Price</h5>
+                                <p class="mb-0"><?= number_format($content->getPrice(), 2) ?> USD</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
-				<!-- Map -->
-				<div class="event-card p-4 mb-4">
-					<h3 class="h4 mb-4 fw-bold section-title">Location Map</h3>
-					<div class="map-container">
-						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256627966!2d-73.98784492453812!3d40.74844097138995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1689870033995!5m2!1sen!2sus"
-							width="100%"
-							height="100%"
-							style="border: 0"
-							allowfullscreen=""
-							loading="lazy"
-							referrerpolicy="no-referrer-when-downgrade"
-						></iframe>
-					</div>
-				</div>
-                <?php endif;?>
+                    <!-- Shared Info for Academy & Exhibition -->
+                    <?php if ($type !== "blog"): ?>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-calendar-event detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Start - End</h5>
+                                <p class="mb-0">
+                                    <?= date("F j, Y, g:i A", strtotime($content->timeStart)) ?>
+                                    <br/>
+                                    to
+                                    <br/>
+                                    <?= date("F j, Y, g:i A", strtotime($content->timeEnd)) ?>
+                                </p>
+                            </div>
+                        </div>
 
-				<!-- Included Artifacts Section -->
-                <?php if ($type === 'Exhibition'):?>
-				<div class="event-card p-4 mb-4">
-					<h3 class="h4 mb-4 fw-bold section-title">
-						Included Artifacts
-					</h3>
-					<p class="mb-4">
-						Explore these rare botanical artifacts featured in our
-						exhibition:
-					</p>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-geo-alt detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Location</h5>
+                                <p class="mb-0"><?= htmlspecialchars($content->location) ?></p>
+                            </div>
+                        </div>
 
-					<div class="row g-3">
-						<!-- Artifact 1 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-									alt="Ancient Herbarium"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Ancient Herbarium (1543)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Ancient Herbarium
-									</div>
-									<!-- <div class="artifact-year">1543</div> -->
-								</a>
-							</div>
-						</div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-clock detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Opening Hours</h5>
+                                <p class="mb-0">
+                                    Monday - Friday: 9:00 AM - 6:00 PM<br />
+                                    Saturday - Sunday: 10:00 AM - 8:00 PM
+                                </p>
+                            </div>
+                        </div>
 
-						<!-- Artifact 2 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-									alt="Linnaeus' Notebook"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Linnaeus' Notebook (1753)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Linnaeus' Notebook
-									</div>
-									<!-- <div class="artifact-year">1753</div> -->
-								</a>
-							</div>
-						</div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="bi bi-ticket-perforated detail-icon"></i>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Admission</h5>
+                                <p class="mb-0">
+                                    All exhibitions are free with Museum admission.
+                                </p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-						<!-- Artifact 3 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-									alt="Victorian Pressed Flowers"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Victorian Pressed Flowers (1865)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Victorian Pressed Flowers
-									</div>
-									<!-- <div class="artifact-year">1865</div> -->
-								</a>
-							</div>
-						</div>
+                <!-- Countdown & Map -->
+                <?php if ($type !== "blog"): ?>
+                    <div class="event-card countdown mb-4">
+                        <h4 class="mb-4 text-white"><?= ucfirst($type) ?> Opens In:</h4>
+                        <div class="row text-center">
+                            <div class="col-3">
+                                <div class="countdown-number" id="days">00</div>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="countdown-number" id="hours">00</div>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="countdown-number" id="minutes">00</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="countdown-number" id="seconds">00</div>
+                                <div class="countdown-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Artifact 4 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80"
-									alt="Darwin's Orchid Sketch"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Darwin's Orchid Sketch (1862)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Darwin's Orchid Sketch
-									</div>
-									<!-- <div class="artifact-year">1862</div> -->
-								</a>
-							</div>
-						</div>
+                    <div class="event-card p-4 mb-4">
+                        <h3 class="h4 mb-4 fw-bold section-title">Location Map</h3>
+                        <div class="map-container">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256627966!2d-73.98784492453812!3d40.74844097138995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1689870033995!5m2!1sen!2sus"
+                                width="100%" height="100%" style="border: 0" allowfullscreen=""
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
 
-						<!-- Artifact 5 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1526397751294-331021109fbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-									alt="Amazonian Plant Samples"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Amazonian Plant Samples (1921)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Amazonian Plant Samples
-									</div>
-									<!-- <div class="artifact-year">1921</div> -->
-								</a>
-							</div>
-						</div>
-
-						<!-- Artifact 6 -->
-						<div class="col-12 col-md-6">
-							<div class="artifact-container position-relative">
-								<img
-									src="https://images.unsplash.com/photo-1459411551684-2581dafc4d4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-									alt="Microscope Slides"
-									class="img-fluid artifact-image"
-								/>
-								<!-- <div class="artifact-tooltip">
-                        Microscope Slides (1898)
-                    </div> -->
-								<a href="#" class="artifact-overlay">
-									<div class="artifact-name">
-										Microscope Slides
-									</div>
-									<!-- <div class="artifact-year">1898</div> -->
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-                <?php endif;?>
-			</div>
 		</div>
 	</div>
 </section>
@@ -417,9 +319,10 @@
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    
 	// Countdown timer
 	function updateCountdown() {
-		const eventDate = new Date("June 15, 2025 09:00:00").getTime();
+        const eventDate = new Date("<?= date("Y-m-d\TH:i:s", strtotime($content->timeStart)) ?>").getTime();
 		const now = new Date().getTime();
 		const distance = eventDate - now;
 
