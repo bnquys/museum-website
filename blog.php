@@ -1,228 +1,160 @@
 <?php
-    $css = "blog_gallery";
-    $title = $banner = "Blog";
-    include "components/first.php";
-    include "components/navbar.php";
-    include "components/banner.php";
-    // require_once "object/Blog.php";
+ob_start();
+$css = "blog_gallery";
+$title = $banner = "Blog";
+include "components/first.php";
+include "components/navbar.php";
+include "components/banner.php";
+use Museum\Object\Blog;
+use Museum\Object\Comment;
+use Museum\Utils\HtmlManipulator;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $blogId = $_POST['blog_id'] ?? '';
+    $username = trim($_SESSION['login']);
+    $content = trim($_POST['comment']);
+
+    if (!empty($blogId) && !empty($username) && !empty($content)) {
+        $comment = new Comment($username, $blogId);
+
+        if (isset($_POST['submit_new'])) {
+            $comment->save($content); 
+
+        } elseif (isset($_POST['submit_edit'])) {
+            $comment->save($content);
+        }
+    }
+
+    header("Location: blog.php?id=" . urlencode($blogId) . "&scrolldown=1");
+    exit();      
+}
 ?>
 
         <?php
-            // Blog::show(10);
-            
+            $blogs = Blog::getListBlog();
         ?>
         <div class="container my-5">
             <div class="row g-4">
-                <!-- Brief Content 1 -->
+                <?php foreach($blogs as $blog):?>
                 <div
                     class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-1')"
+                    onclick="openModal('<?= $blog->id?>')"
                 >
                     <img
-                        src="assets/img/g1.jpg"
+                        src="<?= $blog->imgUrl?>"
                         class="img-fluid rounded"
                         alt="Blog Pic"
                         style="width: 150px; height: 150px; object-fit: cover"
                     />
 
                     <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                        <h5 class="blog-title">The Rise of Leaf-Based Algorithms</h5>
-                        <p class="blog-summary text-muted flex-grow-1">
-                            A glimpse into how plants might've invented machine learning way before us.
-                        </p>
-
+                        <h5 class="blog-title"><?= $blog->title?></h5>
+                        <?php
+                            $htmlSummary = new HtmlManipulator($blog->summary);
+                            $htmlSummary->addClass('p', 'blog-summary text-muted flex-grow-1');
+                            echo $htmlSummary->getHtml();
+                        ?>
                         <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 April 21, 2025</span>
-                            <span>✍️ Dr. Liana Moss, Botanical Archivist</span>
+                            <span>📅 <?= $blog->uploadDate?></span>
+                            <span>✍️ <?= $blog->username?></span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Brief Content 2 -->
-                <div
-                    class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-2')"
-                >
-                    <img
-                        src="assets/img/g2.jpg"
-                        class="img-fluid rounded"
-                        alt="Blog Pic"
-                        style="width: 150px; height: 150px; object-fit: cover"
-                    />
-
-                    <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                        <h5 class="blog-title">The Secrets of Deep Ocean Bioluminescence</h5>
-                        <p class="blog-summary text-muted flex-grow-1">
-                            Exploring the enchanting light shows of the deep sea's mysterious creatures.
-                        </p>
-                        <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 May 15, 2025</span>
-                            <span>✍️ Dr. Ethan Reed, Archaeologist</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Brief Content 3 -->
-                <div
-                    class="col-12 d-flex blog-card"
-                    onclick="openModal('modal-3')"
-                >
-                    <img
-                        src="assets/img/g3.jpg"
-                        class="img-fluid rounded"
-                        alt="Blog Pic"
-                        style="width: 150px; height: 150px; object-fit: cover"
-                    />
-
-                    <div class="ms-3 flex-grow-1 blog-brief d-flex flex-column rounded-end">
-                    <h5 class="blog-title">The Art of Mindful Gardening</h5>
-                        <p class="blog-summary text-muted flex-grow-1">
-                            Cultivating peace and creativity through the simple act of gardening.
-                        </p>
-                        <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 June 10, 2025</span>
-                            <span>✍️ Dr. Mia Chen, Marine Biologist</span>
-                        </div>                    
-                    </div>
-                </div>
-
-
+                <?php endforeach;?>
             </div>
         </div>
         
-        <!-- Modal-1 -->
-        <div id="modal-1" class="modal">
+        <?php foreach($blogs as $blog):?>
+        <div id="<?= $blog->id?>" class="modal">
             <div class="modal-box">
                 <div class="row g-0 h-100">
                     <!-- Left Picture -->
                     <div class="col-xl-4 col-12 modal-img">
-                        <img src="assets/img/g1.jpg" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
+                        <img src="<?= $blog->imgUrl?>" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
                     </div>
 
                     <!-- Full Content -->
                     <div class="col-xl-8 col-12 p-4 modal-content-scroll blog-full">
-                        <h3 class="mb-2 blog-title">The Rise of Leaf-Based Algorithms</h3>
-                        <p class="blog-summary mb-3 text-muted">
-                            Nature's neural networks — real roots of intelligence?
-                        </p>
+                        <h3 class="mb-2 blog-title"><?= $blog->title?></h3>
+                        <?php
+                            $htmlSummary = new HtmlManipulator($blog->summary);
+                            $htmlSummary->addClass('p', 'blog-summary mb-3 text-muted');
+                            echo $htmlSummary->getHtml();
 
-                        <p class="blog-lorem mb-3">
-                            While researchers race to develop intelligent machines, the forest has
-                            quietly run decentralized systems for millions of years. 
-                            Trees communicate, adapt, and respond to environmental data — and maybe even gossip 👀.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            This article dives deep into the patterns of fungal networks, leaf response
-                            systems, and how these can inspire next-gen bio-AI hybrid models. Prepare for
-                            a wild trip down Motherboard Nature 🌱🤖.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            As cities expand, wildlife adapts in surprising ways. 
-                            This article examines innovative urban designs that support biodiversity and sustainable living.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Explore case studies of cities around the world that have successfully integrated green spaces 
-                            and wildlife corridors, making urban life more harmonious with nature.
-                        </p>
+                            $htmlContent = new HtmlManipulator($blog->content);
+                            $htmlContent->addClass('p', 'blog-lorem mb-3');
+                            $htmlContent->addClass('img', 'w-100');
+                            echo $htmlContent->getHtml();
+                        ?>
 
                         <div class="d-flex justify-content-between mt-4 flex-wrap blog-meta">
-                            <span>📅 April 21, 2025</span>
-                            <span>✍️ Dr. Liana Moss, Botanical Archivist</span>
+                            <span>📅 <?= $blog->uploadDate?></span>
+                            <span>✍️ <?= $blog->username?></span>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal-2 -->
-        <div id="modal-2" class="modal">
-            <div class="modal-box">
-                <div class="row g-0 h-100">
-                    <!-- Left Picture -->
-                    <div class="col-md-4 modal-img">
-                        <img src="assets/img/g2.jpg" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
-                    </div>
-
-                    <!-- Full Content -->
-                    <div class="col-md-8 p-4 modal-content-scroll blog-full">
-                        <h3 class="mb-2 blog-title">The Secrets of Deep Ocean Bioluminescence</h3>
-                        <p class="blog-summary mb-3 text-muted">
-                            A journey into the dark, illuminating the wonders of nature's light.
-                        </p>
-
-                        <p class="blog-lorem mb-3">
-                            From the depths of the ocean, bioluminescent organisms create a stunning spectacle. 
-                            This article uncovers the science behind these natural lights and their purposes.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Discover how these creatures use light to lure prey, communicate, and evade predators.
-                            Join us in diving deep into the bioluminescent marvels that inhabit our oceans.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Mindful gardening is not just about planting; it’s about connecting with nature.
-                            This article explores how gardening can enhance mental well-being and foster creativity.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Learn techniques to cultivate your garden mindfully and discover the joy of nurturing life.
-                            Transform your outdoor space into a haven for relaxation and reflection.
-                        </p>
-
-                        <div class="d-flex justify-content-between mt-4 flex-wrap blog-meta">
-                            <span>📅 May 15, 2025</span>
-                            <span>✍️ Dr. Ethan Reed, Archaeologist</span>
-                        </div>
-                    </div>                
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal-3 -->
-        <div id="modal-3" class="modal">
-            <div class="modal-box">
-                <div class="row g-0 h-100">
-                    <!-- Left Picture -->
-                    <div class="col-md-4 modal-img">
-                        <img src="assets/img/g3.jpg" alt="pic" class="img-fluid h-100 w-100 object-fit-cover rounded-start">
-                    </div>
-
-                    <!-- Full Content -->
-                    <div class="col-md-8 p-4 modal-content-scroll blog-full">
-                        <h3 class="mb-2 blog-title">The Art of Mindful Gardening</h3>
-                        <p class="blog-summary mb-3 text-muted">
-                            Finding tranquility and inspiration in nature’s embrace.
-                        </p>
-
-                        <p class="blog-lorem mb-3">
-                            Mindful gardening is not just about planting; it’s about connecting with nature.
-                            This article explores how gardening can enhance mental well-being and foster creativity.
+                        <!-- Comments Section -->
+                        <div class="blog-comments mt-5">
+                            <h5 class="mb-3">💬 Comment</h5>
                             
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Learn techniques to cultivate your garden mindfully and discover the joy of nurturing life.
-                            Transform your outdoor space into a haven for relaxation and reflection.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            As cities expand, wildlife adapts in surprising ways. 
-                            This article examines innovative urban designs that support biodiversity and sustainable living.
-                        </p>
-                        <p class="blog-lorem mb-3">
-                            Explore case studies of cities around the world that have successfully integrated green spaces 
-                            and wildlife corridors, making urban life more harmonious with nature.
-                        </p>
+                            <?php
+                                $comments = Comment::getAllById($blog->id);
 
-                        <div class="d-flex justify-content-between mt-4 flex-wrap blog-meta">
-                            <span>📅 June 10, 2025</span>
-                            <span>✍️ Dr. Mia Chen, Marine Biologist</span>
+                                if ($comments && count($comments) > 0):
+                                    foreach ($comments as $cmt):
+                                        $uid = $blog->id . '-' . $cmt["Username"];
+                            ?>
+                                <div class="comment mb-3">
+                                    <strong><?= htmlspecialchars($cmt["Username"]) ?></strong>
+                                    <?php if ($_SESSION['login'] === $cmt["Username"]): ?>
+                                        <div class="user-comment-block" id="comment-block-<?= $uid ?>">
+                                            <p class="mb-1"><?= nl2br(htmlspecialchars($cmt["Text"])) ?></p>
+                                            <small class="text-muted">
+                                                <?= date("d/m/Y H:i", strtotime($cmt["CreatedAt"])) ?>
+                                                &nbsp;|&nbsp;
+                                                <button type="button" class="btn btn-sm btn-link p-0 align-baseline" onclick="toggleEdit('<?= $uid ?>')">Edit</button>
+                                            </small>
+                                        </div>
+
+                                        <form method="post" class="edit-comment-form mb-3 d-none" id="edit-form-<?= $uid ?>">
+                                            <input type="hidden" name="blog_id" value="<?= $blog->id ?>">
+                                            <div class="mb-2">
+                                                <textarea class="form-control" name="comment" rows="3"><?= htmlspecialchars($cmt["Text"]) ?></textarea>
+                                            </div>
+                                            <button type="submit" name="submit_edit" class="btn btn-sm btn-success">Update</button>
+                                            <button type="button" class="btn btn-sm btn-secondary" onclick="toggleEdit('<?= $uid ?>')">Cancel</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <p class="mb-1"><?= nl2br(htmlspecialchars($cmt["Text"])) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            <?php
+                                    endforeach;
+                                else:
+                            ?>
+                                <p class="text-muted">No comments yet.</p>
+                            <?php endif; ?>
+
+                            <!-- Form bình luận -->
+                            <?php if (!Comment::hasUserCommented($blog->id, $_SESSION['login'])): ?>
+                                <form method="post" class="mt-4" id="create-form-<?= $blog->id ?>">
+                                    <input type="hidden" name="blog_id" value="<?= $blog->id ?>">
+                                    <div class="mb-3">
+                                        <label for="comment_<?= $blog->id ?>" class="form-label">Comment</label>
+                                        <textarea class="form-control" id="comment_<?= $blog->id ?>" name="comment" rows="3" required></textarea>
+                                    </div>
+                                    <button type="submit" name="submit_new" class="btn btn-primary">Send</button>
+                                </form>
+                            <?php endif;?>
                         </div>
-                    </div>                
+                    </div>
+
+
                 </div>
             </div>
         </div>
-
-
+        <?php endforeach;?>
         <script>
             // Open a specific modal by ID
-            function openModal(modalId) {
+            function openModal(modalId, scrollToComment = false) {
                 const modal = document.getElementById(modalId);
                 if (!modal) return;
                 modal.style.display = 'flex';
@@ -235,6 +167,16 @@
                         modal.removeEventListener('click', handler);
                     }
                 });
+
+                // Nếu có yêu cầu thì cuộn xuống phần comment
+                if (scrollToComment) {
+                    setTimeout(() => {
+                        const commentSection = modal.querySelector(".blog-comments");
+                        if (commentSection) {
+                            commentSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }, 300);
+                }
             }
 
             function closeModal(modalId) {
@@ -244,7 +186,31 @@
                 document.body.style.overflow = 'auto';
             }
         </script>
-        
+        <script>
+            function toggleEdit(commentId) {
+                const block = document.getElementById(`comment-block-${commentId}`);
+                const form = document.getElementById(`edit-form-${commentId}`);
+
+                if (block && form) {
+                    block.classList.toggle('d-none');
+                    form.classList.toggle('d-none');
+                }
+            }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const blogId = urlParams.get("id");
+                const shouldScroll = urlParams.get("scrolldown") === "1";
+
+                if (blogId) {
+                    openModal(blogId, shouldScroll);
+
+                    // Xóa tham số khỏi URL sau khi xử lý xong
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            });
+        </script>
 
         <?php 
             include "components/footer.php";
@@ -252,3 +218,4 @@
         ?>
 	</body>
 </html>
+<?php ob_end_flush(); ?>

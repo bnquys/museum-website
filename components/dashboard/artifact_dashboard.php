@@ -88,11 +88,12 @@ if ($editId) {
         <script>
             ClassicEditor
                 .create(document.querySelector('#description'), {
-                    ckfinder: {
-                        uploadUrl: '<?= UrlHelper::browserpath("components/dashboard/artifact_fileupload.php") ?>'
-                    }
+                    removePlugins: ['ImageUpload', 'EasyImage', 'MediaEmbed'],
+                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
                 })
-                .catch(console.error);
+                .catch(error => {
+                    console.error(error);
+                });
 
             ClassicEditor
                 .create(document.querySelector('#history'), {

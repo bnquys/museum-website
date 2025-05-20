@@ -35,6 +35,11 @@ class HtmlManipulator
         libxml_use_internal_errors(true);
 
         $this->dom = new DOMDocument();
+
+        if (empty(trim($html ?? ''))) {
+            $html = '<p></p>';
+        }
+
         $this->dom->loadHTML('<?xml encoding="utf-8" ?>' . $html); // keep UTF-8
 
         $this->xpath = new DOMXPath($this->dom);
@@ -77,6 +82,10 @@ class HtmlManipulator
     {
         $body = $this->dom->getElementsByTagName('body')->item(0);
         return $this->innerHTML($body);
+    }
+
+    public function print() : void {
+        echo $this->getHtml();
     }
 
     /**

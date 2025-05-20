@@ -1,18 +1,37 @@
 <?php
 require_once realpath(__DIR__."/../../vendor/autoload.php");
 
+use Museum\Object\Account;
 use Museum\Object\Order;
 use Museum\Object\Payment;
 use Museum\Object\Ticket;
+use Museum\Utils\Mailer;
 
 // Get the action and id from the URL
 $action = $_GET['action'] ?? 'list';
 $paidId = $_GET['paidId'] ?? null;
 $viewId = $_GET['viewId'] ?? null;
 
+if (!empty($viewId)) {
+    $order = Order::fromId($viewId);
+}
+
 // Handle marking payment as paid
 if ($paidId) {
     $payment = Payment::paid($paidId);
+
+    $customer = Account::getByUsername($order->username)->getUser();
+    $mailer = new Mailer($customer->email, $customer->name);
+
+    $data = [
+        'name' => $customer->name,
+        'id' => $paidId
+    ];
+
+    $mailer->setSubject('Ticket Confirmation');
+    $mailer->setBodyFromTemplate(__DIR__ . '/booking_email.html', $data);
+    $mailer->send();
+
     header("Location: dashboard.php?page=payment");  // Redirect after processing
     exit;
 }
@@ -68,7 +87,6 @@ if ($paidId) {
         <h2 class="mb-4">Order Details</h2>
 
         <?php 
-        $order = Order::fromId($viewId);
         $payment = Payment::fromOrderId($viewId);
         ?>
 
