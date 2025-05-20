@@ -15,18 +15,18 @@ $viewId = $_GET['viewId'] ?? null;
 if ($paidId) {
     $payment = Payment::paid($paidId);
 
-        $data = [
-        'name' => 'John Doe',
-        'id' => 'ABC123456'
+    $customerEmail = '2uy.9dragons@gmail.com';
+    $customerName = 'John Doe';
+    $mailer = new Mailer($customerEmail, $customerName);
+
+    $data = [
+        'name' => $customerName,
+        'id' => $paidId
     ];
 
-    Mailer::sendRenderedMailFromFile(
-        '2uy.9dragons@gmail.com',
-        'John Doe',
-        'Ticket Confirmation',
-        __DIR__ . '/booking_email.html',
-        $data
-    );
+    $mailer->setSubject('Ticket Confirmation');
+    $mailer->setBodyFromTemplate(__DIR__ . '/booking_email.html', $data);
+    $mailer->send();
 
     header("Location: dashboard.php?page=payment");  // Redirect after processing
     exit;
