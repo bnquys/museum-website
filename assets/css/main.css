@@ -39,7 +39,12 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: var(--normal-cl);
+    color: var(--sky-cl);
 }
 
 ::-webkit-scrollbar-track {
