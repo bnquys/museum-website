@@ -26,7 +26,7 @@ class Artifact {
 
     public static function getList($limit = 100000) {
         $conn = Database::Connect();
-        $stmt = $conn->prepare("SELECT Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder FROM Artifact ORDER BY IsShow DESC, DisplayOrder DESC LIMIT ?");
+        $stmt = $conn->prepare("SELECT Id, Title, Description, History, ImageUrl, IsShow, DisplayOrder FROM Artifact WHERE IsShow = TRUE ORDER BY IsShow DESC, DisplayOrder DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
         $stmt->execute();
         $result = $stmt->get_result();
