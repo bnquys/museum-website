@@ -40,6 +40,35 @@
 					modal.removeEventListener('click', handler);
 				}
 			});
+
+			const artifactIdInput = document.getElementById('comment-artifact-id');
+			if (artifactIdInput) {
+				artifactIdInput.value = this.getAttribute('data-id'); // cần thêm data-id vào thẻ img
+			}
+
+			const commentContainer = document.getElementById('comment-container');
+			const commentsRaw = this.getAttribute('data-comments');
+			commentContainer.innerHTML = ''; // clear cũ
+
+			if (commentsRaw) {
+				try {
+					const comments = JSON.parse(commentsRaw);
+					if (comments.length === 0) {
+						commentContainer.innerHTML = '<p class="text-white-50">No comments yet.</p>';
+					} else {
+						comments.forEach(c => {
+							const div = document.createElement('div');
+							div.className = 'mb-2 p-2 bg-dark text-white rounded';
+							div.innerHTML = `<strong>${c.Username}</strong> (${c.CreatedAt}):<br>${c.Text}`;
+							commentContainer.appendChild(div);
+						});
+					}
+				} catch (err) {
+					commentContainer.innerHTML = '<p class="text-danger">Failed to load comments.</p>';
+				}
+			}
+
+
 		});
 	});
 
