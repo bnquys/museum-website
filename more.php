@@ -9,7 +9,8 @@
     use Museum\Object\Event;
     use Museum\Object\Academy;
     use Museum\Object\Comment;
-    use Museum\Utils\HtmlManipulator;
+use Museum\Object\Exhibition;
+use Museum\Utils\HtmlManipulator;
 
     $type = $_GET['type'] ?? '';
     $id = $_GET['id'] ?? null;
@@ -239,6 +240,36 @@
                         </div>
                     </div>
                 <?php endif; ?>
+                <?php if ($type === 'exhibition' && $content instanceof Exhibition):?>
+                    <!-- Included Artifacts Section -->
+                    <div class="event-card p-4 mb-4">
+                        <h3 class="h4 mb-4 fw-bold section-title">Included Artifacts</h3>
+                        <p class="mb-4">
+                            Explore these rare botanical artifacts featured in our
+                            exhibition:
+                        </p>
+
+                        <div class="row g-3">
+                            <?php 
+                                $artifactsInExhibition = $content->getArtifacts();
+                                foreach ($artifactsInExhibition as $artifact): ?>
+                                <div class="col-12 col-md-6">
+                                    <div class="artifact-container position-relative">
+                                        <img
+                                            src="<?= htmlspecialchars($artifact->imageUrl) ?>"
+                                            alt="<?= htmlspecialchars($artifact->title) ?>"
+                                            class="img-fluid artifact-image"
+                                        />
+                                        <a href="gallery.php" class="artifact-overlay">
+                                            <div class="artifact-name"><?= htmlspecialchars($artifact->title) ?></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                <?php endif;?>
             </div>
 
 		</div>
