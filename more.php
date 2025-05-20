@@ -7,8 +7,8 @@
     
     use Museum\Object\Blog;
     use Museum\Object\Event;
-    use Museum\Object\Exhibition;
     use Museum\Object\Academy;
+    use Museum\Object\Comment;
     use Museum\Utils\HtmlManipulator;
 
     $type = $_GET['type'] ?? '';
@@ -32,6 +32,36 @@
             // Redirect or show error if type is invalid
             header("Location: notfound404.html");
             exit;
+    }
+
+    $commentMessage = "";
+    $hasCommented = false;
+    $existingComment = "";
+
+    // Nếu là blog, xử lý comment
+    if ($type === "blog" && isset($id)) {
+        if (isset($accountLogin)) {
+            $username = $accountLogin->username;
+
+            $hasCommented = Comment::hasUserCommented($id, $username);
+
+            if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["comment"])) {
+                $comment = new Comment($username, $id);
+                $comment->save($_POST["comment"]);
+                header("Location: more.php?type=blog&id=$id#comment-section");
+                exit;
+            }
+
+            if ($hasCommented) {
+                $allComments = Comment::getAllById($id);
+                foreach ($allComments as $cmt) {
+                    if ($cmt["Username"] === $username) {
+                        $existingComment = $cmt["Text"];
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     if (!isset($content)) {
@@ -109,7 +139,7 @@
                     <?php endif; ?>
 
                     <!-- Academy Specific Info -->
-                    <?php if ($type === "academy" && $content instanceof \Museum\Object\Academy): ?>
+                    <?php if ($type === "academy" && $content instanceof Academy): ?>
                         <div class="d-flex align-items-start mb-4">
                             <i class="bi bi-mic detail-icon"></i>
                             <div>
@@ -212,6 +242,46 @@
             </div>
 
 		</div>
+        <?php if ($type === "blog"): ?>
+        <div class="mt-5" id="comment-section">
+            <h3 class="h4 fw-bold mb-3">Comments</h3>
+
+            <!-- Danh sách bình luận -->
+            <?php
+                $comments = Comment::getAllById($id);
+                if ($comments):
+                    foreach ($comments as $cmt):
+            ?>
+                <div class="mb-3 p-3 border rounded">
+                    <strong><?= htmlspecialchars($cmt['Username']) ?></strong>
+                    <small class="text-muted"><?= date("F j, Y H:i", strtotime($cmt['CreatedAt'])) ?></small>
+                    <p class="mb-0"><?= nl2br(htmlspecialchars($cmt['Text'])) ?></p>
+                </div>
+            <?php endforeach; else: ?>
+                <p class="text-muted">No comments yet. Be the first to comment!</p>
+            <?php endif; ?>
+
+            <hr class="my-4">
+
+            <!-- Form bình luận -->
+            <?php if (!isset($accountLogin)): ?>
+                <p class="text-danger">You must be logged in to comment.</p>
+            <?php else: ?>
+                <form method="POST" class="mt-4">
+                    <div class="mb-3">
+                        <label for="comment" class="form-label fw-semibold">
+                            <?= $hasCommented ? "Edit your comment" : "Leave a comment" ?>
+                        </label>
+                        <textarea name="comment" id="comment" rows="4" class="form-control" required><?= htmlspecialchars($existingComment) ?></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <?= $hasCommented ? "Update Comment" : "Post Comment" ?>
+                    </button>
+                </form>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
+
 	</div>
 </section>
 
