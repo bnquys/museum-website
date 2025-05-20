@@ -341,7 +341,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </table>
                 </div>
             <?php else: ?>
-                <p class="text-muted">Chưa có câu hỏi nào được thêm.</p>
+                <p class="text-muted">No questions added yet.</p>
             <?php endif; ?>
         </div>
 
