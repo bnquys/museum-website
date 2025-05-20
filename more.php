@@ -5,8 +5,11 @@
     include "components/navbar.php"; 
     
     use Museum\Object\Blog;
+    use Museum\Object\Event;
+    use Museum\Object\Exhibition;
+    use Museum\Object\Academy;
     use Museum\Utils\HtmlManipulator;
-    
+
     $type = $_GET['type'] ?? '';
     $id = $_GET['id'] ?? null;
     $content = null;
@@ -18,10 +21,10 @@
             $detail = $content->content;
             break;
         case 'exhibition':
-            // $content = Exhibition::getById($id);
+            $content = Event::getById($id)->getType();
             break;
         case 'academy':
-            // $content = Academy::getById($id);
+            $content = Event::getById($id)->getType();
             break;
         default:
             // Redirect or show error if type is invalid
