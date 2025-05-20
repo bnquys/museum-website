@@ -3,10 +3,6 @@ use Museum\Utils\HtmlManipulator;
 use Museum\Object\Artifact;
 use Museum\Object\Comment;
 
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-
 if (isset($_POST['submit_comment']) && isset($accountLogin)) {
 	$artifactId = $_POST['artifact_id'];
 	$username = $accountLogin->username;
