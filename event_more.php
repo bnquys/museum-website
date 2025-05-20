@@ -1,9 +1,8 @@
 <?php
     $css = "event_more";
-    $title = "<Title of Events> | Museum Event";
-    include "components/first.php"; 
-    include "components/navbar.php";
-?>
+    $title = "<Title of Events>
+| Museum Event"; include "components/first.php"; include
+"components/navbar.php"; ?>
 
 <body>
     <!-- Event Header -->
@@ -37,8 +36,8 @@
                         <p class="lead">
                             This immersive exhibition reveals the latest
                             scientific discoveries about plant intelligence,
-                            communication, and their complex relationships
-                            with other organisms.
+                            communication, and their complex relationships with
+                            other organisms.
                         </p>
 
                         <div class="my-4">
@@ -52,23 +51,21 @@
                         <h3 class="mt-5 mb-4">Exhibition Highlights</h3>
                         <p>
                             Through interactive displays, living plant
-                            installations, and cutting-edge microscopy,
-                            visitors will explore:
+                            installations, and cutting-edge microscopy, visitors
+                            will explore:
                         </p>
                         <ul class="list-unstyled">
                             <li class="mb-3 py-2">
                                 <i
                                     class="bi bi-check-circle-fill text-success me-3"
                                 ></i>
-                                How plants communicate through chemical
-                                signals
+                                How plants communicate through chemical signals
                             </li>
                             <li class="mb-3 py-2">
                                 <i
                                     class="bi bi-check-circle-fill text-success me-3"
                                 ></i>
-                                The sophisticated defense mechanisms of
-                                plants
+                                The sophisticated defense mechanisms of plants
                             </li>
                             <li class="mb-3 py-2">
                                 <i
@@ -81,25 +78,23 @@
                                 <i
                                     class="bi bi-check-circle-fill text-success me-3"
                                 ></i>
-                                The latest research on plant memory and
-                                learning
+                                The latest research on plant memory and learning
                             </li>
                             <li class="mb-3 py-2">
                                 <i
                                     class="bi bi-check-circle-fill text-success me-3"
                                 ></i>
-                                How climate change affects plant
-                                communication
+                                How climate change affects plant communication
                             </li>
                         </ul>
 
                         <h3 class="mt-5 mb-4">Detailed Description</h3>
                         <p>
-                            This exhibition challenges traditional notions
-                            of plant life, presenting compelling evidence
-                            that plants are far more complex and sentient
-                            than previously believed. Visitors will journey
-                            through four themed galleries:
+                            This exhibition challenges traditional notions of
+                            plant life, presenting compelling evidence that
+                            plants are far more complex and sentient than
+                            previously believed. Visitors will journey through
+                            four themed galleries:
                         </p>
 
                         <h4 class="mt-4 mb-3">
@@ -107,12 +102,11 @@
                             The Language of Plants
                         </h4>
                         <p>
-                            Explore how plants communicate with each other
-                            and with other organisms through volatile
-                            organic compounds, electrical signals, and even
-                            sound waves. Interactive displays let you
-                            "listen" to plant sounds and observe chemical
-                            signaling in real-time.
+                            Explore how plants communicate with each other and
+                            with other organisms through volatile organic
+                            compounds, electrical signals, and even sound waves.
+                            Interactive displays let you "listen" to plant
+                            sounds and observe chemical signaling in real-time.
                         </p>
 
                         <h4 class="mt-4 mb-3">
@@ -120,10 +114,10 @@
                             Plant Intelligence
                         </h4>
                         <p>
-                            Discover how plants solve problems, make
-                            decisions, and remember past experiences. See
-                            live demonstrations of plant learning behaviors
-                            and participate in experiments that reveal their
+                            Discover how plants solve problems, make decisions,
+                            and remember past experiences. See live
+                            demonstrations of plant learning behaviors and
+                            participate in experiments that reveal their
                             remarkable cognitive abilities.
                         </p>
 
@@ -133,10 +127,10 @@
                         </h4>
                         <p>
                             Dive into the underground network of mycorrhizal
-                            fungi that connects plants in a vast
-                            communication and resource-sharing system. A
-                            walk-through installation recreates this hidden
-                            world at human scale.
+                            fungi that connects plants in a vast communication
+                            and resource-sharing system. A walk-through
+                            installation recreates this hidden world at human
+                            scale.
                         </p>
 
                         <h4 class="mt-4 mb-3">
@@ -144,10 +138,10 @@
                             Plants & The Future
                         </h4>
                         <p>
-                            Learn how understanding plant intelligence can
-                            help us address global challenges like food
-                            security, climate change, and biodiversity loss.
-                            See innovative technologies inspired by plant
+                            Learn how understanding plant intelligence can help
+                            us address global challenges like food security,
+                            climate change, and biodiversity loss. See
+                            innovative technologies inspired by plant
                             communication systems.
                         </p>
                     </div>
@@ -165,9 +159,7 @@
                             <i class="bi bi-calendar-event detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Date</h5>
-                                <p class="mb-0">
-                                    June 15 - September 30, 2023
-                                </p>
+                                <p class="mb-0">June 15 - September 30, 2023</p>
                             </div>
                         </div>
 
@@ -195,9 +187,7 @@
                         </div>
 
                         <div class="d-flex align-items-start mb-4">
-                            <i
-                                class="bi bi-ticket-perforated detail-icon"
-                            ></i>
+                            <i class="bi bi-ticket-perforated detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Admission</h5>
                                 <p class="mb-0">
@@ -213,9 +203,7 @@
                         <h4 class="mb-4 text-white">Exhibition Opens In:</h4>
                         <div class="row text-center">
                             <div class="col-3">
-                                <div class="countdown-number" id="days">
-                                    00
-                                </div>
+                                <div class="countdown-number" id="days">00</div>
                                 <div class="countdown-label">Days</div>
                             </div>
                             <div class="col-3">
@@ -256,117 +244,140 @@
                             ></iframe>
                         </div>
                     </div>
+                            <!-- Included Artifacts Section -->
+        <div class="event-card p-4 mb-4">
+            <h3 class="h4 mb-4 fw-bold section-title">Included Artifacts</h3>
+            <p class="mb-4">
+                Explore these rare botanical artifacts featured in our
+                exhibition:
+            </p>
 
+            <div class="row g-3">
+                <!-- Artifact 1 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt="Ancient Herbarium"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Ancient Herbarium (1543)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">Ancient Herbarium</div>
+                            <!-- <div class="artifact-year">1543</div> -->
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Artifact 2 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Linnaeus' Notebook"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Linnaeus' Notebook (1753)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">Linnaeus' Notebook</div>
+                            <!-- <div class="artifact-year">1753</div> -->
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Artifact 3 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt="Victorian Pressed Flowers"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Victorian Pressed Flowers (1865)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">
+                                Victorian Pressed Flowers
+                            </div>
+                            <!-- <div class="artifact-year">1865</div> -->
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Artifact 4 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80"
+                            alt="Darwin's Orchid Sketch"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Darwin's Orchid Sketch (1862)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">
+                                Darwin's Orchid Sketch
+                            </div>
+                            <!-- <div class="artifact-year">1862</div> -->
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Artifact 5 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1526397751294-331021109fbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+                            alt="Amazonian Plant Samples"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Amazonian Plant Samples (1921)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">
+                                Amazonian Plant Samples
+                            </div>
+                            <!-- <div class="artifact-year">1921</div> -->
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Artifact 6 -->
+                <div class="col-12 col-md-6">
+                    <div class="artifact-container position-relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1459411551684-2581dafc4d4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Microscope Slides"
+                            class="img-fluid artifact-image"
+                        />
+                        <!-- <div class="artifact-tooltip">
+                            Microscope Slides (1898)
+                        </div> -->
+                        <a href="#" class="artifact-overlay">
+                            <div class="artifact-name">Microscope Slides</div>
+                            <!-- <div class="artifact-year">1898</div> -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
                 </div>
             </div>
         </div>
-                            <!-- Included Artifacts Section -->
-                    <div class="event-card p-4 mb-4">
-                        <h3 class="h4 mb-4 fw-bold section-title">
-                            Included Artifacts
-                        </h3>
-                        <p class="mb-4">Explore these rare botanical artifacts featured in our exhibition:</p>
-                        
-                        <div class="grid grid-cols-3 gap-3">
-                            <!-- Artifact 1 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
-                                    alt="Ancient Herbarium" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Ancient Herbarium (1543)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Ancient Herbarium</div>
-                                    <div class="artifact-year">1543</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Artifact 2 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                                    alt="Linnaeus' Notebook" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Linnaeus' Notebook (1753)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Linnaeus' Notebook</div>
-                                    <div class="artifact-year">1753</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Artifact 3 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
-                                    alt="Victorian Pressed Flowers" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Victorian Pressed Flowers (1865)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Victorian Pressed Flowers</div>
-                                    <div class="artifact-year">1865</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Artifact 4 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
-                                    alt="Darwin's Orchid Sketch" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Darwin's Orchid Sketch (1862)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Darwin's Orchid Sketch</div>
-                                    <div class="artifact-year">1862</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Artifact 5 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1526397751294-331021109fbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
-                                    alt="Amazonian Plant Samples" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Amazonian Plant Samples (1921)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Amazonian Plant Samples</div>
-                                    <div class="artifact-year">1921</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Artifact 6 -->
-                            <div class="artifact-container relative group">
-                                <img 
-                                    src="https://images.unsplash.com/photo-1459411551684-2581dafc4d4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                                    alt="Microscope Slides" 
-                                    class="artifact-image"
-                                >
-                                <div class="artifact-tooltip">Microscope Slides (1898)</div>
-                                <div class="artifact-overlay">
-                                    <div class="artifact-name">Microscope Slides</div>
-                                    <div class="artifact-year">1898</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="btn-custom w-full mt-4 py-2 flex items-center justify-center">
-                            View All Artifacts <i class="bi bi-arrow-right ms-2"></i>
-                        </button>
-                    </div>
-
     </section>
 
     <!-- Related Events -->
     <section class="related-events">
         <div class="container">
-            <h2 class="section-title text-center mb-5">
-                You Might Also Like
-            </h2>
+            <h2 class="section-title text-center mb-5">You Might Also Like</h2>
 
             <div class="row g-4">
                 <div class="col-md-4">
@@ -382,16 +393,14 @@
                             >
                             <h3 class="h4">Rainforest Conservation</h3>
                             <p class="mb-4">
-                                Learn about efforts to protect the world's
-                                most biodiverse ecosystems.
+                                Learn about efforts to protect the world's most
+                                biodiverse ecosystems.
                             </p>
                             <div
                                 class="d-flex justify-content-between align-items-center"
                             >
                                 <span class="text-muted"
-                                    ><i
-                                        class="bi bi-calendar-event me-2"
-                                    ></i>
+                                    ><i class="bi bi-calendar-event me-2"></i>
                                     July 10, 2023</span
                                 >
                                 <a href="#" class="btn btn-sm btn-custom"
@@ -423,9 +432,7 @@
                                 class="d-flex justify-content-between align-items-center"
                             >
                                 <span class="text-muted"
-                                    ><i
-                                        class="bi bi-calendar-event me-2"
-                                    ></i>
+                                    ><i class="bi bi-calendar-event me-2"></i>
                                     August 5, 2023</span
                                 >
                                 <a href="#" class="btn btn-sm btn-custom"
@@ -457,9 +464,7 @@
                                 class="d-flex justify-content-between align-items-center"
                             >
                                 <span class="text-muted"
-                                    ><i
-                                        class="bi bi-calendar-event me-2"
-                                    ></i>
+                                    ><i class="bi bi-calendar-event me-2"></i>
                                     September 15, 2023</span
                                 >
                                 <a href="#" class="btn btn-sm btn-custom"
@@ -540,7 +545,6 @@
         });
     </script>
 </body>
-
 
 <?php
     include "components/footer.php";
