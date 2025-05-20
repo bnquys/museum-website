@@ -10,7 +10,7 @@
 	<div class="container-fluid border-light border-bottom">
 		<div class="topbar container d-flex justify-content-between mt-2 pb-2">
 			<div class>
-				<span class="text-white me-4"><i class="fas fa-clock"></i> <?= htmlspecialchars($museum["summary"])?></span>
+				<!-- <span class="text-white me-4"><i class="fas fa-clock"></i> <?= htmlspecialchars($museum["summary"])?></span> -->
 				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($museum["address"])?></span>
 				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($museum["phone"])?></span>
 			</div>
@@ -34,7 +34,7 @@
 					alt="Icon"
 					width="35"
 					height="35"
-				/><span class="ps-lg-3 ps-2 glowing-text"
+				/><span class="ps-lg-3 ps-2"
 					><?= htmlspecialchars($museum["name"])?></span
 				></a
 			>

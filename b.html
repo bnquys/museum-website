@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Blog - Green Heritage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --dark-cl: #059212;
+                --dark-cl-rgba: rgba(5, 146, 18, 0.6);
+                --normal-cl: #06d001;
+                --normal-cl-rgba: rgba(6, 208, 1, 0.6);
+                --normal-light-cl: rgb(175, 255, 0);
+                --light-cl-rgba: rgba(144, 238, 144, 0.253);
+                --super-light-cl: #d6f8d652;
+                --white-cl: rgb(169, 245, 167);
+                --deep-forest-cl: #014421;
+                --sky-cl: #b2f5ead3;
+                --so-deep-cl: rgb(5, 30, 4);
+            }
+
+            body {
+                font-family: 'Georgia', serif;
+                @apply bg-[var(--super-light-cl)] text-[var(--so-deep-cl)];
+            }
+
+            .prose :where(a):not(:where([class~="not-prose"] *)) {
+                @apply text-[var(--dark-cl)] hover:text-[var(--deep-forest-cl)] font-medium;
+            }
+
+            .prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+                @apply border-l-[var(--normal-cl)] bg-[var(--light-cl-rgba)];
+            }
+
+            .prose :where(code):not(:where([class~="not-prose"] *)) {
+                @apply bg-[var(--light-cl-rgba)] text-[var(--deep-forest-cl)];
+            }
+        }
+
+        @layer components {
+            .btn-primary {
+                @apply bg-[var(--deep-forest-cl)] hover:bg-[var(--dark-cl)] text-white px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+
+            .tag {
+                @apply bg-[var(--normal-cl)] text-white px-3 py-1 rounded-full text-sm font-medium;
+            }
+
+            .author-card {
+                @apply bg-white p-6 rounded-xl shadow-md border-l-4 border-[var(--normal-cl)];
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-[var(--deep-forest-cl)] text-[var(--white-cl)] sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-leaf mr-2"></i> Green Heritage
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Home</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Exhibitions</a>
+                    <a href="#" class="font-bold text-[var(--normal-light-cl)] transition">Blog</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Collections</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Visit</a>
+                </div>
+                <button class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <header class="bg-gradient-to-r from-[var(--dark-cl-rgba)] to-[var(--normal-cl-rgba)] bg-[url('https://images.unsplash.com/photo-1589118949276-1c3e0e403df6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center py-20 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl">
+                <span class="tag mb-4 inline-block">Research</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Unearthing Ancient Botanical Knowledge: The Lost Healing Plants of Mesopotamia</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[var(--deep-forest-cl)]">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium">Dr. Sarah Chen</p>
+                        <p class="text-sm opacity-80">Published on May 15, 2023 · 8 min read</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Blog Content -->
+            <article class="lg:w-2/3">
+                <div class="prose max-w-none">
+                    <p class="lead text-xl font-medium text-[var(--deep-forest-cl)] mb-8">
+                        Recent archaeological discoveries in the Fertile Crescent have revealed sophisticated botanical knowledge that predates modern medicine by millennia. This article explores the fascinating findings from cuneiform tablets that document medicinal plant use in ancient Mesopotamia.
+                    </p>
+
+                    <img src="https://images.unsplash.com/photo-1547989013-6c9a1a577a93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Ancient cuneiform tablets" class="w-full rounded-xl mb-8">
+
+                    <h2>The Discovery of the Nippur Herbal</h2>
+                    <p>In 2021, archaeologists working at the ancient Sumerian city of Nippur uncovered a collection of cuneiform tablets that contained detailed descriptions of over 200 medicinal plants. Dubbed the "Nippur Herbal," these tablets date back to approximately 1800 BCE and represent one of the earliest known systematic records of botanical medicine.</p>
+                    
+                    <p>What makes these tablets particularly remarkable is their organization. Unlike other medical texts of the period that mix magical incantations with practical remedies, the Nippur Herbal presents a surprisingly modern approach:</p>
+                    
+                    <ul>
+                        <li>Plants are categorized by their medicinal properties</li>
+                        <li>Preparation methods are described in detail</li>
+                        <li>Dosages are specified for different age groups</li>
+                        <li>Potential side effects are noted</li>
+                    </ul>
+                    
+                    <h2>Deciphering Ancient Plant Knowledge</h2>
+                    <p>The translation team, led by Dr. Amina Khalid from the University of Baghdad, faced significant challenges in identifying the plants described in the tablets. Many of the Sumerian plant names don't have direct equivalents in modern botanical taxonomy.</p>
+                    
+                    <blockquote>
+                        "We're essentially reconstructing an entire pharmacopeia from fragments of a lost civilization. Each plant identification is like solving a 4,000-year-old puzzle." — Dr. Amina Khalid
+                    </blockquote>
+                    
+                    <p>Through painstaking cross-referencing with later Akkadian texts, archaeological plant remains, and traditional medicine still practiced in Iraq today, the team has identified about 60% of the plants mentioned in the tablets.</p>
+                    
+                    <img src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                         alt="Archaeologists working on tablets" class="w-full rounded-xl my-8">
+                    
+                    <h2>Notable Medicinal Plants</h2>
+                    <h3>1. The "Great Healer" Plant (Šim-mu-ú)</h3>
+                    <p>This plant, tentatively identified as a species of licorice (Glycyrrhiza glabra), appears in more than 30 remedies. The tablets describe its use for:</p>
+                    
+                    <ul>
+                        <li>Respiratory ailments (similar to modern use for coughs)</li>
+                        <li>Digestive disorders</li>
+                        <li>Skin conditions</li>
+                    </ul>
+                    
+                    <h3>2. The "Sun Goddess" Herb (Nin-šubur)</h3>
+                    <p>Likely a type of chamomile, this plant was used as:</p>
+                    
+                    <ul>
+                        <li>A sedative (modern science confirms chamomile's calming effects)</li>
+                        <li>An anti-inflammatory</li>
+                        <li>A treatment for eye infections</li>
+                    </ul>
+                    
+                    <h3>3. The "Dragon's Tooth" Root (Ušum)</h3>
+                    <p>Possibly mandrake (Mandragora officinarum), this dangerous but powerful plant was used cautiously for:</p>
+                    
+                    <ul>
+                        <li>Pain relief (contains scopolamine, still used in anesthesia)</li>
+                        <li>As a surgical anesthetic</li>
+                        <li>Treating mental disorders (with warnings about overdose)</li>
+                    </ul>
+                    
+                    <h2>Modern Applications</h2>
+                    <p>Several pharmaceutical companies are now investigating compounds from these ancient remedies. A German research team has isolated a novel flavonoid from a plant believed to be the "Great Healer" that shows promise in treating antibiotic-resistant bacteria.</p>
+                    
+                    <p>Perhaps the most valuable lesson from the Nippur Herbal isn't just about individual plants, but about the sophisticated system of botanical knowledge that existed four millennia ago. As we face growing antibiotic resistance and search for new medicines, looking to ancient wisdom might provide unexpected solutions.</p>
+                    
+                    <div class="border-t border-b border-[var(--normal-cl)] py-6 my-8">
+                        <h3 class="text-lg font-bold mb-2">Key Takeaways</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Ancient Mesopotamians had a sophisticated understanding of medicinal plants</li>
+                            <li>Many of their remedies have modern scientific validation</li>
+                            <li>About 40% of the plants remain unidentified, representing potential discoveries</li>
+                            <li>Ancient medical texts can guide modern drug discovery</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="mt-12">
+                    <h3 class="text-xl font-bold mb-4">Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Archaeology</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Botany</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Ancient Medicine</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Mesopotamia</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Ethnobotany</a>
+                    </div>
+                </div>
+
+                <!-- Author Bio -->
+                <div class="author-card mt-12">
+                    <div class="flex flex-col md:flex-row items-start gap-6">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                             alt="Dr. Sarah Chen" class="w-24 h-24 rounded-full object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">About the Author</h3>
+                            <p class="text-[var(--deep-forest-cl)] font-medium mb-2">Dr. Sarah Chen</p>
+                            <p class="text-gray-600 mb-4">Dr. Chen is a Senior Research Fellow in Archaeobotany at the Green Heritage Museum. She specializes in ancient plant use and has published extensively on traditional medicine systems.</p>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-[var(--dark-cl)] hover:text-[var(--deep-forest-cl)]">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="text-[var(--dark-cl)] hover:text-[var(--deep-forest-cl)]">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="text-[var(--dark-cl)] hover:text-[var(--deep-forest-cl)]">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold mb-6">Comments (3)</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Comment 1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-[var(--light-cl-rgba)] flex items-center justify-center text-[var(--deep-forest-cl)]">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Michael Rodriguez</p>
+                                    <p class="text-sm text-gray-500">May 16, 2023</p>
+                                </div>
+                            </div>
+                            <p>Fascinating article! I'm particularly interested in how these ancient remedies compare to traditional Chinese medicine. Have you found any parallels in your research?</p>
+                            <button class="text-[var(--normal-cl)] font-medium mt-3 hover:text-[var(--dark-cl)]">Reply</button>
+                        </div>
+                        
+                        <!-- Comment 2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm ml-8">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-[var(--light-cl-rgba)] flex items-center justify-center text-[var(--deep-forest-cl)]">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Dr. Sarah Chen</p>
+                                    <p class="text-sm text-gray-500">May 17, 2023</p>
+                                </div>
+                            </div>
+                            <p>Great question, Michael! We have indeed found some interesting parallels, particularly in the use of licorice root. Both systems recognized its benefits for respiratory and digestive issues, though preparation methods differed significantly.</p>
+                            <button class="text-[var(--normal-cl)] font-medium mt-3 hover:text-[var(--dark-cl)]">Reply</button>
+                        </div>
+                        
+                        <!-- Comment 3 -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-[var(--light-cl-rgba)] flex items-center justify-center text-[var(--deep-forest-cl)]">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">Emma Johnson</p>
+                                    <p class="text-sm text-gray-500">May 18, 2023</p>
+                                </div>
+                            </div>
+                            <p>This research is groundbreaking! Are there plans to exhibit these tablets at the museum? I'd love to see them in person.</p>
+                            <button class="text-[var(--normal-cl)] font-medium mt-3 hover:text-[var(--dark-cl)]">Reply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment Form -->
+                    <div class="mt-8 bg-white p-6 rounded-xl shadow-sm">
+                        <h4 class="text-xl font-bold mb-4">Leave a Comment</h4>
+                        <form>
+                            <div class="mb-4">
+                                <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent" rows="4" placeholder="Your comment..."></textarea>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <input type="text" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent" placeholder="Name">
+                                <input type="email" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent" placeholder="Email">
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                Post Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sidebar -->
+            <aside class="lg:w-1/3 space-y-8">
+                <!-- Search -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Search</h3>
+                    <div class="relative">
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent" placeholder="Search blog...">
+                        <button class="absolute right-3 top-2 text-[var(--normal-cl)]">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex justify-between items-center hover:text-[var(--normal-cl)] transition">
+                                <span>Archaeology</span>
+                                <span class="bg-[var(--light-cl-rgba)] text-[var(--dark-cl)] px-2 py-1 rounded-full text-xs">24</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex justify-between items-center hover:text-[var(--normal-cl)] transition">
+                                <span>Botany</span>
+                                <span class="bg-[var(--light-cl-rgba)] text-[var(--dark-cl)] px-2 py-1 rounded-full text-xs">18</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex justify-between items-center hover:text-[var(--normal-cl)] transition">
+                                <span>Conservation</span>
+                                <span class="bg-[var(--light-cl-rgba)] text-[var(--dark-cl)] px-2 py-1 rounded-full text-xs">15</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex justify-between items-center hover:text-[var(--normal-cl)] transition">
+                                <span>Exhibitions</span>
+                                <span class="bg-[var(--light-cl-rgba)] text-[var(--dark-cl)] px-2 py-1 rounded-full text-xs">12</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex justify-between items-center hover:text-[var(--normal-cl)] transition">
+                                <span>Research</span>
+                                <span class="bg-[var(--light-cl-rgba)] text-[var(--dark-cl)] px-2 py-1 rounded-full text-xs">32</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Popular Posts -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Popular Posts</h3>
+                    <div class="space-y-4">
+                        <a href="#" class="flex gap-3 group">
+                            <div class="w-16 h-16 flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1547989013-6c9a1a577a93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                     alt="Ancient tablets" class="w-full h-full object-cover rounded">
+                            </div>
+                            <div>
+                                <h4 class="font-medium group-hover:text-[var(--normal-cl)] transition">Decoding Ancient Plant Lore</h4>
+                                <p class="text-sm text-gray-500">April 28, 2023</p>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-3 group">
+                            <div class="w-16 h-16 flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                                     alt="Herbal medicine" class="w-full h-full object-cover rounded">
+                            </div>
+                            <div>
+                                <h4 class="font-medium group-hover:text-[var(--normal-cl)] transition">Medicinal Plants Through History</h4>
+                                <p class="text-sm text-gray-500">March 15, 2023</p>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-3 group">
+                            <div class="w-16 h-16 flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                     alt="Rainforest" class="w-full h-full object-cover rounded">
+                            </div>
+                            <div>
+                                <h4 class="font-medium group-hover:text-[var(--normal-cl)] transition">Rainforest Remedies Rediscovered</h4>
+                                <p class="text-sm text-gray-500">February 2, 2023</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="bg-[var(--light-cl-rgba)] p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4">Newsletter</h3>
+                    <p class="mb-4">Stay updated with our latest research and exhibitions.</p>
+                    <form>
+                        <input type="email" class="w-full px-4 py-2 mb-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--normal-cl)] focus:border-transparent" placeholder="Your email">
+                        <button type="submit" class="btn-primary w-full">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tags Cloud -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Archaeology</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Botany</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">History</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Medicine</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Research</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Museum</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Plants</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Ancient</a>
+                        <a href="#" class="tag hover:bg-[var(--dark-cl)] transition">Science</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Related Articles -->
+    <section class="bg-[var(--light-cl-rgba)] py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center">You Might Also Like</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Article 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                         alt="Rainforest" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="tag mb-3 inline-block">Conservation</span>
+                        <h3 class="text-xl font-bold mb-2">Saving the Amazon's Medicinal Plants</h3>
+                        <p class="text-gray-600 mb-4">How indigenous knowledge is helping preserve endangered botanical species.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">April 5, 2023</span>
+                            <a href="#" class="text-[var(--normal-cl)] font-medium hover:text-[var(--dark-cl)]">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Article 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="Herbal medicine" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="tag mb-3 inline-block">History</span>
+                        <h3 class="text-xl font-bold mb-2">The Herbalists of Medieval Europe</h3>
+                        <p class="text-gray-600 mb-4">Exploring the botanical knowledge preserved in monastery gardens.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">March 22, 2023</span>
+                            <a href="#" class="text-[var(--normal-cl)] font-medium hover:text-[var(--dark-cl)]">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Article 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+                    <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Plant research" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="tag mb-3 inline-block">Research</span>
+                        <h3 class="text-xl font-bold mb-2">Modern Science Meets Traditional Remedies</h3>
+                        <p class="text-gray-600 mb-4">How contemporary researchers are validating ancient plant medicines.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">February 18, 2023</span>
+                            <a href="#" class="text-[var(--normal-cl)] font-medium hover:text-[var(--dark-cl)]">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--deep-forest-cl)] text-[var(--white-cl)] py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-leaf mr-2"></i> Green Heritage
+                    </h3>
+                    <p class="mb-4">Exploring the botanical wonders of our world through research, education, and preservation.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-[var(--normal-light-cl)] transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Visit</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Hours & Tickets</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Directions</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Accessibility</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Group Visits</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Museum Map</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Explore</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Exhibitions</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Collections</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Research</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Education</a></li>
+                        <li><a href="#" class="hover:text-[var(--normal-light-cl)] transition">Gardens</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact</h4>
+                    <address class="not-italic">
+                        <p class="mb-2">123 Nature Way</p>
+                        <p class="mb-2">Greensville, GH 12345</p>
+                        <p class="mb-2">Phone: (555) 123-4567</p>
+                        <p class="mb-4">Email: info@greenheritage.org</p>
+                    </address>
+                    <a href="#" class="btn-primary inline-block">
+                        <i class="fas fa-envelope mr-2"></i> Contact Us
+                    </a>
+                </div>
+            </div>
+            
+            <hr class="border-[var(--dark-cl)] my-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2023 Green Heritage Museum. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Terms of Use</a>
+                    <a href="#" class="hover:text-[var(--normal-light-cl)] transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to handle mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.md\\:hidden');
+            const mobileMenu = document.querySelector('.md\\:flex');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+                mobileMenu.classList.toggle('flex-col');
+                mobileMenu.classList.toggle('absolute');
+                mobileMenu.classList.toggle('top-16');
+                mobileMenu.classList.toggle('left-0');
+                mobileMenu.classList.toggle('right-0');
+                mobileMenu.classList.toggle('bg-[var(--deep-forest-cl)]');
+                mobileMenu.classList.toggle('p-4');
+                mobileMenu.classList.toggle('space-y-4');
+                mobileMenu.classList.toggle('space-x-6');
+                mobileMenu.classList.toggle('shadow-md');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -3,9 +3,9 @@ import sys
 from datetime import datetime
 
 # Fixed output directory for converted .txt files
-OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite" 
+# OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite" 
 # OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
-# OUTPUT_DIR = "/home/quys/Documents/convert_txt"
+OUTPUT_DIR = "/home/quys/Documents/convert_txt"
 
 def log(message, status="INFO"):
     """Log message with status and timestamp."""
@@ -20,7 +20,7 @@ def convert_to_txt(input_file_path):
             return
 
         # Only support .php or .sql files
-        valid_extensions = ['.php', '.sql']
+        valid_extensions = ['.php', '.sql', '.json']
         _, ext = os.path.splitext(input_file_path)
         if ext.lower() not in valid_extensions:
             log(f"Only files with extensions {valid_extensions} are supported.", status="ERROR")
