@@ -4,8 +4,19 @@
 	$title = "Dashboard";
 	$css = "dashboard";
 	include "components/first.php";
+	use Museum\Object\AccountRole;
 
-	$userAdmin = $accountLogin->username;
+    if (isset($accountLogin)) {
+		$userAdmin = $accountLogin->username;
+	} else {
+		header('Location: portal.php');
+		exit;
+	}
+
+	if ($accountLogin->hasRole(AccountRole::USER)) {
+		header('Location: notfound404.html');
+		exit;
+	}
 ?>
 <script src="https://cdn.tailwindcss.com"></script>
 <body class="min-h-screen">
