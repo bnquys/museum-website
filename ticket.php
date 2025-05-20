@@ -191,8 +191,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 id="checkoutError"
                 style="color: red; display: none; margin-bottom: 10px; max-width: 20vw;"
                 class="fw-bold"
-            ></p>
-            <button type="submit" class="button-92">Checkout now !</button>
+            >
+            </p>
+            <?php if (!isset($accountLogin)):?>
+                <p class='text-danger'>You must <a href="portal.php?pg=login">Login</a> or <a href="portal.php?pg=signup">Sign up</a> to checkout!</p>
+            <?php else:?>
+                <button type="submit" class="button-92">Checkout now !</button>
+            <?php endif;?>
         </div>
     </form>
 
@@ -393,7 +398,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         visitDate.addEventListener("change", calculateTotal);
         visitTime.addEventListener("change", calculateTotal);
 
-        // 👇 This runs calculateTotal() immediately on page load
         calculateTotal();
     });
 
@@ -410,15 +414,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
 
-        // Nếu thiếu dữ liệu → hiển thị lỗi và chặn submit
         if (!visitDate || !visitTime || !hasParticipant) {
-            event.preventDefault(); // 🔴 Chặn gửi form
+            event.preventDefault(); 
             errorMsg.textContent = "Please select Date, Time, and at least one participant before checking out.";
             errorMsg.style.display = "block";
             return;
         }
 
-        // ✅ Đủ điều kiện → ẩn lỗi và tiếp tục submit
         errorMsg.style.display = "none";
     });
 
