@@ -59,6 +59,10 @@
 		<!-- Link CKEditor -->
 		<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 		
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
+		<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 	</head>
 	<body>

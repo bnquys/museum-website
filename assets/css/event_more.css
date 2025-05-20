@@ -225,11 +225,7 @@ h5 {
 }
 
 .countdown {
-    background: linear-gradient(
-        135deg,
-        var(--normal-cl),
-        var(--deep-forest-cl)
-    );
+    background: var(--normal-cl);
     color: white;
     padding: 30px 20px;
     border-radius: 16px;
@@ -246,11 +242,7 @@ h5 {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 70%
-    );
+    background-color: var(--light-cl-rgba);
     transform: rotate(30deg);
     animation: shine 6s infinite linear;
 }
