@@ -115,11 +115,6 @@ class JsonDataManager {
             $data[$index1] = $data[$index2];
             $data[$index2] = $tmp;
     
-            // Reassign sequential IDs
-            foreach ($data as $i => &$item) {
-                $item['id'] = $i + 1;
-            }
-    
             $this->writeData($data);
         }
     }
