@@ -444,5 +444,32 @@ class Event {
     
         return $list;
     }    
+
+    public static function countThisWeekEvents() {
+        $conn = Database::Connect();
+    
+        // Tính ngày đầu tuần (Monday) và cuối tuần (Sunday)
+        $stmt = $conn->prepare("
+            SELECT COUNT(*) as total FROM Events
+            WHERE IsShow = TRUE AND (
+                (TimeStart >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                 AND TimeStart <= DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY))
+                OR
+                (TimeEnd >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+                 AND TimeEnd <= DATE_ADD(CURDATE(), INTERVAL (6 - WEEKDAY(CURDATE())) DAY))
+            )
+        ");
+    
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $row ? (int)$row['total'] : 0;
+    }    
 }
 ?>

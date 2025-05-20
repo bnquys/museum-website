@@ -201,5 +201,51 @@ class ContactForm {
         $stmt->close();
         $conn->close();
     }    
+
+    public static function countUnseenForms() {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM ContactForms WHERE IsSeen = FALSE");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $row ? (int)$row['total'] : 0;
+    }
+
+    public static function getLatestForm() {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("SELECT Id, Email, Name, Message, CreatedAt, IsSeen FROM ContactForms ORDER BY CreatedAt DESC LIMIT 1");
+        if (!$stmt) die("Prepare failed: " . $conn->error);
+    
+        if (!$stmt->execute()) die("Execute failed: " . $stmt->error);
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        $stmt->close();
+        $conn->close();
+    
+        if ($row) {
+            return new ContactForm(
+                $row["Id"],
+                $row["Email"],
+                $row["Name"],
+                $row["Message"],
+                $row["CreatedAt"],
+                $row["IsSeen"]
+            );
+        }
+    
+        return null;
+    }
+    
 }
 ?>
