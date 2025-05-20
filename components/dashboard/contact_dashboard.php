@@ -6,6 +6,8 @@ use Museum\Utils\Mailer;
 
 $action = $_GET['action'] ?? 'list';
 $replyId = $_GET['replyId'] ?? null;
+$unseenId = $_GET['unseenId'] ?? null;
+$seenId = $_GET['seenId'] ?? null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $toEmail = $_POST['email'];
@@ -13,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
-    Mailer::sendMail($toEmail, $toName, $subject, $message);
+    // Mailer::sendMail($toEmail, $toName, $subject, $message);
     header("Location: dashboard.php?page=contact");
     exit;
 }
@@ -24,6 +26,19 @@ if ($replyId) {
     ContactForm::markAsSeen($replyId);
     $action = 'reply';
 }
+
+if ($unseenId) {
+    ContactForm::makeAsUnseen($unseenId);
+    header("Location: dashboard.php?page=contact");
+    exit;
+}
+
+if ($seenId) {
+    ContactForm::markAsSeen($seenId);
+    header("Location: dashboard.php?page=contact");
+    exit;
+}
+
 ?>
 
 <div class="container mt-4">
@@ -74,6 +89,11 @@ if ($replyId) {
                         <td><?= $msg->isSeen ? '✔' : '✘' ?></td>
                         <td>
                             <a href="?page=contact&replyId=<?= urlencode($msg->id) ?>" class="btn btn-sm btn-outline-primary">Rep Tin</a>
+                            <?php if ($msg->isSeen): ?>
+                                <a href="?page=contact&unseenId=<?= urlencode($msg->id) ?>" class="btn btn-sm btn-outline-warning">Unseen</a>
+                            <?php else: ?>
+                                <a href="?page=contact&seenId=<?= urlencode($msg->id) ?>" class="btn btn-sm btn-outline-success">Seen</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

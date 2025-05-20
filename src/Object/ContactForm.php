@@ -183,5 +183,23 @@ class ContactForm {
         $stmt->close();
         $conn->close();
     }    
+
+    public static function makeAsUnseen($id) {
+        $conn = Database::Connect();
+    
+        $stmt = $conn->prepare("UPDATE ContactForms SET IsSeen = FALSE WHERE Id = ?");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+    
+        $stmt->bind_param('s', $id);
+    
+        if (!$stmt->execute()) {
+            die("Execute failed: " . $stmt->error);
+        }
+    
+        $stmt->close();
+        $conn->close();
+    }    
 }
 ?>

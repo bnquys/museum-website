@@ -12,7 +12,9 @@ $action = $_GET['action'] ?? 'list';
 $paidId = $_GET['paidId'] ?? null;
 $viewId = $_GET['viewId'] ?? null;
 
-$order = Order::fromId($viewId);
+if (!empty($viewId)) {
+    $order = Order::fromId($viewId);
+}
 
 // Handle marking payment as paid
 if ($paidId) {
