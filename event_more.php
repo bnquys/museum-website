@@ -210,7 +210,7 @@
 
                     <!-- Countdown -->
                     <div class="event-card countdown mb-4">
-                        <h4 class="mb-4">Exhibition Opens In:</h4>
+                        <h4 class="mb-4 text-white">Exhibition Opens In:</h4>
                         <div class="row text-center">
                             <div class="col-3">
                                 <div class="countdown-number" id="days">
@@ -256,9 +256,109 @@
                             ></iframe>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
+                            <!-- Included Artifacts Section -->
+                    <div class="event-card p-4 mb-4">
+                        <h3 class="h4 mb-4 fw-bold section-title">
+                            Included Artifacts
+                        </h3>
+                        <p class="mb-4">Explore these rare botanical artifacts featured in our exhibition:</p>
+                        
+                        <div class="grid grid-cols-3 gap-3">
+                            <!-- Artifact 1 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                                    alt="Ancient Herbarium" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Ancient Herbarium (1543)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Ancient Herbarium</div>
+                                    <div class="artifact-year">1543</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artifact 2 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                    alt="Linnaeus' Notebook" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Linnaeus' Notebook (1753)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Linnaeus' Notebook</div>
+                                    <div class="artifact-year">1753</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artifact 3 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                                    alt="Victorian Pressed Flowers" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Victorian Pressed Flowers (1865)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Victorian Pressed Flowers</div>
+                                    <div class="artifact-year">1865</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artifact 4 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                                    alt="Darwin's Orchid Sketch" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Darwin's Orchid Sketch (1862)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Darwin's Orchid Sketch</div>
+                                    <div class="artifact-year">1862</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artifact 5 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1526397751294-331021109fbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                                    alt="Amazonian Plant Samples" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Amazonian Plant Samples (1921)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Amazonian Plant Samples</div>
+                                    <div class="artifact-year">1921</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artifact 6 -->
+                            <div class="artifact-container relative group">
+                                <img 
+                                    src="https://images.unsplash.com/photo-1459411551684-2581dafc4d4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                    alt="Microscope Slides" 
+                                    class="artifact-image"
+                                >
+                                <div class="artifact-tooltip">Microscope Slides (1898)</div>
+                                <div class="artifact-overlay">
+                                    <div class="artifact-name">Microscope Slides</div>
+                                    <div class="artifact-year">1898</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-custom w-full mt-4 py-2 flex items-center justify-center">
+                            View All Artifacts <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
     </section>
 
     <!-- Related Events -->

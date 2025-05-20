@@ -104,10 +104,10 @@
 
     <div class="flex h-screen overflow-hidden">
         <!-- Desktop Sidebar -->
-        <div class="sidebar w-64 flex-shrink-0 hidden md:flex flex-col">
+        <div class="sidebar w-80 flex-shrink-0 hidden md:flex flex-col">
             <div class="p-6 border-b border-green-600">
                 <a href="dashboard.php">
-                	<h1 class="text-2xl font-bold text-white flex items-center">
+                	<h1 class="text-3xl font-bold text-white flex items-center">
 	                    <i class="fas fa-leaf mr-3"></i> Dashboard
 	                </h1>
                 </a>
@@ -116,61 +116,61 @@
             <nav class="mt-4 flex-1">
                 <ul class="list-group">
                     <li class="sidebar-item px-6 py-3">
-                        <a href="index.php" class="d-flex gap-3 items-center text-white">
+                        <a href="index.php" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-home"></i>
                             <span>Back to website</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=museum" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=museum" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-info-circle"></i>
                             <span>General</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=blog" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=blog" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-newspaper"></i>
                             <span>Blog</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=event" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=event" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-calendar-alt"></i>
                             <span>Event</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=ticket" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=ticket" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-ticket-alt"></i>
                             <span>Ticket</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=payment" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=payment" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-credit-card"></i>
                             <span>Payment</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=artifact" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=artifact" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-images"></i>
                             <span>Gallery</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=account" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=account" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-user-cog"></i>
                             <span>Account</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=contact" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=contact" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-envelope"></i>
                             <span>Contact Message</span>
                         </a>
                     </li>
                     <li class="sidebar-item px-6 py-3">
-                        <a href="dashboard.php?page=carousel" class="d-flex gap-3 items-center text-white">
+                        <a href="dashboard.php?page=carousel" class="d-flex gap-3 items-center text-white text-lg">
                             <i class="fas fa-sliders-h"></i>
                             <span>Carousel</span>
                         </a>
