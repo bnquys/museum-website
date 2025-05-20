@@ -230,108 +230,35 @@
         </div>
 
         <div class="accordion" id="faqAccordion">
-            <div class="accordion-item mb-3 border-0 shadow-sm">
-                <h2 class="accordion-header" id="headingOne">
-                    <button
-                        class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne"
-                    >
-                        What are your current COVID-19 safety measures?
-                    </button>
-                </h2>
-                <div
-                    id="collapseOne"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion"
-                >
-                    <div class="accordion-body">
-                        We follow all local health guidelines.
-                        Currently, masks are optional but recommended in
-                        crowded spaces. We've increased cleaning
-                        protocols and provide hand sanitizing stations
-                        throughout the museum.
-                    </div>
-                </div>
-            </div>
+            <?php
+                use Museum\Utils\JsonDataManager;
+                $faqManager = new JsonDataManager('assets/data/common_question.json');
+                $faqs = $faqManager->readAll();
 
+                foreach($faqs as $faq):
+            ?>
             <div class="accordion-item mb-3 border-0 shadow-sm">
-                <h2 class="accordion-header" id="headingTwo">
+                <h2 class="accordion-header" id="heading<?= htmlspecialchars($faq['id'])?>">
                     <button
                         class="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo"
+                        data-bs-target="#collapse<?= htmlspecialchars($faq['id'])?>"
                     >
-                        Do you offer discounts for students or seniors?
+                        <?= htmlspecialchars($faq['question'])?>
                     </button>
                 </h2>
                 <div
-                    id="collapseTwo"
+                    id="collapse<?= htmlspecialchars($faq['id'])?>"
                     class="accordion-collapse collapse"
                     data-bs-parent="#faqAccordion"
                 >
                     <div class="accordion-body">
-                        Yes, we offer discounted admission for students
-                        with valid ID and seniors (65+). Children under
-                        7 are admitted free. Check our website for
-                        current pricing and special discount days.
+                        <?= htmlspecialchars($faq['answer'])?>
                     </div>
                 </div>
             </div>
-
-            <div class="accordion-item mb-3 border-0 shadow-sm">
-                <h2 class="accordion-header" id="headingThree">
-                    <button
-                        class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree"
-                    >
-                        Can I take photos in the museum?
-                    </button>
-                </h2>
-                <div
-                    id="collapseThree"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion"
-                >
-                    <div class="accordion-body">
-                        Photography without flash is permitted in most
-                        permanent collection galleries for personal use
-                        only. Some special exhibitions may prohibit
-                        photography entirely. No tripods or selfie
-                        sticks are allowed.
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item mb-3 border-0 shadow-sm">
-                <h2 class="accordion-header" id="headingFour">
-                    <button
-                        class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseFour"
-                    >
-                        How do I book a guided tour?
-                    </button>
-                </h2>
-                <div
-                    id="collapseFour"
-                    class="accordion-collapse collapse"
-                    data-bs-parent="#faqAccordion"
-                >
-                    <div class="accordion-body">
-                        Guided tours must be booked at least two weeks
-                        in advance. Please contact our Group Visits
-                        department at groups@mfa.org or call (617)
-                        267-9300 ext. 1 for more information and
-                        reservations.
-                    </div>
-                </div>
-            </div>
+            <?php endforeach;?>
         </div>
     </section>
 </main>
