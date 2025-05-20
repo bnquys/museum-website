@@ -1,423 +1,463 @@
-<body>
-    <!-- Mobile Header -->
-    <nav class="navbar navbar-mobile d-md-none navbar-dark sticky-top">
-        <div class="container-fluid">
-            <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-                <i class="fas fa-bars"></i>
-            </button>
-            <span class="navbar-brand mb-0 h1">Dashboard</span>
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Mobile Sidebar Offcanvas -->
-    <div class="offcanvas offcanvas-start offcanvas-nature" tabindex="-1" id="mobileSidebar">
-        <div class="offcanvas-header border-bottom border-white border-opacity-10">
-            <h5 class="offcanvas-title text-white">
-                <i class="fas fa-leaf me-2"></i> Dashboard
-            </h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body p-0">
-            <ul class="nav flex-column">
-                <li class="sidebar-item">
-                    <a href="index.php" class="sidebar-link">
-                        <i class="fas fa-home"></i>
-                        <span>Back to website</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=museum" class="sidebar-link">
-                        <i class="fas fa-info-circle"></i>
-                        <span>General</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=blog" class="sidebar-link">
-                        <i class="fas fa-newspaper"></i>
-                        <span>Blog</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=event" class="sidebar-link">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Event</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=ticket" class="sidebar-link">
-                        <i class="fas fa-ticket-alt"></i>
-                        <span>Ticket</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=payment" class="sidebar-link">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Payment</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=artifact" class="sidebar-link">
-                        <i class="fas fa-images"></i>
-                        <span>Gallery</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=account" class="sidebar-link">
-                        <i class="fas fa-user-cog"></i>
-                        <span>Account</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=contact" class="sidebar-link">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Message</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="dashboard.php?page=carousel" class="sidebar-link">
-                        <i class="fas fa-sliders-h"></i>
-                        <span>Carousel</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<?php
+    $css = "user";
+    $title = $name = "<Name> Profile | Our Museum";
+    include "components/first.php"; 
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Desktop Sidebar -->
-            <div class="col-md-3 col-lg-2 d-none d-md-block sidebar p-0">
-                <div class="sidebar-brand">
-                    <i class="fas fa-leaf me-2"></i> Dashboard
-                    <div class="small text-white-50">Welcome, <?php echo $userAdmin; ?></div>
+    require_once realpath(__DIR__."/vendor/autoload.php");
+
+    use Museum\Object\Language;
+    use Museum\Utils\FileUploader;
+
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'log-out':
+                unset($_SESSION['login']);
+                header("Location: index.php");
+                exit;
+    
+            case 'change-password':
+                $_SESSION['change_pass'] = [
+                    'username' => $accountLogin->username,
+                    'email' => $accountLogin->email,
+                    'name' => $accountLogin->getUser()->name,
+                    'birthDate' => $accountLogin->getUser()->birthDate,
+                    'phoneNumber' => $accountLogin->getUser()->phoneNumber
+                ];
+    
+                header("Location: portal.php?pg=create-account");
+                exit;
+    
+            default:
+                break;
+        }
+    }
+
+    $errors = [];
+    $name = $_POST['name'] ?? '';
+    $phone = $_POST['phoneNumber'] ?? '';
+    $birthDate = $_POST['birthDate'] ?? '';
+    $valid = true;
+    
+    $userLogin = $accountLogin?->getUser();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['login'])) {
+    
+        // Validate name
+        if (empty($name) || !preg_match("/^[a-zA-ZÀ-ỹ\s]+$/u", $name)) {
+            $errors['name'] = "Invalid name. Only letters and spaces are allowed.";
+            $valid = false;
+        }
+    
+        // Validate phone number
+        if (!preg_match('/^0\d{9}$/', $phone)) {
+            $errors['phoneNumber'] = "Phone number must start with 0 and contain exactly 10 digits.";
+            $valid = false;
+        }
+    
+        // Validate birthDate
+        if (!empty($birthDate)) {
+            $date = DateTime::createFromFormat('Y-m-d', $birthDate);
+            if (!$date || $date > new DateTime() || $date < new DateTime('-120 years')) {
+                $errors['birthDate'] = "Invalid birth date.";
+                $valid = false;
+            }
+        }
+
+        if (isset($_POST['isGuide'])) {
+            if (empty($_POST['languages']) || !is_array($_POST['languages']) || count($_POST['languages']) === 0) {
+                $errors['languages'] = "Please select at least one language.";
+                $valid = false;
+            }
+        }
+    
+        if ($valid) {
+            $user = $accountLogin->getUser();
+            $user->name = $name;
+            $user->phoneNumber = $phone;
+            $user->birthDate = $birthDate;
+    
+            if (isset($_POST['reset_avatar']) && $_POST['reset_avatar'] === '1') {
+                $user->setAvatar('https://placehold.co/394x394/orange/white?text=Avatar');
+            } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                $uploader = new FileUploader("assets/uploads/avatar/");
+                $path = $uploader->upload($_FILES['avatar']);
+                if ($path) {
+                    $user->setAvatar($path);
+                } else {
+                    $errors['avatar'] = $uploader->error ?: "Failed to upload avatar.";
+                    $valid = false;
+                }
+            }
+
+            if (isset($_POST['isGuide'])) {
+                $user->saveAsGuide();
+            } else {
+                $user->removeGuide();
+            }
+    
+            $user::update($user);
+
+            if ($user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide) {
+                    $intro = $_POST['intro'] ?? '';
+                    $experience = $_POST['experience'] ?? '';
+                    $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
+            
+                    $guide->setIntroduction($intro);
+                    $guide->setExpertise($experience);
+                    $guide->setPrice($price);
+                }
+            } 
+            
+            if ($valid && isset($_POST['isGuide']) && $user->isGuide()) {
+                $guide = $user->getGuide();
+                if ($guide && isset($_POST['languages']) && is_array($_POST['languages'])) {
+                    $selectedLangs = $_POST['languages'];
+                    $currentLangs = $guide->getLanguages(); // Array of Language objects
+            
+                    $guide->updateLanguages($_POST['languages']);
+                }
+            }                       
+            
+            header("Location: user.php");
+            exit;
+        }
+    }
+    
+?>
+
+<body>
+    <!-- Header Section -->
+    <header class="profile-header py-5 mb-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold">
+                        <i class="bi bi-person-circle me-3"></i>
+                        <?= htmlspecialchars($userLogin->name ?? '') ?> Profile
+                    </h1>
+                    <p class="lead">
+                        Update your personal information and preferences
+                    </p>
                 </div>
-                <ul class="nav flex-column">
-                    <li class="sidebar-item">
-                        <a href="index.php" class="sidebar-link">
-                            <i class="fas fa-home"></i>
-                            <span>Back to website</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=museum" class="sidebar-link">
-                            <i class="fas fa-info-circle"></i>
-                            <span>General</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=blog" class="sidebar-link">
-                            <i class="fas fa-newspaper"></i>
-                            <span>Blog</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=event" class="sidebar-link">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Event</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=ticket" class="sidebar-link">
-                            <i class="fas fa-ticket-alt"></i>
-                            <span>Ticket</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=payment" class="sidebar-link">
-                            <i class="fas fa-credit-card"></i>
-                            <span>Payment</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=artifact" class="sidebar-link">
-                            <i class="fas fa-images"></i>
-                            <span>Gallery</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=account" class="sidebar-link">
-                            <i class="fas fa-user-cog"></i>
-                            <span>Account</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=contact" class="sidebar-link">
-                            <i class="fas fa-envelope"></i>
-                            <span>Contact Message</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="dashboard.php?page=carousel" class="sidebar-link">
-                            <i class="fas fa-sliders-h"></i>
-                            <span>Carousel</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="position-absolute bottom-0 w-100 p-3 border-top border-white border-opacity-10">
-                    <div class="d-flex align-items-center">
-                        <div class="user-avatar glow me-3">
-                            <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Profile Update Card -->
+                <div class="card profile-card mb-4 border-0 p-2">
+                    <div class="card-header bg-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-pencil-square me-2"></i>Personal
+                            Information
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <?php $avatar = $userLogin->avatar ?? 'https://placehold.co/394x394/orange/white?text=Avatar'; ?>
+                        <div class="text-center mb-4">
+                            <img id="avatar-preview" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="rounded-circle" width="120" height="120" />
                         </div>
-                        <div>
-                            <div class="text-white"><?php echo $userAdmin; ?></div>
-                            <small class="text-white-50">Admin</small>
+
+                        <!-- Profile Update Form -->
+                        <form id="profileForm" method="POST" enctype="multipart/form-data">
+                            <!-- Avatar Upload -->
+                            <div class="mb-4">
+                                <label for="avatar" class="form-label">
+                                    <i class="bi bi-image-fill profile-icon"></i>Avatar Image
+                                </label>
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    id="avatar"
+                                    name="avatar"
+                                    accept="image/*"
+                                />
+                                <?php if (!empty($errors['avatar'])): ?>
+                                    <div class="text-danger mt-2"><?= htmlspecialchars($errors['avatar']) ?></div>
+                                <?php endif; ?>
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-avatar">
+                                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Default Avatar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Name Section -->
+                            <div class="mb-4">
+                                <label for="fullName" class="form-label">
+                                    <i class="bi bi-person-fill profile-icon"></i>Full Name
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>"
+                                    id="fullName"
+                                    name="name"
+                                    value="<?= htmlspecialchars($_POST['name'] ?? $userLogin->name ?? '') ?>"
+                                    required
+                                />
+                                <?php if (!empty($errors['name'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['name'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="mb-4">
+                                <label for="email" class="form-label">
+                                    <i
+                                        class="bi bi-envelope-fill profile-icon"
+                                    ></i
+                                    >Email Address
+                                </label>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    value="<?= htmlspecialchars($userLogin->email ?? '') ?>"
+                                    required
+                                    readonly
+                                />
+                                <div class="form-text">
+                                    We'll never share your email with anyone
+                                    else.
+                                </div>
+                            </div>
+                            
+                            <!-- Phone Number -->
+                            <div class="mb-4">
+                                <label for="phone" class="form-label">
+                                    <i class="bi bi-telephone-fill profile-icon"></i>Phone Number
+                                </label>
+                                <input
+                                    type="tel"
+                                    class="form-control <?= isset($errors['phoneNumber']) ? 'is-invalid' : '' ?>"
+                                    id="phone"
+                                    name="phoneNumber"
+                                    value="<?= htmlspecialchars($_POST['phoneNumber'] ?? $userLogin->phoneNumber ?? '') ?>"
+                                />
+                                <?php if (!empty($errors['phoneNumber'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['phoneNumber'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Birth Date -->
+                            <div class="mb-4">
+                                <label for="birthDate" class="form-label">
+                                    <i class="bi bi-calendar-date-fill profile-icon"></i>Birth Date
+                                </label>
+                                <input
+                                    type="date"
+                                    class="form-control <?= isset($errors['birthDate']) ? 'is-invalid' : '' ?>"
+                                    id="birthDate"
+                                    name="birthDate"
+                                    value="<?= htmlspecialchars($_POST['birthDate'] ?? $userLogin->birthDate ?? '') ?>"
+                                    min="<?= date('Y-m-d', strtotime('-120 years')) ?>"
+                                    max="<?= date('Y-m-d') ?>"
+                                />
+                                <?php if (!empty($errors['birthDate'])): ?>
+                                    <div class="invalid-feedback"><?= $errors['birthDate'] ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Checkbox to indicate user is a Guide -->
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="isGuideCheckbox" name="isGuide" 
+                                        <?= $userLogin->isGuide() ? 'checked' : '' ?>> I am a Guide
+                                </label>
+                            </div>
+
+                            <!-- Additional fields shown only if user is a Guide -->
+                            <?php
+                                $guideData = $userLogin->isGuide() ? $userLogin->getGuide() : null;
+                                $introValue = $guideData?->getIntroduction() ?? '';
+                                $experienceValue = $guideData?->getExpertise() ?? '';
+                            ?>
+                            <div id="guideFields" style="display: <?= $userLogin->isGuide() ? 'block' : 'none' ?>;">
+                                <div class="form-group">
+                                    <label for="intro">Introduction:</label>
+                                    <textarea id="intro" name="intro" class="form-control" rows="3" placeholder="Write a brief introduction..."><?= htmlspecialchars($introValue) ?></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="experience">Experience:</label>
+                                    <textarea id="experience" name="experience" class="form-control" rows="3" placeholder="Describe your guiding experience..."><?= htmlspecialchars($experienceValue)?></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="price">Guide Price (USD):</label>
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="price"
+                                        name="price"
+                                        min="0"
+                                        step="0.01"
+                                        value="<?= htmlspecialchars($_POST['price'] ?? $guideData?->getPrice() ?? '') ?>"
+                                        placeholder="Enter your hourly rate"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Languages Spoken:</label>
+                                    <div id="languageOptions" class="d-flex flex-wrap gap-2">
+                                    <?php 
+                                        $languages = Language::getAll();
+                                        $selectedLangs = $guideData?->getLanguages() ?? [];
+                                        $selectedLangIds = array_map(fn($l) => $l->id, $selectedLangs);
+
+                                        foreach ($languages as $lang): 
+                                            $checked = in_array($lang->id, $selectedLangIds) ? 'checked' : '';
+                                    ?>
+                                        <label class="btn btn-outline-primary <?= $checked ? 'active' : '' ?>">
+                                            <input type="checkbox" name="languages[]" value="<?= htmlspecialchars($lang->id) ?>" <?= $checked ?>>
+                                            <?= htmlspecialchars($lang->name) ?>
+                                        </label>
+                                    <?php endforeach; ?>
+                                    </div>
+                                    <?php if (!empty($errors['languages'])): ?>
+                                        <div class="text-danger mt-2"><?= htmlspecialchars($errors['languages']) ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- JavaScript to toggle guide-specific fields -->
+                            <script>
+                                document.getElementById('isGuideCheckbox').addEventListener('change', function () {
+                                    const guideFields = document.getElementById('guideFields');
+                                    guideFields.style.display = this.checked ? 'block' : 'none';
+                                });
+                            </script>
+
+                            <!-- Form Buttons -->
+                            <div class="d-flex justify-content-center mt-5">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary px-4"
+                                >
+                                    <i class="bi bi-save me-2"></i>Save
+                                    Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Additional Profile Options -->
+                <div class="card profile-card border-0 p-2">
+                    <div class="card-header bg-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-gear-fill me-2"></i>Account
+                            Settings
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <a
+                                href="?action=change-password"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            >
+                                <span
+                                    ><i class="bi bi-key-fill me-2"></i
+                                    >Change Password</span
+                                >
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a
+                                href="#"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            >
+                                <span
+                                    ><i
+                                        class="bi bi-calendar-event-fill me-2"
+                                    ></i
+                                    >Visit History</span
+                                >
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a
+                                href="#"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger"
+                            >
+                                <span
+                                    ><i class="bi bi-trash-fill me-2"></i
+                                    >Delete Account</span
+                                >
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a
+                                href="dashboard.php"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            >
+                                <span><i class="bi bi-speedometer2 me-2"></i>Go to Dashboard</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                            <a
+                                href="?action=log-out"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger"
+                            >
+                                <span><i class="bi bi-box-arrow-right me-2"></i>Log Out</span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Main Content -->
-            <main class="col-md-9 col-lg-10 ms-sm-auto main-content">
-                <?php if (isset($_GET['page'])): ?>
-                    <?php 
-                    $func = $_GET['page']; 
-                    switch ($func) {
-                        case 'blog':
-                            include "components/dashboard/blog_dashboard.php";
-                            break;
-                        case 'ticket':
-                            include "components/dashboard/ticket_dashboard.php";
-                            break;
-                        case 'carousel':
-                            include 'components/dashboard/carousel_dashboard.php';
-                            break;
-                        case 'museum':
-                            include "components/dashboard/about_dashboard.php";
-                            break;
-                        case 'artifact':
-                            include 'components/dashboard/artifact_dashboard.php';
-                            break;
-                        case 'payment':
-                            include 'components/dashboard/payment_dashboard.php';
-                            break;
-                        case 'event':
-                            include 'components/dashboard/event_dashboard.php';
-                            break;
-                        case 'account':
-                            include 'components/dashboard/account_dashboard.php';
-                            break;
-                        case 'contact':
-                            include 'components/dashboard/contact_dashboard.php';
-                            break;
-                    }
-                    ?>
-                <?php else: ?>
-                    <!-- Default Dashboard View -->
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Dashboard Overview</h1>
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <button class="btn btn-nature">
-                                <i class="fas fa-plus me-1"></i> Quick Action
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Stats Cards -->
-                    <div class="row mb-4">
-                        <div class="col-md-6 col-lg-3 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="text-muted mb-2">Total Visitors</h6>
-                                            <h3 class="stat-value text-nature mb-0">1,245</h3>
-                                            <small class="text-success">
-                                                <i class="fas fa-arrow-up me-1"></i> 12.5% from last month
-                                            </small>
-                                        </div>
-                                        <div class="card-icon">
-                                            <i class="fas fa-users"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-3 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="text-muted mb-2">Events</h6>
-                                            <h3 class="stat-value text-nature mb-0">24</h3>
-                                            <small class="text-success">
-                                                <i class="fas fa-arrow-up me-1"></i> 3 new this week
-                                            </small>
-                                        </div>
-                                        <div class="card-icon">
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-3 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="text-muted mb-2">Blog Posts</h6>
-                                            <h3 class="stat-value text-nature mb-0">56</h3>
-                                            <small class="text-success">
-                                                <i class="fas fa-arrow-up me-1"></i> 2 new today
-                                            </small>
-                                        </div>
-                                        <div class="card-icon">
-                                            <i class="fas fa-newspaper"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-3 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="text-muted mb-2">Messages</h6>
-                                            <h3 class="stat-value text-nature mb-0">12</h3>
-                                            <small class="text-warning">
-                                                <i class="fas fa-circle me-1"></i> 5 unread
-                                            </small>
-                                        </div>
-                                        <div class="card-icon">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Recent Activity and Quick Actions -->
-                    <div class="row">
-                        <div class="col-lg-6 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title text-nature">
-                                        <i class="fas fa-history me-2"></i> Recent Activity
-                                    </h5>
-                                    <div class="activity-list">
-                                        <div class="activity-item">
-                                            <div class="d-flex">
-                                                <div class="card-icon me-3">
-                                                    <i class="fas fa-user"></i>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">New visitor registered</h6>
-                                                    <p class="mb-1 small text-muted">Sarah Johnson signed up for newsletter</p>
-                                                    <small class="text-muted">10 minutes ago</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="activity-item">
-                                            <div class="d-flex">
-                                                <div class="card-icon me-3">
-                                                    <i class="fas fa-ticket-alt"></i>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">Ticket purchased</h6>
-                                                    <p class="mb-1 small text-muted">Order #45892 for $45.00</p>
-                                                    <small class="text-muted">1 hour ago</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="activity-item">
-                                            <div class="d-flex">
-                                                <div class="card-icon me-3">
-                                                    <i class="fas fa-comment"></i>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-1">New comment</h6>
-                                                    <p class="mb-1 small text-muted">On "History of Ancient Artifacts" post</p>
-                                                    <small class="text-muted">3 hours ago</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-6 mb-4">
-                            <div class="card card-nature h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title text-nature">
-                                        <i class="fas fa-bolt me-2"></i> Quick Actions
-                                    </h5>
-                                    <div class="row g-3">
-                                        <div class="col-6">
-                                            <a href="dashboard.php?page=blog" class="quick-action-item d-block text-decoration-none">
-                                                <div class="quick-action-icon">
-                                                    <i class="fas fa-newspaper"></i>
-                                                </div>
-                                                <span>Add Blog Post</span>
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="dashboard.php?page=event" class="quick-action-item d-block text-decoration-none">
-                                                <div class="quick-action-icon">
-                                                    <i class="fas fa-calendar-plus"></i>
-                                                </div>
-                                                <span>Create Event</span>
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="dashboard.php?page=artifact" class="quick-action-item d-block text-decoration-none">
-                                                <div class="quick-action-icon">
-                                                    <i class="fas fa-image"></i>
-                                                </div>
-                                                <span>Add Gallery Item</span>
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="dashboard.php?page=account" class="quick-action-item d-block text-decoration-none">
-                                                <div class="quick-action-icon">
-                                                    <i class="fas fa-user-plus"></i>
-                                                </div>
-                                                <span>Add User</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </main>
         </div>
-    </div>
+    </main>
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // Highlight current page in sidebar
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.href.split('page=')[1] || '';
-            const sidebarItems = document.querySelectorAll('.sidebar-item');
-            
-            sidebarItems.forEach(item => {
-                const link = item.querySelector('a');
-                if (link && link.getAttribute('href').includes(currentPage)) {
-                    item.classList.add('active');
+        const defaultAvatar = 'https://placehold.co/394x394/orange/white?text=Avatar';
+        const avatarInput = document.getElementById('avatar');
+        const avatarPreview = document.getElementById('avatar-preview');
+        const form = document.getElementById('profileForm');
+
+        // Xem trước khi chọn file
+        avatarInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    avatarPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                // Xóa cờ reset nếu người dùng chọn ảnh mới
+                const resetInput = document.getElementById('reset-avatar-flag');
+                if (resetInput) {
+                    resetInput.remove();
                 }
-            });
-            
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.card-nature');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-5px)';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
+            }
+        });
+
+        // Xử lý đặt lại ảnh mặc định
+        document.getElementById('reset-avatar').addEventListener('click', function () {
+            avatarPreview.src = defaultAvatar;
+            avatarInput.value = '';
+
+            // Thêm cờ ẩn vào form
+            if (!document.getElementById('reset-avatar-flag')) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'reset_avatar';
+                hiddenInput.id = 'reset-avatar-flag';
+                hiddenInput.value = '1';
+                form.appendChild(hiddenInput);
+            }
         });
     </script>
 </body>
+
+
+<?php
+    include "components/footer.php";
+    include "components/last.php";
+?>

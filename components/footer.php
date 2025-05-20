@@ -27,8 +27,8 @@
 			<!-- Left: Navigation Links -->
 			<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
 				<h4 class="footer-heading">Quick Links</h4>
-				<ul class="list-unstyled">
-					<li><a href="index.php" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Visit</a></li>
+				<ul class="list-unstyled d-flex flex-column justify-content-between h-75">
+					<li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Visit</a></li>
 					<li><a href="contact.php" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Contact</a></li>
 					<li><a href="about.php" class="footer-link"><i class="fas fa-chevron-right me-2"></i> About</a></li>
 					<li><a href="ticket.php" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Ticket</a></li>
@@ -50,9 +50,6 @@
 								at Richard Gilder Way (77th Street)<br>
 								New York, NY 10024
 							</address>
-							<a href="#" class="btn btn-sm mt-3" style="background-color: var(--normal-cl); color: white;">
-								<i class="fas fa-directions me-2"></i> Get Directions
-							</a>
 						</div>
 					</div>
 					
@@ -101,8 +98,8 @@
 						width="120"
 					/>
 					<div>
-						<h3 class="mb-0" style="color: var(--normal-light-cl);">Our</h3>
-						<h2 class="mb-0 fw-bold" style="letter-spacing: 2px;">MUSEUM</h2>
+						<h3 class="fs-1 mb-0 fw-light" style="color: var(--normal-light-cl);">Our</h3>
+						<h2 class="fs-1 mb-0 fw-bold" style="letter-spacing: 2px;">MUSEUM</h2>
 					</div>
 				</div>
 			</div>

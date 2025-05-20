@@ -31,25 +31,28 @@
 }
 
 body {
-    overflow-y: auto;
-    scrollbar-color: var(--normal-cl) transparent; /* Firefox */
+    overflow: auto;
+    scrollbar-color: var(--normal-cl); /* Firefox */
     scrollbar-width: thin;
 }
 
-/* Chrome, Safari, Edge */
-body::-webkit-scrollbar {
+/* Custom scrollbar */
+::-webkit-scrollbar {
     width: 8px;
 }
 
-body::-webkit-scrollbar-track {
-    background: transparent;
+::-webkit-scrollbar-track {
+    background: var(--light-cl-rgba);
 }
 
-body::-webkit-scrollbar-thumb {
-    background-color: var(--normal-cl);
+::-webkit-scrollbar-thumb {
+    background: var(--normal-cl);
     border-radius: 4px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-cl);
+}
 
 a {
     text-decoration: none;
@@ -136,7 +139,7 @@ header a {
     }
 }
 
-.nav-link::after {
+#menu .nav-link::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -148,7 +151,7 @@ header a {
     transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
+#menu .nav-link:hover::after {
     width: 100%;
 }
 
@@ -599,19 +602,27 @@ section h2[name="title"] {
     }
 }
 
-        
 footer {
-    background: linear-gradient(135deg, var(--deep-forest-cl), var(--dark-cl));
+    background: linear-gradient(
+        135deg,
+        var(--deep-forest-cl),
+        var(--dark-cl),
+        var(--normal-cl)
+    );
     color: white;
     position: relative;
     overflow: hidden;
     .footer-heading {
         position: relative;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         letter-spacing: 2px;
         margin-bottom: 1.5rem;
     }
-    
+
+    * {
+        /* font-family: "Gelasio", sans-serif; */
+    }
+
     .footer-heading::after {
         content: "";
         position: absolute;
@@ -621,7 +632,7 @@ footer {
         height: 3px;
         background-color: var(--normal-light-cl);
     }
-    
+
     .footer-link {
         color: white;
         text-decoration: none;
@@ -630,12 +641,12 @@ footer {
         margin-bottom: 0.5rem;
         position: relative;
     }
-    
+
     .footer-link:hover {
         color: var(--normal-light-cl);
         transform: translateX(5px);
     }
-    
+
     .footer-link::after {
         content: "";
         position: absolute;
@@ -646,11 +657,11 @@ footer {
         background-color: var(--normal-light-cl);
         transition: width 0.3s ease;
     }
-    
+
     .footer-link:hover::after {
         width: 100%;
     }
-    
+
     .email-input {
         background-color: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -659,18 +670,18 @@ footer {
         border-radius: 30px;
         transition: all 0.3s ease;
     }
-    
+
     .email-input:focus {
         background-color: rgba(255, 255, 255, 0.2);
         border-color: var(--normal-light-cl);
         box-shadow: 0 0 0 0.25rem rgba(175, 255, 0, 0.25);
         color: white;
     }
-    
+
     .email-input::placeholder {
         color: rgba(255, 255, 255, 0.7);
     }
-    
+
     .submit-btn {
         background-color: var(--normal-light-cl);
         color: var(--deep-forest-cl);
@@ -680,12 +691,12 @@ footer {
         font-weight: 600;
         transition: all 0.3s ease;
     }
-    
+
     .submit-btn:hover {
         background-color: white;
         transform: translateX(5px);
     }
-    
+
     .social-icon {
         display: inline-flex;
         align-items: center;
@@ -698,13 +709,13 @@ footer {
         margin-right: 0.5rem;
         transition: all 0.3s ease;
     }
-    
+
     .social-icon:hover {
         background-color: var(--normal-light-cl);
         color: var(--deep-forest-cl);
         transform: translateY(-5px);
     }
-    
+
     .info-box {
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
@@ -713,59 +724,59 @@ footer {
         transition: all 0.3s ease;
         border-left: 3px solid transparent;
     }
-    
+
     .info-box:hover {
         background-color: rgba(255, 255, 255, 0.1);
         border-left-color: var(--normal-light-cl);
     }
-    
+
     .museum-logo {
         transition: all 0.3s ease;
     }
-    
+
     .museum-logo:hover {
-        transform: rotate(15deg) scale(1.1);
+        transform: rotate(-15deg) scale(1.1);
     }
-    
+
     .divider {
-        border-color: rgba(255, 255, 255, 0.2) !important;
+        border-color: var(--white-cl) !important;
         margin: 2rem 0;
     }
-    
+
     .policy-link {
         color: rgba(255, 255, 255, 0.7);
         text-decoration: none;
         transition: all 0.3s ease;
         position: relative;
     }
-    
+
     .policy-link:hover {
         color: var(--normal-light-cl);
     }
-    
+
     .policy-link::after {
         content: "•";
         margin: 0 0.5rem;
         color: rgba(255, 255, 255, 0.3);
     }
-    
+
     .policy-link:last-child::after {
         display: none;
     }
-    
+
     @media (max-width: 768px) {
         .footer-heading {
             margin-top: 1.5rem;
         }
-        
+
         .info-box {
             margin-bottom: 1rem;
         }
-        
+
         .policy-link::after {
             display: none;
         }
-        
+
         .policy-link {
             display: block;
             margin-bottom: 0.5rem;
@@ -779,6 +790,10 @@ footer::before {
     top: 0;
     left: 0;
     right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--normal-light-cl), var(--normal-cl));
+    height: 10px;
+    background: linear-gradient(
+        90deg,
+        var(--normal-light-cl),
+        var(--normal-cl)
+    );
 }
