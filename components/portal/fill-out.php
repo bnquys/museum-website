@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				type="text"
 				name="name"
 				id="name"
-				class="form-control <?= isset($nameError) ? 'is-invalid' : ''?>"
+				class="form-control <?= !empty($nameError) ? 'is-invalid' : '' ?>"
 				placeholder="Mc Donal"
 				value="<?= $name?>"
 				required
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				type="tel"
 				name="phoneNumber"
 				id="phone-number"
-				class="form-control <?= isset($phoneNumberError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !empty($phoneNumberError) ? 'is-invalid' : '' ?>"
 				value="<?= $phoneNumber?>"
 				required
 			/>
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				type="email"
 				name="email"
 				id="email"
-				class="form-control <?= !isset($emailError) ? 'is-invalid' : '' ?>"
+				class="form-control <?= !empty($emailError) ? 'is-invalid' : '' ?>"
 				value="<?= $_POST['subscribeEmail'] ?? $email ?>"
 				required
 			/>

@@ -98,7 +98,7 @@
 						width="120"
 					/>
 					<div>
-						<h3 class="fs-1 mb-0 fw-light" style="color: var(--normal-light-cl);">Our</h3>
+						<h3 class="fs-1 mb-0 fw-" style="color: var(--normal-light-cl);">Our</h3>
 						<h2 class="fs-1 mb-0 fw-bold" style="letter-spacing: 2px;">MUSEUM</h2>
 					</div>
 				</div>

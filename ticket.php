@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             >
             </p>
             <?php if (!isset($accountLogin)):?>
-                <p class='text-danger'>You must <a href="portal.php?pg=login">Login</a> or <a href="portal.php?pg=signup">Sign up</a> to checkout!</p>
+                <p class='text-danger'>You must <a style="color:var(--normal-cl)" href="portal.php?pg=login">Login</a> or <a style="color:var(--normal-cl)" href="portal.php?pg=signup">Sign up</a> to checkout!</p>
             <?php else:?>
                 <button type="submit" class="button-92">Checkout now !</button>
             <?php endif;?>

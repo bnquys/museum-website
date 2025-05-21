@@ -205,12 +205,12 @@
                             </a>
                         </li>
                         <?php endif;?>
-                        <li class="nav-item p-2 mb-1">
+                        <!-- <li class="nav-item p-2 mb-1">
                             <a class="nav-link d-flex align-items-center text-danger" href="#">
                                 <i class="bi bi-trash-fill me-3"></i>
                                 <span>Delete Account</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item p-2">
                             <a class="nav-link d-flex align-items-center text-danger" href="?action=log-out">
                                 <i class="bi bi-box-arrow-right me-3"></i>
