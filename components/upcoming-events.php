@@ -29,7 +29,7 @@
 					background-position: <?= $horizontal ?>% <?= $vertical ?>%
 				"
 			>
-				<a href="more.php?type=event&id=<?= $event->id ?>" class="quote text-decoration-none text-white">
+				<a href="more.php?type=<?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?>&id=<?= $event->id ?>" class="quote text-decoration-none text-white">
 					<p class="fw-bold"><?= htmlspecialchars($event->title) ?><br>
 					<span class="fw-light"><?= date('F j, Y', strtotime($event->timeStart)) ?></span></p>
 				</a>

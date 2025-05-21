@@ -5,7 +5,7 @@ from datetime import datetime
 # Fixed output directory for converted .txt files
 # OUTPUT_DIR = "D:\\OneDrive - student.tdtu.edu.vn\\DESKTOP-M3PPH9A\\source-code\\Web\\MuseumWebsite" 
 # OUTPUT_DIR = "C:\\Users\\admin\\Documents" 
-OUTPUT_DIR = "/home/quys/Documents/convert_txt"
+OUTPUT_DIR = "C:\\Users\\Administrator\\OneDrive\\Tài liệu\\conver_txt"
 
 def log(message, status="INFO"):
     """Log message with status and timestamp."""

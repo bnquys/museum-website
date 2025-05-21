@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				name="email"
 				id="email"
 				class="form-control <?= !isset($emailError) ? 'is-invalid' : '' ?>"
-				value="<?= $email?>"
+				value="<?= $_POST['subscribeEmail'] ?? $email?>"
 				required
 			/>
 			<div class="invalid-feedback text-danger"><?= $emailError ?? '' ?></div>

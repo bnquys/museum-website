@@ -9,15 +9,15 @@
 <div class="fixed-top header">
 	<div class="container-fluid border-light border-bottom">
 		<div class="topbar container d-flex justify-content-between mt-2 pb-2">
-			<div class>
+			<div class="">
 				<!-- <span class="text-white me-4"><i class="fas fa-clock"></i> <?= htmlspecialchars($museum["summary"])?></span> -->
-				<span class="text-white me-4"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($museum["address"])?></span>
-				<span class="text-white me-4"><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($museum["phone"])?></span>
+				<span class="text-white me-4 mv-tb"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($museum["address"])?></span>
+				<span class="text-white me-4 mv-tb"><i class="fas fa-phone-alt"></i> <?= htmlspecialchars($museum["phone"])?></span>
 			</div>
 			<?php if(isset($accountLogin)) { ?>
-				<div> <a href="user.php" class="d-inline text-white user me-1"><i class="fa-solid fa-user"></i> <?= $accountLogin->getUser()->name?></a></div>
+				<div> <a href="user.php" class="d-inline text-white user me-1 mv-tb"><i class="fa-solid fa-user"></i> <?= $accountLogin->getUser()->name?></a></div>
 			<?php } else { ?>
-				<div> <a href="portal.php" class="d-inline text-white user me-1">Login here</a></div>
+				<div> <a href="portal.php" class="d-inline text-white user me-1 mv-tb">Login here</a></div>
 			<?php }?>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 		<div id="menu" class="container">
 			<!-- MENU -->
 			<a
-				class="navbar-brand text-light fs-3 fw-bold"
+				class="navbar-brand text-light fs-3 fw-bold mv-lr"
 				href="index.php"
 				><img
 					src="./assets/img/museum.ico"
@@ -72,7 +72,7 @@
 				id="navbarSupportedContent"
 			>
 				<ul
-					class="navbar-nav ms-auto mb-2 mb-lg-0 text-end pe-3 pe-lg-0 border-0"
+					class="navbar-nav ms-auto mb-2 mb-lg-0 text-end pe-3 pe-lg-0 border-0 mv-rl"
 				>
 					<li class="nav-item nav-link px-3 hover-link">
 						<a href="index.php">Home</a>

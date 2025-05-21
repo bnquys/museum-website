@@ -72,7 +72,6 @@
 			<div class="d-flex justify-content-center">
 				<input type="submit" class="btn btn-success my-3" value="Submit"></input>
 			</div>
-			<p class="text-light text-center mb-0 mt-2">Forgot your account? <a href="login.php?pg=forgot">Click here</a></p>
 
 		</div>
 		<p class="text-light text-center mt-1 border-top pt-2">

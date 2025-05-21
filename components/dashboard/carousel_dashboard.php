@@ -17,14 +17,6 @@ if (isset($_GET['deleteId'])) {
     $deleteId = $_GET['deleteId'];
     $imageManager->delete($deleteId);
 
-    // Reorder IDs
-    $items = $imageManager->readAll();
-    usort($items, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
-
-    foreach ($items as $index => &$item) {
-        $item['id'] = $index + 1;
-    }
-
     // Ghi lại vào file JSON
     $reflection = new ReflectionClass($imageManager);
     $property = $reflection->getProperty('filePath');
@@ -38,11 +30,9 @@ if (isset($_GET['deleteId'])) {
 
 if (isset($_GET['move']) && isset($_GET['id'])) {
     $direction = $_GET['move'];
-    $id = (int)$_GET['id'];
+    $id = $_GET['id']; // vì giờ id là hash (chuỗi)
 
     $items = $imageManager->readAll();
-    usort($items, fn($a, $b) => $a['id'] <=> $b['id']);
-
     $index = array_search($id, array_column($items, 'id'));
 
     if ($index !== false) {
@@ -95,11 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($imagePath) {
             // Get next ID
             $existingItems = $imageManager->readAll();
-            $nextId = 1;
-            if (!empty($existingItems)) {
-                $ids = array_column($existingItems, 'id');
-                $nextId = max($ids) + 1;
-            }
+            $filename = basename($imagePath);
+            $nextId = sha1($filename);
 
             $imageManager->create([
                 'id' => $nextId,
@@ -113,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $carouselItems = $imageManager->readAll();
-usort($carouselItems, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
 ?>
 
 <div class="container mt-4">
@@ -123,16 +109,16 @@ usort($carouselItems, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
         <table class="table table-bordered table-hover align-middle">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Image</th>
                     <th>Description</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($carouselItems as $item): ?>
+                <?php foreach ($carouselItems as $index => $item): ?>
                     <tr>
-                        <td><?= htmlspecialchars($item['id']) ?></td>
+                        <td><?= $index+1 ?></td>
                         <td>
                             <img src="<?= htmlspecialchars($item['image_url']) ?>" alt="<?= htmlspecialchars($item['description']) ?>" style="width: 160px; height: 90px; object-fit: cover;">
                         </td>

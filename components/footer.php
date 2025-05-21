@@ -13,15 +13,16 @@
 				<p class="text-white-50">Subscribe to our newsletter for the latest updates and events.</p>
 			</div>
 			<div class="col-lg-6">
-				<form action="#" class="d-flex">
+				<form method="POST" action="portal.php?pg=signup" class="d-flex">
 					<input 
 						type="email" 
 						class="form-control email-input me-2" 
 						id="InputEmail" 
+						name="subscribeEmail"
 						placeholder="Your email address"
 						required
 					/>
-					<button type="submit" class="submit-btn">
+					<button type="submit" name="subscribe" class="submit-btn">
 						<i class="fas fa-paper-plane me-2"></i> Subscribe
 					</button>
 				</form>
