@@ -38,19 +38,24 @@ if (isset($_GET['deleteId'])) {
 
 if (isset($_GET['move']) && isset($_GET['id'])) {
     $direction = $_GET['move'];
-    $id = (int)$_GET['id'];
+    $id = $_GET['id']; // vì giờ id là hash (chuỗi)
 
     $items = $imageManager->readAll();
-    usort($items, fn($a, $b) => $a['id'] <=> $b['id']);
-
     $index = array_search($id, array_column($items, 'id'));
 
     if ($index !== false) {
         if ($direction === 'up' && $index > 0) {
-            $imageManager->swap($items[$index]['id'], $items[$index - 1]['id']);
+            [$items[$index], $items[$index - 1]] = [$items[$index - 1], $items[$index]];
         } elseif ($direction === 'down' && $index < count($items) - 1) {
-            $imageManager->swap($items[$index]['id'], $items[$index + 1]['id']);
+            [$items[$index], $items[$index + 1]] = [$items[$index + 1], $items[$index]];
         }
+
+        // Ghi lại dữ liệu
+        $reflection = new ReflectionClass($imageManager);
+        $property = $reflection->getProperty('filePath');
+        $property->setAccessible(true);
+        $filePath = $property->getValue($imageManager);
+        file_put_contents($filePath, json_encode($items, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
     header("Location: dashboard.php?page=carousel");
@@ -95,11 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($imagePath) {
             // Get next ID
             $existingItems = $imageManager->readAll();
-            $nextId = 1;
-            if (!empty($existingItems)) {
-                $ids = array_column($existingItems, 'id');
-                $nextId = max($ids) + 1;
-            }
+            $filename = basename($imagePath);
+            $nextId = sha1($filename);
 
             $imageManager->create([
                 'id' => $nextId,
