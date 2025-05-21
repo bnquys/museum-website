@@ -35,7 +35,7 @@
                     </div>
                     <div class="data">
                         <div class="content">
-                            <h1 class="title">
+                            <h1 class="title mb-5">
                                 <a href="more.php?type=<?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?>&id=<?= $event->id ?>">
                                     <?= htmlspecialchars($event->title) ?>
                                 </a>
