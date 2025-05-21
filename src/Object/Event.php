@@ -299,9 +299,35 @@ class Event {
     }
 
     public function saveAsAcademy($price = 0.0, $speaker = "") {
-        self::add($this); // Save to Events table
+        self::add($this); // Cập nhật vào bảng Events
     
         $conn = Database::Connect();
+    
+        // Nếu tồn tại trong bảng Exhibitions → xóa Display và Exhibitions
+        $stmt = $conn->prepare("SELECT 1 FROM Exhibitions WHERE Id = ?");
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $stmt->close();
+    
+            // Xóa liên kết Display trước
+            $stmt = $conn->prepare("DELETE FROM Display WHERE ExhId = ?");
+            $stmt->bind_param("s", $this->id);
+            $stmt->execute();
+            $stmt->close();
+    
+            // Xóa khỏi bảng Exhibitions
+            $stmt = $conn->prepare("DELETE FROM Exhibitions WHERE Id = ?");
+            $stmt->bind_param("s", $this->id);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            $stmt->close();
+        }
+    
+        // Lưu vào bảng Academy
         $stmt = $conn->prepare("
             INSERT INTO Academy (Id, Price, Speaker)
             VALUES (?, ?, ?)
@@ -317,16 +343,33 @@ class Event {
         $stmt->close();
         $conn->close();
     }
+    
 
     public function saveAsExhibition() {
-        self::add($this); // Save to Events table
+        self::add($this); // Save or update Events table
     
         $conn = Database::Connect();
+    
+        // Kiểm tra nếu đang tồn tại bên bảng Academy → xóa
+        $stmt = $conn->prepare("SELECT 1 FROM Academy WHERE Id = ?");
+        $stmt->bind_param("s", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $stmt->close();
+            $stmt = $conn->prepare("DELETE FROM Academy WHERE Id = ?");
+            $stmt->bind_param("s", $this->id);
+            $stmt->execute();
+        } else {
+            $stmt->close();
+        }
+    
+        // Thêm vào bảng Exhibitions
         $stmt = $conn->prepare("
             INSERT INTO Exhibitions (Id)
             VALUES (?)
-            ON DUPLICATE KEY UPDATE
-                Id = VALUES(Id) -- Dummy update to avoid error
+            ON DUPLICATE KEY UPDATE Id = VALUES(Id) -- Dummy update
         ");
         if (!$stmt) die("Prepare failed: " . $conn->error);
     
@@ -336,6 +379,7 @@ class Event {
         $stmt->close();
         $conn->close();
     }
+    
     
     /**
      * Returns the specific subclass of this event if applicable.

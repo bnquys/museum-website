@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Event::add($event);
     }
     
-    // header("Location: dashboard.php?page=event");
+    header("Location: dashboard.php?page=event");
     exit;
 }
 
