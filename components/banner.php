@@ -15,9 +15,9 @@
     </div>
     <div>
         <img
-            src="assets/img/banner.jpg"
+            src="assets/img/938-5000x1500.jpg"
             alt=""
-            class="w-100 mv-flip"
+            class="w-100 mv-flip h-25"
         />
     </div>
 </header>

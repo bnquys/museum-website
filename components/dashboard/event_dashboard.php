@@ -8,6 +8,10 @@ use Museum\Object\Artifact;
 use Museum\Utils\FileUploader;
 use Museum\Utils\UrlHelper;
 
+// echo "<pre>";
+// print_r($_POST);
+// echo "</pre>";
+
 $action = $_GET['action'] ?? 'list';
 $editId = $_GET['editId'] ?? null;
 $deleteId = $_GET['deleteId'] ?? null;
@@ -78,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Event::add($event);
     }
     
-    header("Location: dashboard.php?page=event");
+    // header("Location: dashboard.php?page=event");
     exit;
 }
 

@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-md-4 mv-tb">
                     <div class="about-card">
-                        <img src="https://images.unsplash.com/photo-1454923634634-bd1614719a7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Rainforest Exhibit">
+                        <img src="assets/img/1039-5000x3337.jpg" alt="Rainforest Exhibit">
                         <div class="icon-box">
                             <i class="bi bi-tree"></i>
                         </div>
@@ -100,7 +100,7 @@
 
                 <div class="col-md-4 mv-tb">
                     <div class="about-card">
-                        <img src="https://images.unsplash.com/photo-1534766555760-2707d69c4b50?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ocean Exploration">
+                        <img src="assets/img/599-2509x1673.jpg" alt="Rainforest Exhibit">
                         <div class="icon-box">
                             <i class="bi bi-water"></i>
                         </div>

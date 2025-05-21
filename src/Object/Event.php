@@ -70,7 +70,7 @@ class Event {
     
         $stmt = $conn->prepare("
             SELECT * FROM Events 
-            WHERE IsShow = TRUE AND TimeStart > NOW() 
+            WHERE IsShow = TRUE AND TimeEnd > NOW() 
             ORDER BY TimeStart DESC 
             LIMIT ?
         ");

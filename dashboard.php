@@ -5,9 +5,9 @@
 	$css = "dashboard";
 	include "components/first.php";
 	use Museum\Object\AccountRole;
-use Museum\Object\Blog;
-use Museum\Object\ContactForm;
-use Museum\Object\Event;
+    use Museum\Object\Blog;
+    use Museum\Object\ContactForm;
+    use Museum\Object\Event;
 
     if (isset($accountLogin)) {
 		$userAdmin = $accountLogin->username;

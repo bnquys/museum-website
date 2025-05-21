@@ -74,11 +74,11 @@
 						nature's <strong>story—its change</strong> <br>
 						and our evolving place <br> within it.
 					</h5>
-                    <button
+                    <!-- <button
                         class="btn btn-success rounded-0 fw-bold text-uppercase fs-6"
                     >
                         Learn More
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -114,12 +114,12 @@
 						special <strong>moments—talks</strong> <br>
 						and hands-on nature experiences.
 					</h5>
-                    <a
+                    <!-- <a
 						href="event.php"
                         class="btn btn-success rounded-0 fw-bold text-uppercase fs-6"
                     >
                         Learn More
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
