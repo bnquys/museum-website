@@ -18,23 +18,33 @@ if (!empty($viewId)) {
 
 // Handle marking payment as paid
 if ($paidId) {
-    $payment = Payment::paid($paidId);
+    // 1. Đánh dấu là đã thanh toán
+    Payment::paid($paidId); // trả về true/false, không cần gán
 
-    $customer = Account::getByUsername($order->username)->getUser();
-    $mailer = new Mailer($customer->email, $customer->name);
+    // 2. Lấy Payment object thật sự
+    $payment = Payment::fromId($paidId);
+    if ($payment) {
+        $order = Order::fromId($payment->ordId); // đây là dòng đúng
 
-    $data = [
-        'name' => $customer->name,
-        'id' => $paidId
-    ];
+        if ($order) {
+            $customer = Account::getByUsername($order->username)->getUser();
 
-    $mailer->setSubject('Ticket Confirmation');
-    $mailer->setBodyFromTemplate(__DIR__ . '/booking_email.html', $data);
-    $mailer->send();
+            $mailer = new Mailer($customer->email, $customer->name);
+            $data = [
+                'name' => $customer->name,
+                'id' => $paidId
+            ];
 
-    header("Location: dashboard.php?page=payment");  // Redirect after processing
+            $mailer->setSubject('Ticket Confirmation');
+            $mailer->setBodyFromTemplate(__DIR__ . '/booking_email.html', $data);
+            $mailer->send();
+        }
+    }
+
+    header("Location: dashboard.php?page=payment");
     exit;
 }
+
 ?>
 
 <div class="container mt-4">

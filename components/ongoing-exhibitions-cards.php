@@ -21,14 +21,16 @@
 			<div class="col-lg-4 bg-transparent">
 				<div class="card border-0 bg-transparent">
 					<div class="card-body p-0 border-0 bg-transparent">
-						<img
-							src="<?= $ex->imgUrl ?>"
-							class="card-img-top"
-							alt="<?= htmlspecialchars($ex->title) ?>"
-						/>
+						<a href="http://localhost/museum-website/more.php?type=exhibition&id=<?= $ex->id?>">
+							<img
+								src="<?= $ex->imgUrl ?>"
+								class="card-img-top"
+								alt="<?= htmlspecialchars($ex->title) ?>"
+							/>
+						</a>
 						<div class="p-3">
 							<div>
-								<a href="#" class="btn btn-outline-secondary rounded-0 tag">EXHIBITION</a>
+								<div href="#" class="btn btn-outline-secondary rounded-0 tag" style="cursor: context-menu;">EXHIBITION</div>
 							</div>
 							<p class="card-text mt-3">
 								<?= htmlspecialchars($ex->summary) ?>
