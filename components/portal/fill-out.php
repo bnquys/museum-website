@@ -13,10 +13,15 @@ if (isset($_SESSION['fillout']) && $_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST["name"]);
-    $birthDate = trim($_POST["birthDate"]);
-    $phoneNumber = trim($_POST["phoneNumber"]);
-    $email = trim($_POST["email"]);
+    if (isset($_POST['subscribeEmail'])) {
+        $email = trim($_POST['subscribeEmail']);
+        $name = $birthDate = $phoneNumber = ''; // giữ trống các field khác
+    } else {
+        $name = trim($_POST["name"] ?? '');
+        $birthDate = trim($_POST["birthDate"] ?? '');
+        $phoneNumber = trim($_POST["phoneNumber"] ?? '');
+        $email = trim($_POST["email"] ?? '');
+    }
 
     if (empty($name) || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
         $nameError = "Invalid name. Only letters and spaces are allowed.";
@@ -102,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				name="email"
 				id="email"
 				class="form-control <?= !isset($emailError) ? 'is-invalid' : '' ?>"
-				value="<?= $_POST['subscribeEmail'] ?? $email?>"
+				value="<?= $_POST['subscribeEmail'] ?? $email ?>"
 				required
 			/>
 			<div class="invalid-feedback text-danger"><?= $emailError ?? '' ?></div>
