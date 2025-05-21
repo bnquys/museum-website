@@ -9,7 +9,7 @@ body {
     background-color: var(--super-light-cl);
     box-shadow: 0 2px 5px var(--normal-cl-rgba);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease, transform 0.6s ease-out;
 }
 
 .blog-card:hover {

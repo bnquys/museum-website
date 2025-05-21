@@ -32,7 +32,7 @@
 	<form
 		action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
 		method = "post"
-		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5"
+		class="position-absolute top-50 start-50 translate-middle border p-5 rounded-5 mv-scale"
 		id="form"
 	>
 		<h1 class="text-center text-light fw-bold">Login</h1>

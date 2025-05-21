@@ -156,9 +156,8 @@ body {
     }
 
     .example-2 .button {
-        color: var(--normal-cl);
         display: block;
-        width: 100px;
+        /* width: 100px; */
         margin: 2em auto 1em;
         text-align: center;
         font-size: 12px;
@@ -167,18 +166,9 @@ body {
         font-weight: 700;
     }
 
-    .example-2 .button::after {
-        content: "\2192";
-        opacity: 0;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translate(0, -50%);
-        transition: all 0.3s;
+    .example-2 .button:hover {
+        color: var(--normal-light-cl) !important;
+        transform: translateX(4px);
     }
 
-    .example-2 .button:hover::after {
-        transform: translate(5px, -50%);
-        opacity: 1;
-    }
 }

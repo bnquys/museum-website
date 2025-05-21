@@ -76,7 +76,7 @@ use Museum\Utils\HtmlManipulator;
 	<div class="container position-relative z-index-2">
 		<div class="row">
 			<div class="col-lg-12">
-				<span class="info-badge mb-4 d-inline-block" style="text-transform:capitalize;"><?= $type?></span>
+				<span class="info-badge mb-4 d-inline-block mv-scale" style="text-transform:capitalize;"><?= $type?></span>
 				<h1 class="event-title display-3 fw-bold mb-4">
 					<?= htmlspecialchars($content->title)?>
 				</h1>
@@ -94,7 +94,7 @@ use Museum\Utils\HtmlManipulator;
 		<div class="row g-4">
 			<!-- Event Details -->
 			<div class="col-lg-8">
-				<div class="event-details-card mb-4">
+				<div class="event-details-card mb-4 mv-lr">
 					<?php
                         $html = new HtmlManipulator($detail);
                         $html->addClass('img', "img-fluid rounded-3 mb-4 shadow"); $html->addClass('h3', "mt-5 mb-4");
@@ -107,12 +107,12 @@ use Museum\Utils\HtmlManipulator;
             <!-- Sidebar -->
             <div class="col-lg-4">
                 <div class="event-card p-4 mb-4">
-                    <h3 class="h4 mb-4 fw-bold section-title" style="text-transform:capitalize;">
+                    <h3 class="h4 mb-4 fw-bold section-title mv-rl" style="text-transform:capitalize;">
                         <?= htmlspecialchars($type) ?> Information
                     </h3>
 
                     <!-- Author -->
-                    <div class="d-flex align-items-start mb-4">
+                    <div class="d-flex align-items-start mb-4 mv-rl">
                         <i class="bi bi-person-square detail-icon"></i>
                         <div>
                             <h5 class="mb-1 fw-bold">Author</h5>
@@ -122,7 +122,7 @@ use Museum\Utils\HtmlManipulator;
 
                     <!-- Blog Specific Info -->
                     <?php if ($type === "blog"): ?>
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-calendar2-date detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Published On</h5>
@@ -130,7 +130,7 @@ use Museum\Utils\HtmlManipulator;
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-file-earmark-text detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Type</h5>
@@ -141,7 +141,7 @@ use Museum\Utils\HtmlManipulator;
 
                     <!-- Academy Specific Info -->
                     <?php if ($type === "academy" && $content instanceof Academy): ?>
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-mic detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Speaker</h5>
@@ -149,7 +149,7 @@ use Museum\Utils\HtmlManipulator;
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-currency-dollar detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Price</h5>
@@ -160,7 +160,7 @@ use Museum\Utils\HtmlManipulator;
 
                     <!-- Shared Info for Academy & Exhibition -->
                     <?php if ($type !== "blog"): ?>
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-calendar-event detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Start - End</h5>
@@ -174,7 +174,7 @@ use Museum\Utils\HtmlManipulator;
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-geo-alt detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Location</h5>
@@ -182,7 +182,7 @@ use Museum\Utils\HtmlManipulator;
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-clock detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Opening Hours</h5>
@@ -193,7 +193,7 @@ use Museum\Utils\HtmlManipulator;
                             </div>
                         </div>
 
-                        <div class="d-flex align-items-start mb-4">
+                        <div class="d-flex align-items-start mb-4 mv-rl">
                             <i class="bi bi-ticket-perforated detail-icon"></i>
                             <div>
                                 <h5 class="mb-1 fw-bold">Admission</h5>
@@ -207,7 +207,7 @@ use Museum\Utils\HtmlManipulator;
 
                 <!-- Countdown & Map -->
                 <?php if ($type !== "blog"): ?>
-                    <div class="event-card countdown mb-4">
+                    <div class="event-card countdown mb-4 mv-bt">
                         <h4 class="mb-4 text-white"><?= ucfirst($type) ?> Opens In:</h4>
                         <div class="row text-center">
                             <div class="col-3">
@@ -229,7 +229,7 @@ use Museum\Utils\HtmlManipulator;
                         </div>
                     </div>
 
-                    <div class="event-card p-4 mb-4">
+                    <div class="event-card p-4 mb-4 mv-bt">
                         <h3 class="h4 mb-4 fw-bold section-title">Location Map</h3>
                         <div class="map-container">
                             <iframe
@@ -243,8 +243,8 @@ use Museum\Utils\HtmlManipulator;
                 <?php if ($type === 'exhibition' && $content instanceof Exhibition):?>
                     <!-- Included Artifacts Section -->
                     <div class="event-card p-4 mb-4">
-                        <h3 class="h4 mb-4 fw-bold section-title">Included Artifacts</h3>
-                        <p class="mb-4">
+                        <h3 class="h4 mb-4 fw-bold section-title mv-rl">Included Artifacts</h3>
+                        <p class="mb-4 mv-rl">
                             Explore these rare botanical artifacts featured in our
                             exhibition:
                         </p>
@@ -253,7 +253,7 @@ use Museum\Utils\HtmlManipulator;
                             <?php 
                                 $artifactsInExhibition = $content->getArtifacts();
                                 foreach ($artifactsInExhibition as $artifact): ?>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6 mv-scale">
                                     <div class="artifact-container position-relative">
                                         <img
                                             src="<?= htmlspecialchars($artifact->imageUrl) ?>"
@@ -283,7 +283,7 @@ use Museum\Utils\HtmlManipulator;
                 if ($comments):
                     foreach ($comments as $cmt):
             ?>
-                <div class="mb-3 p-3 border rounded">
+                <div class="mb-3 p-3 border rounded mv-lr">
                     <strong><?= htmlspecialchars($cmt['Username']) ?></strong>
                     <small class="text-muted"><?= date("F j, Y H:i", strtotime($cmt['CreatedAt'])) ?></small>
                     <p class="mb-0"><?= nl2br(htmlspecialchars($cmt['Text'])) ?></p>
@@ -305,7 +305,7 @@ use Museum\Utils\HtmlManipulator;
                         </label>
                         <textarea name="comment" id="comment" rows="4" class="form-control" required><?= htmlspecialchars($existingComment) ?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         <?= $hasCommented ? "Update Comment" : "Post Comment" ?>
                     </button>
                 </form>
@@ -319,7 +319,7 @@ use Museum\Utils\HtmlManipulator;
 <!-- Related Events -->
 <section class="related-events">
     <div class="container">
-        <h2 class="section-title text-center mb-5">You Might Also Like</h2>
+        <h2 class="section-title text-center mb-5 mv-lr">You Might Also Like</h2>
         <div class="row g-4">
             <?php
                 $relatedEvents = array_filter(
@@ -328,7 +328,7 @@ use Museum\Utils\HtmlManipulator;
                 );             
                 foreach ($relatedEvents as $event): 
             ?>
-                <div class="col-md-4">
+                <div class="col-md-4 mv-bt">
                     <div class="event-card h-100">
                         <img
                             src="<?= htmlspecialchars($event->imgUrl) ?>"

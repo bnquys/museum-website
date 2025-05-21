@@ -43,8 +43,8 @@
                             <p class="text">
                                 <?= htmlspecialchars($event->summary) ?>
                             </p>
-                            <a href="more.php?type=<?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?>&id=<?= $event->id ?>" class="button text-white">
-                                Read more
+                            <a href="more.php?type=<?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?>&id=<?= $event->id ?>" class="button text-white fs-6 mt-0 mb-1">
+                                Read more <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>

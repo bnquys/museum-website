@@ -23,7 +23,8 @@ $introText = $textManager->read('carousel_text');
     >
         <p class="mv-bt"><?= htmlspecialchars($introText["opening_date"])?></p>
         <h1 class="mv-bt"><?= $introText["title"]?></h1>
-        <p class="mv-bt" style="letter-spacing: 1px"><?= $introText["description"]?></p>
+        <p class="mv-bt" style="letter-spacing: 1px"><?php $html=new HtmlManipulator($introText["description"]); $html->addClass('p','mv-bt'); $html->print();?></p>
+        
         <a
             href="portal.php"
             class="btn btn-success rounded-0 fw-bold text-uppercase"
@@ -37,7 +38,7 @@ $introText = $textManager->read('carousel_text');
             if (empty($carouselItems)):
                 echo '<div class="carousel-item active">
                         <img
-                            src="https://placehold.co/5000/png?text=Image Not Found"
+                            src="https://picsum.photos/1920/1080"
                             class="d-block w-100 vh-100 object-fit-cover"
                             alt="Image Not Found"
                         />

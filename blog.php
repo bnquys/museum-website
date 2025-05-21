@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?php foreach($blogs as $blog):?>
                 <a
                     href="more.php?type=blog&id=<?= $blog->id?>"
-                    class="col-12 d-flex blog-card text-decoration-none text-dark"
+                    class="col-12 d-flex blog-card text-decoration-none text-dark mv-lr"
                 >
                     <img
                         src="<?= $blog->imgUrl?>"
@@ -55,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             echo $htmlSummary->getHtml();
                         ?>
                         <div class="d-flex justify-content-between flex-wrap blog-meta">
-                            <span>📅 <?= $blog->uploadDate?></span>
-                            <span>✍️ <?= $blog->username?></span>
+                            <span><i class="fa-solid fa-calendar"></i> <?= $blog->uploadDate?></span>
+                            <span><i class="fa-solid fa-pencil"></i> <?= $blog->username?></span>
                         </div>
                     </div>
                 </a>
