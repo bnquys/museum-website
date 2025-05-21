@@ -344,7 +344,7 @@ use Museum\Utils\HtmlManipulator;
                                     <i class="bi bi-calendar-event me-2"></i>
                                     <?= date("F j, Y", strtotime($event->timeStart)) ?>
                                 </span>
-                                <a href="more.php?type=<?= $type ?>&id=<?= $event->id ?>" class="btn btn-sm btn-custom">
+                                <a href="more.php?type=<?= str_replace('museum\\object\\', '', strtolower(get_class($event->getType()))) ?>&id=<?= $event->id ?>" class="btn btn-sm btn-custom">
                                     Details <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                             </div>
