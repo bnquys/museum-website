@@ -82,6 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         id="visitTime"
                         name="visitTime"
                         class="form-control mx-auto"
+                        min="08:00"
+                        max="17:00"
                     />
                 </div>
             </div>
