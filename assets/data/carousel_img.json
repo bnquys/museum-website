@@ -1,7 +1,37 @@
 [
     {
         "id": 1,
-        "image_url": "assets\/uploads\/carousel\/683-1920x1080.jpg",
+        "image_url": "assets\/uploads\/carousel\/353-5000x2806.jpg",
+        "description": ""
+    },
+    {
+        "id": 2,
+        "image_url": "assets\/uploads\/carousel\/324-3888x2592.jpg",
+        "description": ""
+    },
+    {
+        "id": 3,
+        "image_url": "assets\/uploads\/carousel\/785-5000x3333.jpg",
+        "description": ""
+    },
+    {
+        "id": 4,
+        "image_url": "assets\/uploads\/carousel\/353-5000x2806.jpg",
+        "description": ""
+    },
+    {
+        "id": 5,
+        "image_url": "assets\/uploads\/carousel\/380-4080x2710.jpg",
+        "description": ""
+    },
+    {
+        "id": 6,
+        "image_url": "assets\/uploads\/carousel\/498-5000x3333.jpg",
+        "description": ""
+    },
+    {
+        "id": 7,
+        "image_url": "assets\/uploads\/carousel\/478-5000x3333.jpg",
         "description": ""
     }
 ]
