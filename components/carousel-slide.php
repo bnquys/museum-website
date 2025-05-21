@@ -1,6 +1,8 @@
 <?php
 
 require_once 'vendor/autoload.php';
+
+use Museum\Utils\HtmlManipulator;
 use Museum\Utils\JsonDataManager;
 
 $imageManager = new JsonDataManager(__DIR__.'/../assets/data/carousel_img.json');
@@ -20,8 +22,8 @@ $introText = $textManager->read('carousel_text');
         style="z-index: 10"
     >
         <p class="mv-bt"><?= htmlspecialchars($introText["opening_date"])?></p>
-        <h1 class="mv-bt">"<?= htmlspecialchars($introText["title"])?>"</h1>
-        <p class="mv-bt" style="letter-spacing: 1px"><?= htmlspecialchars($introText["description"])?></p>
+        <h1 class="mv-bt"><?= $introText["title"]?></h1>
+        <p class="mv-bt" style="letter-spacing: 1px"><?= $introText["description"]?></p>
         <a
             href="portal.php"
             class="btn btn-success rounded-0 fw-bold text-uppercase"
