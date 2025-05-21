@@ -1,6 +1,8 @@
 <?php
 
 require_once 'vendor/autoload.php';
+
+use Museum\Utils\HtmlManipulator;
 use Museum\Utils\JsonDataManager;
 
 $imageManager = new JsonDataManager(__DIR__.'/../assets/data/carousel_img.json');
@@ -20,8 +22,8 @@ $introText = $textManager->read('carousel_text');
         style="z-index: 10"
     >
         <p class="mv-bt"><?= htmlspecialchars($introText["opening_date"])?></p>
-        <h1 class="mv-bt">"<?= htmlspecialchars($introText["title"])?>"</h1>
-        <p class="mv-bt" style="letter-spacing: 1px"><?= htmlspecialchars($introText["description"])?></p>
+        <h1 class="mv-bt"><?= $introText["title"]?></h1>
+        <p class="mv-bt" style="letter-spacing: 1px"><?= $introText["description"]?></p>
         <a
             href="portal.php"
             class="btn btn-success rounded-0 fw-bold text-uppercase"
@@ -32,7 +34,15 @@ $introText = $textManager->read('carousel_text');
     <div class="carousel-inner bg-darker">
         <?php
             $carouselItems = $imageManager->readAll();
-            usort($carouselItems, fn($a, $b) => (int)$a['id'] <=> (int)$b['id']);
+            if (empty($carouselItems)):
+                echo '<div class="carousel-item active">
+                        <img
+                            src="https://placehold.co/5000/png?text=Image Not Found"
+                            class="d-block w-100 vh-100 object-fit-cover"
+                            alt="Image Not Found"
+                        />
+                    </div>';
+            else :
             foreach ($carouselItems as $item):
         ?>
         <div class="carousel-item active">
@@ -42,7 +52,10 @@ $introText = $textManager->read('carousel_text');
                 alt="<?= htmlspecialchars($item['description']) ?>"
             />
         </div>
-        <?php endforeach;?>
+        <?php 
+            endforeach;
+        endif;
+        ?>
     </div>
     <button
         class="carousel-control-prev d-none"

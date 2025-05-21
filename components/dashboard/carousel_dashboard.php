@@ -17,6 +17,9 @@ if (isset($_GET['deleteId'])) {
     $deleteId = $_GET['deleteId'];
     $imageManager->delete($deleteId);
 
+    // Lấy lại danh sách mới sau khi xóa
+    $items = $imageManager->readAll();
+
     // Ghi lại vào file JSON
     $reflection = new ReflectionClass($imageManager);
     $property = $reflection->getProperty('filePath');
@@ -157,11 +160,11 @@ $carouselItems = $imageManager->readAll();
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" name="title" class="form-control" value="<?= htmlspecialchars($introText['title']) ?>">
-            </div>
+                <textarea name="title" id="title" class="form-control"><?= $introText['title'] ?></textarea>
+                </div>
             <div class="mb-3">
                 <label for="intro_description" class="form-label">Description</label>
-                <textarea name="intro_description" class="form-control" rows="3"><?= htmlspecialchars($introText['description']) ?></textarea>
+                <textarea name="intro_description" id="intro_description" class="form-control" rows="3"><?= $introText['description'] ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="interval_seconds" class="form-label">Slide Interval (seconds)</label>
@@ -169,6 +172,25 @@ $carouselItems = $imageManager->readAll();
             </div>
             <button type="submit" name="intro_text_submit" class="btn btn-primary">Save Text</button>
         </form>
+        <script>
+        ClassicEditor
+            .create(document.querySelector('#title'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'undo', 'redo']
+            })
+            .then(editor => {
+                editor.ui.view.editable.element.style.minHeight = '250px';
+            })
+            .catch(console.error);
+
+        ClassicEditor
+            .create(document.querySelector('#intro_description'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'undo', 'redo']
+            })
+            .then(editor => {
+                editor.ui.view.editable.element.style.minHeight = '300px';
+            })
+            .catch(console.error);
+        </script>
     </section>
 </div>
 
