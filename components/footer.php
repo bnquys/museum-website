@@ -9,7 +9,7 @@
 		<!-- Stay with email -->
 		<div class="row align-items-center mb-5">
 			<div class="col-lg-6 mb-4 mb-lg-0">
-				<h3 class="footer-heading">STAY WITH US</h3>
+				<h3 class="footer-heading mv-lr">STAY WITH US</h3>
 				<p class="text-white-50">Subscribe to our newsletter for the latest updates and events.</p>
 			</div>
 			<div class="col-lg-6">
@@ -33,7 +33,7 @@
 		<div class="row mb-5">
 			<!-- Left: Navigation Links -->
 			<div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-				<h4 class="footer-heading">Quick Links</h4>
+				<h4 class="footer-heading mv-lr">Quick Links</h4>
 				<ul class="list-unstyled d-flex flex-column justify-content-between h-75">
 					<li><a href="#" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Visit</a></li>
 					<li><a href="contact.php" class="footer-link"><i class="fas fa-chevron-right me-2"></i> Contact</a></li>
@@ -48,15 +48,18 @@
 			<div class="col-lg-9">
 				<div class="row">
 					<!-- Address -->
-					<div class="col-md-4 mb-4 mb-md-0">
+					<div class="col-md-4 mb-4 mb-md-0 mv-lr">
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-map-marker-alt me-2"></i> Address</h4>
 							<address class="text-white-50"><?= $museum['address']?></address>
+							<a href="contact.php" class="btn btn-sm mt-3" style="background-color: var(--normal-cl); color: white;">
+								<i class="fas fa-ticket me-2"></i> Buy Ticket
+							</a>
 						</div>
 					</div>
 					
 					<!-- Contact -->
-					<div class="col-md-4 mb-4 mb-md-0">
+					<div class="col-md-4 mb-4 mb-md-0 mv-lr">
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-phone-alt me-2"></i> Contact</h4>
 							<p class="text-white-50">
@@ -70,11 +73,14 @@
 					</div>
 					
 					<!-- Hours -->
-					<div class="col-md-4">
+					<div class="col-md-4 mv-lr">
 						<div class="info-box">
 							<h4 class="footer-heading"><i class="fas fa-clock me-2"></i> Hours</h4>
 							<p class="text-white-50 mb-1"><strong>Museum & Store:</strong></p>
-							<p class="text-white-50 small"><?= str_replace(',', '<br>', $museum['summary'])?></p>
+							<p class="text-white-50 small mb-1"><?= str_replace(',', '<br>', $museum['summary'])?></p>
+							<a href="contact.php" class="btn btn-sm mt-3" style="background-color: var(--normal-cl); color: white;">
+								<i class="fas fa-ticket me-2"></i> Ticket now!
+							</a>
 						</div>
 					</div>
 				</div>
@@ -99,12 +105,12 @@
 			</div>
 			
 			<div class="col-md-6 text-md-end">
-				<h4 class="footer-heading d-inline-block me-3">Follow Us</h4>
-				<a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-				<a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-				<a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-				<a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+				<h4 class="footer-heading d-inline-block me-3 mv-lr">Follow Us</h4>
+				<a href="#" class="social-icon mv-bt"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social-icon mv-bt"><i class="fab fa-twitter"></i></a>
+				<a href="#" class="social-icon mv-bt"><i class="fab fa-instagram"></i></a>
+				<a href="#" class="social-icon mv-bt"><i class="fab fa-youtube"></i></a>
+				<a href="#" class="social-icon mv-bt"><i class="fab fa-tiktok"></i></a>
 			</div>
 		</div>
 		

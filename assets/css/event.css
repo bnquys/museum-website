@@ -35,7 +35,7 @@ body {
 
     .card .wrapper {
         background-color: #fff;
-        min-height: 540px;
+        min-height: 530px;
         position: relative;
         overflow: hidden;
         /* box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3),
@@ -76,6 +76,7 @@ body {
 
     .card .title {
         margin-top: 10px;
+        margin-bottom: 1.5rem;
     }
 
     .card .text {
@@ -94,6 +95,7 @@ body {
         background-color: var(--normal-cl);
         color: #fff;
         padding: 1em;
+        border-bottom-right-radius: 2.2rem;
     }
 
     .date span {
@@ -103,13 +105,13 @@ body {
 
     .day {
         font-weight: 700;
-        font-size: 24px;
+        font-size: 32px;
         text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.18);
     }
 
     .month,
     .year {
-        font-size: 12px;
+        font-size: 16px;
         text-transform: uppercase;
     }
 
@@ -138,7 +140,6 @@ body {
 
     .example-2 .header .date {
         float: left;
-        font-size: 12px;
     }
 
     .example-2 .data {
@@ -148,6 +149,7 @@ body {
 
     .example-2 .title a {
         color: white;
+        font-size: 2.3rem;
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         font-weight: 700;
         line-height: 1.2;

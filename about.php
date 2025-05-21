@@ -1,6 +1,4 @@
 <?php
-
-
 	$css = "about";
 	$title = $banner = "About Us";
 	include "components/first.php";
@@ -32,12 +30,12 @@
 			</div>
 			<div
 				class="shadow-lg img-responsive mt-5 mt-xl-0 mv-lr"
-				style="padding: 6rem"
+				style="padding: 6rem; color: var(--dark-cl)"
 			>
 				<?= $about['introduction']['title']?>
 				<?php 
 					$html = new HtmlManipulator($about['introduction']['content']);
-					$html->addClass('p', 'text-gray mt-4');
+					$html->addClass('p', 'mt-4');
 					echo $html->getHtml();
 				?>
 			</div>

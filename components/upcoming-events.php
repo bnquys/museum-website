@@ -14,7 +14,7 @@
 
 
 
-<section class="events mv-bt">
+<section class="events mv-tb">
 	<div class="container-event">
 		<?php foreach ($upcomings as $index => $event): 
 			// Sinh background-position dựa trên index (0-based)

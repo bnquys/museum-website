@@ -791,6 +791,14 @@ footer {
         transform: translateX(5px);
     }
 
+    .btn-sm {
+        transition: all 0.3s ease;
+    }
+
+    .btn-sm:hover {
+        background-color: var(--normal-light-cl) !important;
+    }
+
     .social-icon {
         display: inline-flex;
         align-items: center;
