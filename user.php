@@ -191,12 +191,12 @@
                                 <span>Change Password</span>
                             </a>
                         </li>
-                        <li class="nav-item p-2 mb-1">
+                        <!-- <li class="nav-item p-2 mb-1">
                             <a class="nav-link d-flex align-items-center" href="#">
                                 <i class="bi bi-calendar-event-fill me-3"></i>
                                 <span>Visit History</span>
                             </a>
-                        </li>
+                        </li> -->
                         <?php if (!$accountLogin->hasRole(AccountRole::USER)):?>
                         <li class="nav-item p-2 mb-1">
                             <a class="nav-link d-flex align-items-center" href="dashboard.php">
