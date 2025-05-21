@@ -17,6 +17,9 @@ if (isset($_GET['deleteId'])) {
     $deleteId = $_GET['deleteId'];
     $imageManager->delete($deleteId);
 
+    // Lấy lại danh sách mới sau khi xóa
+    $items = $imageManager->readAll();
+
     // Ghi lại vào file JSON
     $reflection = new ReflectionClass($imageManager);
     $property = $reflection->getProperty('filePath');
