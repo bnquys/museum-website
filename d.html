@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Our Museum</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6e1c;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ffc107;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            background-color: rgba(13, 110, 28, 0.95) !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(13, 110, 28, 0.95) !important;
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            margin: 0 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-ticket {
+            background-color: var(--accent-color);
+            color: var(--dark-color) !important;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ticket:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1794&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .breadcrumb-item a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--accent-color);
+        }
+
+        .breadcrumb-item.active {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            color: white;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            aspect-ratio: 1/1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .gallery-overlay p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 992px) {
+            .modal-body {
+                flex-direction: row;
+            }
+        }
+
+        .modal-image {
+            flex: 1;
+            min-height: 400px;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .modal-info h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .modal-info h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .modal-info p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .modal-meta span {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        .modal-meta i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background-color: var(--dark-color);
+            transform: rotate(90deg);
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .blog-card {
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            background-color: white;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-date {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--primary-color);
+        }
+
+        .blog-author {
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .blog-author i {
+            margin-left: 5px;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 0;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-logo:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-about p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent-color);
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .modal-image {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 50vh;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .breadcrumb {
+                font-size: 0.9rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-museum me-2"></i>Our Museum
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link btn-ticket" href="#">Buy Ticket</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Our Gallery</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Our Collections</h2>
+                <p>Discover the rich cultural heritage and artistic masterpieces from around the world in our carefully curated exhibitions.</p>
+            </div>
+
+            <div class="gallery-container">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Ancient Egyptian Artifacts" data-description="This collection features rare artifacts from ancient Egypt, including pottery, jewelry, and ceremonial objects dating back to 3000 BCE. Each piece tells a story of the rich cultural heritage and advanced craftsmanship of the Egyptian civilization." data-history="Discovered during the 1922 excavation in the Valley of the Kings, these artifacts were carefully preserved and restored by our team of expert archaeologists." data-date="April 15, 2023" data-author="Dr. Sarah Johnson">
+                    <img src="https://images.unsplash.com/photo-1547483238-f400e65ccd56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ancient Egyptian Artifacts">
+                    <div class="gallery-overlay">
+                        <h3>Ancient Egyptian Artifacts</h3>
+                        <p>3000 BCE - 30 BCE</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Renaissance Paintings" data-description="Our Renaissance collection showcases masterpieces from the 14th to 17th centuries, featuring works by renowned artists such as Leonardo da Vinci, Michelangelo, and Raphael. These paintings represent the rebirth of classical learning and wisdom in Europe." data-history="Many of these paintings were acquired from private collections and European museums through cultural exchange programs." data-date="June 2, 2023" data-author="Prof. Michael Chen">
+                    <img src="https://images.unsplash.com/photo-1579783902614-a3fb39268b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1450&q=80" alt="Renaissance Paintings">
+                    <div class="gallery-overlay">
+                        <h3>Renaissance Paintings</h3>
+                        <p>14th - 17th Century</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Asian Ceramics" data-description="This exquisite collection features Chinese porcelain, Japanese raku ware, and Korean celadon from various dynasties. The delicate craftsmanship and unique glazing techniques demonstrate the artistic achievements of Asian ceramic traditions." data-history="Collected over 50 years by our founder during his travels across Asia, these pieces represent the pinnacle of ceramic art." data-date="March 10, 2023" data-author="Dr. Li Wei">
+                    <img src="https://images.unsplash.com/photo-1560840067-dd226c4ca2a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Asian Ceramics">
+                    <div class="gallery-overlay">
+                        <h3>Asian Ceramics</h3>
+                        <p>Various Dynasties</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="African Tribal Art" data-description="Our African collection includes masks, sculptures, and textiles from various tribes across the continent. These artifacts represent spiritual beliefs, social structures, and artistic traditions of African cultures." data-history="Many pieces were donated by anthropologists who lived among these tribes in the early 20th century." data-date="August 22, 2023" data-author="Dr. Amina Diallo">
+                    <img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a1ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="African Tribal Art">
+                    <div class="gallery-overlay">
+                        <h3>African Tribal Art</h3>
+                        <p>Various Tribes</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Greek and Roman Sculptures" data-description="This collection features marble and bronze sculptures from ancient Greece and Rome, showcasing the human form with unprecedented realism and beauty." data-history="Several pieces were recovered from archaeological sites in the Mediterranean and carefully restored by our conservation team." data-date="May 5, 2023" data-author="Dr. Elena Papadopoulos">
+                    <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Greek and Roman Sculptures">
+                    <div class="gallery-overlay">
+                        <h3>Greek and Roman Sculptures</h3>
+                        <p>8th Century BCE - 4th Century CE</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Medieval Armor" data-description="Our collection of medieval armor includes full suits, helmets, and weapons from various European kingdoms. These pieces demonstrate the evolution of warfare technology during the Middle Ages." data-history="Most armor was preserved in castle armories and private collections before being acquired by the museum." data-date="July 18, 2023" data-author="Sir Richard Pembroke">
+                    <img src="https://images.unsplash.com/photo-1588591795085-7c0c7d1e4c4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Medieval Armor">
+                    <div class="gallery-overlay">
+                        <h3>Medieval Armor</h3>
+                        <p>5th - 15th Century</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 7 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Pre-Columbian Art" data-description="This collection features artifacts from the Aztec, Maya, and Inca civilizations, including gold ornaments, stone carvings, and textiles that demonstrate the artistic achievements of pre-Columbian America." data-history="Many pieces were discovered during archaeological expeditions in Central and South America in the 20th century." data-date="September 30, 2023" data-author="Dr. Carlos Mendez">
+                    <img src="https://images.unsplash.com/photo-1580745290542-5b9d6c1e1f5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Pre-Columbian Art">
+                    <div class="gallery-overlay">
+                        <h3>Pre-Columbian Art</h3>
+                        <p>2000 BCE - 16th Century</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 -->
+                <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#galleryModal" data-title="Islamic Calligraphy" data-description="This collection showcases the art of Islamic calligraphy from various periods and regions, featuring Quranic verses, poetry, and historical documents written in beautiful Arabic script." data-history="Several pieces were donated by collectors from the Middle East who wanted to share this cultural heritage with the world." data-date="October 12, 2023" data-author="Dr. Fatima Al-Mansoor">
+                    <img src="https://images.unsplash.com/photo-1605106702734-2056a71d0928?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Islamic Calligraphy">
+                    <div class="gallery-overlay">
+                        <h3>Islamic Calligraphy</h3>
+                        <p>7th - 19th Century</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest From Our Blog</h2>
+                <p>Stay updated with our latest articles, exhibition reviews, and behind-the-scenes stories from the museum.</p>
+            </div>
+
+            <div class="row">
+                <!-- Blog Post 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-card">
+                        <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Blog Post">
+                        <div class="blog-content">
+                            <span class="blog-date">May 15, 2023</span>
+                            <h4 class="blog-title">The Hidden Meanings in Renaissance Art</h4>
+                            <p class="blog-excerpt">Discover the symbolic language used by Renaissance artists to convey complex ideas...</p>
+                            <p class="blog-author">By Dr. Elena Papadopoulos <i class="fas fa-feather-alt"></i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-card">
+                        <img src="https://images.unsplash.com/photo-1580745290542-5b9d6c1e1f5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Blog Post">
+                        <div class="blog-content">
+                            <span class="blog-date">June 2, 2023</span>
+                            <h4 class="blog-title">Uncovering Lost Civilizations</h4>
+                            <p class="blog-excerpt">Our latest expedition reveals fascinating artifacts from a previously unknown pre-Columbian culture...</p>
+                            <p class="blog-author">By Dr. Carlos Mendez <i class="fas fa-feather-alt"></i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-card">
+                        <img src="https://images.unsplash.com/photo-1605106702734-2056a71d0928?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Blog Post">
+                        <div class="blog-content">
+                            <span class="blog-date">June 18, 2023</span>
+                            <h4 class="blog-title">The Art of Islamic Calligraphy</h4>
+                            <p class="blog-excerpt">Explore the spiritual significance and technical mastery behind this ancient art form...</p>
+                            <p class="blog-author">By Dr. Fatima Al-Mansoor <i class="fas fa-feather-alt"></i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-card">
+                        <img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a1ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Blog Post">
+                        <div class="blog-content">
+                            <span class="blog-date">July 5, 2023</span>
+                            <h4 class="blog-title">African Masks and Their Meanings</h4>
+                            <p class="blog-excerpt">Discover how different African tribes used masks in rituals and ceremonies...</p>
+                            <p class="blog-author">By Dr. Amina Diallo <i class="fas fa-feather-alt"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-museum me-2"></i>Our Museum
+                    </a>
+                    <div class="footer-about">
+                        <p>Our Museum is dedicated to preserving and showcasing cultural heritage from around the world. We offer educational programs, special exhibitions, and community events.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Exhibitions</a></li>
+                            <li><a href="#">Events</a></li>
+                            <li><a href="#">Collections</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Visitor Info</h4>
+                        <ul>
+                            <li><a href="#">Hours & Admission</a></li>
+                            <li><a href="#">Directions</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                            <li><a href="#">Tours</a></li>
+                            <li><a href="#">Group Visits</a></li>
+                            <li><a href="#">Museum Shop</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Museum Avenue, Cultural District, City</p>
+                        <p><i class="fas fa-phone-alt"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@ourmuseum.org</p>
+                        <p><i class="fas fa-clock"></i> Open: Tue-Sun 10am-6pm</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start">
+                            <p>&copy; 2023 Our Museum. All Rights Reserved.</p>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Gallery Item">
+                </div>
+                <div class="modal-info">
+                    <h3 id="modalTitle"></h3>
+                    <p id="modalDescription"></p>
+                    <h5>Historical Context</h5>
+                    <p id="modalHistory"></p>
+                    <div class="modal-meta">
+                        <span><i class="far fa-calendar-alt"></i> <span id="modalDate"></span></span>
+                        <span><i class="fas fa-user-edit"></i> <span id="modalAuthor"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $('.navbar').addClass('scrolled');
+            } else {
+                $('.navbar').removeClass('scrolled');
+            }
+        });
+
+        // Gallery modal functionality
+        $(document).ready(function() {
+            $('.gallery-item').click(function() {
+                const imgSrc = $(this).find('img').attr('src');
+                const title = $(this).data('title');
+                const description = $(this).data('description');
+                const history = $(this).data('history');
+                const date = $(this).data('date');
+                const author = $(this).data('author');
+
+                $('#modalImage').attr('src', imgSrc);
+                $('#modalTitle').text(title);
+                $('#modalDescription').text(description);
+                $('#modalHistory').text(history);
+                $('#modalDate').text(date);
+                $('#modalAuthor').text(author);
+
+                $('.gallery-modal').addClass('active');
+                $('body').css('overflow', 'hidden');
+            });
+
+            $('#closeModal').click(function() {
+                $('.gallery-modal').removeClass('active');
+                $('body').css('overflow', 'auto');
+            });
+
+            $(document).keyup(function(e) {
+                if (e.key === "Escape") {
+                    $('.gallery-modal').removeClass('active');
+                    $('body').css('overflow', 'auto');
+                }
+            });
+
+            $('.gallery-modal').click(function(e) {
+                if ($(e.target).hasClass('gallery-modal')) {
+                    $('.gallery-modal').removeClass('active');
+                    $('body').css('overflow', 'auto');
+                }
+            });
+        })
+    </script>
+       
+</html>

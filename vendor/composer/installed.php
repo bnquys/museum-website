@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '9800e7dc641245f73b8abaa7425419bddf1b2a42',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '9800e7dc641245f73b8abaa7425419bddf1b2a42',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.3',
+            'version' => '6.9.3.0',
+            'reference' => '2f5c94fe7493efc213f643c23b1b1c249d40f47e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/css-selector' => array(
+            'pretty_version' => 'v6.0.19',
+            'version' => '6.0.19.0',
+            'reference' => 'f1d00bddb83a4cb2138564b2150001cb6ce272b1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/css-selector',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
